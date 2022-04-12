@@ -1,24 +1,21 @@
 package controller;
 
-public class MainMenuController
-{
+public class MainMenuController {
     //Fields
     int number;
 
     //Singleton definition
     private static MainMenuController instance;
-    private MainMenuController(int number)
-    {
+
+    private MainMenuController(int number) {
         this.number = number;
     }
 
-    public static MainMenuController getInstance()
-    {
+    public static MainMenuController getInstance() {
         return instance;
     }
 
-    public static void updateInstance(int number)
-    {
+    public static void updateInstance(int number) {
         /*
          * This function is not necessary if there is only a single instance of the Class throughout the program.
          * However, for handling singleton Classes that can be renewed or changes throughout the program, this
