@@ -1,4 +1,5 @@
-package model;
+package model.unit;
 
 public abstract class Unit {
+
 }

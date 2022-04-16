@@ -9,4 +9,10 @@ public abstract class Menu {
         this.scanner = scanner;
     }
 
+    public abstract void run ();
+
+    public void printMessage(String message) {
+        System.out.println(message);
+    }
+
 }
