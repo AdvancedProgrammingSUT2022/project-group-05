@@ -4,7 +4,7 @@ import static model.tile.ResourceType.*;
 
 public enum Resource{
     //TODO... Add all resources
-    BANANA(BENEFICIAL, 1, 0, 0),
+    BANANA(BONUS, 1, 0, 0),
 
     COTTON(LUXURIOUS, 0, 2, 0),
 

@@ -1,6 +1,7 @@
 package model.tile;
 
 import model.game.City;
+import model.unit.Unit;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,11 @@ public class Tile {
     private final Terrain terrain;
     private final Feature feature;
     private final ArrayList<Resource> resources;
+
+    private Unit unit;
+
+    //TODO... Implement improvements
+    //private Improvement improvement
 
     private int foodBoost;
     private int goldBoost;
@@ -22,7 +28,9 @@ public class Tile {
         this.feature = feature;
         this.resources = resources;
 
-        //TODO... Set "foodBoost, goldBoost, ..." based on "terrain, feature, ...".
+        this.unit = null;
+
+        //TODO... Set "foodBoost, goldBoost, ..." based on "terrain, feature, resource, improvement".
     }
 
     //SETTERS
@@ -30,9 +38,17 @@ public class Tile {
         this.city = city;
     }
 
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
     //GETTERS
     public City getCity() {
         return this.city;
+    }
+
+    public Unit getUnit() {
+        return this.unit;
     }
 
     public Terrain getTerrain() {

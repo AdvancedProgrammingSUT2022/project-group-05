@@ -19,9 +19,14 @@ public abstract class Unit {
 
     protected UnitState unitState;
 
-    public Unit(Civilization civilization) {
+    public Unit(Civilization civilization, Tile tile) {
         this.civilization = civilization;
         this.unitState = UnitState.DONE;
+
+        this.tile = tile;
+
+        this.experience = 0;
+        this.level = 0;
     }
 
     //TODO... Read game.pdf page 21 and implement the functions below
