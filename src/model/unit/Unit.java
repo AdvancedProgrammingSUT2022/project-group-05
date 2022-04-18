@@ -1,19 +1,57 @@
 package model.unit;
 
 import model.game.Civilization;
+import model.tile.Tile;
 
 public abstract class Unit {
-    private Civilization civilization;
-    private int health;
-    private int cost;
+    protected Civilization civilization;
+    protected int health;
+    protected int cost;
 
-    private int maxMovement;
-    private int remainingMovement;
+    protected Tile tile;
+    protected int maxMovement;
+    protected int remainingMovement;
 
-    private int meleeStrength; //also defence
-    private int rangeStrength;
-    private int experience;
-    private int level;
+    protected int meleeStrength; //also defence
+    protected int rangeStrength;
+    protected int experience;
+    protected int level;
 
-    private int state;
+    protected UnitState unitState;
+
+    public Unit(Civilization civilization) {
+        this.civilization = civilization;
+        this.unitState = UnitState.DONE;
+    }
+
+    //TODO... Read game.pdf page 21 and implement the functions below
+    public void canMoveTo(Tile tile) { //checks if unit can move to a given tile
+
+    }
+
+    public void sleep() { //sets unit to asleep state
+
+    }
+
+    public void alert() { //sets unit to alerted state
+
+    }
+
+    public void heal() { //sets unit to healing state
+
+    }
+
+    public void garrison() { //garrisons the unit if on a city tile
+
+    }
+
+    public void cancel() { //cancels the last order in unit command query?? WTH... check game.pdf page 21
+
+    }
+    //SETTERS
+
+
+    //GETTERS
+
+
 }
