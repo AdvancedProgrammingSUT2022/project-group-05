@@ -45,7 +45,30 @@ public class Civilization {
     }
 
     //SETTERS
+    public void setTurn(int turn)
+    {
+        this.turn = turn;
+    }
 
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public void setProduction(int production) {
+        this.production = production;
+    }
+
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
+    }
+
+    public void setResearchPoint(int researchPoint) {
+        this.researchPoint = researchPoint;
+    }
 
     //GETTERS
     public User getPlayer() {

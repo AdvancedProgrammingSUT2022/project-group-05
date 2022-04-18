@@ -6,12 +6,15 @@ import model.unit.Unit;
 import java.util.ArrayList;
 
 public class Tile {
+    //TODO.. Add something that shows where the tile is located. (like int x, int y)
+
     private City city; //This tile belongs to city
     private final Terrain terrain;
     private final Feature feature;
     private final ArrayList<Resource> resources;
 
     private Unit unit;
+    private boolean hasCitizen;
 
     //TODO... Implement improvements
     //private Improvement improvement

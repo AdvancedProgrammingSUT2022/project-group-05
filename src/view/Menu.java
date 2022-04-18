@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Menu{
@@ -13,6 +14,12 @@ public abstract class Menu{
 
     public void printMessage(String message) {
         System.out.println(message);
+    }
+    public void printMessage(ArrayList<String> message) {
+        for (String line : message)
+        {
+            System.out.println(line);
+        }
     }
 
 }

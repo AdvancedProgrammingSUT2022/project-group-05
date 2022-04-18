@@ -1,4 +1,10 @@
 package model.unit.military.melee;
 
-public class Panzer{
+import model.game.Civilization;
+import model.tile.Tile;
+
+public class Panzer extends Melee{
+    public Panzer(Civilization civilization, Tile tile) {
+        super(civilization, tile);
+    }
 }

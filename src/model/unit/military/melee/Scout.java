@@ -1,4 +1,10 @@
 package model.unit.military.melee;
 
-public class Scout{
+import model.game.Civilization;
+import model.tile.Tile;
+
+public class Scout extends Melee{
+    public Scout(Civilization civilization, Tile tile) {
+        super(civilization, tile);
+    }
 }

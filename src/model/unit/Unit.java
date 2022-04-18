@@ -5,7 +5,6 @@ import model.tile.Tile;
 
 public abstract class Unit {
     protected Civilization civilization;
-    protected int health;
     protected int cost;
 
     protected Tile tile;
@@ -13,8 +12,9 @@ public abstract class Unit {
     protected int remainingMovement;
 
     protected int meleeStrength; //also defence
-    protected int rangeStrength;
+    protected int rangedStrength;
     protected int experience;
+    protected int health;
     protected int level;
 
     protected UnitState unitState;
@@ -26,12 +26,13 @@ public abstract class Unit {
         this.tile = tile;
 
         this.experience = 0;
+        this.health = 10;
         this.level = 0;
     }
 
     //TODO... Read game.pdf page 21 and implement the functions below
-    public void canMoveTo(Tile tile) { //checks if unit can move to a given tile
-
+    public boolean canMoveTo(Tile tile) { //checks if unit can move to a given tile
+        return true;
     }
 
     public void sleep() { //sets unit to asleep state
@@ -53,6 +54,22 @@ public abstract class Unit {
     public void cancel() { //cancels the last order in unit command query?? WTH... check game.pdf page 21
 
     }
+
+    public int getAttackStrength()
+    {
+        return boost(this.meleeStrength);
+    }
+
+    public int getDefenseStrength()
+    {
+        return boost(this.meleeStrength);
+    }
+
+    protected int boost(int initialStrength) { //boosts initial Strength based on current tile stats
+        //TODO...
+        return 0;
+    }
+
     //SETTERS
 
 
