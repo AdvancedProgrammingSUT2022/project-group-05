@@ -6,7 +6,9 @@ import model.unit.Unit;
 import java.util.ArrayList;
 
 public class Tile {
-    //TODO.. Add something that shows where the tile is located. (like int x, int y)
+    private final int xPlace;
+    private final int yPlace;
+    private final int zPlace;
 
     private City city; //This tile belongs to city
     private final Terrain terrain;
@@ -25,7 +27,10 @@ public class Tile {
     private int combatBoost;
     private int movementCost;
 
-    public Tile(City city, Terrain terrain, Feature feature, ArrayList<Resource> resources) {
+    public Tile(int xPlace, int yPlace, int zPlace, City city, Terrain terrain, Feature feature, ArrayList<Resource> resources) {
+        this.xPlace = xPlace;
+        this.yPlace = yPlace;
+        this.zPlace = zPlace;
         this.city = city;
         this.terrain = terrain;
         this.feature = feature;
@@ -45,7 +50,20 @@ public class Tile {
         this.unit = unit;
     }
 
+
     //GETTERS
+    public int getxPlace() {
+        return xPlace;
+    }
+
+    public int getyPlace() {
+        return yPlace;
+    }
+
+    public int getzPlace() {
+        return zPlace;
+    }
+
     public City getCity() {
         return this.city;
     }
