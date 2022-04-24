@@ -83,4 +83,12 @@ public class Tile {
     public ArrayList<Resource> getResources() {
         return this.resources;
     }
+
+
+
+    //returns move points needed to enter this tile
+    public int movePointsNeededToEnterFrom(Tile currentTile) {
+        //TODO... return the needed mp for this tile
+        return 0;
+    }
 }
