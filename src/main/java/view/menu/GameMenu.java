@@ -1,5 +1,6 @@
 package view.menu;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class GameMenu extends Menu {
@@ -10,5 +11,11 @@ public class GameMenu extends Menu {
     @Override
     public MenuType run() {
         return MenuType.EXIT;
+    }
+
+    @Override
+    public HashMap<String, String> scanCommand(String command) {
+        //TODO...
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package view.menu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public abstract class Menu {
@@ -10,8 +11,13 @@ public abstract class Menu {
         this.scanner = scanner;
     }
 
+    //RUN
     public abstract MenuType run();
 
+    //SCAN
+    public abstract HashMap<String, String> scanCommand(String command);
+
+    //PRINT
     public void printMessage(String message) {
         System.out.println(message);
     }

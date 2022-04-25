@@ -74,13 +74,6 @@ public class Tile{
         return 0;
     }
 
-    //returns if a unit on this tile can see through given tile
-    public boolean canSeeThrough(Tile tile) {
-        if (this.terrain == Terrain.HILL) return true;
-
-        return tile.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
-    }
-
     //GETTERS
     public int getxPlace() {
         return xPlace;
