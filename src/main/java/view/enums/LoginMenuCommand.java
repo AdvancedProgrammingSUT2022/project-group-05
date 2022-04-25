@@ -1,9 +1,9 @@
 package view.enums;
 
 public enum LoginMenuCommand{
-    USER_LOGIN("user\\s+login"), //USERNAME, PASSWORD
-    USER_CREATE("user\\s+create"), //USERNAME, PASSWORD, NICKNAME
-    MENU_SHOW_CURRENT("menu\\s+show-current");
+    USER_LOGIN("\\s*user\\s+login(?<entities>.*)"), //USERNAME, PASSWORD
+    USER_CREATE("\\s*user\\s+create(?<entities>.*)"), //USERNAME, PASSWORD, NICKNAME
+    MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)");
 
     private String regex;
 

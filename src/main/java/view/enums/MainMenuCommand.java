@@ -1,14 +1,15 @@
 package view.enums;
 
 public enum MainMenuCommand{
-    USER_LOGOUT("user\\s+logout"),
+    USER_LOGOUT("\\s*user\\s+logout(?<entities>.*)"),
 
     //TWO OR MORE USERS START THE GAME
-    PLAY_GAME("play\\s+game"), //USERNAME
+    PLAY_GAME("\\s*play\\s+game(?<entities>.*)"), //USERNAME
 
-    MENU_ENTER("menu\\s+enter"), //MENU_NAME
-    MENU_SHOW_CURRENT("menu\\s+show-current"),
-    MENU_EXIT("menu\\s+exit");
+    MENU_ENTER("\\s*menu\\s+enter(?<entities>.*)"), //MENU_NAME
+    MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)"),
+    MENU_EXIT("\\s*menu\\s+exit(?<entities>.*)"),
+    EXIT("\\s*exit(?<entities>.*)");
 
 
 
