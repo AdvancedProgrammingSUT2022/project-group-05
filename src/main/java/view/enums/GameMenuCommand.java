@@ -47,8 +47,17 @@ public enum GameMenuCommand{
     //MAP_SHOW also by CITY_NAME
     MAP_MOVE("map\\s+move"),//DIRECTION
 
+    //CHEAT CODES
+    INCREASE_TURN("increase\\s+-turn"), //AMOUNT
+    INCREASE_GOLD("increase\\s+-gold"), //AMOUNT
+
+
     //END OF TURN
-    END("end\\s+turn");
+    END("end\\s+turn"),
+    //SHOW CURRENT MENU
+    MENU_SHOW_CURRENT("menu\\s+show-current"),
+    //EXIT GAME MENU
+    MENU_EXIT("menu\\s+exit");
     //END OF ENUMS
 
 
