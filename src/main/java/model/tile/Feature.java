@@ -1,6 +1,6 @@
 package model.tile;
 
-public enum Feature {
+public enum Feature{
     PLAIN(2, 0, 0, -33, 1),
     FOREST(1, 0, 1, 25, 2),
     ICE(0, 0, 0, 0, 100),
@@ -9,18 +9,18 @@ public enum Feature {
     OASIS(3, 1, 0, -33, 1),
     NO_FEATURE(0, 0, 0, 0, 0);
 
-    final int foodBoost;
-    final int goldBoost;
-    final int productionBoost;
-    final int combatBoostPercentage;
+    final int foodIncrease;
+    final int goldIncrease;
+    final int productionIncrease;
+    final int combatPercentage;
     final int movementCost;
 
-    Feature(int foodBoost, int goldBoost, int productionBoost,
-            int combatBoostPercentage, int movementCost) {
-        this.foodBoost = foodBoost;
-        this.goldBoost = goldBoost;
-        this.productionBoost = productionBoost;
-        this.combatBoostPercentage = combatBoostPercentage;
+    Feature(int foodIncrease, int goldIncrease, int productionIncrease,
+            int combatPercentage, int movementCost) {
+        this.foodIncrease = foodIncrease;
+        this.goldIncrease = goldIncrease;
+        this.productionIncrease = productionIncrease;
+        this.combatPercentage = combatPercentage;
         this.movementCost = movementCost;
     }
 

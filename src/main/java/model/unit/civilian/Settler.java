@@ -1,5 +1,6 @@
 package model.unit.civilian;
 
+import model.game.City;
 import model.game.Civilization;
 import model.tile.Tile;
 import model.unit.Unit;
@@ -16,7 +17,7 @@ public class Settler extends Unit {
     }
 
     public void foundCity() {
-        //TODO
+        this.civilization.addCity(new City(this.tile, this.civilization));
     }
 
 }

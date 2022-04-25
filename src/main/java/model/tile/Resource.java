@@ -16,16 +16,16 @@ public enum Resource {
     final ResourceType resourceType;
     //final Technology neededTech;
 
-    final int foodBoost;
-    final int goldBoost;
-    final int productionBoost;
+    final int foodIncrease;
+    final int goldIncrease;
+    final int productionIncrease;
 
     Resource(ResourceType resourceType, //Technology neededTech,
-             int foodBoost, int goldBoost, int productionBoost) {
+             int foodIncrease, int goldIncrease, int productionIncrease) {
         this.resourceType = resourceType;
-        this.foodBoost = foodBoost;
-        this.goldBoost = goldBoost;
-        this.productionBoost = productionBoost;
+        this.foodIncrease = foodIncrease;
+        this.goldIncrease = goldIncrease;
+        this.productionIncrease = productionIncrease;
     }
 
     //checks if resource can appear in given terrain

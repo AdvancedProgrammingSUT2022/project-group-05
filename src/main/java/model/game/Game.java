@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private int civilizationCount;
-    private ArrayList<Civilization> civilizations;
+    private final int civilizationCount;
+    private final ArrayList<Civilization> civilizations;
 
     private Map map;
 
@@ -33,5 +33,5 @@ public class Game {
         instance = new Game(civilizationCount, players);
     }
 
-    //end of Static pattern definition
+    //end of Singleton pattern definition
 }
