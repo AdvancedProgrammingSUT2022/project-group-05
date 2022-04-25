@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Civilization {
+    private City capital;
     private ArrayList<City> cities;
     private ArrayList<Unit> units;
 
@@ -26,6 +27,7 @@ public class Civilization {
     public Civilization(City city, Unit unit, User player, int color, int turn) {
         this.cities = new ArrayList<>();
         this.cities.add(city);
+        this.capital = city;
 
         this.units = new ArrayList<>();
         this.units.add(unit);
@@ -69,6 +71,14 @@ public class Civilization {
         this.researchPoint = researchPoint;
     }
 
+    public void addCity(City city) {
+        this.cities.add(city);
+    }
+
+    public void removeCity(City city) {
+        this.cities.remove(city);
+    }
+
     //GETTERS
     public User getPlayer() {
         return player;
@@ -100,5 +110,9 @@ public class Civilization {
 
     public int getResearchPoint() {
         return researchPoint;
+    }
+
+    public Boolean hasCity(City city) {
+        return this.cities.contains(city);
     }
 }

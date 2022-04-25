@@ -1,9 +1,9 @@
-package model.unit.military.ranged.siege;
+package model.unit.soldier.ranged.siege;
 
 import model.game.Civilization;
 import model.tile.Tile;
 import model.unit.UnitState;
-import model.unit.military.ranged.Ranged;
+import model.unit.soldier.ranged.Ranged;
 
 public abstract class Siege extends Ranged {
     public Siege(Civilization civilization, Tile tile) {

@@ -1,4 +1,4 @@
-package model.unit.military.ranged;
+package model.unit.soldier.ranged;
 
 import model.game.Civilization;
 import model.tile.Tile;

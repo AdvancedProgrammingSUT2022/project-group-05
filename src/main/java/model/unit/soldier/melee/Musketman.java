@@ -1,4 +1,4 @@
-package model.unit.military.melee;
+package model.unit.soldier.melee;
 
 import model.game.Civilization;
 import model.tile.Tile;
