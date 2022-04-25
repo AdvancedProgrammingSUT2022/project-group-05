@@ -1,4 +1,4 @@
-package view;
+package view.menu;
 
 public enum MenuType {
     LOGIN,

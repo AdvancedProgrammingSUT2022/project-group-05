@@ -1,6 +1,7 @@
 package model.game;
 
 import model.User;
+import model.map.Map;
 
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ public class Game {
     private int civilizationCount;
     private ArrayList<Civilization> civilizations;
 
-    private HexBoard board;
+    private Map map;
 
     //Singleton pattern definition
     private static Game instance;

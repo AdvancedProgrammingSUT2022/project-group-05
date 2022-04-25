@@ -1,9 +1,9 @@
-package view;
+package view.menu;
 
 import java.util.Scanner;
 
-public class ProfileMenu extends Menu {
-    public ProfileMenu(Scanner scanner) {
+public class GameMenu extends Menu {
+    public GameMenu(Scanner scanner) {
         super(scanner);
     }
 

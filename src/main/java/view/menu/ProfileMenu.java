@@ -1,9 +1,9 @@
-package view;
+package view.menu;
 
 import java.util.Scanner;
 
-public class LoginMenu extends Menu {
-    public LoginMenu(Scanner scanner) {
+public class ProfileMenu extends Menu {
+    public ProfileMenu(Scanner scanner) {
         super(scanner);
     }
 

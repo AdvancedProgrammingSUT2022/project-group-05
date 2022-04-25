@@ -4,27 +4,30 @@ import model.tile.Tile;
 
 import java.util.ArrayList;
 
-public class Path {
+public class Path{
     private ArrayList<Tile> pathTiles;
 
     private int mpCost;
 
-    public Path () {
+    public Path() {
         this.pathTiles = new ArrayList<>();
     }
-    public Path (Path pathTemp, Tile lastTile) {
+
+    public Path(Path pathTemp, Tile lastTile) {
         this.pathTiles = new ArrayList<>(pathTemp.getPathTiles());
         this.mpCost = pathTemp.getMpCost();
         this.mpCost += lastTile.movePointsNeededToEnterFrom(this.getLastTile());
         this.pathTiles.add(lastTile);
     }
-    public Path (Tile firstTile, Path pathTemp) {
+
+    public Path(Tile firstTile, Path pathTemp) {
         this.pathTiles = new ArrayList<>(pathTemp.getPathTiles());
         this.mpCost = pathTemp.getMpCost();
         this.mpCost += this.getLastTile().movePointsNeededToEnterFrom(firstTile);
         this.pathTiles.add(0, firstTile);
     }
-    public Path (Path startPath, Path endPath) {
+
+    public Path(Path startPath, Path endPath) {
         this.pathTiles = new ArrayList<>(startPath.getPathTiles());
         this.pathTiles.addAll(endPath.getPathTiles());
         this.mpCost = startPath.getMpCost() + endPath.getMpCost();
@@ -41,19 +44,19 @@ public class Path {
     }
 
     //GETTING START AND END OF PATH : null if no tile in map
-    public Tile getFirstTile () {
-        if(this.getPathLength() == 0) return null;
+    public Tile getFirstTile() {
+        if (this.getPathLength() == 0) return null;
         return this.pathTiles.get(0);
     }
-    public Tile getLastTile () {
-        if(this.getPathLength() == 0) return null;
+
+    public Tile getLastTile() {
+        if (this.getPathLength() == 0) return null;
         return this.pathTiles.get(this.getPathLength() - 1);
     }
 
 
-
     //OTHER FUNCTIONS
-    public int getPathLength () {
+    public int getPathLength() {
         return this.pathTiles.size();
     }
 }
