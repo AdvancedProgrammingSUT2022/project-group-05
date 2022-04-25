@@ -12,7 +12,8 @@ public enum Entity{
     POSITION(""),
     MENU_NAME(""),
     CITY_NAME(""),
-    DIRECTION("");
+    DIRECTION(""),
+    BUILDING("");
 
     private String regex;
 
