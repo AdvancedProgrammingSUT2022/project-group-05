@@ -34,14 +34,14 @@ public enum ProfileMenuCommand{
         }
     }
 
-    public HashMap<String, String> getHashMap(String input, ProfileMenuCommand command) {
+    public static HashMap<String, String> getHashMap(String input, ProfileMenuCommand command) {
         Matcher matcher = patterns.get(command).matcher(input);
         if (!matcher.matches()) return null;
 
         HashMap<String, String> result = extractEntities(input);
         if (result == null) return null;
 
-        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), requiredKeys)) return null;
+        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }

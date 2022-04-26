@@ -61,9 +61,8 @@ public enum GameMenuCommand{
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
 
-
     //END OF TURN
-    END("\\s*end\\s+turn(?<entities>.*)", List.of()),
+    END_TURN("\\s*end\\s+turn(?<entities>.*)", List.of()),
     //SHOW CURRENT MENU
     MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)", List.of()),
     //EXIT GAME MENU
@@ -88,14 +87,14 @@ public enum GameMenuCommand{
         }
     }
 
-    public HashMap<String, String> getHashMap(String input, GameMenuCommand command) {
+    public static HashMap<String, String> getHashMap(String input, GameMenuCommand command) {
         Matcher matcher = patterns.get(command).matcher(input);
         if (!matcher.matches()) return null;
 
         HashMap<String, String> result = extractEntities(input);
         if (result == null) return null;
 
-        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), requiredKeys)) return null;
+        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }

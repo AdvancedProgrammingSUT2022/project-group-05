@@ -14,9 +14,10 @@ public enum MainMenuCommand{
     USER_LOGOUT("\\s*user\\s+logout(?<entities>.*)", List.of()),
 
     //TWO OR MORE USERS START THE GAME
-    PLAY_GAME("\\s*play\\s+game(?<entities>.*)", List.of()), //TODO... getting multiple players
+    PLAY_GAME("\\s*play\\s+game(?<entities>.*)", List.of(PLAYER.getKey())),
 
-    MENU_ENTER("\\s*menu\\s+enter(?<entities>.*)", List.of(MENU_NAME.getKey())), //MENU_NAME
+    SHOW_PROFILE("\\s*show\\s+profile(?<entities>.*)", List.of()),
+
     MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)", List.of()),
     MENU_EXIT("\\s*menu\\s+exit(?<entities>.*)", List.of()),
     EXIT("\\s*exit(?<entities>.*)", List.of());
@@ -25,8 +26,7 @@ public enum MainMenuCommand{
     private final ArrayList<String> requiredKeys;
     private final static HashMap<MainMenuCommand, Pattern> patterns;
 
-    MainMenuCommand (String regex, List<String> requiredKeys)
-    {
+    MainMenuCommand(String regex, List<String> requiredKeys) {
         this.regex = regex;
         this.requiredKeys = new ArrayList<>(requiredKeys);
     }
@@ -38,14 +38,18 @@ public enum MainMenuCommand{
         }
     }
 
-    public HashMap<String, String> getHashMap(String input, MainMenuCommand command) {
+    public static HashMap<String, String> getHashMap(String input, MainMenuCommand command) {
         Matcher matcher = patterns.get(command).matcher(input);
         if (!matcher.matches()) return null;
 
         HashMap<String, String> result = extractEntities(input);
         if (result == null) return null;
 
-        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), requiredKeys)) return null;
+        if (command == PLAY_GAME) {
+            for (String key : result.keySet()) {
+                if (!key.matches("player[1-9]\\d*")) return null;
+            }
+        } else if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }

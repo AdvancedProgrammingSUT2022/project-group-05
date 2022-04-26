@@ -14,9 +14,6 @@ public abstract class Menu {
     //RUN
     public abstract MenuType run();
 
-    //SCAN
-    public abstract HashMap<String, String> scanCommand(String command);
-
     //PRINT
     public void printMessage(String message) {
         System.out.println(message);

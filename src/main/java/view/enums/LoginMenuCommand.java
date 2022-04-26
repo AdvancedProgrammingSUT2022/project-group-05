@@ -13,7 +13,8 @@ import static view.enums.Entity.*;
 public enum LoginMenuCommand{
     USER_LOGIN("\\s*user\\s+login(?<entities>.*)", List.of(USERNAME.getKey(), PASSWORD.getKey())),
     USER_CREATE("\\s*user\\s+create(?<entities>.*)", List.of(USERNAME.getKey(), PASSWORD.getKey(), NICKNAME.getKey())),
-    MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)", List.of());
+    MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)", List.of()),
+    EXIT("\\s*exit(?<entities>.*)", List.of());
 
     private final String regex;
     private final ArrayList<String> requiredKeys;
@@ -32,14 +33,14 @@ public enum LoginMenuCommand{
         }
     }
 
-    public HashMap<String, String> getHashMap(String input, LoginMenuCommand command) {
+    public static HashMap<String, String> getHashMap(String input, LoginMenuCommand command) {
         Matcher matcher = patterns.get(command).matcher(input);
         if (!matcher.matches()) return null;
 
         HashMap<String, String> result = extractEntities(input);
         if (result == null) return null;
 
-        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), requiredKeys)) return null;
+        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }
