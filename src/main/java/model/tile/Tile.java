@@ -14,11 +14,10 @@ public class Tile{
     private final int fromTop;
 
     private final int ID;
-    private final String name;
 
-    private final Terrain terrain;
-    private final Feature feature;
-    private final Resource resource;
+    private Terrain terrain;
+    private Feature feature;
+    private Resource resource;
     private City city; //This tile belongs to city
     private Unit unit;
     private boolean hasCitizen;
@@ -32,11 +31,10 @@ public class Tile{
     private int combatBoost;
     private int movementCost;
 
-    public Tile(int ID, String name,
+    public Tile(int ID,
                 Terrain terrain, Feature feature, Resource resource,
                 int xPlace, int yPlace, int zPlace, int fromLeft, int fromTop) {
         this.ID = ID;
-        this.name = name;
 
         this.city = null;
         this.unit = null;
@@ -53,7 +51,7 @@ public class Tile{
         this.resource = resource;
     }
 
-    public void assignCitizen() {
+    public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() - 1);
         this.hasCitizen = true;
 
@@ -135,19 +133,19 @@ public class Tile{
         return this.hasCitizen;
     }
 
-    public int getfood() {
+    public int getFood() {
         return this.food;
     }
 
-    public int getgold() {
+    public int getGold() {
         return this.gold;
     }
 
-    public int getproduction() {
+    public int getProduction() {
         return this.production;
     }
 
-    public int getcombatBoost() {
+    public int getCombatBoost() {
         return this.combatBoost;
     }
 
@@ -162,6 +160,18 @@ public class Tile{
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
+    }
+
+    public void setFeature(Feature feature) {
+        this.feature = feature;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public void setHasCitizen(boolean hasCitizen) {
