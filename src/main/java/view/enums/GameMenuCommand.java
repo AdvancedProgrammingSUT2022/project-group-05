@@ -71,9 +71,6 @@ public enum GameMenuCommand{
     //EXIT
     EXIT("\\s*exit(?<entities>.*)", List.of());
 
-    //END OF ENUMS
-
-
     private final String regex;
     private final ArrayList<String> requiredKeys;
     private final static HashMap<GameMenuCommand, Pattern> patterns;
