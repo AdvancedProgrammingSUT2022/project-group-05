@@ -1,6 +1,5 @@
 package model.map;
 
-import model.tile.Feature;
 import model.tile.Tile;
 
 public class ColorChar {
@@ -15,6 +14,8 @@ public class ColorChar {
         WIDTH = 4 * ZARIBMAP - 1;
         HEIGHT = 2 * ZARIBMAP;
     }
+
+
     //RESET
     private static final String RESET = "\u001B[0m";
     //TEXT COLORS
@@ -40,6 +41,12 @@ public class ColorChar {
     private String textColor;
     private char text;
 
+    public ColorChar () {
+        this.backgroundColor = "";
+        this.textColor = "";
+        this.text = ' ';
+    }
+
     //GETTERS
 
     //SETTERS
@@ -61,27 +68,31 @@ public class ColorChar {
         return backgroundColor+textColor+text+RESET;
     }
 
+
+
     //CREATING PRINT PATTERN BY MAP
     public static ColorChar[][] mapConsoleOutputCreator (Map gameMap) {
         int mapSize = gameMap.getSizeOfMap();
         int printH = ColorChar.ZARIBMAP * (mapSize-1) + 2 * ColorChar.TODOWN;
         int printW = ColorChar.ZARIBMAP * 3 * (mapSize-1) + 2 * ColorChar.TOLEFT;
         ColorChar[][] output = new ColorChar[printH][printW];
-        coloringBackground(gameMap, output);
-        //TODO color other things
+        coloringTiles(gameMap, output);
         return output;
     }
 
-    //COLORING TILES BACKGROUNDS
-    private static void coloringBackground (Map gameMap, ColorChar[][] input) {
+    //Coloring for each tile
+    private static void coloringTiles(Map gameMap, ColorChar[][] input) {
         int mapSize = gameMap.getSizeOfMap();
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
                 Tile tempTile = gameMap.getTileFromMap(i, j);
                 coloringTileBackground(tempTile, input);
+                addingTexts(tempTile, input);
             }
         }
     }
+
+    //COLORING TILES BACKGROUNDS
     private static void coloringTileBackground (Tile tempTile, ColorChar[][] input) {
         int fromL = ColorChar.getFromLeft(tempTile);
         int fromT = ColorChar.getFromTop(tempTile);
@@ -97,6 +108,21 @@ public class ColorChar {
         //TODO .. get tile feature String and change it to colors above
         return "HELLO";
     }
+
+    //ADDING TEXT
+    private static void addingTexts (Tile tempTile, ColorChar[][] input) {
+        int fromL = ColorChar.getFromLeft(tempTile);
+        int fromT = ColorChar.getFromTop(tempTile);
+        //TODO.. ADD CENTER TEXT ALL TILES DATAs
+    }
+    private static void addCenteredText (String text, ColorChar[][] input, int fromT, int fromL) {
+        int size = text.length();
+
+        for (int i = 0; i < size; i++) {
+            input[fromT][fromL - size/2 + i].setText(text.charAt(i));
+        }
+    }
+
 
     //TILES PLACE
     private static int getFromTop(Tile tile) {
