@@ -9,18 +9,18 @@ public enum Feature{
     OASIS(3, 1, 0, -33, 1),
     NO_FEATURE(0, 0, 0, 0, 0);
 
-    final int foodIncrease;
-    final int goldIncrease;
-    final int productionIncrease;
-    final int combatPercentage;
+    final int food;
+    final int gold;
+    final int production;
+    final int combatBoost;
     final int movementCost;
 
-    Feature(int foodIncrease, int goldIncrease, int productionIncrease,
-            int combatPercentage, int movementCost) {
-        this.foodIncrease = foodIncrease;
-        this.goldIncrease = goldIncrease;
-        this.productionIncrease = productionIncrease;
-        this.combatPercentage = combatPercentage;
+    Feature(int food, int gold, int production,
+            int combatBoost, int movementCost) {
+        this.food = food;
+        this.gold = gold;
+        this.production = production;
+        this.combatBoost = combatBoost;
         this.movementCost = movementCost;
     }
 

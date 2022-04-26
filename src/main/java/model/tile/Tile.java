@@ -14,6 +14,7 @@ public class Tile{
     private final int fromTop;
 
     private final int ID;
+    private final String name;
 
     private final Terrain terrain;
     private final Feature feature;
@@ -25,15 +26,20 @@ public class Tile{
     //TODO... Implement improvements
     //private Improvement improvement
 
-    private int foodIncrease;
-    private int goldIncrease;
-    private int productionIncrease;
-    private final int combatPercentage;
+    private int food;
+    private int gold;
+    private int production;
+    private int combatBoost;
     private int movementCost;
 
-    public Tile(int xPlace, int yPlace, int zPlace, int ID, int fromLeft, int fromTop,
-                Terrain terrain, Feature feature, Resource resource) {
+    public Tile(int ID, String name,
+                Terrain terrain, Feature feature, Resource resource,
+                int xPlace, int yPlace, int zPlace, int fromLeft, int fromTop) {
+        this.ID = ID;
+        this.name = name;
+
         this.city = null;
+        this.unit = null;
 
         this.xPlace = xPlace;
         this.yPlace = yPlace;
@@ -42,37 +48,27 @@ public class Tile{
         this.fromLeft = fromLeft;
         this.fromTop = fromTop;
 
-        this.ID = ID;
-
         this.terrain = terrain;
         this.feature = feature;
         this.resource = resource;
-
-        this.foodIncrease = terrain.foodIncrease + feature.foodIncrease;
-        this.goldIncrease = terrain.goldIncrease + feature.foodIncrease;
-        this.productionIncrease = terrain.productionIncrease + feature.productionIncrease;
-        this.combatPercentage = terrain.combatPercentage + feature.combatPercentage;
-        this.movementCost = terrain.movementCost + feature.movementCost;
-
-        this.unit = null;
     }
 
     public void assignCitizen() {
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() - 1);
         this.hasCitizen = true;
 
-        this.foodIncrease += resource.foodIncrease;
-        this.goldIncrease += resource.goldIncrease;
-        this.productionIncrease += resource.productionIncrease;
+        this.food += resource.food;
+        this.gold += resource.gold;
+        this.production += resource.production;
     }
 
     public void removeCitizen() {
         this.hasCitizen = false;
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() + 1);
 
-        this.foodIncrease -= resource.foodIncrease;
-        this.goldIncrease -= resource.goldIncrease;
-        this.productionIncrease -= resource.productionIncrease;
+        this.food -= resource.food;
+        this.gold -= resource.gold;
+        this.production -= resource.production;
     }
 
     public boolean hasCity() {
@@ -139,20 +135,20 @@ public class Tile{
         return this.hasCitizen;
     }
 
-    public int getFoodIncrease() {
-        return this.foodIncrease;
+    public int getfood() {
+        return this.food;
     }
 
-    public int getGoldIncrease() {
-        return this.goldIncrease;
+    public int getgold() {
+        return this.gold;
     }
 
-    public int getProductionIncrease() {
-        return this.productionIncrease;
+    public int getproduction() {
+        return this.production;
     }
 
-    public int getCombatPercentage() {
-        return this.combatPercentage;
+    public int getcombatBoost() {
+        return this.combatBoost;
     }
 
     public int getMovementCost() {
