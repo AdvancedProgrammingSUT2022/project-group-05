@@ -11,7 +11,7 @@ public abstract class Siege extends Ranged {
     }
 
     public void setup() { //changes State to set for siege
-
+        unitState = UnitState.SET_FOR_SIEGE;
     }
 
     public boolean isSetup() { //checks if siege unit is ready for attack

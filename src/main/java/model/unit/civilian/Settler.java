@@ -13,11 +13,11 @@ public class Settler extends Unit {
         this.meleeStrength = 0;
         this.rangedStrength = 0;
         this.maxMovement = 2;
-        this.remainingMovement = 0;
     }
 
     public void foundCity() {
         this.civilization.addCity(new City(this.tile, this.civilization));
     }
+
 
 }

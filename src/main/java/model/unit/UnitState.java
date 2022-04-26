@@ -6,11 +6,12 @@ public enum UnitState {
     ASLEEP,
     ALERTED,
     FORTIFIED,
+    STRENGTHENING,
     RECOVERING,
 
     GARRISONED,
 
     SET_FOR_SIEGE,
 
-    DONE
+    NOTHING
 }
