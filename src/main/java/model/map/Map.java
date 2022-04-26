@@ -3,6 +3,8 @@ package model.map;
 import model.tile.Tile;
 import model.unit.Unit;
 
+import java.util.HashMap;
+
 public class Map {
     private final int sizeOfMap;
     private Tile[][] gameMap;
@@ -88,14 +90,50 @@ public class Map {
 
     //FINDING PATH WITH MINIMUM MP NEEDED : return null if no path exists
     public Path bestPathFinder (Tile start, Tile end, int pathLengthCab) {
-        if (findDistance(start, end) < pathLengthCab) return null;
-        Tile[] neighbors = findNeighbors(start);
-        //TODO... back track in neighbor tiles
-        return new Path();
+        HashMap<Integer[], Path> pathsMap = new HashMap<>();
+        return bestPathFindersBacktrack(start, end, pathLengthCab, pathsMap);
     }
     // can't handle wrong input
     public Path bestPathFinder (int startXPlace, int startYPlace, int endXPlace, int endYPlace, int pathSizeCab) {
         return bestPathFinder(gameMap[startXPlace][startYPlace], gameMap[endXPlace][endYPlace], pathSizeCab);
+    }
+    private Path bestPathFindersBacktrack (Tile start, Tile end, int pathLengthCab, HashMap<Integer[], Path> pathsMap) {
+        if (findDistance(start, end) < pathLengthCab) return null;
+        Tile[] neighbors = findNeighbors(start);
+        Path[] pathsFinded = new Path[6];
+        //Finding paths from neighbors to end
+        for (int i = 0; i < 6; i++) {
+            if(neighbors[i] == null) {
+                pathsFinded[i] = null;
+                continue;
+            }
+
+            Integer[] keySet = {neighbors[i].getID(),end.getID(),pathLengthCab};
+            if (pathsMap.containsKey(keySet)) {
+                pathsFinded[i] = pathsMap.get(keySet);
+            }
+            else {
+                pathsFinded[i] = bestPathFindersBacktrack(neighbors[i], end, pathLengthCab-1, pathsMap);
+                pathsMap.put(keySet, pathsFinded[i]);
+            }
+        }
+        //creating paths from start to neighbor and then to end
+        for (int i = 0; i < 6; i++) {
+            if(pathsFinded[i] == null) continue;
+            pathsFinded[i] = new Path(start, pathsFinded[i]);
+        }
+        //finding the path with minimum mp
+        int minMP = 100;
+        int minMPIndex = 0;
+        for (int i = 0; i < 6; i++) {
+            if(pathsFinded[i] == null) continue;
+            if(minMP > pathsFinded[i].getMpCost()) {
+                minMP = pathsFinded[i].getMpCost();
+                minMPIndex = i;
+            }
+        }
+        //returning minimum value
+        return pathsFinded[minMPIndex];
     }
 
 

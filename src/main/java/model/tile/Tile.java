@@ -3,10 +3,13 @@ package model.tile;
 import model.game.City;
 import model.unit.Unit;
 
+import java.sql.RowIdLifetime;
+
 public class Tile{
     private final int xPlace;
     private final int yPlace;
     private final int zPlace;
+    private final int ID;
     private final Terrain terrain;
     private final Feature feature;
     private final Resource resource;
@@ -23,12 +26,14 @@ public class Tile{
     private final int combatPercentage;
     private int movementCost;
 
-    public Tile(int xPlace, int yPlace, int zPlace, Terrain terrain, Feature feature, Resource resource) {
+    public Tile(int xPlace, int yPlace, int zPlace, int ID, Terrain terrain, Feature feature, Resource resource) {
         this.city = null;
 
         this.xPlace = xPlace;
         this.yPlace = yPlace;
         this.zPlace = zPlace;
+        this.ID = ID;
+
         this.terrain = terrain;
         this.feature = feature;
         this.resource = resource;
@@ -92,6 +97,10 @@ public class Tile{
 
     public int getzPlace() {
         return zPlace;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public City getCity() {
