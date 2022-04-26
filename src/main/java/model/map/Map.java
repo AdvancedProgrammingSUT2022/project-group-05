@@ -53,7 +53,7 @@ public class Map {
     }
 
     private int fromLeftFinder (int xPlace, int yPlace, int mapSize) {
-        return xPlace + yPlace;
+        return 3 * (xPlace + yPlace);
     }
     private int fromTopFinder (int xPlace, int yPlace, int mapSize) {
         return yPlace - xPlace + mapSize - 1;
