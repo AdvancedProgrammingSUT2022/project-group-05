@@ -72,7 +72,8 @@ public class UserDatabaseController {
         }
     }
 
-    public void changeNickname(String username, String newNickname) {
+    public void changeNickname(String username, HashMap<String, String> command) { // this method needs player username
+        String newNickname = command.get("nickname");
         ArrayList<HashMap<String, String>> users = this.loadDatabase();
         int index;
         if ((index = getUserIndexByNickname(newNickname)) != -1) {
@@ -86,7 +87,9 @@ public class UserDatabaseController {
         this.updateDatabase(users);
     }
 
-    public void changePassword(String username, String oldPassword, String newPassword) {
+    public void changePassword(String username, HashMap<String, String> command) { // this method needs player username
+        String oldPassword = command.get("old-password");
+        String newPassword = command.get("new-password");
         ArrayList<HashMap<String, String>> users = this.loadDatabase();
         int index = getUserIndexByUsername(username);
         if (index == -1) {
