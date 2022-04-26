@@ -46,10 +46,17 @@ public class Map {
 
 
 
-    //ETC
 
+    //MAP CREATOR FUNCTIONS
     private void mapCreator (int sizeOfMap) {
-        //TODO... creating random tile creator
+        //TODO... creating random tile creator/ USE fromleft and from top finder for tiles
+    }
+
+    private int fromLeftFinder (int xPlace, int yPlace, int mapSize) {
+        return xPlace + yPlace;
+    }
+    private int fromTopFinder (int xPlace, int yPlace, int mapSize) {
+        return yPlace - xPlace + mapSize - 1;
     }
 
 
@@ -67,6 +74,8 @@ public class Map {
         if (start == null || end == null) return -1;
         return findDistance(start, end);
     }
+
+
 
     //RETURNS ARRAY OF TILES NEIGHBORS : up as 0, up right as 1 , ... , up left as 5, null if no neighbor or wrong x,y
     private Tile[] findNeighbors (int xPlace, int yPlace) {
@@ -87,6 +96,8 @@ public class Map {
         int yTemp = center.getyPlace();
         return findNeighbors(xTemp, yTemp);
     }
+
+
 
     //FINDING PATH WITH MINIMUM MP NEEDED : return null if no path exists
     public Path bestPathFinder (Tile start, Tile end, int pathLengthCab) {
@@ -135,6 +146,8 @@ public class Map {
         //returning minimum value
         return pathsFinded[minMPIndex];
     }
+
+
 
 
     //

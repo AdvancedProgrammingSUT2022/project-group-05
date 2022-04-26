@@ -9,7 +9,12 @@ public class Tile{
     private final int xPlace;
     private final int yPlace;
     private final int zPlace;
+    //place of tile in MAP
+    private final int fromLeft;
+    private final int fromTop;
+
     private final int ID;
+
     private final Terrain terrain;
     private final Feature feature;
     private final Resource resource;
@@ -26,12 +31,17 @@ public class Tile{
     private final int combatPercentage;
     private int movementCost;
 
-    public Tile(int xPlace, int yPlace, int zPlace, int ID, Terrain terrain, Feature feature, Resource resource) {
+    public Tile(int xPlace, int yPlace, int zPlace, int ID, int fromLeft, int fromTop,
+                Terrain terrain, Feature feature, Resource resource) {
         this.city = null;
 
         this.xPlace = xPlace;
         this.yPlace = yPlace;
         this.zPlace = zPlace;
+
+        this.fromLeft = fromLeft;
+        this.fromTop = fromTop;
+
         this.ID = ID;
 
         this.terrain = terrain;
@@ -92,9 +102,18 @@ public class Tile{
         return zPlace;
     }
 
+    public int getFromLeft() {
+        return fromLeft;
+    }
+
+    public int getFromTop() {
+        return fromTop;
+    }
+
     public int getID() {
         return ID;
     }
+
 
     public City getCity() {
         return this.city;
