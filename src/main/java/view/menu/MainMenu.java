@@ -1,6 +1,9 @@
 package view.menu;
 
+import java.util.HashMap;
 import java.util.Scanner;
+
+import static view.enums.MainMenuCommand.*;
 
 public class MainMenu extends Menu {
     public MainMenu(Scanner scanner) {
@@ -9,6 +12,32 @@ public class MainMenu extends Menu {
 
     @Override
     public MenuType run() {
-        return MenuType.EXIT;
+        String input;
+        HashMap<String, String> command;
+
+        printMessage("__MAIN MENU__");
+
+        while (true) {
+            input = scanner.nextLine();
+
+            if ((command = getHashMap(input, EXIT)) != null)
+                return MenuType.EXIT;
+            else if ((command = getHashMap(input, MENU_EXIT)) != null) {
+                printMessage(""); //TODO... add controller function
+                return MenuType.LOGIN;
+            }
+            else if ((command = getHashMap(input, MENU_SHOW_CURRENT)) != null)
+                printMessage("main menu");
+            else if ((command = getHashMap(input, SHOW_PROFILE)) != null) {
+                printMessage(""); //TODO... add controller function
+                return MenuType.PROFILE;
+            }
+            else if ((command = getHashMap(input, PLAY_GAME)) != null) {
+                printMessage(""); //TODO... add controller function
+                return MenuType.GAME;
+            }
+            else
+                printMessage("error: invalid command");
+        }
     }
 }
