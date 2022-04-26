@@ -163,4 +163,13 @@ public class Tile{
                this.getyPlace() == tile.getyPlace() &&
                this.getzPlace() == tile.getzPlace();
     }
+
+    public void removeUnit() {
+        this.unit = null;
+    }
+
+    public boolean canSeeThrough(Tile tile) {
+        //TODO..
+        return false;
+    }
 }

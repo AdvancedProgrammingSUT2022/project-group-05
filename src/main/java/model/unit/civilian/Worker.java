@@ -11,6 +11,7 @@ public class Worker extends Unit {
         this.cost = 70;
         this.meleeStrength = 0;
         this.rangedStrength = 0;
+        this.maxAttackRange = 0;
         this.maxMovement = 2;
     }
     public void addImprovement() { //Tells a worker to add improvement on current tile

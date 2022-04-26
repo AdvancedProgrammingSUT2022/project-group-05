@@ -59,11 +59,24 @@ public abstract class Unit {
     }
 
     public void garrison() { //garrisons the unit if on a city tile
-        this.unitState = UnitState.FORTIFIED;
+        this.unitState = UnitState.GARRISONED;
+    }
+
+    public void pillaging() { // pillage a tile
+        this.unitState = UnitState.PILLAGING;
+    }
+
+    public void makingCity() { // only works for settler
+        this.unitState = UnitState.MAKING_CITY;
     }
 
     public void cancel() { //cancels the last order in unit command query?? WTH... check game.pdf page 21
         this.unitState = UnitState.NOTHING;
+    }
+
+    public void delete() {
+        civilization.removeUnit(this);
+        tile.removeUnit();
     }
 
     public int getAttackStrength() {
@@ -76,7 +89,8 @@ public abstract class Unit {
 
     protected int boost(int initialStrength) { //boosts initial Strength based on current tile stats
         //TODO...
-        return 0;
+        int combatPercentage = this.tile.getCombatPercentage();
+        return initialStrength + (initialStrength * combatPercentage) / 100;
     }
 
     public void initializeRemainingMovement() {
@@ -93,5 +107,9 @@ public abstract class Unit {
 
     public int getRemainingMovement() {
         return remainingMovement;
+    }
+
+    public Civilization getCivilization() {
+        return civilization;
     }
 }

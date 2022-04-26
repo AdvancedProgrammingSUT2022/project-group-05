@@ -115,4 +115,12 @@ public class Civilization {
     public Boolean hasCity(City city) {
         return this.cities.contains(city);
     }
+
+    public void removeUnit(Unit unit) {
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).equals(unit)) {
+                units.remove(i);
+            }
+        }
+    }
 }

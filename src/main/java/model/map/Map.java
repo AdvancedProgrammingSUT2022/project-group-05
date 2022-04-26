@@ -54,7 +54,7 @@ public class Map {
 
 
     //FIND DISTANCE OF TWO TILES : returns -1 if tile not exits
-    public int findDistance (Tile start, Tile end) {
+    public static int findDistance (Tile start, Tile end) {
         int xDistance = Math.abs(start.getxPlace() - end.getxPlace());
         int yDistance = Math.abs(start.getyPlace() - end.getyPlace());
         int zDistance = Math.abs(start.getzPlace() - end.getzPlace());
