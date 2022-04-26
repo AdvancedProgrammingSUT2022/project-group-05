@@ -15,9 +15,9 @@ public class Tile{
 
     private final int ID;
 
-    private final Terrain terrain;
-    private final Feature feature;
-    private final Resource resource;
+    private Terrain terrain;
+    private Feature feature;
+    private Resource resource;
     private City city; //This tile belongs to city
     private Unit unit;
     private boolean hasCitizen;
@@ -25,15 +25,19 @@ public class Tile{
     //TODO... Implement improvements
     //private Improvement improvement
 
-    private int foodIncrease;
-    private int goldIncrease;
-    private int productionIncrease;
-    private final int combatPercentage;
+    private int food;
+    private int gold;
+    private int production;
+    private int combatBoost;
     private int movementCost;
 
-    public Tile(int xPlace, int yPlace, int zPlace, int ID, int fromLeft, int fromTop,
-                Terrain terrain, Feature feature, Resource resource) {
+    public Tile(int ID,
+                Terrain terrain, Feature feature, Resource resource,
+                int xPlace, int yPlace, int zPlace, int fromLeft, int fromTop) {
+        this.ID = ID;
+
         this.city = null;
+        this.unit = null;
 
         this.xPlace = xPlace;
         this.yPlace = yPlace;
@@ -42,37 +46,27 @@ public class Tile{
         this.fromLeft = fromLeft;
         this.fromTop = fromTop;
 
-        this.ID = ID;
-
         this.terrain = terrain;
         this.feature = feature;
         this.resource = resource;
-
-        this.foodIncrease = terrain.foodIncrease + feature.foodIncrease;
-        this.goldIncrease = terrain.goldIncrease + feature.foodIncrease;
-        this.productionIncrease = terrain.productionIncrease + feature.productionIncrease;
-        this.combatPercentage = terrain.combatPercentage + feature.combatPercentage;
-        this.movementCost = terrain.movementCost + feature.movementCost;
-
-        this.unit = null;
     }
 
-    public void assignCitizen() {
+    public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() - 1);
         this.hasCitizen = true;
 
-        this.foodIncrease += resource.foodIncrease;
-        this.goldIncrease += resource.goldIncrease;
-        this.productionIncrease += resource.productionIncrease;
+        this.food += resource.food;
+        this.gold += resource.gold;
+        this.production += resource.production;
     }
 
     public void removeCitizen() {
         this.hasCitizen = false;
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() + 1);
 
-        this.foodIncrease -= resource.foodIncrease;
-        this.goldIncrease -= resource.goldIncrease;
-        this.productionIncrease -= resource.productionIncrease;
+        this.food -= resource.food;
+        this.gold -= resource.gold;
+        this.production -= resource.production;
     }
 
     public boolean hasCity() {
@@ -139,20 +133,20 @@ public class Tile{
         return this.hasCitizen;
     }
 
-    public int getFoodIncrease() {
-        return this.foodIncrease;
+    public int getFood() {
+        return this.food;
     }
 
-    public int getGoldIncrease() {
-        return this.goldIncrease;
+    public int getGold() {
+        return this.gold;
     }
 
-    public int getProductionIncrease() {
-        return this.productionIncrease;
+    public int getProduction() {
+        return this.production;
     }
 
-    public int getCombatPercentage() {
-        return this.combatPercentage;
+    public int getCombatBoost() {
+        return this.combatBoost;
     }
 
     public int getMovementCost() {
@@ -166,6 +160,18 @@ public class Tile{
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
+    }
+
+    public void setFeature(Feature feature) {
+        this.feature = feature;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public void setHasCitizen(boolean hasCitizen) {

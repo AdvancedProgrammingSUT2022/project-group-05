@@ -1,33 +1,47 @@
 package model.tile;
 
-public enum Feature{
-    PLAIN(2, 0, 0, -33, 1),
-    FOREST(1, 0, 1, 25, 2),
-    ICE(0, 0, 0, 0, 100),
-    JUNGLE(1, 0, -1, 25, 2),
-    SWAMP(-1, 0, 0, -33, 2),
-    OASIS(3, 1, 0, -33, 1),
-    NO_FEATURE(0, 0, 0, 0, 0);
+import java.util.ArrayList;
+import java.util.List;
 
-    final int foodIncrease;
-    final int goldIncrease;
-    final int productionIncrease;
-    final int combatPercentage;
+public enum Feature{
+    PLAIN(2, 0, 0, -33, 1,
+            List.of(Terrain.DESERT, Terrain.FIELD, Terrain.GRASS, Terrain.SNOW, Terrain.TUNDRA)
+    ),
+    FOREST(1, 0, 1, 25, 2,
+            List.of(Terrain.DESERT, Terrain.FIELD, Terrain.GRASS, Terrain.SNOW, Terrain.TUNDRA)
+    ),
+    ICE(0, 0, 0, 0, 100,
+            List.of(Terrain.OCEAN)
+    ),
+    JUNGLE(1, 0, -1, 25, 2,
+            List.of(Terrain.FIELD, Terrain.GRASS, Terrain.SNOW, Terrain.TUNDRA)
+    ),
+    MARSH(-1, 0, 0, -33, 2,
+            List.of(Terrain.FIELD, Terrain.GRASS, Terrain.TUNDRA)
+    ),
+    OASIS(3, 1, 0, -33, 1,
+            List.of(Terrain.DESERT)
+    ),
+    NO_FEATURE(0, 0, 0, 0, 0,
+            List.of()
+    );
+
+    final int food;
+    final int gold;
+    final int production;
+    final int combatBoost;
     final int movementCost;
 
-    Feature(int foodIncrease, int goldIncrease, int productionIncrease,
-            int combatPercentage, int movementCost) {
-        this.foodIncrease = foodIncrease;
-        this.goldIncrease = goldIncrease;
-        this.productionIncrease = productionIncrease;
-        this.combatPercentage = combatPercentage;
-        this.movementCost = movementCost;
-    }
+    final ArrayList<Terrain> compatibleTerrains;
 
-    public boolean matchesTerrain(Terrain terrain) {
-        //TODO... Complete matching terrains and features
-        if (this == OASIS) return terrain == Terrain.DESERT;
-        if (this == ICE) return terrain == Terrain.SNOW || terrain == Terrain.TUNDRA;
-        return true;
+    Feature(int food, int gold, int production, int combatBoost, int movementCost,
+            List<Terrain> compatibleTerrains) {
+        this.food = food;
+        this.gold = gold;
+        this.production = production;
+        this.combatBoost = combatBoost;
+        this.movementCost = movementCost;
+
+        this.compatibleTerrains = new ArrayList<>(compatibleTerrains);
     }
 }
