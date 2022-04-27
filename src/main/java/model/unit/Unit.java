@@ -2,6 +2,8 @@ package model.unit;
 
 import model.game.Civilization;
 import model.tile.Tile;
+import model.unit.civilian.Civilian;
+import model.unit.soldier.Soldier;
 
 public abstract class Unit {
     protected Civilization civilization;
@@ -50,8 +52,8 @@ public abstract class Unit {
         this.unitState = UnitState.ALERTED;
     }
 
-    public void strengthening() { //sets unit to strengthening state to increase meleeStrength
-        this.unitState = UnitState.STRENGTHENING;
+    public void fortify() { //sets unit to strengthening state to increase meleeStrength
+        this.unitState = UnitState.FORTIFY;
     }
 
     public void recovering() { //sets unit to recover state to increase health
@@ -60,6 +62,10 @@ public abstract class Unit {
 
     public void garrison() { //garrisons the unit if on a city tile
         this.unitState = UnitState.GARRISONED;
+    }
+
+    public void setup() {
+        //TODO..
     }
 
     public void pillaging() { // pillage a tile
@@ -74,10 +80,11 @@ public abstract class Unit {
         this.unitState = UnitState.NOTHING;
     }
 
-    public void delete() {
-        civilization.removeUnit(this);
-        tile.removeUnit();
+    public void killWithGold() { // will get coins
+        civilization.setGold(civilization.getGold() + (this.cost * 10) / 100);
+        this.kill();
     }
+
 
     public int getAttackStrength() {
         return boost(this.meleeStrength);
@@ -103,6 +110,18 @@ public abstract class Unit {
         this.tile = tile;
     }
 
+    public void setRemainingMovement(int MP) {
+        this.remainingMovement = MP;
+    }
+
+    public void setHealth(int amount) {
+        if (amount < 0) {
+            this.health = 0;
+        } else {
+            this.health = amount;
+        }
+    }
+
     //GETTERS
 
     public int getRemainingMovement() {
@@ -111,5 +130,30 @@ public abstract class Unit {
 
     public Civilization getCivilization() {
         return civilization;
+    }
+
+    public Tile getTile() {
+        return this.tile;
+    }
+
+    public UnitState getUnitState() {
+        return unitState;
+    }
+
+    public int getTotelMeleeStrength() {
+        return 0;
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public void kill() { // without gold
+        civilization.removeUnit(this);
+        if (this instanceof Civilian) {
+            tile.removeCivilian();
+        } else if (this instanceof Soldier) {
+            tile.removeSoldier();
+        }
     }
 }

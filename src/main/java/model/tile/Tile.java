@@ -2,8 +2,8 @@ package model.tile;
 
 import model.game.City;
 import model.unit.Unit;
-
-import java.sql.RowIdLifetime;
+import model.unit.civilian.Civilian;
+import model.unit.soldier.Soldier;
 
 public class Tile{
     private final int xPlace;
@@ -14,8 +14,11 @@ public class Tile{
     private final Feature feature;
     private final Resource resource;
     private City city; //This tile belongs to city
-    private Unit unit;
+    private Civilian civilian;
+    private Soldier soldier;
     private boolean hasCitizen;
+    private boolean hasRoute;
+    private boolean isRepaired; // if tile is repaired
 
     //TODO... Implement improvements
     //private Improvement improvement
@@ -44,7 +47,8 @@ public class Tile{
         this.combatPercentage = terrain.combatPercentage + feature.combatPercentage;
         this.movementCost = terrain.movementCost + feature.movementCost;
 
-        this.unit = null;
+        this.civilian = null;
+        this.soldier = null;
     }
 
     public void assignCitizen() {
@@ -100,8 +104,12 @@ public class Tile{
         return this.city;
     }
 
-    public Unit getUnit() {
-        return this.unit;
+    public Civilian getCivilian() {
+        return this.civilian;
+    }
+
+    public Soldier getSoldier() {
+        return this.soldier;
     }
 
     public Terrain getTerrain() {
@@ -140,13 +148,25 @@ public class Tile{
         return this.movementCost;
     }
 
+    public boolean hasRoute() {
+        return this.hasRoute;
+    }
+
+    public boolean isRepaired() {
+        return this.isRepaired;
+    }
+
     //SETTERS
     public void setCity(City city) {
         this.city = city;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setCivilian(Civilian civilian) {
+        this.civilian = civilian;
+    }
+
+    public void setSoldier(Soldier soldier) {
+        this.soldier = soldier;
     }
 
     public void setHasCitizen(boolean hasCitizen) {
@@ -164,12 +184,20 @@ public class Tile{
                this.getzPlace() == tile.getzPlace();
     }
 
-    public void removeUnit() {
-        this.unit = null;
+
+    public void removeCivilian() {
+        this.civilian = null;
     }
 
+    public void removeSoldier() {
+        this.soldier = null;
+    }
+
+    //returns if a unit on thie tile cann see through given tile
     public boolean canSeeThrough(Tile tile) {
         //TODO..
-        return false;
+        if (this.terrain == Terrain.HILL) return true;
+
+        return this.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
     }
 }

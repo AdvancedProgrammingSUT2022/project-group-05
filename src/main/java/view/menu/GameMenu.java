@@ -1,7 +1,5 @@
 package view.menu;
 
-import view.enums.GameMenuCommand;
-
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -94,7 +92,7 @@ public class GameMenu extends Menu {
                 printMessage(""); //TODO... add controller function
             else if ((command = getHashMap(input, UNIT_BUILD)) != null)
                 printMessage(""); //TODO... add controller function
-            else if ((command = getHashMap(input, UNIT_REMOVE_JUNGLE)) != null)
+            else if ((command = getHashMap(input, UNIT_REMOVE_FEATURE)) != null)
                 printMessage(""); //TODO... add controller function
             else if ((command = getHashMap(input, UNIT_REMOVE_ROUTE)) != null)
                 printMessage(""); //TODO... add controller function

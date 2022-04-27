@@ -2,6 +2,8 @@ package model.map;
 
 import model.tile.Tile;
 import model.unit.Unit;
+import model.unit.civilian.Civilian;
+import model.unit.soldier.Soldier;
 
 import java.util.HashMap;
 
@@ -54,7 +56,7 @@ public class Map {
 
 
     //FIND DISTANCE OF TWO TILES : returns -1 if tile not exits
-    public static int findDistance (Tile start, Tile end) {
+    public int findDistance (Tile start, Tile end) {
         int xDistance = Math.abs(start.getxPlace() - end.getxPlace());
         int yDistance = Math.abs(start.getyPlace() - end.getyPlace());
         int zDistance = Math.abs(start.getzPlace() - end.getzPlace());
@@ -90,6 +92,7 @@ public class Map {
 
     //FINDING PATH WITH MINIMUM MP NEEDED : return null if no path exists
     public Path bestPathFinder (Tile start, Tile end, int pathLengthCab) {
+        //TODO.. handle MP (MR.B)
         HashMap<Integer[], Path> pathsMap = new HashMap<>();
         return bestPathFindersBacktrack(start, end, pathLengthCab, pathsMap);
     }
@@ -134,6 +137,18 @@ public class Map {
         }
         //returning minimum value
         return pathsFinded[minMPIndex];
+    }
+
+    public void moveCivilian(Civilian civilian, Path path) {
+        //TODO
+    }
+
+    public void moveSoldier(Soldier soldier, Path path) {
+        //TODO
+    }
+
+    public void moveSoldierWithoutMP(Soldier soldier, Tile tile) { // this method is used at attack
+        //TODO
     }
 
 

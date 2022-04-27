@@ -45,7 +45,7 @@ public enum GameMenuCommand{
 
     UNIT_FOUND_CITY("\\s*unit\\s+found\\s+city(?<entities>.*)", List.of()),
     UNIT_BUILD("\\s*unit\\s+build(?<entities>.*)", List.of(BUILDING.getKey())),
-    UNIT_REMOVE_JUNGLE("\\s*unit\\s+remove\\s+jungle(?<entities>.*)", List.of()),
+    UNIT_REMOVE_FEATURE("\\s*unit\\s+remove\\s+feature(?<entities>.*)", List.of()),
     UNIT_REMOVE_ROUTE("\\s*unit\\s+remove\\s+route(?<entities>.*)", List.of()),
     UNIT_REPAIR("\\s*unit\\s+repair(?<entities>.*)", List.of()),
 

@@ -5,7 +5,7 @@ import model.game.Civilization;
 import model.tile.Tile;
 import model.unit.Unit;
 
-public class Settler extends Unit {
+public class Settler extends Civilian {
     public Settler(Civilization civilization, Tile tile) {
         super(civilization, tile);
 

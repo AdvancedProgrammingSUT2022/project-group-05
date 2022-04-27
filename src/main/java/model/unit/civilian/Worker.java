@@ -4,7 +4,7 @@ import model.game.Civilization;
 import model.tile.Tile;
 import model.unit.Unit;
 
-public class Worker extends Unit {
+public class Worker extends Civilian {
 
     public Worker(Civilization civilization, Tile tile) {
         super(civilization, tile);
@@ -27,6 +27,14 @@ public class Worker extends Unit {
     }
 
     public void removeFeature() {
-        //TODO
+        //TODO   remove it
+    }
+
+    public void removeRoute() {
+        //TODO  remove Route
+    }
+
+    public void repairTile() {
+        //TODO  repair Tile
     }
 }

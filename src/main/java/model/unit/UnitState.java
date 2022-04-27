@@ -5,7 +5,7 @@ public enum UnitState {
 
     ASLEEP,
     ALERTED,
-    STRENGTHENING,
+    FORTIFY,
     RECOVERING,
 
     GARRISONED,
