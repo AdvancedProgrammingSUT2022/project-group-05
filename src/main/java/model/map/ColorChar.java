@@ -103,6 +103,13 @@ public class ColorChar {
                 input[i][j].setBackgroundColor(getColorForTile(tempTile));
             }
         }
+
+        for (int i = fromT + 1; i < fromT + 1 + ColorChar.HEIGHT/2; i++) {
+            int level = i - (fromT + 1);
+            for (int j = fromL - WIDTH/2 + level; j <= fromL + WIDTH/2 - level; j++) {
+                input[i][j].setBackgroundColor(getColorForTile(tempTile));
+            }
+        }
     }
     private static String getColorForTile (Tile tempTile) {
         //TODO .. get tile feature String and change it to colors above
