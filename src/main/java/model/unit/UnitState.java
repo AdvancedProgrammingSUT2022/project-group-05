@@ -5,12 +5,15 @@ public enum UnitState {
 
     ASLEEP,
     ALERTED,
-    FORTIFIED,
+    FORTIFY,
     RECOVERING,
 
     GARRISONED,
 
     SET_FOR_SIEGE,
+    ATTACKING_FROM_DISTANCE,
 
-    DONE
+    MAKING_CITY,
+    PILLAGING,
+    NOTHING
 }

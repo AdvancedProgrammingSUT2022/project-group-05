@@ -2,6 +2,8 @@ package model.map;
 
 import model.tile.Tile;
 import model.unit.Unit;
+import model.unit.civilian.Civilian;
+import model.unit.soldier.Soldier;
 
 import java.util.HashMap;
 
@@ -101,6 +103,7 @@ public class Map {
 
     //FINDING PATH WITH MINIMUM MP NEEDED : return null if no path exists
     public Path bestPathFinder (Tile start, Tile end, int pathLengthCab) {
+        //TODO.. handle MP (MR.B)
         HashMap<Integer[], Path> pathsMap = new HashMap<>();
         return bestPathFindersBacktrack(start, end, pathLengthCab, pathsMap);
     }
@@ -145,6 +148,18 @@ public class Map {
         }
         //returning minimum value
         return pathsFinded[minMPIndex];
+    }
+
+    public void moveCivilian(Civilian civilian, Path path) {
+        //TODO
+    }
+
+    public void moveSoldier(Soldier soldier, Path path) {
+        //TODO
+    }
+
+    public void moveSoldierWithoutMP(Soldier soldier, Tile tile) { // this method is used at attack
+        //TODO
     }
 
 

@@ -2,8 +2,8 @@ package model.tile;
 
 import model.game.City;
 import model.unit.Unit;
-
-import java.sql.RowIdLifetime;
+import model.unit.civilian.Civilian;
+import model.unit.soldier.Soldier;
 
 public class Tile{
     private final int xPlace;
@@ -19,8 +19,11 @@ public class Tile{
     private Feature feature;
     private Resource resource;
     private City city; //This tile belongs to city
-    private Unit unit;
+    private Civilian civilian;
+    private Soldier soldier;
     private boolean hasCitizen;
+    private boolean hasRoute;
+    private boolean isRepaired; // if tile is repaired
 
     //TODO... Implement improvements
     //private Improvement improvement
@@ -113,8 +116,12 @@ public class Tile{
         return this.city;
     }
 
-    public Unit getUnit() {
-        return this.unit;
+    public Civilian getCivilian() {
+        return this.civilian;
+    }
+
+    public Soldier getSoldier() {
+        return this.soldier;
     }
 
     public Terrain getTerrain() {
@@ -153,13 +160,25 @@ public class Tile{
         return this.movementCost;
     }
 
+    public boolean hasRoute() {
+        return this.hasRoute;
+    }
+
+    public boolean isRepaired() {
+        return this.isRepaired;
+    }
+
     //SETTERS
     public void setCity(City city) {
         this.city = city;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setCivilian(Civilian civilian) {
+        this.civilian = civilian;
+    }
+
+    public void setSoldier(Soldier soldier) {
+        this.soldier = soldier;
     }
 
     public void setTerrain(Terrain terrain) {
@@ -187,5 +206,22 @@ public class Tile{
         return this.getxPlace() == tile.getxPlace() &&
                this.getyPlace() == tile.getyPlace() &&
                this.getzPlace() == tile.getzPlace();
+    }
+
+
+    public void removeCivilian() {
+        this.civilian = null;
+    }
+
+    public void removeSoldier() {
+        this.soldier = null;
+    }
+
+    //returns if a unit on thie tile cann see through given tile
+    public boolean canSeeThrough(Tile tile) {
+        //TODO..
+        if (this.terrain == Terrain.HILL) return true;
+
+        return this.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
     }
 }

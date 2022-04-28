@@ -6,5 +6,10 @@ import model.tile.Tile;
 public class Rifleman extends Melee {
     public Rifleman(Civilization civilization, Tile tile) {
         super(civilization, tile);
+        this.cost = 200;
+        this.meleeStrength = 25;
+        this.rangedStrength = 0;
+        this.maxAttackRange = 0;
+        this.maxMovement = 2;
     }
 }
