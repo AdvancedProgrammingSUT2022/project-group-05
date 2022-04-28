@@ -41,12 +41,6 @@ public class Tile{
         this.feature = feature;
         this.resource = resource;
 
-        this.foodIncrease = terrain.foodIncrease + feature.foodIncrease;
-        this.goldIncrease = terrain.goldIncrease + feature.foodIncrease;
-        this.productionIncrease = terrain.productionIncrease + feature.productionIncrease;
-        this.combatPercentage = terrain.combatPercentage + feature.combatPercentage;
-        this.movementCost = terrain.movementCost + feature.movementCost;
-
         this.civilian = null;
         this.soldier = null;
     }
