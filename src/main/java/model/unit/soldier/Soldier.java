@@ -1,6 +1,5 @@
 package model.unit.soldier;
 
-import model.game.City;
 import model.game.Civilization;
 import model.map.Map;
 import model.tile.Tile;

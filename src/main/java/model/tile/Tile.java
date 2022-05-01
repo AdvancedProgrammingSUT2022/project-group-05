@@ -1,9 +1,10 @@
 package model.tile;
 
 import model.game.City;
-import model.unit.Unit;
+import model.map.NeighbourType;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
+import model.resource.Resource;
 
 public class Tile{
     private final int xPlace;
@@ -23,8 +24,9 @@ public class Tile{
     private Soldier soldier;
     private boolean hasCitizen;
     private boolean hasRoute;
+    private boolean hasRiver;
     private boolean isRepaired; // if tile is repaired
-
+    
     //TODO... Implement improvements
     //private Improvement improvement
 
@@ -40,7 +42,8 @@ public class Tile{
         this.ID = ID;
 
         this.city = null;
-        this.unit = null;
+        this.civilian = null;
+        this.soldier = null; //sam: why?
 
         this.xPlace = xPlace;
         this.yPlace = yPlace;
@@ -58,18 +61,18 @@ public class Tile{
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() - 1);
         this.hasCitizen = true;
 
-        this.food += resource.food;
-        this.gold += resource.gold;
-        this.production += resource.production;
+        this.food += resource.getFood();
+        this.gold += resource.getGold();
+        this.production += resource.getProduction();
     }
 
     public void removeCitizen() {
         this.hasCitizen = false;
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() + 1);
 
-        this.food -= resource.food;
-        this.gold -= resource.gold;
-        this.production -= resource.production;
+        this.food -= resource.getFood();
+        this.gold -= resource.getGold();
+        this.production -= resource.getProduction();
     }
 
     public boolean hasCity() {
@@ -87,15 +90,15 @@ public class Tile{
     }
 
     //GETTERS
-    public int getxPlace() {
+    public int getXPlace() {
         return xPlace;
     }
 
-    public int getyPlace() {
+    public int getYPlace() {
         return yPlace;
     }
 
-    public int getzPlace() {
+    public int getZPlace() {
         return zPlace;
     }
 
@@ -203,9 +206,9 @@ public class Tile{
         if (!(object instanceof Tile)) return false;
         Tile tile = (Tile) object;
 
-        return this.getxPlace() == tile.getxPlace() &&
-               this.getyPlace() == tile.getyPlace() &&
-               this.getzPlace() == tile.getzPlace();
+        return this.getXPlace() == tile.getXPlace() &&
+               this.getYPlace() == tile.getYPlace() &&
+               this.getZPlace() == tile.getZPlace();
     }
 
 

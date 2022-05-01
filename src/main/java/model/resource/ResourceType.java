@@ -1,4 +1,4 @@
-package model.tile;
+package model.resource;
 
 public enum ResourceType {
     LUXURIOUS,

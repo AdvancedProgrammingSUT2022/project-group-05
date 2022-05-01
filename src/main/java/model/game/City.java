@@ -1,10 +1,12 @@
 package model.game;
 
+import model.game.Civilization;
 import model.tile.Tile;
 
 import java.util.ArrayList;
 
 public class City {
+    private final String name;
     private final Tile center;
 
     private int health;
@@ -13,9 +15,11 @@ public class City {
 
     private int joblessCitizenCount;
 
-    public City(Tile center, Civilization civilization /*, ArrayList<Tile> tiles*/) {
-        this.civilization = civilization;
+    public City(String name, Tile center, Civilization civilization /*, ArrayList<Tile> tiles*/) {
+        this.name = name;
         this.center = center;
+
+        this.civilization = civilization;
 
         //TODO... get adjacent tiles from controller(map) and add it to the city. initialize tiles.
     }

@@ -172,10 +172,10 @@ public class UnitController {
         this.unit.killWithGold();
     }
 
-    public void unitFoundCity() {
+    public void unitFoundCity(String cityName) {
         if (this.unit instanceof Settler) {
             Settler settler = (Settler) this.unit;
-            settler.foundCity();
+            settler.foundCity(cityName);
         } else {
             //TODO.. error
         }
