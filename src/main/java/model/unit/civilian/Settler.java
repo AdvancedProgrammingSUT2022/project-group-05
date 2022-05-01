@@ -15,8 +15,8 @@ public class Settler extends Civilian {
         this.maxMovement = 2;
     }
 
-    public void foundCity() {
-        this.civilization.addCity(new City(this.tile, this.civilization));
+    public void foundCity(String cityName) {
+        this.civilization.addCity(new City(cityName, this.tile, this.civilization));
     }
 
 

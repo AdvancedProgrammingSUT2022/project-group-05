@@ -40,7 +40,8 @@ public class Tile{
         this.ID = ID;
 
         this.city = null;
-        this.unit = null;
+        this.civilian = null;
+        this.soldier = null; //sam: why?
 
         this.xPlace = xPlace;
         this.yPlace = yPlace;
@@ -58,18 +59,18 @@ public class Tile{
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() - 1);
         this.hasCitizen = true;
 
-        this.food += resource.food;
-        this.gold += resource.gold;
-        this.production += resource.production;
+        this.food += resource.getFood();
+        this.gold += resource.getGold();
+        this.production += resource.getProduction();
     }
 
     public void removeCitizen() {
         this.hasCitizen = false;
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() + 1);
 
-        this.food -= resource.food;
-        this.gold -= resource.gold;
-        this.production -= resource.production;
+        this.food -= resource.getFood();
+        this.gold -= resource.getGold();
+        this.production -= resource.getProduction();
     }
 
     public boolean hasCity() {

@@ -139,10 +139,10 @@ public class UnitController {
         this.unit.killWithGold();
     }
 
-    public void unitFoundCity() {
+    public void unitFoundCity(String cityName) {
         if (this.unit instanceof Settler) {
             Settler settler = (Settler) this.unit;
-            settler.foundCity();
+            settler.foundCity(cityName);
         } else {
             //TODO.. error
         }
@@ -155,7 +155,8 @@ public class UnitController {
     public void unitRemoveFeature() {
         if (this.unit instanceof Worker) {
             Worker worker = (Worker) this.unit;
-            //TODO.. override toString in Feature?
+            //TODO.. override toString in Feature.
+            //sam: Gotta talk about this.
             String type = this.unit.getTile().getFeature().toString();
             if (type.equals("JUNGLE") || type.equals("FOREST") || type.equals("MARSH")) {
                 worker.removeFeature();
