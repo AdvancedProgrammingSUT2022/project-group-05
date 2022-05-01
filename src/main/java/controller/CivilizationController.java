@@ -1,6 +1,6 @@
 package controller;
 
-import model.game.Civilization;
+import model.game.civilization.Civilization;
 
 import java.util.ArrayList;
 import java.util.HashMap;

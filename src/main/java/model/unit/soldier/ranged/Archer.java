@@ -1,6 +1,6 @@
 package model.unit.soldier.ranged;
 
-import model.game.Civilization;
+import model.game.civilization.Civilization;
 import model.tile.Tile;
 
 public class Archer extends Ranged {

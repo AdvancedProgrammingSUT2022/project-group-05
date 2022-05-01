@@ -7,7 +7,7 @@ import model.unit.soldier.Soldier;
 
 import java.util.HashMap;
 
-public class Map {
+public class Map { //TODO... Implement the enum "NeighbourType" statically into this class
     private final int sizeOfMap;
     private Tile[][] gameMap;
 

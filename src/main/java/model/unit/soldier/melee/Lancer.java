@@ -1,6 +1,6 @@
 package model.unit.soldier.melee;
 
-import model.game.Civilization;
+import model.game.civilization.Civilization;
 import model.tile.Tile;
 
 public class Lancer extends Melee {

@@ -1,6 +1,7 @@
 package model.game;
 
 import model.User;
+import model.game.civilization.Civilization;
 import model.map.Map;
 
 import java.util.ArrayList;

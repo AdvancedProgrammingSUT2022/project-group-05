@@ -1,6 +1,6 @@
 package model.unit;
 
-import model.game.Civilization;
+import model.game.civilization.Civilization;
 import model.tile.Tile;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;

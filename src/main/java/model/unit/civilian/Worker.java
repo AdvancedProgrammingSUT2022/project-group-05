@@ -1,8 +1,7 @@
 package model.unit.civilian;
 
-import model.game.Civilization;
+import model.game.civilization.Civilization;
 import model.tile.Tile;
-import model.unit.Unit;
 
 public class Worker extends Civilian {
 
