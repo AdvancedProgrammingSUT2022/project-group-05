@@ -1,9 +1,10 @@
 package model.tile;
 
 import model.game.City;
+import model.map.NeighbourType;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
-import resource.Resource;
+import model.resource.Resource;
 
 public class Tile{
     private final int xPlace;
@@ -23,8 +24,9 @@ public class Tile{
     private Soldier soldier;
     private boolean hasCitizen;
     private boolean hasRoute;
+    private boolean hasRiver;
     private boolean isRepaired; // if tile is repaired
-
+    
     //TODO... Implement improvements
     //private Improvement improvement
 

@@ -45,5 +45,8 @@ public enum Feature{
         this.compatibleTerrains = new ArrayList<>(compatibleTerrains);
     }
 
-
+    public boolean matchesTerrain() {
+        return true;
+        //TODO
+    }
 }

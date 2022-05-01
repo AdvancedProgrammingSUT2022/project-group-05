@@ -2,7 +2,7 @@ package model.game;
 
 import model.User;
 import model.research.ResearchTree;
-import resource.ResourceList;
+import model.resource.ResourceList;
 import model.unit.Unit;
 
 import java.util.ArrayList;

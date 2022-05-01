@@ -1,4 +1,4 @@
-package resource;
+package model.resource;
 
 import model.tile.Feature;
 import model.tile.Terrain;
@@ -6,7 +6,7 @@ import model.tile.Terrain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static resource.ResourceType.*;
+import static model.resource.ResourceType.*;
 
 public enum Resource{
     //BONUS RESOURCES
@@ -99,12 +99,12 @@ public enum Resource{
         this.compatibleFeatures = new ArrayList<>(compatibleFeatures);
     }
 
-    //Checks if resource can appear in given terrain
+    //Checks if model.resource can appear in given terrain
     public boolean matchesTerrain(Terrain terrain) {
         return this.compatibleTerrains.contains(terrain);
     }
 
-    //Checks if resource can appear in given feature
+    //Checks if model.resource can appear in given feature
     public boolean matchesFeature(Feature feature) {
         return this.compatibleFeatures.contains(feature);
     }

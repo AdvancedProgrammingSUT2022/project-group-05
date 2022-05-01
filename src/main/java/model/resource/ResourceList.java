@@ -1,4 +1,4 @@
-package resource;
+package model.resource;
 
 import java.util.HashMap;
 
@@ -14,7 +14,7 @@ public class ResourceList{
     }
 
     public boolean hasEnough(ResourceType resourceType, int amount) {
-        //Checks if the list has a given "amount" of a resource
+        //Checks if the list has a given "amount" of a model.resource
 
         return this.getResourceCount(resourceType) >= amount;
     }

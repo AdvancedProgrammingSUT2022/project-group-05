@@ -155,8 +155,7 @@ public class UnitController {
     public void unitRemoveFeature() {
         if (this.unit instanceof Worker) {
             Worker worker = (Worker) this.unit;
-            //TODO.. override toString in Feature.
-            //sam: Gotta talk about this.
+            //TODO.. override toString in Feature?
             String type = this.unit.getTile().getFeature().toString();
             if (type.equals("JUNGLE") || type.equals("FOREST") || type.equals("MARSH")) {
                 worker.removeFeature();
