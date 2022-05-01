@@ -20,7 +20,9 @@ public abstract class Unit {
     protected int health;
     protected int level;
 
-
+    protected int temporaryDefenceBonusPercentage;
+    protected int healingSpeed;
+    protected int healingBouns;
 
     protected UnitState unitState;
 
@@ -96,12 +98,16 @@ public abstract class Unit {
 
     protected int boost(int initialStrength) { //boosts initial Strength based on current tile stats
         //TODO...
-        int combatPercentage = this.tile.getCombatBoost();
-        return initialStrength + (initialStrength * combatPercentage) / 100;
+        int combatPercentage = this.tile.getCombatPercentage();
+        return initialStrength + (initialStrength * combatPercentage) / 100 + (initialStrength * this.temporaryDefenceBonusPercentage) / 100;
     }
 
     public void initializeRemainingMovement() {
         this.remainingMovement = this.maxMovement;
+    }
+
+    public void heal() {
+        this.health  = this.health += healingSpeed;
     }
 
     //SETTERS
@@ -122,6 +128,14 @@ public abstract class Unit {
         }
     }
 
+    public void setTemporaryDefenceBonusPercentage(int temporaryDefenceBonusPercentage) {
+        this.temporaryDefenceBonusPercentage = temporaryDefenceBonusPercentage;
+    }
+
+    public void setHealingSpeed(int healingSpeed) {
+        this.healingSpeed = healingSpeed;
+    }
+
     //GETTERS
 
     public int getRemainingMovement() {
@@ -140,7 +154,7 @@ public abstract class Unit {
         return unitState;
     }
 
-    public int getTotelMeleeStrength() {
+    public int getTotalMeleeStrength() {
         return 0;
     }
 
@@ -155,5 +169,9 @@ public abstract class Unit {
         } else if (this instanceof Soldier) {
             tile.removeSoldier();
         }
+    }
+
+    public int getHealingBouns() {
+        return healingBouns;
     }
 }
