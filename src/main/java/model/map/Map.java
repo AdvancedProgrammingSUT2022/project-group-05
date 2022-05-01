@@ -7,7 +7,10 @@ import model.unit.soldier.Soldier;
 
 import java.util.HashMap;
 
-public class Map { //TODO... Implement the enum "NeighbourType" statically into this class
+public class Map {
+    //TODO... Implement the enum "NeighbourType" statically(or not) into this class.
+    //TODO... Move the function "movePointsNeededToEnterFrom" (or its equivalent) from Tile to this class.
+
     private final int sizeOfMap;
     private Tile[][] gameMap;
 
@@ -64,9 +67,9 @@ public class Map { //TODO... Implement the enum "NeighbourType" statically into 
 
     //FIND DISTANCE OF TWO TILES : returns -1 if tile not exits
     public int findDistance (Tile start, Tile end) {
-        int xDistance = Math.abs(start.getxPlace() - end.getxPlace());
-        int yDistance = Math.abs(start.getyPlace() - end.getyPlace());
-        int zDistance = Math.abs(start.getzPlace() - end.getzPlace());
+        int xDistance = Math.abs(start.getXPlace() - end.getXPlace());
+        int yDistance = Math.abs(start.getYPlace() - end.getYPlace());
+        int zDistance = Math.abs(start.getZPlace() - end.getZPlace());
         int totalDistance = xDistance + yDistance + zDistance;
         return totalDistance/2;
     }
@@ -94,8 +97,8 @@ public class Map { //TODO... Implement the enum "NeighbourType" statically into 
         return neighbors;
     }
     private Tile[] findNeighbors (Tile center) {
-        int xTemp = center.getxPlace();
-        int yTemp = center.getyPlace();
+        int xTemp = center.getXPlace();
+        int yTemp = center.getYPlace();
         return findNeighbors(xTemp, yTemp);
     }
 

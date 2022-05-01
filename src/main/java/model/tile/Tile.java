@@ -1,8 +1,9 @@
 package model.tile;
 
-import model.game.civilization.City;
+import model.game.City;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
+import resource.Resource;
 
 public class Tile{
     private final int xPlace;
@@ -86,15 +87,15 @@ public class Tile{
     }
 
     //GETTERS
-    public int getxPlace() {
+    public int getXPlace() {
         return xPlace;
     }
 
-    public int getyPlace() {
+    public int getYPlace() {
         return yPlace;
     }
 
-    public int getzPlace() {
+    public int getZPlace() {
         return zPlace;
     }
 
@@ -202,9 +203,9 @@ public class Tile{
         if (!(object instanceof Tile)) return false;
         Tile tile = (Tile) object;
 
-        return this.getxPlace() == tile.getxPlace() &&
-               this.getyPlace() == tile.getyPlace() &&
-               this.getzPlace() == tile.getzPlace();
+        return this.getXPlace() == tile.getXPlace() &&
+               this.getYPlace() == tile.getYPlace() &&
+               this.getZPlace() == tile.getZPlace();
     }
 
 

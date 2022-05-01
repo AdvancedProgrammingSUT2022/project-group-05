@@ -1,6 +1,6 @@
 package model.unit.soldier.ranged.siege;
 
-import model.game.civilization.Civilization;
+import model.game.Civilization;
 import model.tile.Tile;
 import model.unit.UnitState;
 import model.unit.soldier.ranged.Ranged;

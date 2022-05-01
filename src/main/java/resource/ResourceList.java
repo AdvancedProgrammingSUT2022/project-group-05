@@ -1,9 +1,4 @@
-package model.game.civilization;
-
-import model.tile.Resource;
-import model.tile.ResourceType;
-
-import static model.tile.ResourceType.*;
+package resource;
 
 import java.util.HashMap;
 

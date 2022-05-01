@@ -1,7 +1,7 @@
 package model.unit.civilian;
 
-import model.game.civilization.City;
-import model.game.civilization.Civilization;
+import model.game.City;
+import model.game.Civilization;
 import model.tile.Tile;
 
 public class Settler extends Civilian {

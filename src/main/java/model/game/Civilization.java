@@ -1,11 +1,11 @@
-package model.game.civilization;
+package model.game;
 
 import model.User;
-import model.tile.ResourceType;
+import model.research.ResearchTree;
+import resource.ResourceList;
 import model.unit.Unit;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Civilization {
     private City capital;
@@ -18,11 +18,12 @@ public class Civilization {
 
     private int food;
     private int gold;
-    private int production;
     private int happiness;
+    private int production;
     private int researchPoint;
 
-    HashMap<ResourceType, Integer> resourcesCount; //Maps how many of each resource the civilization has
+    private ResourceList resourceList;
+    private ResearchTree researchTree;
 
     public Civilization(City city, Unit unit, User player, int color, int turn) {
         this.cities = new ArrayList<>();
@@ -43,7 +44,8 @@ public class Civilization {
         this.happiness = 0;
         this.researchPoint = 0;
 
-        this.resourcesCount = new HashMap<>();
+        this.resourceList = new ResourceList();
+        this.researchTree = new ResearchTree();
     }
 
     //SETTERS

@@ -1,9 +1,12 @@
-package model.tile;
+package resource;
+
+import model.tile.Feature;
+import model.tile.Terrain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.tile.ResourceType.*;
+import static resource.ResourceType.*;
 
 public enum Resource{
     //BONUS RESOURCES

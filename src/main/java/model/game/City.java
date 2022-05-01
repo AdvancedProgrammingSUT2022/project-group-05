@@ -1,5 +1,6 @@
-package model.game.civilization;
+package model.game;
 
+import model.game.Civilization;
 import model.tile.Tile;
 
 import java.util.ArrayList;
