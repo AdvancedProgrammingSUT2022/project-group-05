@@ -16,6 +16,31 @@ import java.util.HashMap;
 public class UnitController {
 
     private Unit unit;
+    private Map map;
+
+    public void applyUnitStateForTurn() { // this method is used for states that have effects in next turns
+        switch (this.unit.getUnitState()) {
+            case FORTIFY:
+                this.setDefenceBonusInFortifyState(2);
+                this.unitFortify();
+                break;
+            case ALERTED:
+                this.checkEnemyInAlertedState(this.map);
+                break;
+            case RECOVERING:
+                this.recoverUnitInRecoveringState();
+                break;
+            case PILLAGING:
+                //TODO..
+                break;
+            case GARRISONED:
+                //TODO..
+                break;
+            case MAKING_CITY:
+                //TODO..
+                break;
+        }
+    }
 
     //TODO.. check state if it is already (MR.B)
 
@@ -233,5 +258,6 @@ public class UnitController {
         this.unit.setHealingSpeed(speed);
         this.unit.heal();
     }
+
 
 }
