@@ -54,7 +54,9 @@ public enum Research{
     RAILROAD(1900, List.of(STEAM_POWER)),
     REPLACEABLE_PARTS(1900, List.of(STEAM_POWER)),
     COMBUSTION(2200, List.of(REPLACEABLE_PARTS, RAILROAD, DYNAMITE)),
-    TELEGRAPH(2200, List.of(ELECTRICITY));
+    TELEGRAPH(2200, List.of(ELECTRICITY)),
+
+    NO_RESEARCH(0, List.of());
 
     private final int cost;
     private final ArrayList<Research> ancestors;
