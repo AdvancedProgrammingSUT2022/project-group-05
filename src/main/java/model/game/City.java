@@ -13,11 +13,13 @@ public class City {
     private ArrayList<Tile> tiles;
     private Civilization civilization;
 
-    private int joblessCitizenCount;
+    private int joblessCitizenCount; //nonsense
 
     public City(String name, Tile center, Civilization civilization /*, ArrayList<Tile> tiles*/) {
         this.name = name;
         this.center = center;
+
+        this.health = 20; //TODO.. check
 
         this.civilization = civilization;
 

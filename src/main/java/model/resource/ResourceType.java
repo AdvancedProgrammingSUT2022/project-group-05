@@ -1,6 +1,6 @@
 package model.resource;
 
-public enum ResourceType {
+public enum ResourceType{
     LUXURIOUS,
     STRATEGIC,
     BONUS,
