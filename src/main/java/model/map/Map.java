@@ -96,7 +96,7 @@ public class Map {
 
         return neighbors;
     }
-    private Tile[] findNeighbors (Tile center) {
+    public Tile[] findNeighbors (Tile center) {
         int xTemp = center.getXPlace();
         int yTemp = center.getYPlace();
         return findNeighbors(xTemp, yTemp);

@@ -229,7 +229,7 @@ public class UnitController {
     public void checkEnemyInAlertedState(Map map) { // check neighbor tile for enemies in alerted state
         if (this.unit.getUnitState() == UnitState.ALERTED) {
             Tile here = this.unit.getTile();
-            Tile[] neighbors = map.getNeighbors(here); //TODO..
+            Tile[] neighbors = map.findNeighbors(here);
             for (int i = 0; i < 6; i++) {
                 if (neighbors[i].getSoldier() != null) {
                     if (neighbors[i].getSoldier().getCivilization() != this.unit.getCivilization()) {

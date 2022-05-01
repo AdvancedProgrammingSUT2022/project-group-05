@@ -98,7 +98,7 @@ public abstract class Unit {
 
     protected int boost(int initialStrength) { //boosts initial Strength based on current tile stats
         //TODO...
-        int combatPercentage = this.tile.getCombatPercentage();
+        int combatPercentage = this.tile.getCombatBoost();
         return initialStrength + (initialStrength * combatPercentage) / 100 + (initialStrength * this.temporaryDefenceBonusPercentage) / 100;
     }
 
