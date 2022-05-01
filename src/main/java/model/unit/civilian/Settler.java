@@ -3,7 +3,6 @@ package model.unit.civilian;
 import model.game.City;
 import model.game.Civilization;
 import model.tile.Tile;
-import model.unit.Unit;
 
 public class Settler extends Civilian {
     public Settler(Civilization civilization, Tile tile) {
@@ -16,8 +15,8 @@ public class Settler extends Civilian {
         this.maxMovement = 2;
     }
 
-    public void foundCity() {
-        this.civilization.addCity(new City(this.tile, this.civilization));
+    public void foundCity(String cityName) {
+        this.civilization.addCity(new City(cityName, this.tile, this.civilization));
     }
 
 

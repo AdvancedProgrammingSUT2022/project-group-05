@@ -1,9 +1,12 @@
-package model.tile;
+package model.resource;
+
+import model.tile.Feature;
+import model.tile.Terrain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.tile.ResourceType.*;
+import static model.resource.ResourceType.*;
 
 public enum Resource{
     //BONUS RESOURCES
@@ -75,15 +78,15 @@ public enum Resource{
     );
 
 
-    final ResourceType resourceType;
+    private final ResourceType resourceType;
     //final Technology neededTech;
 
-    final int food;
-    final int gold;
-    final int production;
+    private final int food;
+    private final int gold;
+    private final int production;
 
-    final ArrayList<Terrain> compatibleTerrains;
-    final ArrayList<Feature> compatibleFeatures;
+    private final ArrayList<Terrain> compatibleTerrains;
+    private final ArrayList<Feature> compatibleFeatures;
 
     Resource(ResourceType resourceType, int food, int gold, int production,
              List<Terrain> compatibleTerrains, List<Feature> compatibleFeatures) {
@@ -96,9 +99,30 @@ public enum Resource{
         this.compatibleFeatures = new ArrayList<>(compatibleFeatures);
     }
 
-    //checks if resource can appear in given terrain
+    //Checks if model.resource can appear in given terrain
     public boolean matchesTerrain(Terrain terrain) {
-        //TODO... Complete matching terrains and features
-        return true;
+        return this.compatibleTerrains.contains(terrain);
+    }
+
+    //Checks if model.resource can appear in given feature
+    public boolean matchesFeature(Feature feature) {
+        return this.compatibleFeatures.contains(feature);
+    }
+
+    //GETTERS
+    public ResourceType getResourceType() {
+        return resourceType;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getProduction() {
+        return production;
     }
 }
