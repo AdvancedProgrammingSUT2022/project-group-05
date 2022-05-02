@@ -24,7 +24,7 @@ public class Tile{
     private Soldier soldier;
     private boolean hasCitizen;
     private boolean hasRoute;
-    private boolean hasRiver;
+    private boolean hasRiver[];
     private boolean isRepaired; // if tile is repaired
     
     //TODO... Implement improvements
@@ -55,6 +55,8 @@ public class Tile{
         this.terrain = terrain;
         this.feature = feature;
         this.resource = resource;
+
+        this.hasRiver = new boolean[6];
     }
 
     public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile
