@@ -254,7 +254,7 @@ public class UnitController {
     public void recoverUnitInRecoveringState() {
         //TODO.. find the location of unit which could be in city or friendly ground or enemy ground
         int speed = 1;
-        speed += this.unit.getHealingBouns();
+        speed += this.unit.getHealingBonus();
         this.unit.setHealingSpeed(speed);
         this.unit.heal();
     }

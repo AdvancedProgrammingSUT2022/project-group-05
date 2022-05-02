@@ -22,7 +22,7 @@ public abstract class Unit {
 
     protected int temporaryDefenceBonusPercentage;
     protected int healingSpeed;
-    protected int healingBouns;
+    protected int healingBonus;
 
     protected UnitState unitState;
 
@@ -171,7 +171,7 @@ public abstract class Unit {
         }
     }
 
-    public int getHealingBouns() {
-        return healingBouns;
+    public int getHealingBonus() {
+        return healingBonus;
     }
 }
