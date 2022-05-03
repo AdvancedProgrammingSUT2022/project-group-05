@@ -1,7 +1,10 @@
 package model.game;
 
+import model.building.BuildingList;
 import model.game.Civilization;
+import model.map.Map;
 import model.tile.Tile;
+import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
@@ -16,13 +19,16 @@ public class City {
     private int defenceBonusPercentage; // because of garrisoned unit
     //private ArrayList<Tile> tiles;
     private HashMap<Tile, TileStatus> tiles;
+    private BuildingList buildingList;
     private Civilization civilization;
 
     private int joblessCitizenCount;
 
     private boolean hasGarrisonedUnit;
 
-    public City(String name, Tile center, Civilization civilization /*, ArrayList<Tile> tiles*/) {
+    private boolean hasCivilianUnit;
+
+    public City(String name, Tile center, Civilization civilization, Tile[] neighbors) {
         this.name = name;
         this.center = center;
         this.civilization = civilization;
@@ -31,6 +37,10 @@ public class City {
         this.hasGarrisonedUnit = false;
 
         //TODO... get adjacent tiles from controller(map) and add it to the city. initialize tiles.
+        for (int i = 0; i < neighbors.length; i++) {
+            this.addTileToCity(neighbors[i]);
+        }
+
     }
 
     public boolean hasJoblessCitizen() {
@@ -97,6 +107,17 @@ public class City {
         }
     }
 
+    public void stayCivilianUnitInCity(Tile tile, Civilian civilian) {
+        if (isHasCivilianUnit()) {
+            //TODO error
+        } else if (!this.isInTerritory(tile)) {
+            //TODO error
+        } else {
+            hasCivilianUnit = true;
+            tile.setCivilian(civilian);
+        }
+    }
+
     //GETTERS
     public int getHealth() {
         return this.health;
@@ -124,6 +145,10 @@ public class City {
 
     public int getDefenceBonusPercentage() {
         return defenceBonusPercentage;
+    }
+
+    public boolean isHasCivilianUnit() {
+        return hasCivilianUnit;
     }
 
     //SETTER
