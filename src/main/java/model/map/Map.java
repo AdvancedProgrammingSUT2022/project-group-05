@@ -8,7 +8,6 @@ import model.unit.soldier.Soldier;
 import java.util.HashMap;
 
 public class Map {
-    //TODO... Implement the enum "NeighbourType" statically(or not) into this class.
     //TODO... Move the function "movePointsNeededToEnterFrom" (or its equivalent) from Tile to this class.
 
     private final int sizeOfMap;
@@ -81,6 +80,16 @@ public class Map {
     }
 
 
+    //FIND MP COST OF TWO TILE
+    public int getMPNeededBetweenTiles (Tile first, Tile second) {
+        //TODO... calculate mps
+        return 0;
+    }
+    public int getMPNeededBetweenTiles (Tile temp, int neighbour) {
+        return getMPNeededBetweenTiles(temp, this.findNeighbors(temp)[neighbour]);
+    }
+
+
 
     //RETURNS ARRAY OF TILES NEIGHBORS : up as 0, up right as 1 , ... , up left as 5, null if no neighbor or wrong x,y
     private Tile[] findNeighbors (int xPlace, int yPlace) {
@@ -105,17 +114,20 @@ public class Map {
 
 
     //FINDING PATH WITH MINIMUM MP NEEDED : return null if no path exists
-    public Path bestPathFinder (Tile start, Tile end, int pathLengthCab) {
-        //TODO.. handle MP (MR.B)
+    public Path bestPathFinder (Tile start, Tile end, int remainingMP) {
         HashMap<Integer[], Path> pathsMap = new HashMap<>();
-        return bestPathFindersBacktrack(start, end, pathLengthCab, pathsMap);
+
+        Integer[] endKey = {end.getID(), end.getID()};
+        pathsMap.put(endKey, new Path(end));
+
+        return bestPathFindersBacktrack(start, end, remainingMP, pathsMap);
     }
     // can't handle wrong input
     public Path bestPathFinder (int startXPlace, int startYPlace, int endXPlace, int endYPlace, int pathSizeCab) {
         return bestPathFinder(gameMap[startXPlace][startYPlace], gameMap[endXPlace][endYPlace], pathSizeCab);
     }
-    private Path bestPathFindersBacktrack (Tile start, Tile end, int pathLengthCab, HashMap<Integer[], Path> pathsMap) {
-        if (findDistance(start, end) < pathLengthCab) return null;
+    private Path bestPathFindersBacktrack (Tile start, Tile end, int remainingMP, HashMap<Integer[], Path> pathsMap) {
+        if (remainingMP <= 0) return null;
         Tile[] neighbors = findNeighbors(start);
         Path[] pathsFinded = new Path[6];
         //Finding paths from neighbors to end
@@ -125,12 +137,13 @@ public class Map {
                 continue;
             }
 
-            Integer[] keySet = {neighbors[i].getID(),end.getID(),pathLengthCab};
+            Integer[] keySet = {neighbors[i].getID(),end.getID()};
             if (pathsMap.containsKey(keySet)) {
                 pathsFinded[i] = pathsMap.get(keySet);
             }
             else {
-                pathsFinded[i] = bestPathFindersBacktrack(neighbors[i], end, pathLengthCab-1, pathsMap);
+                int newRemainingMP = remainingMP - neighbors[i].movePointsNeededToEnterFrom(start);
+                pathsFinded[i] = bestPathFindersBacktrack(neighbors[i], end, newRemainingMP, pathsMap);
                 pathsMap.put(keySet, pathsFinded[i]);
             }
         }
@@ -154,15 +167,28 @@ public class Map {
     }
 
     public void moveCivilian(Civilian civilian, Path path) {
-        //TODO
+        int remainingMPs = path.getFirstTile().getCivilian().getRemainingMovement();
+        int currentMPs = remainingMPs - path.getMpCost();
+        if(currentMPs < 0) currentMPs = 0;
+        path.getFirstTile().getCivilian().setRemainingMovement(currentMPs);
+
+        path.getLastTile().setCivilian(path.getFirstTile().getCivilian());
+        path.getFirstTile().removeCivilian();
     }
 
     public void moveSoldier(Soldier soldier, Path path) {
-        //TODO
+        int remainingMPs = path.getFirstTile().getSoldier().getRemainingMovement();
+        int currentMPs = remainingMPs - path.getMpCost();
+        if(currentMPs < 0) currentMPs = 0;
+        path.getFirstTile().getSoldier().setRemainingMovement(currentMPs);
+
+        path.getLastTile().setSoldier(path.getFirstTile().getSoldier());
+        path.getFirstTile().removeSoldier();
     }
 
     public void moveSoldierWithoutMP(Soldier soldier, Tile tile) { // this method is used at attack
-        //TODO
+        tile.setSoldier(soldier.getTile().getSoldier());
+        soldier.getTile().removeSoldier();
     }
 
 

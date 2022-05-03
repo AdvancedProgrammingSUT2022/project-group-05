@@ -13,6 +13,11 @@ public class Path{
         this.pathTiles = new ArrayList<>();
     }
 
+    public Path(Tile tile) {
+        this.pathTiles = new ArrayList<>();
+        this.mpCost = 0;
+    }
+
     public Path(Path pathTemp, Tile lastTile) {
         this.pathTiles = new ArrayList<>(pathTemp.getPathTiles());
         this.mpCost = pathTemp.getMpCost();
