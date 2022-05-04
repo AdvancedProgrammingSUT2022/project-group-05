@@ -5,19 +5,19 @@ import java.util.List;
 
 public enum Feature{
     PLAIN(2, 0, 0, -33, 1,
-            List.of(Terrain.DESERT, Terrain.FIELD, Terrain.GRASS, Terrain.SNOW, Terrain.TUNDRA)
+            List.of(Terrain.DESERT)
     ),
     FOREST(1, 0, 1, 25, 2,
-            List.of(Terrain.DESERT, Terrain.FIELD, Terrain.GRASS, Terrain.SNOW, Terrain.TUNDRA)
+            List.of(Terrain.FIELD, Terrain.GRASS, Terrain.HILL, Terrain.TUNDRA)
     ),
     ICE(0, 0, 0, 0, 100,
             List.of(Terrain.OCEAN)
     ),
     JUNGLE(1, 0, -1, 25, 2,
-            List.of(Terrain.FIELD, Terrain.GRASS, Terrain.SNOW, Terrain.TUNDRA)
+            List.of(Terrain.FIELD, Terrain.HILL)
     ),
     MARSH(-1, 0, 0, -33, 2,
-            List.of(Terrain.FIELD, Terrain.GRASS, Terrain.TUNDRA)
+            List.of(Terrain.GRASS)
     ),
     OASIS(3, 1, 0, -33, 1,
             List.of(Terrain.DESERT)
@@ -26,13 +26,13 @@ public enum Feature{
             List.of()
     );
 
-    final int food;
-    final int gold;
-    final int production;
-    final int combatBoost;
-    final int movementCost;
+    private final int food;
+    private final int gold;
+    private final int production;
+    private final int combatBoost;
+    private final int movementCost;
 
-    final ArrayList<Terrain> compatibleTerrains;
+    private final ArrayList<Terrain> compatibleTerrains;
 
     Feature(int food, int gold, int production, int combatBoost, int movementCost,
             List<Terrain> compatibleTerrains) {
@@ -45,8 +45,32 @@ public enum Feature{
         this.compatibleTerrains = new ArrayList<>(compatibleTerrains);
     }
 
-    public boolean matchesTerrain() {
-        return true;
-        //TODO
+    public boolean matchesTerrain(Terrain terrain) {
+        return this.compatibleTerrains.contains(terrain);
+    }
+
+    //GETTERS
+    public int getFood() {
+        return this.food;
+    }
+
+    public int getGold() {
+        return this.gold;
+    }
+
+    public int getProduction() {
+        return this.production;
+    }
+
+    public int getCombatBoost() {
+        return this.combatBoost;
+    }
+
+    public int getMovementCost() {
+        return this.movementCost;
+    }
+
+    public ArrayList<Terrain> getCompatibleTerrains() {
+        return this.compatibleTerrains;
     }
 }
