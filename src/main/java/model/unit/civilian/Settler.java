@@ -17,7 +17,7 @@ public class Settler extends Civilian {
     }
 
     public void foundCity(String cityName, Map map) {
-        this.civilization.addCity(new City(cityName, this.tile, this.civilization));
+        //this.civilization.addCity(new City(cityName, this.tile, this.civilization));
     }
 
 

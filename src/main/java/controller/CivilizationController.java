@@ -27,36 +27,47 @@ public class CivilizationController {
 
     //TODO... Complete this functions, info about them can be found on game.pdf page 7 or civManual page 25
     public ArrayList<String> showResearch() {
+        return null;
     }
 
     public ArrayList<String> showUnitsPanel() {
+        return null;
     }
 
     public ArrayList<String> showCitiesPanel() {
+        return null;
     }
 
     public ArrayList<String> showDiplomacyPanel() {
+        return null;
     }
 
     public ArrayList<String> showVictoryProgress() {
+        return null;
     }
 
     public ArrayList<String> showDemographic() {
+        return null;
     }
 
     public ArrayList<String> showNotificationHistory() {
+        return null;
     }
 
     public ArrayList<String> showMilitaryOverview() {
+        return null;
     }
 
     public ArrayList<String> showEconomicOverview() {
+        return null;
     }
 
     public ArrayList<String> showDiplomaticOverview() {
+        return null;
     }
 
     public ArrayList<String> showTradeHistory() {
+        return null;
     }
 
     public void endTurn() {
