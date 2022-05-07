@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum Feature{
     PLAIN(2, 0, 0, -33, 1,
-            List.of(Terrain.DESERT)
+            List.of(Terrain.DESERT) //near river
     ),
     FOREST(1, 0, 1, 25, 2,
             List.of(Terrain.FIELD, Terrain.GRASS, Terrain.HILL, Terrain.TUNDRA)
