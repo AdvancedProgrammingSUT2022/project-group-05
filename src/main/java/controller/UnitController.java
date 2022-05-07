@@ -18,6 +18,7 @@ public class UnitController {
     private Unit unit;
     private Map map;
 
+
     public void applyUnitStateForTurn() { // this method is used for states that have effects in next turns
         switch (this.unit.getUnitState()) {
             case FORTIFY:

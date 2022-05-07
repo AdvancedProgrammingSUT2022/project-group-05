@@ -25,13 +25,13 @@ public class Civilization {
     private ResourceList resourceList;
     private ResearchTree researchTree;
 
-    public Civilization(City city, Unit unit, User player, int color, int turn) {
+    public Civilization(User player, int color, int turn) {
         this.cities = new ArrayList<>();
-        this.cities.add(city);
-        this.capital = city;
+        //this.cities.add(city);
+        //this.capital = city;
 
         this.units = new ArrayList<>();
-        this.units.add(unit);
+        //this.units.add(unit);
 
         this.player = player;
         this.color = color;
