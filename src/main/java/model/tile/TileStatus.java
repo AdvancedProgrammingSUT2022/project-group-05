@@ -1,4 +1,4 @@
-package model.game;
+package model.tile;
 
 public enum TileStatus {
     INTACT, // No citizen worked on it before
