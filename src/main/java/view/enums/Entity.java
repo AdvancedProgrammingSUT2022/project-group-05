@@ -8,14 +8,14 @@ public enum Entity{
     //normal entities
     USERNAME("username", "(--username|-u)\\s+(?<username>\\w+)\\s*"),
     PASSWORD("password", "(--password|-p)\\s+(?<password>\\S+)\\s*"),
-    NEW_PASSWORD("new-password", "(--new-password|-np)\\s+(?<new-password>\\S+)\\s*"),
-    OLD_PASSWORD("old-password", "(--old-password|-op)\\s+(?<old-password>\\S+)\\s*"),
+    NEW_PASSWORD("newPassword", "(--new-password|-np)\\s+(?<newPassword>\\S+)\\s*"),
+    OLD_PASSWORD("oldPassword", "(--old-password|-op)\\s+(?<oldPassword>\\S+)\\s*"),
     NICKNAME("nickname", "(--nickname|-n)\\s+(?<nickname>[a-zA-Z0-9 ]+)\\s*"),
     AMOUNT("amount", "(--amount|-a)\\s+(?<amount>-?\\d+)\\s*"),
-    X_POSITION("x-position", "(--x-position|-x)\\s+(?<x>-?\\d+)\\s*"),
-    Y_POSITION("y-position", "(--y-position|-y)\\s+(?<y>-?\\d+)\\s*"),
-    MENU_NAME("menu-name", "(--menu-name|-m)\\s+(?<menu-name>profile|login|game|main)\\s*"),
-    CITY_NAME("city-name", "(--city-name|-c)\\s+(?<city-name>[a-zA-Z ]+)\\s*"),
+    X_POSITION("xPosition", "(--x-position|-x)\\s+(?<xPosition>-?\\d+)\\s*"),
+    Y_POSITION("yPosition", "(--y-position|-y)\\s+(?<yPosition>-?\\d+)\\s*"),
+    MENU_NAME("menuName", "(--menu-name|-m)\\s+(?<menuName>profile|login|game|main)\\s*"),
+    CITY_NAME("cityName", "(--city-name|-c)\\s+(?<cityName>[a-zA-Z ]+)\\s*"),
     DIRECTION("direction", "(--direction|-d)\\s+(?<direction>U|D|R|L)\\s*"),
     BUILDING("building", "(--building|-b)\\s+(?<building>[a-zA-Z ]+)\\s*"),
     PLAYER("player", "(--player|-p)(?<index>[1-9]\\d*)\\s+(?<username>\\w+)\\s*");
@@ -60,7 +60,7 @@ public enum Entity{
         for (String word : words) {
             if (word.equals("")) continue;
 
-            Entity entity = findEntity(word);
+            Entity entity = findEntity("-" + word);
             if (entity == null) return null;
             if (entities.containsKey(entity.key)) return null;
 
