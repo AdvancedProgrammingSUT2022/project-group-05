@@ -12,7 +12,6 @@ import java.util.HashMap;
 public class CivilizationController {
     private Civilization civilization ;
 
-
     public void combat(HashMap<String, String> command) {
         //TODO...
     }
@@ -26,37 +25,48 @@ public class CivilizationController {
     }
 
     //TODO... Complete this functions, info about them can be found on game.pdf page 7 or civManual page 25
-    public ArrayList<String> showResearch() {
+    public String showResearch() {
+        return civilization.getResearchTree().toString();
     }
 
-    public ArrayList<String> showUnitsPanel() {
+    public String showUnitsPanel() {
+        return "";
     }
 
-    public ArrayList<String> showCitiesPanel() {
+    public String showCitiesPanel() {
+        return "";
     }
 
-    public ArrayList<String> showDiplomacyPanel() {
+    public String showDiplomacyPanel() {
+        return "";
     }
 
-    public ArrayList<String> showVictoryProgress() {
+    public String showVictoryProgress() {
+        return "";
     }
 
-    public ArrayList<String> showDemographic() {
+    public String showDemographic() {
+        return "";
     }
 
-    public ArrayList<String> showNotificationHistory() {
+    public String showNotificationHistory() {
+        return "";
     }
 
-    public ArrayList<String> showMilitaryOverview() {
+    public String showMilitaryOverview() {
+        return "";
     }
 
-    public ArrayList<String> showEconomicOverview() {
+    public String showEconomicOverview() {
+        return "";
     }
 
-    public ArrayList<String> showDiplomaticOverview() {
+    public String showDiplomaticOverview() {
+        return "";
     }
 
-    public ArrayList<String> showTradeHistory() {
+    public String showTradeHistory() {
+        return "";
     }
 
     public void endTurn() {

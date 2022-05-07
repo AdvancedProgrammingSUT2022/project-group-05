@@ -26,7 +26,6 @@ public class City {
     private int joblessCitizenCount;
 
     private boolean hasGarrisonedUnit;
-
     private boolean hasCivilianUnit;
 
     public City(String name, Tile center, Civilization civilization) {
