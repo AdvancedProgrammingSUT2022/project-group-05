@@ -185,10 +185,9 @@ public class UnitController {
 
     }
 
-    public void unitRemoveFeature() {
+    public void unitRemoveForest() {
         if (this.unit instanceof Worker) {
             Worker worker = (Worker) this.unit;
-            //TODO.. override toString in Feature?
             String type = this.unit.getTile().getFeature().toString();
             if (type.equals("JUNGLE") || type.equals("FOREST") || type.equals("MARSH")) {
                 worker.removeFeature();
@@ -198,6 +197,10 @@ public class UnitController {
         } else {
             //TODO.. error
         }
+    }
+
+    public void unitRemoveJungle() {
+
     }
 
     public void unitRemoveRoute() {

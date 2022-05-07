@@ -26,7 +26,7 @@ public class Map{
         instance = new Map(sizeOfMap);
     }
 
-    public static Map getInstance(int sizeOfMap) {
+    public static Map getInstance() {
         return instance;
     }
 

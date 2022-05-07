@@ -1,6 +1,7 @@
 package model.tile;
 
 import model.game.City;
+import model.improvement.Improvement;
 import model.map.NeighbourType;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
@@ -26,15 +27,15 @@ public class Tile{
     private boolean hasRoute;
     private boolean hasRiver[];
     private boolean isRepaired; // if tile is repaired
-    
-    //TODO... Implement improvements
-    //private Improvement improvement
+
+    private Improvement improvement;
 
     private int food;
     private int gold;
     private int production;
     private int combatBoost;
     private int movementCost;
+    private int constructionDelay;
 
     public Tile(int ID,
                 Terrain terrain, Feature feature, Resource resource,
@@ -43,7 +44,7 @@ public class Tile{
 
         this.city = null;
         this.civilian = null;
-        this.soldier = null; //sam: why?
+        this.soldier = null;
 
         this.xPlace = xPlace;
         this.yPlace = yPlace;
@@ -57,6 +58,7 @@ public class Tile{
         this.resource = resource;
 
         this.hasRiver = new boolean[6];
+        this.constructionDelay = 0;
     }
 
     public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile

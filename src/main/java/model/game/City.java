@@ -1,14 +1,14 @@
 package model.game;
 
 import model.building.BuildingList;
-import model.game.Civilization;
 import model.map.Map;
 import model.tile.Tile;
+import model.tile.TileStatus;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class City {
     private final String name;
@@ -16,31 +16,32 @@ public class City {
 
     private int health;
     private int defenceStrength;
-    private int defenceBonusPercentage; // because of garrisoned unit
-    //private ArrayList<Tile> tiles;
-    private HashMap<Tile, TileStatus> tiles;
+    private int defenceBonusPercentage; // because of garrisoned unit and center tile
+
+    private ArrayList<Tile> tiles;
     private BuildingList buildingList;
     private Civilization civilization;
 
+    private int totalCitizenCount;
     private int joblessCitizenCount;
 
     private boolean hasGarrisonedUnit;
 
     private boolean hasCivilianUnit;
 
-    public City(String name, Tile center, Civilization civilization, Tile[] neighbors) {
+    public City(String name, Tile center, Civilization civilization) {
         this.name = name;
         this.center = center;
         this.civilization = civilization;
         this.setHealth(20);
-        this.setDefenceStrength(10); // TODO ??
+        this.setDefenceStrength(10); // TODO set later
+        this.setDefenceBonusPercentage(center.getCombatBoost());
         this.hasGarrisonedUnit = false;
 
-        //TODO... get adjacent tiles from controller(map) and add it to the city. initialize tiles.
-        for (int i = 0; i < neighbors.length; i++) {
-            this.addTileToCity(neighbors[i]);
+        this.addTile(center);
+        for (Tile tile : Map.getInstance().findNeighbors(center)) {
+            if (this.canAddTile(tile)) this.addTile(tile);
         }
-
     }
 
     public boolean hasJoblessCitizen() {
@@ -48,75 +49,45 @@ public class City {
     }
 
     public boolean isInTerritory(Tile tile) {
-        return this.tiles.containsKey(tile);
+        return this.tiles.contains(tile);
     }
 
-    public void increaseSize() { //function to increase city size after reaching a certain amount of food production.
-        //TODO...
-    }
-
-    public void lockJoblessCitizenToTile(Tile tile) {
-        if (!this.isInTerritory(tile)) {
-            //TODO error
-        } else if (!this.hasJoblessCitizen()) {
-            //TODO error
-        } else if (this.tiles.get(tile) == TileStatus.WORKING) {
-            //TODO error
-        } else if (this.tiles.get(tile) == TileStatus.DONE) {
-            //TODO error
-        } else {
+    public void assignCitizenToTile(Tile tile) {
             this.setJoblessCitizenCount(this.getJoblessCitizenCount() - 1);
-            this.tiles.replace(tile, TileStatus.WORKING);
-        }
     }
 
     public void removeCitizenFromTile(Tile tile) {
-        if (!this.isInTerritory(tile)) {
-            //TODO error
-        } else if (this.tiles.get(tile) == TileStatus.INTACT || this.tiles.get(tile) == TileStatus.DONE) {
-            //TODO error
-        } else {
-            this.setJoblessCitizenCount(this.getJoblessCitizenCount() + 1);
+        this.setJoblessCitizenCount(this.getJoblessCitizenCount() + 1);
+    }
+
+    public void addTile(Tile tile) {
+        this.tiles.add(tile);
+    }
+
+    public boolean canAddTile(Tile tile) {
+        if (tile.hasCity()) return false;
+
+        for (Tile territory : this.tiles) {
+            if (Map.getInstance().findDistance(territory, tile) == 1) return true;
         }
-    }
 
-    private void changeTileStateWhenTheWordIsDone(Tile tile) {
-        this.tiles.replace(tile, TileStatus.DONE);
-    }
-
-    public void addTileToCity(Tile tile) {
-        //TODO check if tile could be added to city if not already checked
-        this.tiles.put(tile, TileStatus.INTACT);
+        return false;
     }
 
     public void garrisonUnit(Soldier soldier) {
-        if (ishasGarrisonedUnit()) {
-            //TODO error
-        } else {
-            hasGarrisonedUnit = true;
-            this.setDefenceStrength(33);
-        }
+        this.hasGarrisonedUnit = true;
+        this.setDefenceBonusPercentage(this.getDefenceBonusPercentage() + 33);
     }
 
     public void removeGarrisonedUnit() {
-        if (!ishasGarrisonedUnit()) {
-            //TODO error
-        } else {
-            hasGarrisonedUnit = false;
-            this.setDefenceStrength(0);
-        }
+        this.hasGarrisonedUnit = false;
+        this.setDefenceBonusPercentage(this.getDefenceBonusPercentage() - 33);
     }
 
-    public void stayCivilianUnitInCity(Tile tile, Civilian civilian) {
-        if (isHasCivilianUnit()) {
-            //TODO error
-        } else if (!this.isInTerritory(tile)) {
-            //TODO error
-        } else {
-            hasCivilianUnit = true;
-            tile.setCivilian(civilian);
-        }
-    }
+    public void stayCivilianUnitInCity(Civilian civilian) {
+        hasCivilianUnit = true;
+        center.setCivilian(civilian);
+   }
 
     //GETTERS
     public int getHealth() {
@@ -135,7 +106,7 @@ public class City {
         return civilization;
     }
 
-    public boolean ishasGarrisonedUnit() {
+    public boolean hasGarrisonedUnit() {
         return hasGarrisonedUnit;
     }
 
@@ -147,7 +118,7 @@ public class City {
         return defenceBonusPercentage;
     }
 
-    public boolean isHasCivilianUnit() {
+    public boolean hasCivilianUnit() {
         return hasCivilianUnit;
     }
 
