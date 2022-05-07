@@ -2,6 +2,7 @@ package model.tile;
 
 import model.game.City;
 import model.improvement.Improvement;
+import model.map.Map;
 import model.map.NeighbourType;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
@@ -25,7 +26,7 @@ public class Tile{
     private Soldier soldier;
     private boolean hasCitizen;
     private boolean hasRoute;
-    private boolean hasRiver[];
+    private boolean[] rivers;
     private boolean isRepaired; // if tile is repaired
 
     private Improvement improvement;
@@ -36,6 +37,31 @@ public class Tile{
     private int combatBoost;
     private int movementCost;
     private int constructionDelay;
+
+    public Tile (int xPlace, int yPlace, int sizeOfMap) {
+        this.ID = xPlace * sizeOfMap + yPlace;
+
+        this.xPlace = xPlace;
+        this.yPlace = yPlace;
+        this.zPlace = 2 * (sizeOfMap - 1) - (xPlace + yPlace);
+
+        this.fromTop = fromTopFinder(xPlace, yPlace, sizeOfMap);
+        this.fromLeft = fromLeftFinder(xPlace, yPlace, sizeOfMap);
+
+        this.terrain = null;
+        this.feature = null;
+        this.resource = null;
+
+        this.rivers = new boolean[6];
+        for (int i = 0; i < 6; i++) rivers[i] = false;
+
+        this.hasRoute = false;
+
+        this.city = null;
+        this.civilian = null;
+        this.soldier = null;
+        this.hasCitizen = false;
+    }
 
     public Tile(int ID,
                 Terrain terrain, Feature feature, Resource resource,
@@ -57,8 +83,8 @@ public class Tile{
         this.feature = feature;
         this.resource = resource;
 
-        this.hasRiver = new boolean[6];
         this.constructionDelay = 0;
+        this.rivers = new boolean[6];
     }
 
     public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile
@@ -81,6 +107,13 @@ public class Tile{
 
     public boolean hasCity() {
         return this.city != null;
+    }
+
+    public boolean hasRiver () {
+        for (int i = 0; i < 6; i++) {
+            if (this.rivers[i]) return true;
+        }
+        return false;
     }
 
     public boolean isCityCenter() {
@@ -147,6 +180,18 @@ public class Tile{
         return this.hasCitizen;
     }
 
+    public boolean hasFeature () {
+        return this.feature != null;
+    }
+
+    public boolean hasTerrain () {
+        return this.terrain != null;
+    }
+
+    public boolean hasResource () {
+        return this.resource != null;
+    }
+
     public int getFood() {
         return this.food;
     }
@@ -204,6 +249,10 @@ public class Tile{
         this.hasCitizen = hasCitizen;
     }
 
+    public void addRiver (int i) {
+        rivers[i] = true;
+    }
+
     //Default Overrides
     @Override
     public boolean equals(Object object) {
@@ -230,5 +279,14 @@ public class Tile{
         if (this.terrain == Terrain.HILL) return true;
 
         return this.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
+    }
+
+    //places in print map
+    private int fromLeftFinder(int xPlace, int yPlace, int mapSize) {
+        return 3 * (xPlace + yPlace);
+    }
+
+    private int fromTopFinder(int xPlace, int yPlace, int mapSize) {
+        return yPlace - xPlace + mapSize - 1;
     }
 }
