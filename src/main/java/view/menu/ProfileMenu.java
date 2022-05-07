@@ -1,11 +1,17 @@
 package view.menu;
 
+import controller.ProfileMenuController;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
 import static view.enums.ProfileMenuCommand.*;
 
 public class ProfileMenu extends Menu {
+
+    private ProfileMenuController profileMenuController;
+    private String username;
+
     public ProfileMenu(Scanner scanner) {
         super(scanner);
     }
@@ -29,9 +35,9 @@ public class ProfileMenu extends Menu {
             else if ((command = getHashMap(input, MENU_SHOW_CURRENT)) != null)
                 printMessage("profile menu");
             else if ((command = getHashMap(input, PROFILE_CHANGE_PASSWORD)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(profileMenuController.changePassword(command, this.username)); //TODO.. access to username of player
             else if ((command = getHashMap(input, PROFILE_CHANGE_NICKNAME)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(profileMenuController.changeNickname(command));
             else
                 printMessage("error: invalid command");
         }

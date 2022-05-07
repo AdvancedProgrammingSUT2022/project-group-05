@@ -42,7 +42,7 @@ public class UserDatabaseController {
         }
     }
 
-    private int getUserIndexByUsername(String username) {
+    public int getUserIndexByUsername(String username) {
         ArrayList<HashMap<String, String>> users = this.loadDatabase();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("username").equals(username)) {
@@ -52,7 +52,7 @@ public class UserDatabaseController {
         return -1;
     }
 
-    private int getUserIndexByNickname(String nickname) {
+    public int getUserIndexByNickname(String nickname) {
         ArrayList<HashMap<String, String>> users = this.loadDatabase();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("nickname").equals(nickname)) {
@@ -62,52 +62,39 @@ public class UserDatabaseController {
         return -1;
     }
 
+    public boolean isPasswordCorrect(int userIndex, String password) {
+        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        if (users.get(userIndex).get("password").equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void addUser(User newUser) { // add new user to database
         ArrayList<HashMap<String, String>> users = this.loadDatabase();
-        if (this.getUserIndexByUsername(newUser.getUsername()) != -1) {
-            System.out.println("user with username " + newUser.getUsername() + " already exists");
-        } else if (this.getUserIndexByNickname(newUser.getNickname()) != -1) {
-            System.out.println("user with nickname " + newUser.getNickname() + " already exists");
-        } else {
-            HashMap<String, String> userNew = new HashMap<>();
-            userNew.put("username", newUser.getUsername());
-            userNew.put("password", newUser.getPassword());
-            userNew.put("nickname", newUser.getNickname());
-            users.add(userNew);
-            this.updateDatabase(users);
-        }
-    }
-
-    public void changeNickname(User user, HashMap<String, String> command) { // this method needs player username
-        String newNickname = command.get("nickname");
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
-        int index;
-        if ((index = getUserIndexByNickname(newNickname)) != -1) {
-            System.out.println("user with nickname " + newNickname + " already exists");
-        } else if ((index = getUserIndexByUsername(user.getUsername())) == -1) {
-            System.out.println("wrong username");
-        } else {
-            users.get(index).put("nickname", newNickname);
-            System.out.println("nickname changed successfully!");
-        }
+        HashMap<String, String> userNew = new HashMap<>();
+        userNew.put("username", newUser.getUsername());
+        userNew.put("password", newUser.getPassword());
+        userNew.put("nickname", newUser.getNickname());
+        users.add(userNew);
         this.updateDatabase(users);
     }
 
-    public void changePassword(User user, HashMap<String, String> command) { // this method needs player username
-        String oldPassword = command.get("old-password");
-        String newPassword = command.get("new-password");
+    public void changeNickname(int userIndex, String newNickname) {
         ArrayList<HashMap<String, String>> users = this.loadDatabase();
-        int index = getUserIndexByUsername(user.getUsername());
-        if (index == -1) {
-            System.out.println("wrong username");
-        } else if (users.get(index).get("password").compareTo(oldPassword) != 0) {
-            System.out.println("current password is invalid");
-        } else if (oldPassword.equals(newPassword)) {
-            System.out.println("please enter a new password");
-        } else {
-            users.get(index).put("password", newPassword);
-            System.out.println("password changed successfully!");
-        }
+        users.get(userIndex).put("nickname", newNickname);
         this.updateDatabase(users);
+    }
+
+    public void changePassword(int userIndex, String newPassword) {
+        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        users.get(userIndex).put("password", newPassword);
+        this.updateDatabase(users);
+    }
+
+    public String getPasswordByIndex(int userIndex) {
+        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        return users.get(userIndex).get("password");
     }
 }

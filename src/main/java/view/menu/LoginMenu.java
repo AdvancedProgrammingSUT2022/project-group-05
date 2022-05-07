@@ -1,11 +1,18 @@
 package view.menu;
 
+import controller.LoginMenuController;
+import controller.UserDatabaseController;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
 import static view.enums.LoginMenuCommand.*;
 
 public class LoginMenu extends Menu {
+
+    private LoginMenuController loginMenuController;
+    private UserDatabaseController userDatabaseController;
+
     public LoginMenu(Scanner scanner) {
         super(scanner);
     }
@@ -24,10 +31,11 @@ public class LoginMenu extends Menu {
                 return MenuType.EXIT;
             else if ((command = getHashMap(input, MENU_SHOW_CURRENT)) != null)
                 printMessage("login menu");
-            else if ((command = getHashMap(input, USER_CREATE)) != null)
-                printMessage(""); //TODO... add controller function
+            else if ((command = getHashMap(input, USER_CREATE)) != null) {
+                printMessage(loginMenuController.createUser(command));
+            }
             else if ((command = getHashMap(input, USER_LOGIN)) != null) {
-                printMessage(""); //TODO... add controller function
+                printMessage(loginMenuController.loginUser(command));
                 return MenuType.MAIN;
             }
             else
