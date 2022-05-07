@@ -178,6 +178,18 @@ public class Tile{
         return this.hasCitizen;
     }
 
+    public boolean hasFeature () {
+        return this.feature != null;
+    }
+
+    public boolean hasTerrain () {
+        return this.terrain != null;
+    }
+
+    public boolean hasResource () {
+        return this.resource != null;
+    }
+
     public int getFood() {
         return this.food;
     }
@@ -233,6 +245,10 @@ public class Tile{
 
     public void setHasCitizen(boolean hasCitizen) {
         this.hasCitizen = hasCitizen;
+    }
+
+    public void addRiver (int i) {
+        rivers[i] = true;
     }
 
     //Default Overrides
