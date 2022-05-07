@@ -48,6 +48,18 @@ public class Civilization {
         this.researchTree = new ResearchTree();
     }
 
+    public Boolean hasCity(City city) {
+        return this.cities.contains(city);
+    }
+
+    public void removeUnit(Unit unit) {
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).equals(unit)) {
+                units.remove(i);
+            }
+        }
+    }
+
     //SETTERS
     public void setTurn(int turn) {
         this.turn = turn;
@@ -114,15 +126,15 @@ public class Civilization {
         return researchPoint;
     }
 
-    public Boolean hasCity(City city) {
-        return this.cities.contains(city);
+    public ResourceList getResourceList() {
+        return resourceList;
     }
 
-    public void removeUnit(Unit unit) {
-        for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).equals(unit)) {
-                units.remove(i);
-            }
-        }
+    public ResearchTree getResearchTree() {
+        return researchTree;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        return this.units;
     }
 }

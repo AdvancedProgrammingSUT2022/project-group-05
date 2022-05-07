@@ -16,17 +16,23 @@ public class Map{
     //Map singleton pattern
     private static Map instance = null;
 
+
     private Map(int sizeOfMap) {
         this.sizeOfMap = sizeOfMap;
         gameMap = new Tile[sizeOfMap][sizeOfMap];
-        mapCreator(sizeOfMap);
+        for (int i = 0; i < sizeOfMap; i++) {
+            for (int j = 0; j < sizeOfMap; j++) {
+                gameMap[i][j] = new Tile(i, j, sizeOfMap);
+            }
+        }
     }
 
     public static void updateInstance(int sizeOfMap) {
         instance = new Map(sizeOfMap);
+        MapGeneration.mapCreator();
     }
 
-    public static Map getInstance(int sizeOfMap) {
+    public static Map getInstance() {
         return instance;
     }
 
@@ -55,20 +61,6 @@ public class Map{
         }
 
         return getTileFromMap(xPlace, yPlace);
-    }
-
-
-    //MAP CREATOR FUNCTIONS
-    private void mapCreator(int sizeOfMap) {
-        //TODO... creating random tile creator/ USE from left and from top finder for tiles
-    }
-
-    private int fromLeftFinder(int xPlace, int yPlace, int mapSize) {
-        return 3 * (xPlace + yPlace);
-    }
-
-    private int fromTopFinder(int xPlace, int yPlace, int mapSize) {
-        return yPlace - xPlace + mapSize - 1;
     }
 
 

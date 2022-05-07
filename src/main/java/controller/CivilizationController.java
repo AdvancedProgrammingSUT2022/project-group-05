@@ -26,48 +26,48 @@ public class CivilizationController {
     }
 
     //TODO... Complete this functions, info about them can be found on game.pdf page 7 or civManual page 25
-    public ArrayList<String> showResearch() {
-        return null;
+    public String showResearch() {
+        return civilization.getResearchTree().toString();
     }
 
-    public ArrayList<String> showUnitsPanel() {
-        return null;
+    public String showUnitsPanel() {
+        return "";
     }
 
-    public ArrayList<String> showCitiesPanel() {
-        return null;
+    public String showCitiesPanel() {
+        return "";
     }
 
-    public ArrayList<String> showDiplomacyPanel() {
-        return null;
+    public String showDiplomacyPanel() {
+        return "";
     }
 
-    public ArrayList<String> showVictoryProgress() {
-        return null;
+    public String showVictoryProgress() {
+        return "";
     }
 
-    public ArrayList<String> showDemographic() {
-        return null;
+    public String showDemographic() {
+        return "";
     }
 
-    public ArrayList<String> showNotificationHistory() {
-        return null;
+    public String showNotificationHistory() {
+        return "";
     }
 
-    public ArrayList<String> showMilitaryOverview() {
-        return null;
+    public String showMilitaryOverview() {
+        return "";
     }
 
-    public ArrayList<String> showEconomicOverview() {
-        return null;
+    public String showEconomicOverview() {
+        return "";
     }
 
-    public ArrayList<String> showDiplomaticOverview() {
-        return null;
+    public String showDiplomaticOverview() {
+        return "";
     }
 
-    public ArrayList<String> showTradeHistory() {
-        return null;
+    public String showTradeHistory() {
+        return "";
     }
 
     public void endTurn() {

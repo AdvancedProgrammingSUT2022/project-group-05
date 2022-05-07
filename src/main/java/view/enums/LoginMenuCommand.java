@@ -37,7 +37,7 @@ public enum LoginMenuCommand{
         Matcher matcher = patterns.get(command).matcher(input);
         if (!matcher.matches()) return null;
 
-        HashMap<String, String> result = extractEntities(input);
+        HashMap<String, String> result = extractEntities(matcher.group("entities"));
         if (result == null) return null;
 
         if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
