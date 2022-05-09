@@ -16,4 +16,5 @@ public enum UnitState {
     MAKING_CITY,
     PILLAGING,
     NOTHING
+    //TODO mrb used equals method in this enum maybe we need to overwrite this method in this enum
 }

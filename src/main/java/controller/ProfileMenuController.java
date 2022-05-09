@@ -9,12 +9,12 @@ import static view.enums.Entity.*;
 
 public class ProfileMenuController {
 
-    UserDatabaseController userDatabaseController;
+    private UserDatabaseController userDatabaseController = new UserDatabaseController();
 
-    public String changeNickname(HashMap<String, String> command) {
+    public String changeNickname(HashMap<String, String> command, String username) {
         String newNickname = command.get(NICKNAME.getKey());
-        int userIndex;
-        if ((userIndex = userDatabaseController.getUserIndexByNickname(newNickname)) != -1) {
+        int userIndex = userDatabaseController.getUserIndexByUsername(username);
+        if (userDatabaseController.getUserIndexByNickname(newNickname) != -1) {
             return "user with nickname " + newNickname + " already exists";
         } else {
             userDatabaseController.changeNickname(userIndex, newNickname);
@@ -26,7 +26,7 @@ public class ProfileMenuController {
         String oldPassword = command.get(OLD_PASSWORD.getKey());
         String newPassword = command.get(NEW_PASSWORD.getKey());
         int userIndex = userDatabaseController.getUserIndexByUsername(username);
-        if (userDatabaseController.getPasswordByIndex(userIndex).equals(oldPassword)) {
+        if (!userDatabaseController.getPasswordByIndex(userIndex).equals(oldPassword)) {
             return "current password is invalid";
         } else if (oldPassword.equals(newPassword)) {
             return "please enter a new password";

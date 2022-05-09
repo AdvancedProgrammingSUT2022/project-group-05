@@ -6,6 +6,9 @@ import java.util.Scanner;
 import static view.enums.MainMenuCommand.*;
 
 public class MainMenu extends Menu {
+
+    private static String username;
+
     public MainMenu(Scanner scanner) {
         super(scanner);
     }
@@ -29,8 +32,12 @@ public class MainMenu extends Menu {
             else if ((command = getHashMap(input, MENU_SHOW_CURRENT)) != null)
                 printMessage("main menu");
             else if ((command = getHashMap(input, SHOW_PROFILE)) != null) {
+                ProfileMenu.setUsername(this.username);
                 printMessage(""); //TODO... add controller function
                 return MenuType.PROFILE;
+            } else if ((command = getHashMap(input, USER_LOGOUT)) != null) {
+                printMessage("user logged out successfully!");
+                return MenuType.LOGIN;
             }
             else if ((command = getHashMap(input, PLAY_GAME)) != null) {
                 printMessage(""); //TODO... add controller function
@@ -39,5 +46,9 @@ public class MainMenu extends Menu {
             else
                 printMessage("error: invalid command");
         }
+    }
+
+    public static void setUsername(String username) {
+        MainMenu.username = username;
     }
 }

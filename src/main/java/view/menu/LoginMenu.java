@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import static view.enums.LoginMenuCommand.*;
+import static view.enums.Entity.*;
 
 public class LoginMenu extends Menu {
 
-    private LoginMenuController loginMenuController;
-    private UserDatabaseController userDatabaseController;
+    private LoginMenuController loginMenuController = new LoginMenuController();
+    private UserDatabaseController userDatabaseController = new UserDatabaseController();
 
     public LoginMenu(Scanner scanner) {
         super(scanner);
@@ -35,8 +36,12 @@ public class LoginMenu extends Menu {
                 printMessage(loginMenuController.createUser(command));
             }
             else if ((command = getHashMap(input, USER_LOGIN)) != null) {
-                printMessage(loginMenuController.loginUser(command));
-                return MenuType.MAIN;
+                String message = loginMenuController.loginUser(command);
+                printMessage(message);
+                if (message.equals("user logged in successfully!")) {
+                    MainMenu.setUsername(command.get(USERNAME.getKey()));
+                    return MenuType.MAIN;
+                }
             }
             else
                 printMessage("error: invalid command");
