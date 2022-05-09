@@ -4,6 +4,7 @@ import model.game.City;
 import model.improvement.Improvement;
 import model.map.Map;
 import model.map.NeighbourType;
+import model.tile.project.Project;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 import model.resource.Resource;
@@ -30,6 +31,7 @@ public class Tile{
     private boolean isRepaired; // if tile is repaired
 
     private Improvement improvement;
+    private Project project;
 
     private int food;
     private int gold;
@@ -82,27 +84,21 @@ public class Tile{
         this.feature = feature;
         this.resource = resource;
 
-        this.constructionDelay = 0;
+        this.project = new Project();
         this.rivers = new boolean[6];
     }
 
     public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() - 1);
         this.hasCitizen = true;
-
-        this.food += resource.getFood();
-        this.gold += resource.getGold();
-        this.production += resource.getProduction();
     }
 
     public void removeCitizen() {
         this.hasCitizen = false;
         this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() + 1);
-
-        this.food -= resource.getFood();
-        this.gold -= resource.getGold();
-        this.production -= resource.getProduction();
     }
+
+    //TODO... if (this.city.getCivilization().getResearchTree().isResearchDone(resource.neededImprovement))
 
     public boolean hasCity() {
         return this.city != null;
@@ -121,7 +117,7 @@ public class Tile{
 
     //returns move points needed to enter this tile
     public int movePointsNeededToEnterFrom(Tile currentTile) {
-        //TODO... return the needed mp for this tile
+        //TODO... return the needed mp for this tile MRB MRB MRB MRB
         return 0;
     }
 

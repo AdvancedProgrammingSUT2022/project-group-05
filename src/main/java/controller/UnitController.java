@@ -212,6 +212,10 @@ public class UnitController {
 
     }
 
+    public void unitRemoveMarsh() {
+
+    }
+
     public void unitRemoveRoute() {
         if (this.unit instanceof Worker) {
             Worker worker = (Worker) this.unit;

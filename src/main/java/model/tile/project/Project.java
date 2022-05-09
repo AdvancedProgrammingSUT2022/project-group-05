@@ -17,15 +17,19 @@ public class Project{
         this.currentProject = ProjectType.NONE;
     }
 
-    public void startConstruction(Improvement improvement)
-    {
+    public void startImprovementConstruction(Improvement improvement) {
         this.delay = improvement.getConstructionTime();
         this.currentProject = ProjectType.IMPROVEMENT_CONSTRUCTION;
         this.currentImprovementProject = improvement;
     }
 
-    public void startDestruction()
-    {
+    public void startRouteConstruction(Route route) {
+        this.delay = 3;
+        this.currentProject = ProjectType.ROUTE_CONSTRUCTION;
+        this.currentRouteProject = route;
+    }
+
+    public void startDestruction() {
         this.delay = 1;
         this.currentProject = ProjectType.DESTRUCTION;
     }
@@ -48,8 +52,11 @@ public class Project{
         return this.currentProject != ProjectType.NONE;
     }
 
-    public ProjectType getFinishedProject() {
-        if (delay != 0) return ProjectType.NONE;
+    public boolean hasFinishedProject() {
+        return this.delay == 0 && this.currentProject != ProjectType.NONE;
+    }
+
+    public ProjectType getProject() {
         return currentProject;
     }
 }
