@@ -13,11 +13,15 @@ public enum Responses{
     ALREADY_ASLEEP("error: unit is already asleep"),
     ALREADY_ALERTED("error: unit is already alerted"),
     ALREADY_FORTIFIED("error: unit is already fortified"),
+    ALREADY_RECOVERED("error: unit is already recovered"),
+    ALREADY_GARRISONED("error: unit is already garrosoned"),
         //MESSAGES
     UNIT_MOVED("unit moves here successfully"),
     UNIT_SLEPT("unit slept successfully"),
     UNIT_ALERTED("unit alerted successfully"),
-    UNIT_FORTIFIED("unit fortified successfully")
+    UNIT_FORTIFIED("unit fortified successfully"),
+    UNIT_RECOVERING("unit recovered successfully"),
+    UNIT_GARRISONED("unit garrisoned successfully")
 
     ;
 

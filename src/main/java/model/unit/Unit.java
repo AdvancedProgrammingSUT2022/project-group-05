@@ -1,6 +1,7 @@
 package model.unit;
 
 import model.game.Civilization;
+import model.map.Map;
 import model.tile.Tile;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
@@ -39,6 +40,9 @@ public abstract class Unit {
 
     //TODO... Read game.pdf page 21 and implement the functions below
     public boolean canMoveTo(Tile tile) { //checks if unit can move to a given tile
+        if (Map.getInstance().bestPathFinder(this.tile, tile, remainingMovement) == null) {
+            return false;
+        }
         return true;
     }
 

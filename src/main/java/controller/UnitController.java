@@ -16,7 +16,6 @@ import java.util.HashMap;
 public class UnitController {
 
     private Unit unit;
-    private Map map;
 
 
     public void applyUnitStateForTurn() { // this method is used for states that have effects in next turns
@@ -26,7 +25,7 @@ public class UnitController {
                 this.unitFortify();
                 break;
             case ALERTED:
-                this.checkEnemyInAlertedState(this.map);
+                this.checkEnemyInAlertedState();
                 break;
             case RECOVERING:
                 this.recoverUnitInRecoveringState();
@@ -50,14 +49,14 @@ public class UnitController {
         this.unit = unit;
     }
 
-    public String unitMove(HashMap<String, String> command, Map map) {
+    public String unitMove(HashMap<String, String> command) {
 
         this.setDefenceBonusInFortifyState(0);
 
         int xPlace = Integer.parseInt(command.get("X_POSITION"));
         int yPlace = Integer.parseInt(command.get("Y_POSITION"));
         Tile here = this.unit.getTile();
-        Tile destination = map.getTileFromMap(xPlace, yPlace);
+        Tile destination = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
         if (true) {
             //TODO.. handle fog of war
@@ -67,14 +66,14 @@ public class UnitController {
                 (this.unit instanceof Civilian && destination.getCivilian() != null)) {
             return Responses.ALREADY_A_UNIT_IN_TILE.toString();
         } else {
-            Path bestPath = map.bestPathFinder(here, destination, this.unit.getRemainingMovement());
+            Path bestPath = Map.getInstance().bestPathFinder(here, destination, this.unit.getRemainingMovement());
             if (bestPath == null) {
                 return Responses.UNABLE_TO_MOVE_UNIT_HERE.toString();
             } else {
                 if (this.unit instanceof Soldier) {
-                    map.moveSoldier((Soldier) this.unit, bestPath);
+                    Map.getInstance().moveSoldier((Soldier) this.unit, bestPath);
                 } else if (this.unit instanceof Civilian) {
-                    map.moveCivilian((Civilian) this.unit, bestPath);
+                    Map.getInstance().moveCivilian((Civilian) this.unit, bestPath);
                 }
                 return Responses.UNIT_MOVED.toString();
             }
@@ -104,15 +103,25 @@ public class UnitController {
         }
     }
 
-    public void unitRecover() {
-        this.setDefenceBonusInFortifyState(0);
-        this.unit.recovering();
+    public String unitRecover() {
+        if (!this.unit.getUnitState().equals(UnitState.RECOVERING)) {
+            this.setDefenceBonusInFortifyState(0);
+            this.unit.recovering();
+            return Responses.UNIT_RECOVERING.toString();
+        } else {
+            return Responses.ALREADY_RECOVERED.toString();
+        }
     }
 
-    public void unitGarrison() {
+    public String unitGarrison() {
         //TODO..  unit is in the city?
-        this.setDefenceBonusInFortifyState(0);
-        this.unit.garrison();
+        if (!this.unit.getUnitState().equals(UnitState.GARRISONED)) {
+            this.setDefenceBonusInFortifyState(0);
+            this.unit.garrison();
+            return Responses.UNIT_GARRISONED.toString();
+        } else {
+            return Responses.ALREADY_GARRISONED.toString();
+        }
     }
 
     public void unitSetupRanged() {
@@ -238,10 +247,10 @@ public class UnitController {
         }
     }
 
-    public void checkEnemyInAlertedState(Map map) { // check neighbor tile for enemies in alerted state
+    public void checkEnemyInAlertedState() { // check neighbor tile for enemies in alerted state
         if (this.unit.getUnitState() == UnitState.ALERTED) {
             Tile here = this.unit.getTile();
-            Tile[] neighbors = map.findNeighbors(here);
+            Tile[] neighbors = Map.getInstance().findNeighbors(here);
             for (int i = 0; i < 6; i++) {
                 if (neighbors[i].getSoldier() != null) {
                     if (neighbors[i].getSoldier().getCivilization() != this.unit.getCivilization()) {

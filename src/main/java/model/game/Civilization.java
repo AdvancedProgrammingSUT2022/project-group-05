@@ -127,4 +127,8 @@ public class Civilization {
     public ArrayList<Unit> getUnits() {
         return this.units;
     }
+
+    public ArrayList<City> getCities() {
+        return cities;
+    }
 }

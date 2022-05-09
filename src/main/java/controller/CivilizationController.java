@@ -73,4 +73,11 @@ public class CivilizationController {
     public String showTradeHistory() {
         return "";
     }
+
+    //GETTERS
+
+
+    public Civilization getCivilization() {
+        return civilization;
+    }
 }

@@ -56,7 +56,7 @@ public class GameMenu extends Menu {
                 printMessage(""); //TODO... add controller function
 
             //SELECT COMMANDS
-            else if ((command = getHashMap(input, SELECT_UNIT_MILITARY)) != null)
+            else if ((command = getHashMap(input, SELECT_UNIT_SOLDIER)) != null)
                 printMessage(""); //TODO... add controller function
             else if ((command = getHashMap(input, SELECT_UNIT_CIVILIAN)) != null)
                 printMessage(""); //TODO... add controller function
@@ -74,7 +74,7 @@ public class GameMenu extends Menu {
                 printMessage(""); //TODO... add controller function
             else if ((command = getHashMap(input, UNIT_FORTIFY)) != null)
                 printMessage(""); //TODO... add controller function
-            else if ((command = getHashMap(input, UNIT_HEAL)) != null)
+            else if ((command = getHashMap(input, UNIT_RECOVER)) != null)
                 printMessage(""); //TODO... add controller function
             else if ((command = getHashMap(input, UNIT_GARRISON)) != null)
                 printMessage(""); //TODO... add controller function

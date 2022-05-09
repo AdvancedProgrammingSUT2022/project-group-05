@@ -25,7 +25,7 @@ public enum GameMenuCommand{
     INFO_DEALS("\\s*info\\s+deals(?<entities>.*)", List.of()),
 
     //SELECT COMMANDS
-    SELECT_UNIT_MILITARY("\\s*select\\s+unit\\s+military(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+    SELECT_UNIT_SOLDIER("\\s*select\\s+unit\\s+soldier(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     SELECT_UNIT_CIVILIAN("\\s*select\\s+unit\\s+civilian(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     SELECT_CITY_POSITION("\\s*select\\s+city(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     SELECT_CITY_NAME("\\s*select\\s+city(?<entities>.*)", List.of(CITY_NAME.getKey())),
@@ -35,7 +35,7 @@ public enum GameMenuCommand{
     UNIT_SLEEP("\\s*unit\\s+sleep(?<entities>.*)", List.of()),
     UNIT_ALERT("\\s*unit\\s+alert(?<entities>.*)", List.of()),
     UNIT_FORTIFY("\\s*unit\\s+fortify(?<entities>.*)", List.of()),
-    UNIT_HEAL("\\s*unit\\s+heal(?<entities>.*)", List.of()),
+    UNIT_RECOVER("\\s*unit\\s+recover(?<entities>.*)", List.of()),
     UNIT_GARRISON("\\s*unit\\s+garrison(?<entities>.*)", List.of()),
     UNIT_SETUP_RANGED("\\s*unit\\s+setup\\s+ranged(?<entities>.*)", List.of()),
     UNIT_ATTACK("\\s*unit\\s+attack(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
