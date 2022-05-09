@@ -36,7 +36,6 @@ public class Tile{
     private int production;
     private int combatBoost;
     private int movementCost;
-    private int constructionDelay;
 
     public Tile (int xPlace, int yPlace, int sizeOfMap) {
         this.ID = xPlace * sizeOfMap + yPlace;
