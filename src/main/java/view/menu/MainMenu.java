@@ -44,7 +44,7 @@ public class MainMenu extends Menu {
             else if ((command = getHashMap(input, PLAY_GAME)) != null) {
                 String response = MainMenuController.getInstance().startGame(command);
                 printMessage(response);
-                if (response == "game started successfully") // TODO clean programming...
+                if (response.equals("game started successfully")) // TODO clean programming...
                     return MenuType.GAME;
             }
             else

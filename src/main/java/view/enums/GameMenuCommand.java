@@ -50,6 +50,11 @@ public enum GameMenuCommand{
     UNIT_REPAIR("\\s*unit\\s+repair(?<entities>.*)", List.of()),
 
     //CITY COMMANDS
+    CITY_CREATE_UNIT("", List.of()),
+    CITY_CREATE_BUILDING("", List.of()),
+    CITY_BUY_TILE("", List.of()),
+    CITY_PURCHASE_UNIT("", List.of()),
+    CITY_PURCHASE_BUILDING("", List.of()),
 
 
     //MAP COMMANDS

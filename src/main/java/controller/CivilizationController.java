@@ -13,6 +13,10 @@ public class CivilizationController {
     private Civilization civilization ;
 
 
+    public CivilizationController(Civilization civilization) {
+        this.civilization = civilization;
+    }
+
     public void combat(HashMap<String, String> command) {
         //TODO...
     }
@@ -68,9 +72,5 @@ public class CivilizationController {
 
     public String showTradeHistory() {
         return "";
-    }
-
-    public void endTurn() {
-        civilization.setTurn(civilization.getTurn() + 1);
     }
 }
