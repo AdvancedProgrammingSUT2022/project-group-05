@@ -1,5 +1,7 @@
 package view.menu;
 
+import controller.MainMenuController;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -40,8 +42,10 @@ public class MainMenu extends Menu {
                 return MenuType.LOGIN;
             }
             else if ((command = getHashMap(input, PLAY_GAME)) != null) {
-                printMessage(""); //TODO... add controller function
-                return MenuType.GAME;
+                String response = MainMenuController.getInstance().startGame(command);
+                printMessage(response);
+                if (response == "game started successfully") // TODO clean programming...
+                    return MenuType.GAME;
             }
             else
                 printMessage("error: invalid command");

@@ -40,7 +40,7 @@ public enum LoginMenuCommand{
         HashMap<String, String> result = extractEntities(matcher.group("entities"));
         if (result == null) return null;
 
-        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
+        if (!ListUtility.isEqualString(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }
