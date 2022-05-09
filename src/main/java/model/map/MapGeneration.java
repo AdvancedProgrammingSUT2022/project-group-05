@@ -29,7 +29,6 @@ public class MapGeneration {
     private static final int FEATURE_JUNGLE_PROB = 5;
     private static final int FEATURE_MARSH_PROB = 5;
     private static final int FEATURE_OASIS_PROB = 5;
-    private static final int FEATURE_NO_PROB = 5;
 
     private static final int RESOURCE_BANANA_PROB = 5;
     private static final int RESOURCE_COW_PROB = 5;
