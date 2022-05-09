@@ -21,7 +21,7 @@ public class Game {
         this.civilizations = new ArrayList<>();
 
         for (int i = 0; i < players.size(); i++) {
-            this.civilizations.add(new Civilization(null, null, players.get(i), i, 0));
+            this.civilizations.add(new Civilization(players.get(i), i, 0));
         }
     }
 

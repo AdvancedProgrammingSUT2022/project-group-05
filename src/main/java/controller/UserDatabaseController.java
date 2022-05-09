@@ -21,7 +21,7 @@ public class UserDatabaseController {
 
     private void updateDatabase(ArrayList<HashMap<String, String>> users) {
         try {
-            FileWriter writer = new FileWriter("src/main/java/models/usersDatabase.json");
+            FileWriter writer = new FileWriter("src/main/java/model/usersDatabase.json");
             writer.write(new Gson().toJson(users));
             writer.close();
         } catch (IOException e) {
@@ -31,7 +31,7 @@ public class UserDatabaseController {
 
     private ArrayList<HashMap<String, String>> loadDatabase() {
         try {
-            String json = new String(Files.readAllBytes(Paths.get("src/main/java/models/usersDatabase.json")));
+            String json = new String(Files.readAllBytes(Paths.get("src/main/java/model/usersDatabase.json")));
             ArrayList<HashMap<String, String>> users;
             users = new Gson().fromJson(json, new TypeToken<List<HashMap<String, String>>>() {
             }.getType());
@@ -64,7 +64,8 @@ public class UserDatabaseController {
 
     public boolean isPasswordCorrect(int userIndex, String password) {
         ArrayList<HashMap<String, String>> users = this.loadDatabase();
-        if (users.get(userIndex).get("password").equals(password)) {
+        String p = users.get(userIndex).get("password");
+        if (p.equals(password)) {
             return true;
         } else {
             return false;

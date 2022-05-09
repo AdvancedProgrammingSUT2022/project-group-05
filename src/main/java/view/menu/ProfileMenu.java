@@ -9,8 +9,9 @@ import static view.enums.ProfileMenuCommand.*;
 
 public class ProfileMenu extends Menu {
 
-    private ProfileMenuController profileMenuController;
-    private String username;
+    private ProfileMenuController profileMenuController = new ProfileMenuController();
+    private static String  username;
+
 
     public ProfileMenu(Scanner scanner) {
         super(scanner);
@@ -18,6 +19,9 @@ public class ProfileMenu extends Menu {
 
     @Override
     public MenuType run() {
+
+
+
         String input;
         HashMap<String, String> command;
 
@@ -35,11 +39,15 @@ public class ProfileMenu extends Menu {
             else if ((command = getHashMap(input, MENU_SHOW_CURRENT)) != null)
                 printMessage("profile menu");
             else if ((command = getHashMap(input, PROFILE_CHANGE_PASSWORD)) != null)
-                printMessage(profileMenuController.changePassword(command, this.username)); //TODO.. access to username of player
+                printMessage(profileMenuController.changePassword(command, username));
             else if ((command = getHashMap(input, PROFILE_CHANGE_NICKNAME)) != null)
-                printMessage(profileMenuController.changeNickname(command));
+                printMessage(profileMenuController.changeNickname(command, username));
             else
                 printMessage("error: invalid command");
         }
+    }
+
+    public static void setUsername(String username) {
+        ProfileMenu.username = username;
     }
 }

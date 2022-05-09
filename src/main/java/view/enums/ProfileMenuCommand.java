@@ -12,7 +12,7 @@ import static view.enums.Entity.*;
 
 public enum ProfileMenuCommand{
     PROFILE_CHANGE_NICKNAME("\\s*profile\\s+change(?<entities>.*)", List.of(NICKNAME.getKey())),
-    PROFILE_CHANGE_PASSWORD("\\s*profile\\s+change(?<entities>.*)", List.of(PASSWORD.getKey(), OLD_PASSWORD.getKey(), NEW_PASSWORD.getKey())),
+    PROFILE_CHANGE_PASSWORD("\\s*profile\\s+change(?<entities>.*)", List.of(PASSWORD.getKey(), OLD_PASSWORD.getKey(), NEW_PASSWORD.getKey())), //TODO.. password entity in empty in this regex
     MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)", List.of()),
     MENU_EXIT("\\s*menu\\s+exit(?<entities>.*)", List.of()),
     EXIT("\\s*exit(?<entities>.*)", List.of());
