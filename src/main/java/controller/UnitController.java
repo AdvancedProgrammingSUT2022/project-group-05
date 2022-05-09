@@ -44,12 +44,13 @@ public class UnitController {
     }
 
     //TODO.. check state if it is already (MR.B)
+    //TODO.. handle deselect or select a unit after a command which is better
 
     public UnitController(Unit unit) {
         this.unit = unit;
     }
 
-    public void unitMove(HashMap<String, String> command, Map map) {
+    public String unitMove(HashMap<String, String> command, Map map) {
 
         this.setDefenceBonusInFortifyState(0);
 
@@ -64,35 +65,42 @@ public class UnitController {
 
         if ((this.unit instanceof Soldier && destination.getSoldier() != null) ||
                 (this.unit instanceof Civilian && destination.getCivilian() != null)) {
-            //TODO error same unit in one tile
+            return Responds.ALREADY_A_UNIT_IN_TILE.toString();
         } else {
             Path bestPath = map.bestPathFinder(here, destination, this.unit.getRemainingMovement());
             if (bestPath == null) {
-                //TODO.. error can't move
+                return Responds.UNABLE_TO_MOVE_UNIT_HERE.toString();
             } else {
                 if (this.unit instanceof Soldier) {
                     map.moveSoldier((Soldier) this.unit, bestPath);
                 } else if (this.unit instanceof Civilian) {
                     map.moveCivilian((Civilian) this.unit, bestPath);
                 }
+                return Responds.UNIT_MOVED.toString();
             }
         }
     }
 
-    public void unitSleep() {
+    public String unitSleep() {
+        if (this.unit.getUnitState().equals(UnitState.ASLEEP)) return Responds.ALREADY_ASLEEP.toString();
         this.unit.sleep();
+        this.setDefenceBonusInFortifyState(0);
+        return Responds.UNIT_SLEPT.toString();
     }
 
-    public void unitAlert() {
+    public String unitAlert() {
+        if (this.unit.getUnitState().equals(UnitState.ALERTED)) return Responds.ALREADY_ALERTED.toString();
         this.unit.alert();
+        return Responds.UNIT_ALERTED.toString();
     }
 
-    public void unitFortify() {
-        if (this.unit.getUnitState() != UnitState.FORTIFY) {
+    public String unitFortify() {
+        if (!this.unit.getUnitState().equals(UnitState.FORTIFY)) {
             this.setDefenceBonusInFortifyState(1);
             this.unit.fortify();
+            return Responds.UNIT_FORTIFIED.toString();
         } else {
-            //TODO.. this is already fortified
+            return Responds.ALREADY_FORTIFIED.toString();
         }
     }
 
