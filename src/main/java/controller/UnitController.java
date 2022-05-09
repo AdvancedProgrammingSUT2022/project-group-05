@@ -65,42 +65,42 @@ public class UnitController {
 
         if ((this.unit instanceof Soldier && destination.getSoldier() != null) ||
                 (this.unit instanceof Civilian && destination.getCivilian() != null)) {
-            return Responds.ALREADY_A_UNIT_IN_TILE.toString();
+            return Responses.ALREADY_A_UNIT_IN_TILE.toString();
         } else {
             Path bestPath = map.bestPathFinder(here, destination, this.unit.getRemainingMovement());
             if (bestPath == null) {
-                return Responds.UNABLE_TO_MOVE_UNIT_HERE.toString();
+                return Responses.UNABLE_TO_MOVE_UNIT_HERE.toString();
             } else {
                 if (this.unit instanceof Soldier) {
                     map.moveSoldier((Soldier) this.unit, bestPath);
                 } else if (this.unit instanceof Civilian) {
                     map.moveCivilian((Civilian) this.unit, bestPath);
                 }
-                return Responds.UNIT_MOVED.toString();
+                return Responses.UNIT_MOVED.toString();
             }
         }
     }
 
     public String unitSleep() {
-        if (this.unit.getUnitState().equals(UnitState.ASLEEP)) return Responds.ALREADY_ASLEEP.toString();
+        if (this.unit.getUnitState().equals(UnitState.ASLEEP)) return Responses.ALREADY_ASLEEP.toString();
         this.unit.sleep();
         this.setDefenceBonusInFortifyState(0);
-        return Responds.UNIT_SLEPT.toString();
+        return Responses.UNIT_SLEPT.toString();
     }
 
     public String unitAlert() {
-        if (this.unit.getUnitState().equals(UnitState.ALERTED)) return Responds.ALREADY_ALERTED.toString();
+        if (this.unit.getUnitState().equals(UnitState.ALERTED)) return Responses.ALREADY_ALERTED.toString();
         this.unit.alert();
-        return Responds.UNIT_ALERTED.toString();
+        return Responses.UNIT_ALERTED.toString();
     }
 
     public String unitFortify() {
         if (!this.unit.getUnitState().equals(UnitState.FORTIFY)) {
             this.setDefenceBonusInFortifyState(1);
             this.unit.fortify();
-            return Responds.UNIT_FORTIFIED.toString();
+            return Responses.UNIT_FORTIFIED.toString();
         } else {
-            return Responds.ALREADY_FORTIFIED.toString();
+            return Responses.ALREADY_FORTIFIED.toString();
         }
     }
 

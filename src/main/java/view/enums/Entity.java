@@ -8,7 +8,6 @@ public enum Entity{
     //normal entities
     USERNAME("username", "(--username|-u)\\s+(?<username>\\w+)\\s*"),
     PASSWORD("password", "(--password|-p)\\s+(?<password>\\S+)\\s*"),
-    PASSWORD_CHANGE("passwordChange", "(--password|-p)\\s+(?<passwordChange>)\\s*"),
     NEW_PASSWORD("newPassword", "(--new-password|-np)\\s+(?<newPassword>\\S+)\\s*"),
     OLD_PASSWORD("oldPassword", "(--old-password|-op)\\s+(?<oldPassword>\\S+)\\s*"),
     NICKNAME("nickname", "(--nickname|-n)\\s+(?<nickname>[a-zA-Z0-9 ]+)\\s*"),
