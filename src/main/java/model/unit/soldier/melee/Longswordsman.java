@@ -12,4 +12,11 @@ public class Longswordsman extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 3;
     }
+
+    @Override
+    public String toString () {
+        //return "Longswordsman";
+        //TODO we can edit after map printing beacause its too long to print
+        return "LSword";
+    }
 }

@@ -12,4 +12,9 @@ public class Spearman extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
     }
+
+    @Override
+    public String toString () {
+        return "Spearman";
+    }
 }

@@ -12,4 +12,9 @@ public class Knight extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 3;
     }
+
+    @Override
+    public String toString () {
+        return "Knight";
+    }
 }

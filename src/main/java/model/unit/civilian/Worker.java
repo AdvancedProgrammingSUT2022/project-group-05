@@ -36,4 +36,9 @@ public class Worker extends Civilian {
     public void repairTile() {
         //TODO  repair Tile
     }
+
+    @Override
+    public String toString () {
+        return "Worker";
+    }
 }

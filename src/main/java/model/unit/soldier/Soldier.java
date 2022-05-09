@@ -11,4 +11,9 @@ public abstract class Soldier extends Unit{
     }
 
     public abstract boolean canAttackTile(Tile tile, Map map); //Checks if this unit is in range to attack given tile
+
+    @Override
+    public String toString () {
+        return "Soldier";
+    }
 }

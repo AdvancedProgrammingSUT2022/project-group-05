@@ -12,4 +12,9 @@ public class Archer extends Ranged {
         this.maxAttackRange = 2;
         this.maxMovement = 2;
     }
+
+    @Override
+    public String toString () {
+        return "Archer";
+    }
 }

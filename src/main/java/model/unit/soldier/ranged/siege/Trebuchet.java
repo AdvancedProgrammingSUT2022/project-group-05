@@ -12,4 +12,11 @@ public class Trebuchet extends Siege {
         this.maxAttackRange = 2;
         this.maxMovement = 2;
     }
+
+    @Override
+    public String toString () {
+        //return "Trebuchet";
+        //TODO we can edit after map printing beacause its too long to print
+        return "trebuch";
+    }
 }

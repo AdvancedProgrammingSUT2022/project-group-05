@@ -17,4 +17,9 @@ public abstract class Siege extends Ranged {
     public boolean isSetup() { //checks if siege unit is ready for attack
         return unitState == UnitState.SET_FOR_SIEGE;
     }
+
+    @Override
+    public String toString () {
+        return "Siege";
+    }
 }
