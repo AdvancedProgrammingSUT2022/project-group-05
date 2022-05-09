@@ -12,4 +12,11 @@ public class AntiTankGun extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
     }
+
+    @Override
+    public String toString () {
+        //return "AntiTankGun";
+        //TODO we can edit after map printing beacause its too long to print
+        return "AntTank";
+    }
 }

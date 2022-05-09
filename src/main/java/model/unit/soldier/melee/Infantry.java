@@ -12,4 +12,9 @@ public class Infantry extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
     }
+
+    @Override
+    public String toString () {
+        return "Infantry";
+    }
 }

@@ -12,4 +12,9 @@ public class Panzer extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 5;
     }
+
+    @Override
+    public String toString () {
+        return "Panzer";
+    }
 }

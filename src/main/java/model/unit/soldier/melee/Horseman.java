@@ -12,4 +12,9 @@ public class Horseman extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 4;
     }
+
+    @Override
+    public String toString () {
+        return "Horseman";
+    }
 }

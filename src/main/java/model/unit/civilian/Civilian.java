@@ -10,4 +10,8 @@ public class Civilian extends Unit {
         super(civilization, tile);
     }
 
+    @Override
+    public String toString () {
+        return "Civilian";
+    }
 }

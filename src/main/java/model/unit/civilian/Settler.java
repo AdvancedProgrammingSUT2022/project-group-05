@@ -20,5 +20,8 @@ public class Settler extends Civilian {
         //this.civilization.addCity(new City(cityName, this.tile, this.civilization));
     }
 
-
+    @Override
+    public String toString () {
+        return  "Settler";
+    }
 }
