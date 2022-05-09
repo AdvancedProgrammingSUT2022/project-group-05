@@ -12,7 +12,7 @@ import static view.enums.Entity.*;
 
 public enum ProfileMenuCommand{
     PROFILE_CHANGE_NICKNAME("\\s*profile\\s+change(?<entities>.*)", List.of(NICKNAME.getKey())),
-    PROFILE_CHANGE_PASSWORD("\\s*profile\\s+change(?<entities>.*)", List.of(PASSWORD.getKey(), OLD_PASSWORD.getKey(), NEW_PASSWORD.getKey())),
+    PROFILE_CHANGE_PASSWORD("\\s*profile\\s+change\\s+(--password|-p)(?<entities>.*)", List.of(OLD_PASSWORD.getKey(), NEW_PASSWORD.getKey())),
     MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)", List.of()),
     MENU_EXIT("\\s*menu\\s+exit(?<entities>.*)", List.of()),
     EXIT("\\s*exit(?<entities>.*)", List.of());
@@ -41,7 +41,7 @@ public enum ProfileMenuCommand{
         HashMap<String, String> result = extractEntities(matcher.group("entities"));
         if (result == null) return null;
 
-        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
+        if (!ListUtility.isEqualString(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }

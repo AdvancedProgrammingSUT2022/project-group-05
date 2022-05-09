@@ -10,7 +10,6 @@ public class Game {
     private final int civilizationCount;
     private final ArrayList<Civilization> civilizations;
 
-    private Map map;
 
     //Singleton pattern definition
     private static Game instance;
@@ -34,4 +33,15 @@ public class Game {
     }
 
     //end of Singleton pattern definition
+
+    //GETTER
+
+
+    public ArrayList<Civilization> getCivilizations() {
+        return civilizations;
+    }
+
+    public int getCivilizationCount() {
+        return civilizationCount;
+    }
 }

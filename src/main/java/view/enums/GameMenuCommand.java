@@ -50,6 +50,11 @@ public enum GameMenuCommand{
     UNIT_REPAIR("\\s*unit\\s+repair(?<entities>.*)", List.of()),
 
     //CITY COMMANDS
+    CITY_CREATE_UNIT("", List.of()),
+    CITY_CREATE_BUILDING("", List.of()),
+    CITY_BUY_TILE("", List.of()),
+    CITY_PURCHASE_UNIT("", List.of()),
+    CITY_PURCHASE_BUILDING("", List.of()),
 
 
     //MAP COMMANDS
@@ -94,7 +99,7 @@ public enum GameMenuCommand{
         HashMap<String, String> result = extractEntities(matcher.group("entities"));
         if (result == null) return null;
 
-        if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
+        if (!ListUtility.isEqualString(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }

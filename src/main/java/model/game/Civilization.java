@@ -14,7 +14,6 @@ public class Civilization {
 
     private User player;
     private int color;
-    private int turn;
 
     private int food;
     private int gold;
@@ -35,7 +34,6 @@ public class Civilization {
 
         this.player = player;
         this.color = color;
-        this.turn = turn;
 
         //TODO... Reconfigure the initial values of "food, gold, happiness, ..." based on doc
         this.food = 0;
@@ -61,10 +59,6 @@ public class Civilization {
     }
 
     //SETTERS
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
     public void setFood(int food) {
         this.food = food;
     }
@@ -100,10 +94,6 @@ public class Civilization {
 
     public int getColor() {
         return color;
-    }
-
-    public int getTurn() {
-        return turn;
     }
 
     public int getFood() {
