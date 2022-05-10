@@ -14,7 +14,7 @@ import static view.enums.Entity.*;
 public class GameMenuController {
     //FIELDS
     private int civilizationCount;
-    private ArrayList<CivilizationController> civilizationControllers;
+    private ArrayList<CivilizationController> civilizationControllers = new ArrayList<>();
     private int currentTurn;
     private CivilizationController currentCivilizationController;
     private UnitController selectedUnitController; //TODO it should be null while using other methods
@@ -32,7 +32,7 @@ public class GameMenuController {
 
     public String nextCivilization() {
         if (currentCivilizationController.isHasRequiredAction()) {
-            return currentCivilizationController.getRequiredActions();
+            return "error: " + currentCivilizationController.getRequiredActions();
         } else {
             this.currentTurn++;
             this.currentTurn %= this.civilizationCount;
@@ -288,4 +288,46 @@ public class GameMenuController {
             return selectedCityController.purchaseBuilding(buildingName);
         }
     }
+
+    // MAP COMMAND
+
+    public String mapShowCity(HashMap<String, String> command) {
+        String cityName = command.get(CITY_NAME.getKey());
+        //TODO find city by cityName in Map (city must have been discovered before) and print Map
+        return "";
+    }
+
+    public String mapShowPosition(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+        //TODO check validity of x and y and print Map
+        return "";
+    }
+
+    public String mapMove(HashMap<String, String> command) {
+        String direction = command.get(DIRECTION.getKey());
+        //TODO move Map to desired direction and print Map
+        return "";
+    }
+
+    // CHEAT CODE COMMANDS
+
+    public String increaseTurn(HashMap<String, String> command) {
+        int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
+        //TODO change variables with respect to amount of turn
+        return "turn increased";
+    }
+
+    public String increaseGold(HashMap<String, String> command) {
+        int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
+        this.currentCivilizationController.getCivilization().setGold(this.currentCivilizationController.getCivilization().getGold() + amount);
+        return "turn increased";
+    }
+
+    // END OF TURN
+
+    public String endOfTurn(HashMap<String, String> command) {
+        return this.nextCivilization();
+    }
+
 }
