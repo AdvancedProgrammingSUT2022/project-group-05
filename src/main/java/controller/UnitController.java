@@ -1,5 +1,6 @@
 package controller;
 
+import model.game.City;
 import model.map.Map;
 import model.map.Path;
 import model.tile.Tile;
@@ -212,8 +213,9 @@ public class UnitController {
         }
     }
 
-    public void unitBuild() {
-
+    public String unitBuild(String name) {
+        //TODO ...
+        return "";
     }
 
     public void unitRemoveForest() {
@@ -234,29 +236,31 @@ public class UnitController {
 
     }
 
-    public void unitRemoveRoute() {
+    public String unitRemoveRoute() {
         if (this.unit instanceof Worker) {
             Worker worker = (Worker) this.unit;
             if (this.unit.getTile().hasRoute()) {
                 worker.removeRoute();
+                return "route removed successfully";
             } else {
-                //TODO.. error
+                return "Tile does not have route";
             }
         } else {
-            //TODO.. error
+            return "This is not worker unit";
         }
     }
 
-    public void unitRepair() {
+    public String unitRepair() {
         if (this.unit instanceof Worker) {
             Worker worker = (Worker) this.unit;
             if (!this.unit.getTile().isRepaired()) {
                 worker.repairTile();
+                return "Tile repaired successfully";
             } else {
-                //TODO error : tile is repaired
+                return "error: tile is already repaired";
             }
         } else {
-            //TODO error
+            return "This is not worker unit";
         }
     }
 
@@ -291,6 +295,12 @@ public class UnitController {
         speed += this.unit.getHealingBonus();
         this.unit.setHealingSpeed(speed);
         this.unit.heal();
+    }
+
+    public void spawnUnit(City city) {
+        //TODO check special conditions...
+        this.unit.setTile(city.getCenter());
+        this.unit.getCivilization().addUnit(this.unit);
     }
 
 

@@ -11,7 +11,9 @@ import java.util.HashMap;
 
 public class CivilizationController {
     private Civilization civilization ;
+    private boolean hasRequiredAction;
 
+    private ArrayList<String> requiredActions;
 
     public CivilizationController(Civilization civilization) {
         this.civilization = civilization;
@@ -79,5 +81,23 @@ public class CivilizationController {
 
     public Civilization getCivilization() {
         return civilization;
+    }
+
+    public String getRequiredActions() {
+        return requiredActions.get(0);
+    }
+
+    public boolean isHasRequiredAction() {
+        return hasRequiredAction;
+    }
+
+    public void searchForRequiredActions() {
+        //TODO find problems such as stacked unit , units without orders, no research chosen, ... and add their comments in required actions
+        // requiredActions.add(" comment ");...
+        if (requiredActions.size() == 0) {
+            this.hasRequiredAction = false;
+        } else {
+            this.hasRequiredAction = true;
+        }
     }
 }

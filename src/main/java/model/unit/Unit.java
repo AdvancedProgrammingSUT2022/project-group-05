@@ -25,6 +25,10 @@ public abstract class Unit {
     protected int healingSpeed;
     protected int healingBonus;
 
+    protected int remainingProductionNeeded;
+
+    protected boolean createdYet;
+
     protected UnitState unitState;
 
     public Unit(Civilization civilization, Tile tile) {
@@ -177,5 +181,9 @@ public abstract class Unit {
 
     public int getHealingBonus() {
         return healingBonus;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }

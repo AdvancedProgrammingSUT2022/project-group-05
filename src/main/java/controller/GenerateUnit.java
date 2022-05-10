@@ -20,7 +20,7 @@ import model.unit.soldier.ranged.siege.Trebuchet;
 
 public class GenerateUnit {
 
-    public Unit StringToUnit(Civilization civilization, Tile tile, String unitName) {
+    public static Unit StringToUnit(Civilization civilization, Tile tile, String unitName) {
         Unit unit;
         switch (unitName) {
             case ("Archer"):

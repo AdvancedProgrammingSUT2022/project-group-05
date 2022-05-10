@@ -50,6 +50,10 @@ public class Civilization {
         return this.cities.contains(city);
     }
 
+    public void addUnit(Unit unit) {
+        this.units.add(unit);
+    }
+
     public void removeUnit(Unit unit) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).equals(unit)) {
@@ -130,5 +134,10 @@ public class Civilization {
 
     public ArrayList<City> getCities() {
         return cities;
+    }
+
+    public void applyNewTurnChanges() {
+        //TODO increase production , decrease required production needed for units that are being created
+
     }
 }
