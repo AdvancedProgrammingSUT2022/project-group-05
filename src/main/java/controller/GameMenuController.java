@@ -50,7 +50,9 @@ public class GameMenuController {
 
     // end of singleton design pattern
 
-    //GAME COMMAND VERIFICATION (METHODS)
+    //SELECT COMMANDS
+
+
     public String selectUnitSoldier(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
@@ -100,11 +102,15 @@ public class GameMenuController {
         return "There is no city with this name";
     }
 
+    //UNIT COMMANDS
+
     public String unitMove(HashMap<String, String> command) {
         if (this.selectedUnitController == null) {
             return "No unit selected";
         } else {
-            return selectedUnitController.unitMove(command);
+            int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
+            int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
+            return selectedUnitController.unitMove(xPlace, yPlace);
         }
     }
 
@@ -145,6 +151,57 @@ public class GameMenuController {
             return "No unit selected";
         } else {
             return selectedUnitController.unitGarrison();
+        }
+    }
+
+    public String unitSetupRanged(HashMap<String, String> command) {
+        if (this.selectedUnitController == null) {
+            return "No unit selected";
+        } else {
+            return selectedUnitController.unitSetupRanged();
+        }
+    }
+
+    public String unitAttack(HashMap<String, String> command) {
+        if (this.selectedUnitController == null) {
+            return "No unit selected";
+        } else {
+            int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
+            int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
+            return selectedUnitController.unitAttack(xPlace, yPlace);
+        }
+    }
+
+    public String unitCancel(HashMap<String, String> command) {
+        if (this.selectedUnitController == null) {
+            return "No unit selected";
+        } else {
+            return selectedUnitController.unitCancel();
+        }
+    }
+
+    public String unitWake(HashMap<String, String> command) {
+        if (this.selectedUnitController == null) {
+            return "No unit selected";
+        } else {
+            return selectedUnitController.unitWake();
+        }
+    }
+
+    public String unitDelete(HashMap<String, String> command) {
+        if (this.selectedUnitController == null) {
+            return "No unit selected";
+        } else {
+            return selectedUnitController.unitDelete();
+        }
+    }
+
+
+    public String unitFoundCity(HashMap<String, String> command) {
+        if (this.selectedUnitController == null) {
+            return "No unit selected";
+        } else {
+            return selectedUnitController.unitFoundCity();
         }
     }
 }

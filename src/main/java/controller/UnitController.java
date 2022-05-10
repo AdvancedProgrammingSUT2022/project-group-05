@@ -49,12 +49,9 @@ public class UnitController {
         this.unit = unit;
     }
 
-    public String unitMove(HashMap<String, String> command) {
-
+    public String unitMove(int xPlace, int yPlace) {
+        //TODO.. handle multiple-turn-moves
         this.setDefenceBonusInFortifyState(0);
-
-        int xPlace = Integer.parseInt(command.get("X_POSITION"));
-        int yPlace = Integer.parseInt(command.get("Y_POSITION"));
         Tile here = this.unit.getTile();
         Tile destination = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
@@ -114,8 +111,13 @@ public class UnitController {
     }
 
     public String unitGarrison() {
-        //TODO..  unit is in the city?
-        if (!this.unit.getUnitState().equals(UnitState.GARRISONED)) {
+        if (!this.unit.getTile().hasCity()) {
+            return "This tile does not belong to city";
+        } else if (this.unit.getTile().getCity().getCivilization() != this.unit.getCivilization()) {
+            return "Unit cannot garrison in enemy city";
+        } else if (this.unit.getTile().getCity().hasGarrisonedUnit()) {
+            return "City cannot have two garrisoned units";
+        } if (!this.unit.getUnitState().equals(UnitState.GARRISONED)) {
             this.setDefenceBonusInFortifyState(0);
             this.unit.garrison();
             return Responses.UNIT_GARRISONED.toString();
@@ -124,39 +126,41 @@ public class UnitController {
         }
     }
 
-    public void unitSetupRanged() {
-        if (this.unit instanceof Siege) {
+    public String unitSetupRanged() {
+        if (!(this.unit instanceof Siege)) {
+            return "This unit is not a siege unit";
+        } else if (!this.unit.getUnitState().equals(UnitState.SET_FOR_SIEGE)) {
             this.setDefenceBonusInFortifyState(0);
             Siege siege = (Siege) this.unit;
             siege.setup();
+            return Responses.UNIT_SETUP.toString();
         } else {
-            //TODO.. error
+            return Responses.ALREADY_SETUP.toString();
         }
     }
 
-    public void unitAttack(HashMap<String, String> command, Map map) {
-
-        int xPlace = Integer.parseInt(command.get("X_POSITION"));
-        int yPlace = Integer.parseInt(command.get("Y_POSITION"));
+    public String unitAttack(int xPlace, int yPlace) {
 
         Tile here = this.unit.getTile();
-        Tile end = map.getTileFromMap(xPlace, yPlace);
+        Tile end = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
         Soldier soldier;
         if (!(this.unit instanceof Soldier)) {
-            //TODO.. error: can't attack without soldier
+            return "This is not a soldier unit";
         } else {
             soldier = (Soldier) this.unit;
-            if (!soldier.canAttackTile(end, map)) {
+            if (!soldier.canAttackTile(end)) {
                 //TODO error: can't attack
+                return "Can't attack tile";
             } else {
                 this.setDefenceBonusInFortifyState(0);
-                this.attack(map, soldier, end.getSoldier());
+                this.attack(soldier, end.getSoldier());
+                return "unit attacked successfully";
             }
         }
     }
 
-    private void attack(Map map, Soldier soldier, Soldier enemySoldier) {
+    private void attack(Soldier soldier, Soldier enemySoldier) {
         //TODO.. MP ???
         int totalStrengthOfSoldier = soldier.getTotalMeleeStrength();
         int totalStrengthOfEnemy = enemySoldier.getTotalMeleeStrength();
@@ -167,7 +171,7 @@ public class UnitController {
         if (enemySoldier.getHealth() == 0) {
             enemySoldier.kill();
             if (soldier.getHealth() != 0) {
-                map.moveSoldierWithoutMP(soldier, enemySoldier.getTile());
+                Map.getInstance().moveSoldierWithoutMP(soldier, enemySoldier.getTile());
                 //TODO handle hostage civilian
             }
         }
@@ -177,25 +181,34 @@ public class UnitController {
         }
     }
 
-    public void unitCancel() {
-        //TODO.. ???
+    public String unitCancel() {
+        //TODO.. cancel multiple-turn-moves and ...
+        return "";
     }
 
-    public void unitWake() {
-        this.unit.wake();
+    public String unitWake() {
+        if (this.unit.getUnitState() != UnitState.ASLEEP) {
+            return Responses.ALREADY_AWAKE.toString();
+        } else {
+            this.unit.wake();
+            return Responses.UNIT_AWAKENED.toString();
+        }
     }
 
-    public void unitDelete() {
+    public String unitDelete() {
         this.setDefenceBonusInFortifyState(0);
         this.unit.killWithGold();
+        return Responses.UNIT_DELETED.toString();
     }
 
-    public void unitFoundCity(Map map, String cityName) {
+    public String unitFoundCity() {
         if (this.unit instanceof Settler) {
             Settler settler = (Settler) this.unit;
-            settler.foundCity(cityName, map);
+            String cityName = "New city";
+            settler.foundCity(cityName);
+            return "City found successfully";
         } else {
-            //TODO.. error
+            return "This is not settler unit";
         }
     }
 
