@@ -106,6 +106,10 @@ public abstract class Unit {
         this.remainingMovement = this.maxMovement;
     }
 
+    public boolean isInFriendlyTile() {
+        return this.civilization == this.tile.getCivilization();
+    }
+
     public void heal() {
         this.health  = this.health += healingSpeed;
     }
@@ -137,7 +141,6 @@ public abstract class Unit {
     }
 
     //GETTERS
-
     public int getRemainingMovement() {
         return remainingMovement;
     }
