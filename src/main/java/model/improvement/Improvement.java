@@ -43,8 +43,8 @@ public enum Improvement{
             List.of(FIELD, DESERT, GRASS, TUNDRA),
             List.of()
     ),
-    FACTORY(0, 0, 2, 8, Research.ENGINEERING,
-            List.of(FIELD, DESERT, GRASS, TUNDRA, SNOW),
+    NO_IMPROVEMENT(0, 0, 0, 0, Research.AGRICULTURE,
+            List.of(),
             List.of()
     );
 

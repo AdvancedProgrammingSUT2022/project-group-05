@@ -49,7 +49,7 @@ public enum MainMenuCommand{
             for (String key : result.keySet()) {
                 if (!key.matches("player[1-9]\\d*")) return null;
             }
-        } else if (!ListUtility.isEqual(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
+        } else if (!ListUtility.isEqualString(new ArrayList<String>(result.keySet()), command.requiredKeys)) return null;
 
         return result;
     }

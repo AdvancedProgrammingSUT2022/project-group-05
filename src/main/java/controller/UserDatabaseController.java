@@ -21,7 +21,7 @@ public class UserDatabaseController {
 
     private void updateDatabase(ArrayList<HashMap<String, String>> users) {
         try {
-            FileWriter writer = new FileWriter("src/main/java/model/usersDatabase.json");
+            FileWriter writer = new FileWriter("database/usersDatabase.json");
             writer.write(new Gson().toJson(users));
             writer.close();
         } catch (IOException e) {
@@ -29,9 +29,9 @@ public class UserDatabaseController {
         }
     }
 
-    private ArrayList<HashMap<String, String>> loadDatabase() {
+    private static ArrayList<HashMap<String, String>> loadDatabase() {
         try {
-            String json = new String(Files.readAllBytes(Paths.get("src/main/java/model/usersDatabase.json")));
+            String json = new String(Files.readAllBytes(Paths.get("database/usersDatabase.json")));
             ArrayList<HashMap<String, String>> users;
             users = new Gson().fromJson(json, new TypeToken<List<HashMap<String, String>>>() {
             }.getType());
@@ -43,7 +43,7 @@ public class UserDatabaseController {
     }
 
     public int getUserIndexByUsername(String username) {
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        ArrayList<HashMap<String, String>> users = loadDatabase();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("username").equals(username)) {
                 return i;
@@ -53,7 +53,7 @@ public class UserDatabaseController {
     }
 
     public int getUserIndexByNickname(String nickname) {
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        ArrayList<HashMap<String, String>> users = loadDatabase();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("nickname").equals(nickname)) {
                 return i;
@@ -63,7 +63,7 @@ public class UserDatabaseController {
     }
 
     public boolean isPasswordCorrect(int userIndex, String password) {
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        ArrayList<HashMap<String, String>> users = loadDatabase();
         String p = users.get(userIndex).get("password");
         if (p.equals(password)) {
             return true;
@@ -73,7 +73,7 @@ public class UserDatabaseController {
     }
 
     public void addUser(User newUser) { // add new user to database
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        ArrayList<HashMap<String, String>> users = loadDatabase();
         HashMap<String, String> userNew = new HashMap<>();
         userNew.put("username", newUser.getUsername());
         userNew.put("password", newUser.getPassword());
@@ -83,19 +83,31 @@ public class UserDatabaseController {
     }
 
     public void changeNickname(int userIndex, String newNickname) {
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        ArrayList<HashMap<String, String>> users = loadDatabase();
         users.get(userIndex).put("nickname", newNickname);
         this.updateDatabase(users);
     }
 
     public void changePassword(int userIndex, String newPassword) {
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        ArrayList<HashMap<String, String>> users = loadDatabase();
         users.get(userIndex).put("password", newPassword);
         this.updateDatabase(users);
     }
 
     public String getPasswordByIndex(int userIndex) {
-        ArrayList<HashMap<String, String>> users = this.loadDatabase();
+        ArrayList<HashMap<String, String>> users = loadDatabase();
         return users.get(userIndex).get("password");
+    }
+
+    public static User getUserByUsername(String username) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).get("username").equals(username)) {
+                HashMap<String, String> userData = users.get(i);
+                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"));
+                return user;
+            }
+        }
+        return null;
     }
 }
