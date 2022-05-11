@@ -1,44 +1,48 @@
 package model.tile;
 
 import model.game.City;
+import model.game.Civilization;
 import model.improvement.Improvement;
-import model.map.Map;
-import model.map.NeighbourType;
-import model.unit.civilian.Civilian;
-import model.unit.soldier.Soldier;
 import model.resource.Resource;
+import model.tile.project.ProjectManager;
+import model.tile.project.ProjectType;
+import model.unit.civilian.Civilian;
+import model.unit.civilian.Worker;
+import model.unit.soldier.Soldier;
+
+import java.util.Arrays;
 
 public class Tile{
     private final int xPlace;
     private final int yPlace;
     private final int zPlace;
-    //place of tile in MAP
-    private final int fromLeft;
     private final int fromTop;
+    private final int fromLeft;
 
     private final int ID;
 
+    private Route route;
     private Terrain terrain;
     private Feature feature;
     private Resource resource;
-    private City city; //This tile belongs to city
-    private Civilian civilian;
-    private Soldier soldier;
-    private boolean hasCitizen;
-    private boolean hasRoute;
-    private boolean[] rivers;
-    private boolean isRepaired; // if tile is repaired
-
     private Improvement improvement;
+
+    private City city;
+    private Soldier soldier;
+    private Civilian civilian;
+    private boolean hasCitizen;
+    private final boolean[] rivers;
+
+    private boolean isRepaired;
+    private final ProjectManager projectManager;
 
     private int food;
     private int gold;
     private int production;
     private int combatBoost;
     private int movementCost;
-    private int constructionDelay;
 
-    public Tile (int xPlace, int yPlace, int sizeOfMap) {
+    public Tile(int xPlace, int yPlace, int sizeOfMap) {
         this.ID = xPlace * sizeOfMap + yPlace;
 
         this.xPlace = xPlace;
@@ -48,14 +52,16 @@ public class Tile{
         this.fromTop = fromTopFinder(xPlace, yPlace, sizeOfMap);
         this.fromLeft = fromLeftFinder(xPlace, yPlace, sizeOfMap);
 
-        this.terrain = null;
-        this.feature = null;
-        this.resource = null;
+        this.route = Route.NO_ROUTE;
+        this.terrain = Terrain.NO_TERRAIN;
+        this.feature = Feature.NO_FEATURE;
+        this.resource = Resource.NO_RESOURCE;
+        this.improvement = Improvement.NO_IMPROVEMENT;
 
         this.rivers = new boolean[6];
-        for (int i = 0; i < 6; i++) rivers[i] = false;
+        Arrays.fill(rivers, false);
 
-        this.hasRoute = false;
+        this.projectManager = new ProjectManager();
 
         this.city = null;
         this.civilian = null;
@@ -63,67 +69,92 @@ public class Tile{
         this.hasCitizen = false;
     }
 
-    public Tile(int ID,
-                Terrain terrain, Feature feature, Resource resource,
-                int xPlace, int yPlace, int zPlace, int fromLeft, int fromTop) {
-        this.ID = ID;
-
-        this.city = null;
-        this.civilian = null;
-        this.soldier = null;
-
-        this.xPlace = xPlace;
-        this.yPlace = yPlace;
-        this.zPlace = zPlace;
-
-        this.fromLeft = fromLeft;
-        this.fromTop = fromTop;
-
-        this.terrain = terrain;
-        this.feature = feature;
-        this.resource = resource;
-
-        this.constructionDelay = 0;
-        this.rivers = new boolean[6];
-    }
-
+    //Citizen stuff
     public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile
-        this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() - 1);
         this.hasCitizen = true;
-
-        this.food += resource.getFood();
-        this.gold += resource.getGold();
-        this.production += resource.getProduction();
     }
 
     public void removeCitizen() {
         this.hasCitizen = false;
-        this.city.setJoblessCitizenCount(this.city.getJoblessCitizenCount() + 1);
-
-        this.food -= resource.getFood();
-        this.gold -= resource.getGold();
-        this.production -= resource.getProduction();
     }
 
-    public boolean hasCity() {
-        return this.city != null;
+    //Project stuff
+    public void startImprovementConstruction(Improvement improvement) {
+        this.projectManager.closeProject();
+        this.projectManager.startImprovementConstruction(improvement);
     }
 
-    public boolean hasRiver () {
-        for (int i = 0; i < 6; i++) {
-            if (this.rivers[i]) return true;
+    public  void startRouteConstruction(Route route) {
+        this.projectManager.closeProject();
+        this.projectManager.startRouteConstruction(route);
+    }
+
+    public void startImprovementRemoval() {
+        this.projectManager.closeProject();
+        this.projectManager.startImprovementRemoval();
+    }
+
+    public void startRouteRemoval() {
+        this.projectManager.closeProject();
+        this.projectManager.startRouteRemoval();
+    }
+
+    public void startFeatureRemoval(Feature feature) {
+        this.projectManager.closeProject();
+        this.projectManager.startFeatureRemoval(feature);
+    }
+
+    public void startRepair() {
+        this.projectManager.closeProject();
+        this.projectManager.startRepair();
+    }
+
+    public void elapseTurn() { //progresses the current project on this tile
+        if (this.civilian instanceof Worker) this.projectManager.continueProject();
+
+        if (this.projectManager.hasFinishedProject()) {
+            ProjectType type = this.projectManager.getProjectType();
+
+            if (type == ProjectType.FEATURE_REMOVAL)
+                this.removeFeature();
+            else if (type == ProjectType.REPAIR)
+                this.isRepaired = true;
+
+            else if (type == ProjectType.ROUTE_CONSTRUCTION)
+                this.setRoute(this.projectManager.getRouteProject());
+            else if (type == ProjectType.IMPROVEMENT_CONSTRUCTION)
+                this.setImprovement(this.projectManager.getImprovementProject());
+
+            else if (type == ProjectType.ROUTE_REMOVAL)
+                this.removeRoute();
+            else if (type == ProjectType.IMPROVEMENT_REMOVAL)
+                this.removeImprovement();
+
+            this.projectManager.closeProject();
         }
-        return false;
     }
 
-    public boolean isCityCenter() {
-        return this.hasCity() && this.equals(this.city.getCenter());
-    }
+    //TODO... if (this.city.getCivilization().getResearchTree().isResearchDone(resource.neededImprovement))
 
-    //returns move points needed to enter this tile
-    public int movePointsNeededToEnterFrom(Tile currentTile) {
-        //TODO... return the needed mp for this tile
+    //Map stuff
+    public int movePointsNeededToEnterFrom(Tile currentTile) { //returns move points needed to enter this tile
+        //TODO... return the needed mp for this tile MRB MRB MRB MRB
         return 0;
+    }
+
+    public boolean canSeeThrough(Tile tile) { //returns if a unit on this tile can see through given tile
+        //TODO..
+        if (this.terrain == Terrain.HILL) return true;
+
+        return this.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
+    }
+
+    private int fromLeftFinder(int xPlace, int yPlace, int mapSize) { //places in print map
+        return 3 * (xPlace + yPlace);
+    }
+
+    private int fromTopFinder(int xPlace, int yPlace, int mapSize) { //places in print map
+        return yPlace - xPlace + mapSize - 1;
     }
 
     //GETTERS
@@ -156,6 +187,11 @@ public class Tile{
         return this.city;
     }
 
+    public Civilization getCivilization() {
+        if (!this.hasCity()) return null;
+        return this.city.getCivilization();
+    }
+
     public Civilian getCivilian() {
         return this.civilian;
     }
@@ -164,32 +200,28 @@ public class Tile{
         return this.soldier;
     }
 
-    public Terrain getTerrain() {
-        return this.terrain;
-    }
-
-    public Feature getFeature() {
-        return this.feature;
-    }
-
-    public Resource getResource() {
-        return this.resource;
-    }
-
     public boolean hasCitizen() {
         return this.hasCitizen;
     }
 
-    public boolean hasFeature () {
-        return this.feature != null;
+    public boolean hasRoute() {
+        return this.route != null && this.route != Route.NO_ROUTE;
     }
 
-    public boolean hasTerrain () {
-        return this.terrain != null;
+    public boolean hasTerrain() {
+        return this.terrain != null && this.terrain != Terrain.NO_TERRAIN;
     }
 
-    public boolean hasResource () {
-        return this.resource != null;
+    public boolean hasFeature() {
+        return this.feature != null && this.feature != Feature.NO_FEATURE;
+    }
+
+    public boolean hasResource() {
+        return this.resource != null && this.resource != Resource.NO_RESOURCE;
+    }
+
+    public boolean hasImprovement() {
+        return this.improvement != null && this.improvement != Improvement.NO_IMPROVEMENT;
     }
 
     public int getFood() {
@@ -212,8 +244,44 @@ public class Tile{
         return this.movementCost;
     }
 
-    public boolean hasRoute() {
-        return this.hasRoute;
+    public Route getRoute() {
+        return this.route;
+    }
+
+    public Terrain getTerrain() {
+        return this.terrain;
+    }
+
+    public Feature getFeature() {
+        return this.feature;
+    }
+
+    public Resource getResource() {
+        return this.resource;
+    }
+
+    public Improvement getImprovement() {
+        return this.improvement;
+    }
+
+    public boolean hasCity() {
+        return this.city != null;
+    }
+
+    public int getRiverCount() {
+        int count = 0;
+        for (boolean hasRiver : this.rivers) {
+            if (hasRiver) count++;
+        }
+        return count;
+    }
+
+    public boolean hasRiver() {
+        return this.getRiverCount() > 0;
+    }
+
+    public boolean isCityCenter() {
+        return this.hasCity() && this.equals(this.city.getCenter());
     }
 
     public boolean isRepaired() {
@@ -233,23 +301,88 @@ public class Tile{
         this.soldier = soldier;
     }
 
+    public void removeCivilian() {
+        this.civilian = null;
+    }
+
+    public void removeSoldier() {
+        this.soldier = null;
+    }
+
+    public void setRoute(Route route) {
+        if (this.hasRoute()) this.removeRoute();
+        this.route = route;
+
+        //TODO... movement point stuff
+    }
+    public void removeRoute() {
+        //TODO... movement point stuff
+        this.route = Route.NO_ROUTE;
+    }
+
     public void setTerrain(Terrain terrain) {
+        if (this.hasTerrain()) this.removeTerrain();
         this.terrain = terrain;
+
+        this.gold += terrain.getGold();
+        this.food += terrain.getFood();
+        this.production += terrain.getProduction();
+        this.combatBoost += terrain.getCombatBoost();
+        this.movementCost += terrain.getMovementCost();
+    }
+    public void removeTerrain() {
+        this.gold -= this.terrain.getGold();
+        this.food -= this.terrain.getFood();
+        this.production -= this.terrain.getProduction();
+        this.combatBoost -= this.terrain.getCombatBoost();
+        this.movementCost -= this.terrain.getMovementCost();
+
+        this.terrain = Terrain.NO_TERRAIN;
     }
 
     public void setFeature(Feature feature) {
+        if (this.hasFeature()) this.removeFeature();
         this.feature = feature;
+
+        this.gold += feature.getGold();
+        this.food += feature.getFood();
+        this.production += feature.getProduction();
+        this.combatBoost += feature.getCombatBoost();
+        this.movementCost += feature.getMovementCost();
+    }
+    public void removeFeature() {
+        this.gold -= this.feature.getGold();
+        this.food -= this.feature.getFood();
+        this.production -= this.feature.getProduction();
+        this.combatBoost -= this.feature.getCombatBoost();
+        this.movementCost -= this.feature.getMovementCost();
     }
 
     public void setResource(Resource resource) {
+        if (this.hasResource()) this.removeResource();
         this.resource = resource;
+        //TODO is there more to do?
+    }
+    public void removeResource() {
+        //TODO is there more to do?
+        this.resource = Resource.NO_RESOURCE;
+    }
+
+    public void setImprovement(Improvement improvement) {
+        if (this.hasImprovement()) this.removeImprovement();
+        this.improvement = improvement;
+        //TODO is there more to do?
+    }
+    public void removeImprovement() {
+        //TODO is there more to do?
+        this.improvement = Improvement.NO_IMPROVEMENT;
     }
 
     public void setHasCitizen(boolean hasCitizen) {
         this.hasCitizen = hasCitizen;
     }
 
-    public void addRiver (int i) {
+    public void addRiver(int i) {
         rivers[i] = true;
     }
 
@@ -260,33 +393,7 @@ public class Tile{
         Tile tile = (Tile) object;
 
         return this.getXPlace() == tile.getXPlace() &&
-               this.getYPlace() == tile.getYPlace() &&
-               this.getZPlace() == tile.getZPlace();
-    }
-
-
-    public void removeCivilian() {
-        this.civilian = null;
-    }
-
-    public void removeSoldier() {
-        this.soldier = null;
-    }
-
-    //returns if a unit on thie tile cann see through given tile
-    public boolean canSeeThrough(Tile tile) {
-        //TODO..
-        if (this.terrain == Terrain.HILL) return true;
-
-        return this.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
-    }
-
-    //places in print map
-    private int fromLeftFinder(int xPlace, int yPlace, int mapSize) {
-        return 3 * (xPlace + yPlace);
-    }
-
-    private int fromTopFinder(int xPlace, int yPlace, int mapSize) {
-        return yPlace - xPlace + mapSize - 1;
+                this.getYPlace() == tile.getYPlace() &&
+                this.getZPlace() == tile.getZPlace();
     }
 }

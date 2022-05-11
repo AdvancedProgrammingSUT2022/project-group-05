@@ -1,8 +1,11 @@
 package controller;
 
 import model.game.City;
+import model.improvement.Improvement;
 import model.map.Map;
 import model.map.Path;
+import model.tile.Feature;
+import model.tile.Route;
 import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.UnitState;
@@ -14,10 +17,24 @@ import model.unit.soldier.ranged.siege.Siege;
 
 import java.util.HashMap;
 
-public class UnitController {
+public class UnitController{
+    private final Unit unit;
 
-    private Unit unit;
+    //Singleton definition
+    private static UnitController instance;
 
+    private UnitController(Unit unit) {
+        this.unit = unit;
+    }
+
+    public static UnitController getInstance() {
+        return instance;
+    }
+
+    public static void updateInstance(Unit unit) {
+        instance = new UnitController(unit);
+    }
+    //End of singleton definition
 
     public void applyUnitStateForTurn() { // this method is used for states that have effects in next turns
         switch (this.unit.getUnitState()) {
@@ -26,7 +43,7 @@ public class UnitController {
                 this.unitFortify();
                 break;
             case ALERTED:
-                this.checkEnemyInAlertedState();
+                this.checkEnemyInAlertedState(Map.getInstance());
                 break;
             case RECOVERING:
                 this.recoverUnitInRecoveringState();
@@ -46,13 +63,12 @@ public class UnitController {
     //TODO.. check state if it is already (MR.B)
     //TODO.. handle deselect or select a unit after a command which is better
 
-    public UnitController(Unit unit) {
-        this.unit = unit;
-    }
+    public String unitMove(HashMap<String, String> command) {
 
-    public String unitMove(int xPlace, int yPlace) {
-        //TODO.. handle multiple-turn-moves
         this.setDefenceBonusInFortifyState(0);
+
+        int xPlace = Integer.parseInt(command.get("X_POSITION"));
+        int yPlace = Integer.parseInt(command.get("Y_POSITION"));
         Tile here = this.unit.getTile();
         Tile destination = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
@@ -213,56 +229,115 @@ public class UnitController {
         }
     }
 
-    public String unitBuild(String name) {
-        //TODO ...
-        return "";
+    //Worker stuff
+    public String unitBuildImprovement(Improvement improvement) {
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (this.unit.getTile().hasRoute())
+            return "error: Already an improvement on tile";
+        if (!improvement.matchesTerrain(this.unit.getTile().getTerrain()) &&
+                !improvement.matchesFeature(this.unit.getTile().getFeature()))
+            return "error: this improvement doesn't match this feature and terrain";
+
+        return "Improvement construction started";
     }
 
-    public void unitRemoveForest() {
-        if (this.unit instanceof Worker) {
-            Worker worker = (Worker) this.unit;
-            String type = this.unit.getTile().getFeature().toString();
-            if (type.equals("JUNGLE") || type.equals("FOREST") || type.equals("MARSH")) {
-                worker.removeFeature();
-            } else {
-                //TODO.. error
-            }
-        } else {
-            //TODO.. error
-        }
+    public String unitBuildRoute(Route route) {
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (this.unit.getTile().hasRoute())
+            return "error: Already a route on tile";
+
+        return "Route construction started";
     }
 
-    public void unitRemoveJungle() {
+    public String unitRemoveForest() {
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (this.unit.getTile().getFeature() != Feature.FOREST)
+            return "error: No forest on current tile";
+        if (this.unit.getTile().hasImprovement())
+            return "error: Can't remove feature of a tile with improvement";
 
+        Worker worker = (Worker) this.unit;
+        worker.removeFeature(Feature.FOREST);
+        return "Forest removal started";
+    }
+
+    public String unitRemoveJungle() {
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (this.unit.getTile().getFeature() != Feature.JUNGLE)
+            return "error: No jungle on current tile";
+        if (this.unit.getTile().hasImprovement())
+            return "error: Can't remove feature of a tile with improvement";
+
+        Worker worker = (Worker) this.unit;
+        worker.removeFeature(Feature.JUNGLE);
+        return "Jungle removal started";
+    }
+
+    public String unitRemoveMarsh() {
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (this.unit.getTile().getFeature() != Feature.MARSH)
+            return "error: No marsh on current tile";
+        if (this.unit.getTile().hasImprovement())
+            return "error: Can't remove feature of a tile with improvement";
+
+        Worker worker = (Worker) this.unit;
+        worker.removeFeature(Feature.MARSH);
+        return "Marsh removal started";
     }
 
     public String unitRemoveRoute() {
-        if (this.unit instanceof Worker) {
-            Worker worker = (Worker) this.unit;
-            if (this.unit.getTile().hasRoute()) {
-                worker.removeRoute();
-                return "route removed successfully";
-            } else {
-                return "Tile does not have route";
-            }
-        } else {
-            return "This is not worker unit";
-        }
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (!this.unit.getTile().hasRoute())
+            return "error: No route on current tile";
+
+        Worker worker = (Worker) this.unit;
+        worker.removeRoute();
+        return "Route removal started";
+    }
+
+    public String unitRemoveImprovement() {
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (!this.unit.getTile().hasImprovement())
+            return "error: No improvement on current tile";
+
+        Worker worker = (Worker) this.unit;
+        worker.removeImprovement();
+        return "Improvement removal started";
     }
 
     public String unitRepair() {
-        if (this.unit instanceof Worker) {
-            Worker worker = (Worker) this.unit;
-            if (!this.unit.getTile().isRepaired()) {
-                worker.repairTile();
-                return "Tile repaired successfully";
-            } else {
-                return "error: tile is already repaired";
-            }
-        } else {
-            return "This is not worker unit";
-        }
+        if (!(this.unit instanceof Worker))
+            return "error: Not a worker";
+        if (!this.unit.isInFriendlyTile())
+            return "error: Tile not in territory";
+        if (this.unit.getTile().isRepaired())
+            return "error: Tile already repaired";
+
+        Worker worker = (Worker) this.unit;
+        return "Repair started";
     }
+    //End of worker stuff
 
     public void checkEnemyInAlertedState() { // check neighbor tile for enemies in alerted state
         if (this.unit.getUnitState() == UnitState.ALERTED) {
@@ -297,6 +372,10 @@ public class UnitController {
         this.unit.heal();
     }
 
+    //GETTER (NOT NEEDED?)
+    public Unit getUnit() {
+        return this.unit;
+    }
     public void spawnUnit(City city) {
         //TODO check special conditions...
         this.unit.setTile(city.getCenter());

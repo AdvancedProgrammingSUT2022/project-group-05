@@ -120,7 +120,14 @@ public class ColorChar {
     private static void addingTexts (Tile tempTile, ColorChar[][] input) {
         int fromL = ColorChar.getFromLeft(tempTile);
         int fromT = ColorChar.getFromTop(tempTile);
-        //TODO.. ADD CENTER TEXT ALL TILES DATAs
+        addCenteredText("" + tempTile.getXPlace() ,input ,fromT - 3, fromL - 2); //xpos
+        addCenteredText("" + tempTile.getYPlace() ,input ,fromT - 3, fromL + 2); //ypos
+        addCenteredText(tempTile.getCity().getCivilization().getPlayer().getNickname() ,input ,fromT - 1, fromL); //Civilization
+        //TODO can change later
+        addCenteredText(tempTile.getSoldier().toString() ,input ,fromT + 1, fromL - 5); //Soldier
+        addCenteredText(tempTile.getCivilian().toString() ,input ,fromT + 1, fromL + 5); //Civ
+        addCenteredText(tempTile.getFeature().toString() ,input ,fromT + 3, fromL); //Feature
+        addCenteredText(tempTile.getResource().toString() ,input ,fromT + 4, fromL); //Resource
     }
     private static void addCenteredText (String text, ColorChar[][] input, int fromT, int fromL) {
         int size = text.length();

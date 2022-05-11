@@ -19,4 +19,9 @@ public abstract class Melee extends Soldier{
         }
         return false;
     }
+
+    @Override
+    public String toString () {
+        return "Melee";
+    }
 }

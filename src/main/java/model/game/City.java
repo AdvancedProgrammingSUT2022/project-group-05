@@ -3,12 +3,10 @@ package model.game;
 import model.building.BuildingList;
 import model.map.Map;
 import model.tile.Tile;
-import model.tile.TileStatus;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class City {
     private final String name;

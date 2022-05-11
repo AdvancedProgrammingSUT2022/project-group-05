@@ -12,4 +12,11 @@ public class Artillery extends Siege {
         this.maxAttackRange = 3;
         this.maxMovement = 2;
     }
+
+    @Override
+    public String toString () {
+        //return "Artillery";
+        //TODO we can edit after map printing beacause its too long to print
+        return "Artiler";
+    }
 }
