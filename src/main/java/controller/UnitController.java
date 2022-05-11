@@ -43,7 +43,7 @@ public class UnitController{
                 this.unitFortify();
                 break;
             case ALERTED:
-                this.checkEnemyInAlertedState(Map.getInstance());
+                this.checkEnemyInAlertedState();
                 break;
             case RECOVERING:
                 this.recoverUnitInRecoveringState();
@@ -63,12 +63,10 @@ public class UnitController{
     //TODO.. check state if it is already (MR.B)
     //TODO.. handle deselect or select a unit after a command which is better
 
-    public String unitMove(HashMap<String, String> command) {
+    public String unitMove(int xPlace, int yPlace) {
 
         this.setDefenceBonusInFortifyState(0);
 
-        int xPlace = Integer.parseInt(command.get("X_POSITION"));
-        int yPlace = Integer.parseInt(command.get("Y_POSITION"));
         Tile here = this.unit.getTile();
         Tile destination = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
@@ -230,6 +228,7 @@ public class UnitController{
     }
 
     //Worker stuff
+
     public String unitBuildImprovement(Improvement improvement) {
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";

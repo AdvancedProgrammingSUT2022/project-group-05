@@ -2,12 +2,15 @@ package controller;
 
 import model.game.City;
 import model.game.Civilization;
+import model.improvement.Improvement;
 import model.map.Map;
+import model.tile.Route;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import static view.enums.Entity.*;
 
@@ -17,8 +20,7 @@ public class GameMenuController {
     private ArrayList<CivilizationController> civilizationControllers = new ArrayList<>();
     private int currentTurn;
     private CivilizationController currentCivilizationController;
-    private UnitController selectedUnitController; //TODO it should be null while using other methods
-    private CityController selectedCityController; //TODO it should be null while using other methods
+
 
     //singleton
     private static GameMenuController instance;
@@ -34,6 +36,8 @@ public class GameMenuController {
         if (currentCivilizationController.isHasRequiredAction()) {
             return "error: " + currentCivilizationController.getRequiredActions();
         } else {
+            UnitController.updateInstance(null); //TODO ???
+            CityController.updateInstance(null); //TODO ???
             this.currentTurn++;
             this.currentTurn %= this.civilizationCount;
             this.currentCivilizationController = civilizationControllers.get(currentTurn);
@@ -62,7 +66,7 @@ public class GameMenuController {
         if (soldier.getCivilization() != currentCivilizationController.getCivilization()) {
             return "This unit is not from your civilization";
         } else {
-            this.selectedUnitController = new UnitController(soldier);
+            UnitController.updateInstance(soldier);
             return "Soldier selected successfully";
         }
     }
@@ -74,7 +78,7 @@ public class GameMenuController {
         if (civilian.getCivilization() != currentCivilizationController.getCivilization()) {
             return "This unit is not from your civilization";
         } else {
-            this.selectedUnitController = new UnitController(civilian);
+            UnitController.updateInstance(civilian);
             return "Civilian selected successfully";
         }
     }
@@ -86,7 +90,7 @@ public class GameMenuController {
         if (city.getCivilization() != currentCivilizationController.getCivilization()) {
             return "This city is not from your civilization";
         } else {
-            this.selectedCityController = new CityController(city);
+            CityController.updateInstance(city);
             return "City selected successfully";
         }
     }
@@ -97,7 +101,7 @@ public class GameMenuController {
         boolean hasCity = false;
         for (int i = 0; i < cities.size(); i++) {
             if (cities.get(i).getName().equals(cityName)) {
-                this.selectedCityController = new CityController(cities.get(i));
+                CityController.updateInstance(cities.get(i));
                 return "City selected successfully";
             }
         }
@@ -107,185 +111,212 @@ public class GameMenuController {
     //UNIT COMMANDS
 
     public String unitMove(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
             int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
             int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
-            return selectedUnitController.unitMove(xPlace, yPlace);
+            return UnitController.getInstance().unitMove(xPlace, yPlace);
         }
     }
 
     public String unitSleep(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitSleep();
+            return UnitController.getInstance().unitSleep();
         }
     }
 
     public String unitAlert(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitAlert();
+            return UnitController.getInstance().unitAlert();
         }
     }
 
     public String unitFortify(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitFortify();
+            return UnitController.getInstance().unitFortify();
         }
     }
 
     public String unitRecover(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitRecover();
+            return UnitController.getInstance().unitRecover();
         }
     }
 
     public String unitGarrison(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitGarrison();
+            return UnitController.getInstance().unitGarrison();
         }
     }
 
     public String unitSetupRanged(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitSetupRanged();
+            return UnitController.getInstance().unitSetupRanged();
         }
     }
 
     public String unitAttack(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
             int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
             int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
-            return selectedUnitController.unitAttack(xPlace, yPlace);
+            return UnitController.getInstance().unitAttack(xPlace, yPlace);
         }
     }
 
     public String unitCancel(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitCancel();
+            return UnitController.getInstance().unitCancel();
         }
     }
 
     public String unitWake(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitWake();
+            return UnitController.getInstance().unitWake();
         }
     }
 
     public String unitDelete(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitDelete();
+            return UnitController.getInstance().unitDelete();
         }
     }
 
 
     public String unitFoundCity(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitFoundCity();
+            return UnitController.getInstance().unitFoundCity();
         }
     }
 
 
-    public String unitBuild(HashMap<String, String> command) {
-        if (this.selectedUnitController == null) {
+    public String unitBuildImprovement(HashMap<String, String> command) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            String building = command.get(BUILDING.getKey());
-            return selectedUnitController.unitBuild(building);
+            String improvementName = command.get(IMPROVEMENT.getKey());
+            Improvement improvement = Improvement.valueOf(improvementName.toUpperCase());
+            return UnitController.getInstance().unitBuildImprovement(improvement);
         }
     }
 
-    public String unitRemoveFeature(HashMap<String, String> command) { //TODO
-        if (selectedUnitController == null) {
+    public String unitBuildRoute(HashMap<String, String> command) {
+        if (UnitController.getInstance().getUnit() == null) {
+            return "error: no unit selected";
+        } else {
+            String routeName = command.get(ROUTE.getKey());
+            Route route = Route.valueOf(routeName.toUpperCase());
+            return UnitController.getInstance().unitBuildRoute(route);
+        }
+    }
+
+    public String unitRemoveJungle(HashMap<String, String> command) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return "";
+            return UnitController.getInstance().unitRemoveJungle();
+        }
+    }
+
+    public String unitRemoveForest(HashMap<String, String> command) {
+        if (UnitController.getInstance().getUnit() == null) {
+            return "error : no unit selected";
+        } else {
+            return UnitController.getInstance().unitRemoveForest();
+        }
+    }
+
+    public String unitRemoveMarsh(HashMap<String, String> command) {
+        if (UnitController.getInstance().getUnit() == null) {
+            return "error : no unit selected";
+        } else {
+            return UnitController.getInstance().unitRemoveMarsh();
         }
     }
 
     public String unitRemoveRoute(HashMap<String, String> command) {
-        if (selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitRemoveRoute();
+            return UnitController.getInstance().unitRemoveRoute();
         }
     }
 
     public String unitRepair(HashMap<String , String> command) {
-        if (selectedUnitController == null) {
+        if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return selectedUnitController.unitRepair();
+            return UnitController.getInstance().unitRepair();
         }
     }
     
     //CITY COMMANDS
     
     public String cityCreateUnit(HashMap<String, String> command) {
-        if (selectedCityController == null) {
+        if (CityController.getInstance().getCity() == null) {
             return "error : no city selected";
         } else {
             String unitName = command.get(UNIT_NAME.getKey());
-            return selectedCityController.cityCreateUnit(unitName);
+            return CityController.getInstance().cityCreateUnit(unitName);
         }
     }
     
     public String cityCreateBuilding(HashMap<String, String> command) {
-        if (selectedCityController == null) {
+        if (CityController.getInstance().getCity() == null) {
             return "error : no city selected";
         } else {
             String buildingName = command.get(BUILDING.getKey());
-            return selectedCityController.cityCreateBuilding(buildingName);
+            return CityController.getInstance().cityCreateBuilding(buildingName);
         }
     }
     
     public String buyTile(HashMap<String, String> command) {
-        if (selectedCityController == null) {
+        if (CityController.getInstance().getCity() == null) {
             return "error : no city selected";
         } else {
             int x = Integer.parseInt(command.get(X_POSITION.getKey()));
             int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
-            return selectedCityController.buyTile(x, y);
+            return CityController.getInstance().buyTile(x, y);
         }
     }
 
     public String purchaseUnit(HashMap<String, String> command) {
-        if (selectedCityController == null) {
+        if (CityController.getInstance().getCity() == null) {
             return "error: no city selected";
         } else {
             String unitName = command.get(UNIT_NAME.getKey());
-            return selectedCityController.purchaseUnit(unitName);
+            return CityController.getInstance().purchaseUnit(unitName);
         }
     }
 
     public String purchaseBuilding(HashMap<String, String> command) {
-        if (selectedCityController == null) {
+        if (CityController.getInstance().getCity() == null) {
             return "error: no city selected";
         } else {
             String buildingName = command.get(BUILDING.getKey());
-            return selectedCityController.purchaseBuilding(buildingName);
+            return CityController.getInstance().purchaseBuilding(buildingName);
         }
     }
 

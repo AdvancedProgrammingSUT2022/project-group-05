@@ -94,10 +94,16 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().unitDelete(command));
             else if ((command =getHashMap(input, UNIT_FOUND_CITY)) != null)
                 printMessage(GameMenuController.getInstance().unitFoundCity(command));
-            else if ((command = getHashMap(input, UNIT_BUILD)) != null)
-                printMessage(GameMenuController.getInstance().unitBuild(command));
-            else if ((command = getHashMap(input, UNIT_REMOVE_FEATURE)) != null)
-                printMessage(GameMenuController.getInstance().unitRemoveFeature(command));
+            else if ((command = getHashMap(input, UNIT_BUILD_IMPROVEMENT)) != null)
+                printMessage(GameMenuController.getInstance().unitBuildImprovement(command));
+            else if ((command = getHashMap(input, UNIT_BUILD_ROUTE)) != null)
+                printMessage(GameMenuController.getInstance().unitBuildRoute(command));
+            else if ((command = getHashMap(input, UNIT_REMOVE_JUNGLE)) != null)
+                printMessage(GameMenuController.getInstance().unitRemoveJungle(command));
+            else if ((command = getHashMap(input, UNIT_REMOVE_FOREST)) != null)
+                printMessage(GameMenuController.getInstance().unitRemoveForest(command));
+            else if ((command = getHashMap(input, UNIT_REMOVE_MARSH)) != null)
+                printMessage(GameMenuController.getInstance().unitRemoveMarsh(command));
             else if ((command = getHashMap(input, UNIT_REMOVE_ROUTE)) != null)
                 printMessage(GameMenuController.getInstance().unitRemoveRoute(command));
             else if ((command = getHashMap(input, UNIT_REPAIR)) != null)

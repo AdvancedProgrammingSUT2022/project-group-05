@@ -8,11 +8,24 @@ import model.unit.soldier.Soldier;
 
 public class CityController {
 
-    private City city;
+    private final City city;
 
-    public CityController(City city) {
+    //singleton definition
+    private static CityController instance;
+
+    private CityController(City city) {
         this.city = city;
     }
+
+    public static CityController getInstance() {
+        return instance;
+    }
+
+    public static void updateInstance(City city) {
+        instance = new CityController(city);
+    }
+
+    //End of singleton definition
 
     public String cityCreateUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
@@ -44,5 +57,9 @@ public class CityController {
     public String purchaseBuilding(String buildingName) {
         //TODO find building and check conditions and add building to city
         return "";
+    }
+
+    public City getCity() {
+        return city;
     }
 }
