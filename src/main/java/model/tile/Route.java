@@ -3,7 +3,7 @@ package model.tile;
 public enum Route{
     RAIL(0),
     ROAD(0),
-    NONE(0);
+    NO_ROUTE(0);
 
     int movementBoost;
 

@@ -42,6 +42,10 @@ public enum Improvement{
     TRADING_POST(0, 1, 0, 8, Research.TRAPPING,
             List.of(FIELD, DESERT, GRASS, TUNDRA),
             List.of()
+    ),
+    NO_IMPROVEMENT(0, 0, 0, 0, Research.AGRICULTURE,
+            List.of(),
+            List.of()
     );
 
     private final int food;

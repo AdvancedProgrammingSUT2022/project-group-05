@@ -1,6 +1,9 @@
 package model.unit.civilian;
 
 import model.game.Civilization;
+import model.improvement.Improvement;
+import model.tile.Feature;
+import model.tile.Route;
 import model.tile.Tile;
 
 public class Worker extends Civilian {
@@ -13,28 +16,29 @@ public class Worker extends Civilian {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
     }
-    public void addImprovement() { //Tells a worker to add improvement on current tile
-        //TODO
+
+    public void addRoute(Route route) {
+        this.tile.startRouteConstruction(route);
+    }
+
+    public void addImprovement(Improvement improvement) {
+        this.tile.startImprovementConstruction(improvement);
     }
 
     public void removeImprovement() {
-        //TODO
-    }
-
-    public void repairImprovement() {
-        //TODO
-    }
-
-    public void removeFeature() {
-        //TODO   remove it
+        this.tile.startImprovementRemoval();
     }
 
     public void removeRoute() {
-        //TODO  remove Route
+        this.tile.startRouteRemoval();
     }
 
-    public void repairTile() {
-        //TODO  repair Tile
+    public void removeFeature(Feature feature) {
+        this.tile.startFeatureRemoval(feature);
+    }
+
+    public void repair() {
+        this.tile.startRepair();
     }
 
     @Override

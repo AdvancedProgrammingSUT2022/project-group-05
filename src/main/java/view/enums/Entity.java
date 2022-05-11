@@ -18,6 +18,8 @@ public enum Entity{
     CITY_NAME("cityName", "(--city-name|-c)\\s+(?<cityName>[a-zA-Z ]+)\\s*"),
     DIRECTION("direction", "(--direction|-d)\\s+(?<direction>U|D|R|L)\\s*"),
     BUILDING("building", "(--building|-b)\\s+(?<building>[a-zA-Z ]+)\\s*"),
+    IMPROVEMENT("improvement", "(--improvement|-i)\\s+(?<improvement>\\S+)\\s*"),
+    ROUTE("route", "(--route|-r)\\s+(?<route>\\S+)\\s*"),
     PLAYER("player", "(--player|-p)(?<index>[1-9]\\d*)\\s+(?<username>\\w+)\\s*");
 
     private final String key;
