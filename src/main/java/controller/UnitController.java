@@ -36,7 +36,7 @@ public class UnitController{
     }
     //End of singleton definition
 
-    public void applyUnitStateForTurn() { // this method is used for states that have effects in next turns
+    public void applyUnitStateForNewTurn() { // this method is used for states that have effects in next turns
         switch (this.unit.getUnitState()) {
             case FORTIFY:
                 this.setDefenceBonusInFortifyState(2);
@@ -46,16 +46,9 @@ public class UnitController{
                 this.checkEnemyInAlertedState();
                 break;
             case RECOVERING:
-                this.recoverUnitInRecoveringState();
-                break;
-            case PILLAGING:
-                //TODO..
-                break;
-            case GARRISONED:
-                //TODO..
-                break;
-            case MAKING_CITY:
-                //TODO..
+                if (!this.recoverUnitInRecoveringState()) {
+                    this.getUnit().wake();
+                }
                 break;
         }
     }
@@ -64,6 +57,8 @@ public class UnitController{
     //TODO.. handle deselect or select a unit after a command which is better
 
     public String unitMove(int xPlace, int yPlace) {
+
+        this.unit.wake();
 
         this.setDefenceBonusInFortifyState(0);
 
@@ -119,7 +114,11 @@ public class UnitController{
         if (!this.unit.getUnitState().equals(UnitState.RECOVERING)) {
             this.setDefenceBonusInFortifyState(0);
             this.unit.recovering();
-            return Responses.UNIT_RECOVERING.toString();
+            if (!this.recoverUnitInRecoveringState()) {
+                return Responses.UNIT_RECOVERING.toString();
+            } else {
+                return "Unit is in full health";
+            }
         } else {
             return Responses.ALREADY_RECOVERED.toString();
         }
@@ -363,12 +362,17 @@ public class UnitController{
         }
     }
 
-    public void recoverUnitInRecoveringState() {
+    public boolean recoverUnitInRecoveringState() {
         //TODO.. find the location of unit which could be in city or friendly ground or enemy ground
-        int speed = 1;
-        speed += this.unit.getHealingBonus();
-        this.unit.setHealingSpeed(speed);
-        this.unit.heal();
+        if (this.unit.getHealth() == 10) { // TODO 10 will differ
+            return false;
+        } else {
+            int speed = 1;
+            speed += this.unit.getHealingBonus();
+            this.unit.setHealingSpeed(speed);
+            this.unit.heal();
+            return true;
+        }
     }
 
     //GETTER (NOT NEEDED?)

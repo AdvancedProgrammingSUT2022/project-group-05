@@ -10,7 +10,6 @@ import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 import static view.enums.Entity.*;
 
@@ -33,15 +32,21 @@ public class GameMenuController {
     }
 
     public String nextCivilization() {
-        if (currentCivilizationController.isHasRequiredAction()) {
+        if (currentCivilizationController.isHasRequiredAction()) { // check conditions for changing turn
+            this.currentCivilizationController.searchForRequiredActions();
             return "error: " + currentCivilizationController.getRequiredActions();
         } else {
-            UnitController.updateInstance(null); //TODO ???
-            CityController.updateInstance(null); //TODO ???
+            CityController.updateInstance(null); // deselect city in new turn
             this.currentTurn++;
             this.currentTurn %= this.civilizationCount;
-            this.currentCivilizationController = civilizationControllers.get(currentTurn);
-            this.currentCivilizationController.getCivilization().applyNewTurnChanges();
+            this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
+            //TODO increase production for new Turn
+            this.currentCivilizationController.getCivilization().applyNewTurnChanges(); // add production, decrease cost of units
+            for (int i = 0; i < this.currentCivilizationController.getCivilization().getUnits().size(); i++) { // apply unit state effects for new turn
+                UnitController.updateInstance(this.currentCivilizationController.getCivilization().getUnits().get(i));
+                UnitController.getInstance().applyUnitStateForNewTurn();
+            }
+            UnitController.updateInstance(null); // deselect unit in new turn
             return currentCivilizationController.getCivilization().getPlayer().getNickname() + "'s turn";
         }
     }
@@ -98,10 +103,9 @@ public class GameMenuController {
     public String selectCityName(HashMap<String, String> command) {
         String cityName = command.get(CITY_NAME.getKey());
         ArrayList<City> cities = currentCivilizationController.getCivilization().getCities();
-        boolean hasCity = false;
-        for (int i = 0; i < cities.size(); i++) {
-            if (cities.get(i).getName().equals(cityName)) {
-                CityController.updateInstance(cities.get(i));
+        for (City city : cities) {
+            if (city.getName().equals(cityName)) {
+                CityController.updateInstance(city);
                 return "City selected successfully";
             }
         }

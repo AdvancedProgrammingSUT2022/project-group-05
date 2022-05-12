@@ -11,6 +11,7 @@ public class Civilization {
     private City capital;
     private ArrayList<City> cities;
     private ArrayList<Unit> units;
+    public Unit unitInProgress;
 
     private User player;
     private int color;
@@ -137,7 +138,17 @@ public class Civilization {
     }
 
     public void applyNewTurnChanges() {
-        //TODO increase production , decrease required production needed for units that are being created
+        //TODO increase production
+        this.spendProductionForUnitInProgress(); // decrease cost of unit
+    }
 
+    public void spendProductionForUnitInProgress() {
+        this.unitInProgress.setCost(this.unitInProgress.getCost() - this.production);
+        this.production = 0;
+        if (this.unitInProgress.getCost() <= 0) {
+            this.addUnit(this.unitInProgress);
+            this.unitInProgress.done();
+            this.unitInProgress = null;
+        }
     }
 }

@@ -10,6 +10,8 @@ public abstract class Unit {
     protected Civilization civilization;
     protected int cost;
 
+    protected boolean hasBuilt;
+
     protected Tile tile;
     protected int maxMovement;
     protected int remainingMovement;
@@ -33,13 +35,14 @@ public abstract class Unit {
 
     public Unit(Civilization civilization, Tile tile) {
         this.civilization = civilization;
-        this.unitState = UnitState.NOTHING;
+        this.unitState = UnitState.AWAKE;
 
         this.tile = tile;
 
         this.experience = 0;
         this.health = 10;
         this.level = 0;
+        this.hasBuilt = false;
     }
 
     //TODO... Read game.pdf page 21 and implement the functions below
@@ -87,7 +90,7 @@ public abstract class Unit {
     }
 
     public void cancel() { //cancels the last order in unit command query?? WTH... check game.pdf page 21
-        this.unitState = UnitState.NOTHING;
+        this.unitState = UnitState.AWAKE;
     }
 
     public void killWithGold() { // will get coins
@@ -148,6 +151,10 @@ public abstract class Unit {
         this.healingSpeed = healingSpeed;
     }
 
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     //GETTERS
     public int getRemainingMovement() {
         return remainingMovement;
@@ -174,7 +181,7 @@ public abstract class Unit {
     }
 
     public void kill() { // without gold
-        civilization.removeUnit(this);
+        this.getCivilization().removeUnit(this);
         if (this instanceof Civilian) {
             tile.removeCivilian();
         } else if (this instanceof Soldier) {
@@ -188,5 +195,18 @@ public abstract class Unit {
 
     public int getCost() {
         return cost;
+    }
+
+    public boolean hasTask() {
+        if (this.getUnitState() == UnitState.AWAKE) {
+            return true;
+        }
+        return false;
+    }
+
+    public void done() {
+        this.hasBuilt = true;
+        this.civilization.addUnit(this);
+        this.civilization.unitInProgress = null;
     }
 }

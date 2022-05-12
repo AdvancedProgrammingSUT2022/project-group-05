@@ -29,6 +29,7 @@ public class CityController {
 
     public String cityCreateUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
+        if ()
         //TODO check conditions and add newUnit to queue
         return "Creating Unit started";
     }
