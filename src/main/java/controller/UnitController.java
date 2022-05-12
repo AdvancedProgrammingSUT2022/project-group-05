@@ -1,5 +1,6 @@
 package controller;
 
+import model.game.City;
 import model.improvement.Improvement;
 import model.map.Map;
 import model.map.Path;
@@ -42,7 +43,7 @@ public class UnitController{
                 this.unitFortify();
                 break;
             case ALERTED:
-                this.checkEnemyInAlertedState(Map.getInstance());
+                this.checkEnemyInAlertedState();
                 break;
             case RECOVERING:
                 this.recoverUnitInRecoveringState();
@@ -62,14 +63,12 @@ public class UnitController{
     //TODO.. check state if it is already (MR.B)
     //TODO.. handle deselect or select a unit after a command which is better
 
-    public String unitMove(HashMap<String, String> command, Map map) {
+    public String unitMove(int xPlace, int yPlace) {
 
         this.setDefenceBonusInFortifyState(0);
 
-        int xPlace = Integer.parseInt(command.get("X_POSITION"));
-        int yPlace = Integer.parseInt(command.get("Y_POSITION"));
         Tile here = this.unit.getTile();
-        Tile destination = map.getTileFromMap(xPlace, yPlace);
+        Tile destination = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
         if (true) {
             //TODO.. handle fog of war
@@ -79,14 +78,14 @@ public class UnitController{
                 (this.unit instanceof Civilian && destination.getCivilian() != null)) {
             return Responses.ALREADY_A_UNIT_IN_TILE.toString();
         } else {
-            Path bestPath = map.bestPathFinder(here, destination, this.unit.getRemainingMovement());
+            Path bestPath = Map.getInstance().bestPathFinder(here, destination, this.unit.getRemainingMovement());
             if (bestPath == null) {
                 return Responses.UNABLE_TO_MOVE_UNIT_HERE.toString();
             } else {
                 if (this.unit instanceof Soldier) {
-                    map.moveSoldier((Soldier) this.unit, bestPath);
+                    Map.getInstance().moveSoldier((Soldier) this.unit, bestPath);
                 } else if (this.unit instanceof Civilian) {
-                    map.moveCivilian((Civilian) this.unit, bestPath);
+                    Map.getInstance().moveCivilian((Civilian) this.unit, bestPath);
                 }
                 return Responses.UNIT_MOVED.toString();
             }
@@ -116,50 +115,67 @@ public class UnitController{
         }
     }
 
-    public void unitRecover() {
-        this.setDefenceBonusInFortifyState(0);
-        this.unit.recovering();
-    }
-
-    public void unitGarrison() {
-        //TODO..  unit is in the city?
-        this.setDefenceBonusInFortifyState(0);
-        this.unit.garrison();
-    }
-
-    public void unitSetupRanged() {
-        if (this.unit instanceof Siege) {
+    public String unitRecover() {
+        if (!this.unit.getUnitState().equals(UnitState.RECOVERING)) {
             this.setDefenceBonusInFortifyState(0);
-            Siege siege = (Siege) this.unit;
-            siege.setup();
+            this.unit.recovering();
+            return Responses.UNIT_RECOVERING.toString();
         } else {
-            //TODO.. error
+            return Responses.ALREADY_RECOVERED.toString();
         }
     }
 
-    public void unitAttack(HashMap<String, String> command, Map map) {
+    public String unitGarrison() {
+        if (!this.unit.getTile().hasCity()) {
+            return "This tile does not belong to city";
+        } else if (this.unit.getTile().getCity().getCivilization() != this.unit.getCivilization()) {
+            return "Unit cannot garrison in enemy city";
+        } else if (this.unit.getTile().getCity().hasGarrisonedUnit()) {
+            return "City cannot have two garrisoned units";
+        } if (!this.unit.getUnitState().equals(UnitState.GARRISONED)) {
+            this.setDefenceBonusInFortifyState(0);
+            this.unit.garrison();
+            return Responses.UNIT_GARRISONED.toString();
+        } else {
+            return Responses.ALREADY_GARRISONED.toString();
+        }
+    }
 
-        int xPlace = Integer.parseInt(command.get("X_POSITION"));
-        int yPlace = Integer.parseInt(command.get("Y_POSITION"));
+    public String unitSetupRanged() {
+        if (!(this.unit instanceof Siege)) {
+            return "This unit is not a siege unit";
+        } else if (!this.unit.getUnitState().equals(UnitState.SET_FOR_SIEGE)) {
+            this.setDefenceBonusInFortifyState(0);
+            Siege siege = (Siege) this.unit;
+            siege.setup();
+            return Responses.UNIT_SETUP.toString();
+        } else {
+            return Responses.ALREADY_SETUP.toString();
+        }
+    }
+
+    public String unitAttack(int xPlace, int yPlace) {
 
         Tile here = this.unit.getTile();
-        Tile end = map.getTileFromMap(xPlace, yPlace);
+        Tile end = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
         Soldier soldier;
         if (!(this.unit instanceof Soldier)) {
-            //TODO.. error: can't attack without soldier
+            return "This is not a soldier unit";
         } else {
             soldier = (Soldier) this.unit;
-            if (!soldier.canAttackTile(end, map)) {
+            if (!soldier.canAttackTile(end)) {
                 //TODO error: can't attack
+                return "Can't attack tile";
             } else {
                 this.setDefenceBonusInFortifyState(0);
-                this.attack(map, soldier, end.getSoldier());
+                this.attack(soldier, end.getSoldier());
+                return "unit attacked successfully";
             }
         }
     }
 
-    private void attack(Map map, Soldier soldier, Soldier enemySoldier) {
+    private void attack(Soldier soldier, Soldier enemySoldier) {
         //TODO.. MP ???
         int totalStrengthOfSoldier = soldier.getTotalMeleeStrength();
         int totalStrengthOfEnemy = enemySoldier.getTotalMeleeStrength();
@@ -170,7 +186,7 @@ public class UnitController{
         if (enemySoldier.getHealth() == 0) {
             enemySoldier.kill();
             if (soldier.getHealth() != 0) {
-                map.moveSoldierWithoutMP(soldier, enemySoldier.getTile());
+                Map.getInstance().moveSoldierWithoutMP(soldier, enemySoldier.getTile());
                 //TODO handle hostage civilian
             }
         }
@@ -180,29 +196,39 @@ public class UnitController{
         }
     }
 
-    public void unitCancel() {
-        //TODO.. ???
+    public String unitCancel() {
+        //TODO.. cancel multiple-turn-moves and ...
+        return "";
     }
 
-    public void unitWake() {
-        this.unit.wake();
+    public String unitWake() {
+        if (this.unit.getUnitState() != UnitState.ASLEEP) {
+            return Responses.ALREADY_AWAKE.toString();
+        } else {
+            this.unit.wake();
+            return Responses.UNIT_AWAKENED.toString();
+        }
     }
 
-    public void unitDelete() {
+    public String unitDelete() {
         this.setDefenceBonusInFortifyState(0);
         this.unit.killWithGold();
+        return Responses.UNIT_DELETED.toString();
     }
 
-    public void unitFoundCity(Map map, String cityName) {
+    public String unitFoundCity() {
         if (this.unit instanceof Settler) {
             Settler settler = (Settler) this.unit;
-            settler.foundCity(cityName, map);
+            String cityName = "New city";
+            settler.foundCity(cityName);
+            return "City found successfully";
         } else {
-            //TODO.. error
+            return "This is not settler unit";
         }
     }
 
     //Worker stuff
+
     public String unitBuildImprovement(Improvement improvement) {
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
@@ -312,10 +338,10 @@ public class UnitController{
     }
     //End of worker stuff
 
-    public void checkEnemyInAlertedState(Map map) { // check neighbor tile for enemies in alerted state
+    public void checkEnemyInAlertedState() { // check neighbor tile for enemies in alerted state
         if (this.unit.getUnitState() == UnitState.ALERTED) {
             Tile here = this.unit.getTile();
-            Tile[] neighbors = map.findNeighbors(here);
+            Tile[] neighbors = Map.getInstance().findNeighbors(here);
             for (int i = 0; i < 6; i++) {
                 if (neighbors[i].getSoldier() != null) {
                     if (neighbors[i].getSoldier().getCivilization() != this.unit.getCivilization()) {
@@ -349,4 +375,11 @@ public class UnitController{
     public Unit getUnit() {
         return this.unit;
     }
+    public void spawnUnit(City city) {
+        //TODO check special conditions...
+        this.unit.setTile(city.getCenter());
+        this.unit.getCivilization().addUnit(this.unit);
+    }
+
+
 }

@@ -140,4 +140,8 @@ public class City {
     public void setDefenceBonusPercentage(int defenceBonusPercentage) {
         this.defenceBonusPercentage = defenceBonusPercentage;
     }
+
+    public String getName() {
+        return name;
+    }
 }

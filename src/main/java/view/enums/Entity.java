@@ -16,6 +16,7 @@ public enum Entity{
     Y_POSITION("yPosition", "(--y-position|-y)\\s+(?<yPosition>-?\\d+)\\s*"),
     MENU_NAME("menuName", "(--menu-name|-m)\\s+(?<menuName>profile|login|game|main)\\s*"),
     CITY_NAME("cityName", "(--city-name|-c)\\s+(?<cityName>[a-zA-Z ]+)\\s*"),
+    UNIT_NAME("unitName", "(--unit-name|-un)\\s+(?<unitName>[a-zA-Z ]+)\\s*"),//TODO check with sam...
     DIRECTION("direction", "(--direction|-d)\\s+(?<direction>U|D|R|L)\\s*"),
     BUILDING("building", "(--building|-b)\\s+(?<building>[a-zA-Z ]+)\\s*"),
     IMPROVEMENT("improvement", "(--improvement|-i)\\s+(?<improvement>\\S+)\\s*"),
