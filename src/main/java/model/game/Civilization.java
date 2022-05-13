@@ -194,18 +194,26 @@ public class Civilization{
     public void applyNewTurnChanges() {
         this.spendProductionForUnitInProgress(); // decrease cost of unit
 
-        //update production after changes in current turn
+        //update research (science is declined if negative gold)
+        this.getResearchTree().continueResearch(this.gold >= 0 ? this.researchPoint : this.gold);
+
+        //update production after changes
         this.production = 0;
         for (Tile tile : this.getTiles()) {
             this.production += tile.getProduction();
         }
 
-        //update gold after changes in current turn
+        //update gold after changes
         for (Tile tile : this.getTiles()) {
             this.gold += tile.getGold() - tile.getRouteMaintenanceCost();
+
+            tile.applyNewTurnChanges();
         }
 
-        //update
+        //update city status
+
+        //update happiness after changes
+        this.happiness = this.calculateHappiness();
     }
 
     public void spendProductionForUnitInProgress() {

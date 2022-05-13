@@ -147,10 +147,9 @@ public class Tile{
     }
 
     public boolean canSeeThrough(Tile tile) { //returns if a unit on this tile can see through given tile
-        //TODO..
         if (this.terrain == Terrain.HILL) return true;
 
-        return this.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
+        return tile.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST && tile.feature != Feature.JUNGLE;
     }
 
     private int fromLeftFinder(int xPlace, int yPlace, int mapSize) { //places in print map

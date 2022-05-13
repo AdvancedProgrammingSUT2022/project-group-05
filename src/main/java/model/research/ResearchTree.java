@@ -30,6 +30,7 @@ public class ResearchTree{
 
     public void continueResearch(int researchPointsIncrease) {
         this.researchPoints += researchPointsIncrease;
+        if (this.researchPoints < 0) this.researchPoints = 0;
 
         if (!this.hasResearch()) return;
         if (this.researchPoints >= this.currentResearch.getCost()) {
@@ -40,6 +41,12 @@ public class ResearchTree{
         }
     }
 
+    public int getResearchProgressPercentage() {
+        if (!this.hasResearch()) return 0;
+        if (this.researchPoints > this.currentResearch.getCost()) return 1;
+
+        return this.researchPoints * 100 / this.currentResearch.getCost();
+    }
     //GETTER
     public void setCurrentResearch(Research research) {
         this.currentResearch = research;
@@ -122,7 +129,11 @@ public class ResearchTree{
     //PRINT
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder("RESEARCH INFO:\n\n");
+        StringBuilder result = new StringBuilder();
+
+        result.append("RESEARCH INFO:").append("\n");
+        result.append("CURRENT RESEARCH: ").append(this.getCurrentResearch().toString()).append("\n");
+        result.append("CURRENT PROGRESS: ").append(this.getResearchProgressPercentage()).append("%\n");
 
         for (Research research : Research.values()) {
             result.append(getResearch(research).toString());
