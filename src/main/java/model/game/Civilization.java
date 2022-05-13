@@ -2,21 +2,34 @@ package model.game;
 
 import model.User;
 import model.map.FogOfWarStates;
+import model.research.Research;
 import model.research.ResearchTree;
+import model.resource.Resource;
 import model.resource.ResourceList;
+import model.resource.ResourceType;
+import model.tile.Tile;
 import model.unit.Unit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Civilization {
+public class Civilization{
+    private static int baseHappiness;
+
+    static {
+        baseHappiness = 10;
+    }
+
     private City capital;
     private ArrayList<City> cities;
+    private ArrayList<City> annexedCities;
     private ArrayList<Unit> units;
+
     private ArrayList<Unit> unitsInQueue;
     private Unit unitInProgress;
 
-    private User player;
-    private int color;
+    private final User player;
+    private final int color;
 
     private int gold;
     private int happiness;
@@ -28,18 +41,14 @@ public class Civilization {
 
     private FogOfWarStates[][] fogOfWar = null;
 
-    public Civilization(User player, int color, int turn) {
+    public Civilization(User player, int color) {
         this.cities = new ArrayList<>();
-        //this.cities.add(city);
-        //this.capital = city;
 
         this.units = new ArrayList<>();
-        //this.units.add(unit);
 
         this.player = player;
         this.color = color;
 
-        //TODO initialization
         this.gold = 0;
         this.production = 0;
         this.happiness = 10;
@@ -59,11 +68,7 @@ public class Civilization {
     }
 
     public void removeUnit(Unit unit) {
-        for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).equals(unit)) {
-                units.remove(i);
-            }
-        }
+        units.removeAll(Collections.singleton(unit));
     }
 
     public void addUnitToQueue(Unit unit) {
@@ -79,8 +84,23 @@ public class Civilization {
         return null;
     }
 
-    //SETTERS
+    public void startResearch(Research research) {
+        this.researchTree.startResearch(research);
+    }
 
+    public int calculateHappiness() {
+        int result = baseHappiness;
+        for (Resource resource : Resource.values()) {
+            if (resource.getResourceType().equals(ResourceType.LUXURIOUS) &&
+                    this.resourceList.hasEnough(resource, 1))
+                result += 4;
+        }
+        for (City city : this.cities) {
+            result -= 3 + city.getTotalCitizenCount();
+        }
+        return result;
+    }
+    //SETTERS
 
     public void setUnitInProgress(Unit unitInProgress) {
         this.unitInProgress = unitInProgress;
@@ -115,6 +135,7 @@ public class Civilization {
     public Unit getUnitInProgress() {
         return unitInProgress;
     }
+
     public User getPlayer() {
         return player;
     }
@@ -159,9 +180,32 @@ public class Civilization {
         return cities;
     }
 
+    public ArrayList<Tile> getTiles() {
+        ArrayList<Tile> result = new ArrayList<>();
+        for (City city : this.cities) {
+            result.addAll(city.getTiles());
+        }
+
+        return result;
+    }
+
+    //END OF GETTERS
+
     public void applyNewTurnChanges() {
-        //TODO increase production
         this.spendProductionForUnitInProgress(); // decrease cost of unit
+
+        //update production after changes in current turn
+        this.production = 0;
+        for (Tile tile : this.getTiles()) {
+            this.production += tile.getProduction();
+        }
+
+        //update gold after changes in current turn
+        for (Tile tile : this.getTiles()) {
+            this.gold += tile.getGold() - tile.getRouteMaintenanceCost();
+        }
+
+        //update
     }
 
     public void spendProductionForUnitInProgress() {
@@ -176,5 +220,10 @@ public class Civilization {
 
     public void removeUnitFromQueue(Unit unitFromQueue) {
         this.unitsInQueue.remove(unitFromQueue);
+    }
+
+    //CHEAT
+    public static void setBaseHappiness(int newBaseHappiness) {
+        baseHappiness = newBaseHappiness;
     }
 }

@@ -110,6 +110,10 @@ public class Tile{
     }
 
     public void applyNewTurnChanges() { //progresses the current project on this tile
+        //Gold calculation
+
+
+        //WorkerStuff
         if (this.civilian instanceof Worker) this.projectManager.continueProject();
 
         if (this.projectManager.hasFinishedProject()) {
@@ -261,7 +265,9 @@ public class Tile{
     }
 
     public Improvement getImprovement() {
-        return this.improvement;
+        if (this.getCivilization().getResearchTree().isResearchDone(improvement.getNeededResearch()))
+            return this.improvement;
+        return Improvement.NO_IMPROVEMENT;
     }
 
     public boolean hasCity() {
@@ -274,6 +280,10 @@ public class Tile{
             if (hasRiver) count++;
         }
         return count;
+    }
+
+    public int getRouteMaintenanceCost() {
+        return this.route.getMaintenanceCost();
     }
 
     public boolean hasRiver() {
@@ -371,10 +381,28 @@ public class Tile{
     public void setImprovement(Improvement improvement) {
         if (this.hasImprovement()) this.removeImprovement();
         this.improvement = improvement;
-        //TODO is there more to do?
+
+        this.gold += this.improvement.getGold();
+        this.food += this.improvement.getFood();
+        this.production += this.improvement.getProduction();
+
+        if (this.resource.getNeededImprovement() == this.improvement) {
+            this.gold += this.resource.getGold();
+            this.food += this.resource.getFood();
+            this.production += this.resource.getProduction();
+        }
     }
     public void removeImprovement() {
-        //TODO is there more to do?
+        this.gold -= this.improvement.getGold();
+        this.food -= this.improvement.getFood();
+        this.production -= this.improvement.getProduction();
+
+        if (this.resource.getNeededImprovement() == this.improvement) {
+            this.gold -= this.resource.getGold();
+            this.food -= this.resource.getFood();
+            this.production -= this.resource.getProduction();
+        }
+
         this.improvement = Improvement.NO_IMPROVEMENT;
     }
 
@@ -383,7 +411,10 @@ public class Tile{
     }
 
     public void addRiver(int i) {
+        if (rivers[i]) return;
+
         rivers[i] = true;
+        this.gold += 1;
     }
 
     //Default Overrides

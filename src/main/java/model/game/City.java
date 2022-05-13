@@ -93,12 +93,20 @@ public class City {
         return this.health;
     }
 
+    public int getTotalCitizenCount() {
+        return this.totalCitizenCount;
+    }
+
     public int getJoblessCitizenCount() {
         return this.joblessCitizenCount;
     }
 
     public Tile getCenter() {
         return this.center;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return this.tiles;
     }
 
     public Civilization getCivilization() {

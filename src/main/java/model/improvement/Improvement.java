@@ -53,18 +53,18 @@ public enum Improvement{
     private final int production;
     private final int constructionTime;
 
-    private final Research prerequisite;
+    private final Research neededResearch;
     private final ArrayList<Terrain> compatibleTerrains;
     private final ArrayList<Feature> compatibleFeatures;
 
-    Improvement(int food, int gold, int production, int constructionTime, Research prerequisite,
+    Improvement(int food, int gold, int production, int constructionTime, Research neededResearch,
                 List<Terrain> compatibleTerrains, List<Feature> compatibleFeatures) {
         this.food = food;
         this.gold = gold;
         this.production = production;
         this.constructionTime = constructionTime;
 
-        this.prerequisite = prerequisite;
+        this.neededResearch = neededResearch;
 
         this.compatibleTerrains = new ArrayList<>(compatibleTerrains);
         this.compatibleFeatures = new ArrayList<>(compatibleFeatures);
@@ -95,8 +95,8 @@ public enum Improvement{
         return this.constructionTime;
     }
 
-    public Research getPrerequisite() {
-        return this.prerequisite;
+    public Research getNeededResearch() {
+        return this.neededResearch;
     }
 
     public ArrayList<Terrain> getCompatibleTerrains() {
