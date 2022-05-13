@@ -6,7 +6,6 @@ import model.tile.Terrain;
 import model.tile.Tile;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
@@ -52,13 +51,14 @@ public class MapGeneration {
 
 
     static void mapCreator() {
-        addTerrain();
+        addTerrains();
         addRiver();
         addFeatures();
         addResource();
     }
 
-    private static void addTerrain () {
+    //ADDING TERRAINS TODO
+    private static void addTerrains() {
         Map map = Map.getInstance();
         int sizeOfMap = map.getSizeOfMap();
     }

@@ -217,14 +217,13 @@ public class UnitController{
     }
 
     public String unitFoundCity() {
-        if (this.unit instanceof Settler) {
-            Settler settler = (Settler) this.unit;
-            String cityName = "New city";
-            settler.foundCity(cityName);
-            return "City found successfully";
-        } else {
-            return "This is not settler unit";
-        }
+        if (!(this.unit instanceof Settler))
+            return "error: Not a settler";
+
+        Settler settler = (Settler) this.unit;
+        String cityName = "New city";
+        settler.foundCity(cityName);
+        return "City found successfully";
     }
 
     //Worker stuff

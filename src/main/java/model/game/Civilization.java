@@ -44,7 +44,7 @@ public class Civilization {
         this.food = 0;
         this.gold = 0;
         this.production = 0;
-        this.happiness = 0;
+        this.happiness = 10;
         this.researchPoint = 0;
 
         this.resourceList = new ResourceList();
