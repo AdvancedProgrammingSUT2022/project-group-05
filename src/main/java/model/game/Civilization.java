@@ -2,9 +2,12 @@ package model.game;
 
 import controller.UnitController;
 import model.User;
+import model.map.FogOfWar;
+import model.map.FogOfWarStates;
 import model.research.ResearchTree;
 import model.resource.ResourceList;
 import model.unit.Unit;
+import org.mockito.internal.matchers.Null;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,8 @@ public class Civilization {
     private ResourceList resourceList;
     private ResearchTree researchTree;
 
+    private FogOfWarStates[][] fogOfWar = null;
+
     public Civilization(User player, int color, int turn) {
         this.cities = new ArrayList<>();
         //this.cities.add(city);
@@ -42,7 +47,7 @@ public class Civilization {
         this.food = 0;
         this.gold = 0;
         this.production = 0;
-        this.happiness = 0;
+        this.happiness = 10;
         this.researchPoint = 0;
 
         this.resourceList = new ResourceList();
@@ -105,6 +110,10 @@ public class Civilization {
         this.researchPoint = researchPoint;
     }
 
+    public void setFogOfWar(FogOfWarStates[][] fogOfWar) {
+        this.fogOfWar = fogOfWar;
+    }
+
     public void addCity(City city) {
         this.cities.add(city);
     }
@@ -146,6 +155,10 @@ public class Civilization {
         return researchPoint;
     }
 
+    public FogOfWarStates[][] getFogOfWar() {
+        return fogOfWar;
+    }
+
     public ResourceList getResourceList() {
         return resourceList;
     }
@@ -156,6 +169,10 @@ public class Civilization {
 
     public ArrayList<Unit> getUnits() {
         return this.units;
+    }
+
+    public boolean equals(Civilization civilization) {
+        return civilization.getPlayer().getNickname().equals(this.getPlayer().getNickname());
     }
 
     public ArrayList<City> getCities() {

@@ -58,7 +58,7 @@ public enum Entity{
     public static HashMap<String, String> extractEntities(String input) {
         HashMap<String, String> entities = new HashMap<>();
 
-        String[] words = input.split("\\s+-"); //TODO... find the best way to split into entities.
+        String[] words = input.split("\\s+-");
 
         for (String word : words) {
             if (word.equals("")) continue;
