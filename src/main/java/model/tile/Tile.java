@@ -122,7 +122,7 @@ public class Tile{
             if (type == ProjectType.FEATURE_REMOVAL)
                 this.removeFeature();
             else if (type == ProjectType.REPAIR)
-                this.isRepaired = true;
+                this.setIsRepaired(true);
 
             else if (type == ProjectType.ROUTE_CONSTRUCTION)
                 this.setRoute(this.projectManager.getRouteProject());
@@ -137,8 +137,6 @@ public class Tile{
             this.projectManager.closeProject();
         }
     }
-
-    //TODO... if (this.city.getCivilization().getResearchTree().isResearchDone(resource.neededImprovement))
 
     //Map stuff
     public int movePointsNeededToEnterFrom(Tile currentTile) { //returns move points needed to enter this tile
@@ -228,15 +226,15 @@ public class Tile{
     }
 
     public int getFood() {
-        return this.food;
+        return this.hasCitizen ? this.food : 0;
     }
 
     public int getGold() {
-        return this.gold;
+        return this.hasCitizen ? this.gold : 0;
     }
 
     public int getProduction() {
-        return this.production;
+        return this.hasCitizen ? this.production : 0;
     }
 
     public int getCombatBoost() {
@@ -264,6 +262,8 @@ public class Tile{
     }
 
     public Improvement getImprovement() {
+        if (!this.hasCity()) return Improvement.NO_IMPROVEMENT;
+
         if (this.getCivilization().getResearchTree().isResearchDone(improvement.getNeededResearch()))
             return this.improvement;
         return Improvement.NO_IMPROVEMENT;
@@ -368,19 +368,23 @@ public class Tile{
     }
 
     public void setResource(Resource resource) {
-        if (this.hasResource()) this.removeResource();
         this.resource = resource;
-        //TODO is there more to do?
-    }
-    public void removeResource() {
-        //TODO is there more to do?
-        this.resource = Resource.NO_RESOURCE;
     }
 
     public void setImprovement(Improvement improvement) {
         if (this.hasImprovement()) this.removeImprovement();
         this.improvement = improvement;
+        this.isRepaired = true;
 
+        this.applyImprovementEffects();
+    }
+    public void removeImprovement() {
+        this.disableImprovementEffects();
+
+        this.improvement = Improvement.NO_IMPROVEMENT;
+    }
+
+    private void applyImprovementEffects() {
         this.gold += this.improvement.getGold();
         this.food += this.improvement.getFood();
         this.production += this.improvement.getProduction();
@@ -391,7 +395,7 @@ public class Tile{
             this.production += this.resource.getProduction();
         }
     }
-    public void removeImprovement() {
+    private void disableImprovementEffects() {
         this.gold -= this.improvement.getGold();
         this.food -= this.improvement.getFood();
         this.production -= this.improvement.getProduction();
@@ -401,12 +405,18 @@ public class Tile{
             this.food -= this.resource.getFood();
             this.production -= this.resource.getProduction();
         }
-
-        this.improvement = Improvement.NO_IMPROVEMENT;
     }
 
     public void setHasCitizen(boolean hasCitizen) {
         this.hasCitizen = hasCitizen;
+    }
+
+    public void setIsRepaired(boolean isRepaired) {
+        if (isRepaired) {
+            this.applyImprovementEffects();
+        } else {
+            this.disableImprovementEffects();
+        }
     }
 
     public void addRiver(int i) {

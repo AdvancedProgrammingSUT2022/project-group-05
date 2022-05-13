@@ -211,6 +211,9 @@ public class Civilization{
         }
 
         //update city status
+        for (City city : this.getCities()) {
+            city.applyNewTurnChanges();
+        }
 
         //update happiness after changes
         this.happiness = this.calculateHappiness();

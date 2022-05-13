@@ -13,6 +13,7 @@ public class City {
     private final Tile center;
 
     private int food;
+    //When food reached its threshold, population increases and Threshold doubles.
 
     private int health;
     private int defenceStrength;
@@ -32,10 +33,16 @@ public class City {
         this.name = name;
         this.center = center;
         this.civilization = civilization;
+
         this.setHealth(20);
         this.setDefenceStrength(10); // TODO set later
         this.setDefenceBonusPercentage(center.getCombatBoost());
         this.hasGarrisonedUnit = false;
+
+        this.food = 0;
+
+        this.totalCitizenCount = 1;
+        this.joblessCitizenCount = 1;
 
         this.addTile(center);
         for (Tile tile : Map.getInstance().findNeighbors(center)) {
@@ -53,10 +60,12 @@ public class City {
 
     public void assignCitizenToTile(Tile tile) {
             this.setJoblessCitizenCount(this.getJoblessCitizenCount() - 1);
+            tile.setHasCitizen(true);
     }
 
     public void removeCitizenFromTile(Tile tile) {
         this.setJoblessCitizenCount(this.getJoblessCitizenCount() + 1);
+        tile.setHasCitizen(false);
     }
 
     public void addTile(Tile tile) {
@@ -87,6 +96,23 @@ public class City {
         hasCivilianUnit = true;
         center.setCivilian(civilian);
    }
+
+    public void applyNewTurnChanges() {
+        //calculate foodSurplus
+        int foodSurplus = 0;
+
+        for (Tile tile : this.tiles) {
+            foodSurplus += tile.getFood();
+        }
+        foodSurplus -= this.getTotalCitizenCount() * 2;
+
+        //add foodSurplus or remove citizen
+        this.food += foodSurplus;
+        if (this.food < 0) this.food = 0;
+
+        if (foodSurplus < 0 && totalCitizenCount > 1) this.removeCitizen();
+        else if (foodSurplus > 0 && this.food >= nextThreshold()) this.addCitizen();
+    }
 
     //GETTERS
     public int getHealth() {
@@ -130,8 +156,27 @@ public class City {
     }
 
     //SETTER
-    public void setHealth(int health)
-    {
+    public void addCitizen() {
+        this.totalCitizenCount++;
+        this.joblessCitizenCount++;
+    }
+
+    public void removeCitizen() {
+        this.totalCitizenCount--;
+
+        if (joblessCitizenCount > 0) {
+            this.joblessCitizenCount--;
+            return;
+        }
+        for (Tile tile : this.tiles) {
+            if (tile.hasCitizen()) {
+                tile.removeCitizen();
+                break;
+            }
+        }
+    }
+
+    public void setHealth(int health) {
         this.health = health;
     }
 
@@ -153,5 +198,12 @@ public class City {
 
     public String getName() {
         return name;
+    }
+
+    //UTIL
+    private int nextThreshold() {
+        int n = this.totalCitizenCount;
+
+        return 15 + 6 * (n - 1) + ((int) Math.pow(n - 1, 1.5));
     }
 }
