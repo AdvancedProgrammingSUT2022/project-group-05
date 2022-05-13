@@ -27,15 +27,11 @@ public class MainMenu extends Menu {
 
             if ((command = getHashMap(input, EXIT)) != null)
                 return MenuType.EXIT;
-            else if ((command = getHashMap(input, MENU_EXIT)) != null) {
-                printMessage(""); //TODO... add controller function
-                return MenuType.LOGIN;
-            }
             else if ((command = getHashMap(input, MENU_SHOW_CURRENT)) != null)
                 printMessage("main menu");
             else if ((command = getHashMap(input, SHOW_PROFILE)) != null) {
                 ProfileMenu.setUsername(MainMenu.username);
-                printMessage(" entering profile menu");
+                printMessage("entering profile menu");
                 return MenuType.PROFILE;
             } else if ((command = getHashMap(input, USER_LOGOUT)) != null) {
                 printMessage("user logged out successfully!");

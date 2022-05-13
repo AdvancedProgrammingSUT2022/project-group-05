@@ -42,7 +42,7 @@ public class CityController {
             }
             if (!this.city.getCivilization().getResearchTree().isResearchDone(newUnit.getRequiredResearch())) { // check reserch
                 return "required research not found";
-            } else if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1)) { //TODO can't find required amount
+            } else if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1)) {
                 return "not enough resource";
             } else { // moving previous unit to queue and set new unit
                 if (this.city.getCivilization().getUnitInProgress() != null)

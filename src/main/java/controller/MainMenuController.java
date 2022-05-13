@@ -2,11 +2,9 @@ package controller;
 
 import model.User;
 import model.game.Civilization;
-import model.game.Game;
 import utility.ListUtility;
 import view.enums.Entity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

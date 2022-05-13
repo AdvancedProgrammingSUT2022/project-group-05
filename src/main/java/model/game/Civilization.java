@@ -1,13 +1,10 @@
 package model.game;
 
-import controller.UnitController;
 import model.User;
-import model.map.FogOfWar;
 import model.map.FogOfWarStates;
 import model.research.ResearchTree;
 import model.resource.ResourceList;
 import model.unit.Unit;
-import org.mockito.internal.matchers.Null;
 
 import java.util.ArrayList;
 
@@ -21,14 +18,13 @@ public class Civilization {
     private User player;
     private int color;
 
-    private int food;
     private int gold;
     private int happiness;
     private int production;
     private int researchPoint;
 
-    private ResourceList resourceList;
-    private ResearchTree researchTree;
+    private final ResourceList resourceList;
+    private final ResearchTree researchTree;
 
     private FogOfWarStates[][] fogOfWar = null;
 
@@ -43,15 +39,15 @@ public class Civilization {
         this.player = player;
         this.color = color;
 
-        //TODO... Reconfigure the initial values of "food, gold, happiness, ..." based on doc
-        this.food = 0;
+        //TODO initialization
         this.gold = 0;
         this.production = 0;
         this.happiness = 10;
-        this.researchPoint = 0;
 
         this.resourceList = new ResourceList();
         this.researchTree = new ResearchTree();
+
+        this.researchPoint = 0;
     }
 
     public Boolean hasCity(City city) {
@@ -90,16 +86,8 @@ public class Civilization {
         this.unitInProgress = unitInProgress;
     }
 
-    public void setFood(int food) {
-        this.food = food;
-    }
-
     public void setGold(int gold) {
         this.gold = gold;
-    }
-
-    public void setProduction(int production) {
-        this.production = production;
     }
 
     public void setHappiness(int happiness) {
@@ -135,16 +123,8 @@ public class Civilization {
         return color;
     }
 
-    public int getFood() {
-        return food;
-    }
-
     public int getGold() {
         return gold;
-    }
-
-    public int getProduction() {
-        return production;
     }
 
     public int getHappiness() {

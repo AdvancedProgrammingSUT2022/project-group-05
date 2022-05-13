@@ -1,6 +1,5 @@
 package controller;
 
-import model.game.City;
 import model.improvement.Improvement;
 import model.map.Map;
 import model.map.Path;
@@ -14,8 +13,6 @@ import model.unit.civilian.Settler;
 import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
 import model.unit.soldier.ranged.siege.Siege;
-
-import java.util.HashMap;
 
 public class UnitController{
     private final Unit unit;
@@ -218,18 +215,16 @@ public class UnitController{
     }
 
     public String unitFoundCity() {
-        if (this.unit instanceof Settler) {
-            Settler settler = (Settler) this.unit;
-            String cityName = "New city";
-            settler.foundCity(cityName);
-            this.unit.kill();
-            return "City found successfully";
-        } else {
-            return "This is not settler unit";
-        }
+        if (!(this.unit instanceof Settler))
+            return "error: Not a settler";
+
+        Settler settler = (Settler) this.unit;
+        String cityName = "New city";
+        settler.foundCity(cityName);
+        return "City found successfully";
     }
 
-    //Worker stuff
+    //Worker stuff TODO
 
     public String unitBuildImprovement(Improvement improvement) {
         this.unitWake();
@@ -255,6 +250,7 @@ public class UnitController{
         if (this.unit.getTile().hasRoute())
             return "error: Already a route on tile";
 
+        //TODO
         return "Route construction started";
     }
 

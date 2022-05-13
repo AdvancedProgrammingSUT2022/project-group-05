@@ -5,7 +5,7 @@ public enum Route{
     ROAD(0),
     NO_ROUTE(0);
 
-    int movementBoost;
+    private final int movementBoost;
 
     Route(int movementBoost) {
         this.movementBoost = movementBoost;

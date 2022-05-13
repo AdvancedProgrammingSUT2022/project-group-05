@@ -19,7 +19,6 @@ public enum MainMenuCommand{
     SHOW_PROFILE("\\s*show\\s+profile(?<entities>.*)", List.of()),
 
     MENU_SHOW_CURRENT("\\s*menu\\s+show-current(?<entities>.*)", List.of()),
-    MENU_EXIT("\\s*menu\\s+exit(?<entities>.*)", List.of()),
     EXIT("\\s*exit(?<entities>.*)", List.of());
 
     private final String regex;

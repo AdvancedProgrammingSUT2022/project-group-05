@@ -109,7 +109,7 @@ public class Tile{
         this.projectManager.startRepair();
     }
 
-    public void elapseTurn() { //progresses the current project on this tile
+    public void applyNewTurnChanges() { //progresses the current project on this tile
         if (this.civilian instanceof Worker) this.projectManager.continueProject();
 
         if (this.projectManager.hasFinishedProject()) {

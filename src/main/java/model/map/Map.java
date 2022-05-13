@@ -8,8 +8,6 @@ import model.unit.soldier.Soldier;
 import java.util.HashMap;
 
 public class Map{
-    //TODO... Move the function "movePointsNeededToEnterFrom" (or its equivalent) from Tile to this class.
-
     private final int sizeOfMap;
     private Tile[][] gameMap;
 

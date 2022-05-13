@@ -12,6 +12,8 @@ public class City {
     private final String name;
     private final Tile center;
 
+    private int food;
+
     private int health;
     private int defenceStrength;
     private int defenceBonusPercentage; // because of garrisoned unit and center tile
@@ -61,7 +63,7 @@ public class City {
         this.tiles.add(tile);
     }
 
-    public boolean canAddTile(Tile tile) {
+    public boolean canAddTile(Tile tile) { //checks if tile is neighbouring city and is not owned by anybody
         if (tile.hasCity()) return false;
 
         for (Tile territory : this.tiles) {

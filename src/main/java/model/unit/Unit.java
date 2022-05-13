@@ -128,7 +128,7 @@ public abstract class Unit {
     }
 
     public void heal() {
-        this.health  = this.health += healingSpeed;
+        this.health += healingSpeed;
     }
 
     //SETTERS
