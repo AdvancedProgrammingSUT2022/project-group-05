@@ -136,12 +136,6 @@ public class Tile{
 
     //TODO... if (this.city.getCivilization().getResearchTree().isResearchDone(resource.neededImprovement))
 
-    //Map stuff
-    public int movePointsNeededToEnterFrom(Tile currentTile) { //returns move points needed to enter this tile
-        //TODO... return the needed mp for this tile MRB MRB MRB MRB
-        return 0;
-    }
-
     public boolean canSeeThrough(Tile tile) { //returns if a unit on this tile can see through given tile
         //TODO..
         if (this.terrain == Terrain.HILL) return true;

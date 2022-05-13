@@ -79,7 +79,7 @@ public class Map{
     }
 
 
-    //FIND MP COST OF TWO TILE
+    //FIND MP COST OF TWO TILE entering from first to second input
     public int getMPNeededBetweenTiles(Tile first, Tile second) {
         //TODO... calculate mps
         return 0;
@@ -142,7 +142,7 @@ public class Map{
             if (pathsMap.containsKey(keySet)) {
                 pathsFinded[i] = pathsMap.get(keySet);
             } else {
-                int newRemainingMP = remainingMP - neighbors[i].movePointsNeededToEnterFrom(start);
+                int newRemainingMP = remainingMP -  Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
                 pathsFinded[i] = bestPathFindersBacktrack(neighbors[i], end, newRemainingMP, pathsMap);
                 pathsMap.put(keySet, pathsFinded[i]);
             }
