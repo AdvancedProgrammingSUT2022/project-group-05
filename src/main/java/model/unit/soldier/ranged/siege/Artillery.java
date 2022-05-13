@@ -1,6 +1,7 @@
 package model.unit.soldier.ranged.siege;
 
 import model.game.Civilization;
+import model.research.Research;
 import model.tile.Tile;
 
 public class Artillery extends Siege {
@@ -11,6 +12,7 @@ public class Artillery extends Siege {
         this.rangedStrength = 32;
         this.maxAttackRange = 3;
         this.maxMovement = 2;
+        this.requiredResearch = Research.DYNAMITE;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package model.unit.soldier.ranged.siege;
 
 import model.game.Civilization;
+import model.research.Research;
 import model.tile.Tile;
 
 public class Canon extends Siege {
@@ -11,6 +12,7 @@ public class Canon extends Siege {
         this.rangedStrength = 26;
         this.maxAttackRange = 2;
         this.maxMovement = 2;
+        this.requiredResearch = Research.CHEMISTRY;
     }
 
     @Override

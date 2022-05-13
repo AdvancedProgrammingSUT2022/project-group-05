@@ -1,6 +1,8 @@
 package model.unit.soldier.melee;
 
 import model.game.Civilization;
+import model.research.Research;
+import model.resource.Resource;
 import model.tile.Tile;
 
 public class Swordsman extends Melee {
@@ -11,6 +13,8 @@ public class Swordsman extends Melee {
         this.rangedStrength = 0;
         this.maxAttackRange = 0;
         this.maxMovement = 2;
+        this.requiredResource = Resource.IRON;
+        this.requiredResearch = Research.IRON_WORKING;
     }
 
     @Override

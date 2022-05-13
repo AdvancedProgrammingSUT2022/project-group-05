@@ -25,7 +25,7 @@ public class LoginMenu extends Menu {
 
         printMessage("__LOGIN MENU__");
 
-        while(true) { //TODO... call functions from controllers
+        while(true) {
             input = scanner.nextLine();
 
             if ((command = getHashMap(input, EXIT)) != null)

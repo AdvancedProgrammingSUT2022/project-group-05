@@ -1,6 +1,7 @@
 package model.unit.soldier.ranged;
 
 import model.game.Civilization;
+import model.research.Research;
 import model.tile.Tile;
 
 public class Archer extends Ranged {
@@ -11,6 +12,7 @@ public class Archer extends Ranged {
         this.rangedStrength = 6;
         this.maxAttackRange = 2;
         this.maxMovement = 2;
+        this.requiredResearch = Research.ARCHERY;
     }
 
     @Override

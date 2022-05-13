@@ -1,6 +1,7 @@
 package model.unit.soldier.ranged;
 
 import model.game.Civilization;
+import model.research.Research;
 import model.tile.Tile;
 
 public class Crossbowman extends Ranged {
@@ -11,6 +12,7 @@ public class Crossbowman extends Ranged {
         this.rangedStrength = 12;
         this.maxAttackRange = 2;
         this.maxMovement = 2;
+        this.requiredResearch = Research.MACHINERY;
     }
 
     @Override

@@ -58,7 +58,7 @@ public class UnitController{
 
     public String unitMove(int xPlace, int yPlace) {
 
-        this.unit.wake();
+        this.unitWake();
 
         this.setDefenceBonusInFortifyState(0);
 
@@ -155,6 +155,8 @@ public class UnitController{
 
     public String unitAttack(int xPlace, int yPlace) {
 
+        this.unitWake();
+
         Tile here = this.unit.getTile();
         Tile end = Map.getInstance().getTileFromMap(xPlace, yPlace);
 
@@ -220,6 +222,7 @@ public class UnitController{
             Settler settler = (Settler) this.unit;
             String cityName = "New city";
             settler.foundCity(cityName);
+            this.unit.kill();
             return "City found successfully";
         } else {
             return "This is not settler unit";
@@ -229,6 +232,7 @@ public class UnitController{
     //Worker stuff
 
     public String unitBuildImprovement(Improvement improvement) {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -243,6 +247,7 @@ public class UnitController{
     }
 
     public String unitBuildRoute(Route route) {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -254,6 +259,7 @@ public class UnitController{
     }
 
     public String unitRemoveForest() {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -269,6 +275,7 @@ public class UnitController{
     }
 
     public String unitRemoveJungle() {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -284,6 +291,7 @@ public class UnitController{
     }
 
     public String unitRemoveMarsh() {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -299,6 +307,7 @@ public class UnitController{
     }
 
     public String unitRemoveRoute() {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -312,6 +321,7 @@ public class UnitController{
     }
 
     public String unitRemoveImprovement() {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -325,6 +335,7 @@ public class UnitController{
     }
 
     public String unitRepair() {
+        this.unitWake();
         if (!(this.unit instanceof Worker))
             return "error: Not a worker";
         if (!this.unit.isInFriendlyTile())
@@ -344,7 +355,7 @@ public class UnitController{
             for (int i = 0; i < 6; i++) {
                 if (neighbors[i].getSoldier() != null) {
                     if (neighbors[i].getSoldier().getCivilization() != this.unit.getCivilization()) {
-                        this.unit.wake();
+                        this.unitWake();
                         break;
                     }
                 }
@@ -379,11 +390,8 @@ public class UnitController{
     public Unit getUnit() {
         return this.unit;
     }
-    public void spawnUnit(City city) {
-        //TODO check special conditions...
-        this.unit.setTile(city.getCenter());
-        this.unit.getCivilization().addUnit(this.unit);
-    }
+
+
 
 
 }

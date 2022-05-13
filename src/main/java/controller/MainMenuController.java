@@ -1,6 +1,7 @@
 package controller;
 
 import model.User;
+import model.game.Civilization;
 import model.game.Game;
 import utility.ListUtility;
 import view.enums.Entity;
@@ -56,7 +57,11 @@ public class MainMenuController {
                     users.add(user);
                 }
             }
-            Game.updateInstance(usernames.size(), users);
+            ArrayList<Civilization> civilizations = new ArrayList<>();
+            for (int i = 0; i < users.size(); i++) {
+                civilizations.add(new Civilization(users.get(i), i, 0));
+            }
+            GameMenuController.updateInstance(usernames.size(), civilizations);
             return "game started successfully";
         }
     }

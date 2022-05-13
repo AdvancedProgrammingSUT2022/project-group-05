@@ -1,6 +1,7 @@
 package model.unit.soldier.melee;
 
 import model.game.Civilization;
+import model.research.Research;
 import model.tile.Tile;
 
 public class Tank extends Melee {
@@ -11,6 +12,7 @@ public class Tank extends Melee {
         this.rangedStrength = 0;
         this.maxAttackRange = 0;
         this.maxMovement = 4;
+        this.requiredResearch = Research.COMBUSTION;
     }
 
     @Override

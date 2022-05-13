@@ -10,6 +10,8 @@ public abstract class Siege extends Ranged {
         super(civilization, tile);
     }
 
+
+    @Override
     public void setup() { //changes State to set for siege
         unitState = UnitState.SET_FOR_SIEGE;
     }

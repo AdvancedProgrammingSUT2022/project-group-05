@@ -1,6 +1,8 @@
 package model.unit.soldier.melee;
 
 import model.game.Civilization;
+import model.research.Research;
+import model.resource.Resource;
 import model.tile.Tile;
 
 public class Knight extends Melee {
@@ -11,6 +13,8 @@ public class Knight extends Melee {
         this.rangedStrength = 0;
         this.maxAttackRange = 0;
         this.maxMovement = 3;
+        this.requiredResource = Resource.HORSE;
+        this.requiredResearch = Research.CHIVALRY;
     }
 
     @Override

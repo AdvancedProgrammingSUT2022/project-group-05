@@ -3,7 +3,7 @@ import view.menu.*;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         //TODO... remove this stuff from main for cleaner code (idk move it to some menu traverser function)
 

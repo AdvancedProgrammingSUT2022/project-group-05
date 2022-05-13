@@ -1,5 +1,6 @@
 package model.game;
 
+import controller.UnitController;
 import model.User;
 import model.research.ResearchTree;
 import model.resource.ResourceList;
@@ -11,7 +12,8 @@ public class Civilization {
     private City capital;
     private ArrayList<City> cities;
     private ArrayList<Unit> units;
-    public Unit unitInProgress;
+    private ArrayList<Unit> unitsInQueue;
+    private Unit unitInProgress;
 
     private User player;
     private int color;
@@ -63,7 +65,26 @@ public class Civilization {
         }
     }
 
+    public void addUnitToQueue(Unit unit) {
+
+    }
+
+    public Unit getUnitFromQueue(Unit unit) {
+        for (int i = 0; i < this.unitsInQueue.size(); i++) {
+            if (this.unitsInQueue.get(i).equals(unit)) {
+                return this.unitsInQueue.get(i);
+            }
+        }
+        return null;
+    }
+
     //SETTERS
+
+
+    public void setUnitInProgress(Unit unitInProgress) {
+        this.unitInProgress = unitInProgress;
+    }
+
     public void setFood(int food) {
         this.food = food;
     }
@@ -93,6 +114,10 @@ public class Civilization {
     }
 
     //GETTERS
+
+    public Unit getUnitInProgress() {
+        return unitInProgress;
+    }
     public User getPlayer() {
         return player;
     }
@@ -146,9 +171,13 @@ public class Civilization {
         this.unitInProgress.setCost(this.unitInProgress.getCost() - this.production);
         this.production = 0;
         if (this.unitInProgress.getCost() <= 0) {
+            this.unitInProgress.setTile(unitInProgress.getStartingCity().getCenter());
             this.addUnit(this.unitInProgress);
-            this.unitInProgress.done();
             this.unitInProgress = null;
         }
+    }
+
+    public void removeUnitFromQueue(Unit unitFromQueue) {
+        this.unitsInQueue.remove(unitFromQueue);
     }
 }

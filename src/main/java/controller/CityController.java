@@ -29,8 +29,27 @@ public class CityController {
 
     public String cityCreateUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
-        if ()
-        //TODO check conditions and add newUnit to queue
+        newUnit.setStartingCity(this.city);
+        Unit unitFromQueue = this.city.getCivilization().getUnitFromQueue(newUnit);
+        if (unitFromQueue != null) { // for units that were already in queue
+            this.city.getCivilization().removeUnitFromQueue(unitFromQueue);
+            if (this.city.getCivilization().getUnitInProgress() != null)
+                this.city.getCivilization().addUnitToQueue(this.city.getCivilization().getUnitInProgress());
+            this.city.getCivilization().setUnitInProgress(unitFromQueue);
+        } else {
+            if (newUnit.equals(this.city.getCivilization().getUnitInProgress())) { // building same unit that is being built
+                return "this unit is already being built";
+            }
+            if (!this.city.getCivilization().getResearchTree().isResearchDone(newUnit.getRequiredResearch())) { // check reserch
+                return "required research not found";
+            } else if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1)) { //TODO can't find required amount
+                return "not enough resource";
+            } else { // moving previous unit to queue and set new unit
+                if (this.city.getCivilization().getUnitInProgress() != null)
+                    this.city.getCivilization().addUnitToQueue(this.city.getCivilization().getUnitInProgress());
+                this.city.getCivilization().setUnitInProgress(newUnit);
+            }
+        }
         return "Creating Unit started";
     }
 
@@ -47,6 +66,7 @@ public class CityController {
 
     public String purchaseUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
+        newUnit.setStartingCity(this.city);
         if (newUnit.getCost() > this.city.getCivilization().getGold()) {
             return "error: not enough gold";
         } else {

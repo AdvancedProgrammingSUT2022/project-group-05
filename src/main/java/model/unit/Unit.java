@@ -1,7 +1,10 @@
 package model.unit;
 
+import model.game.City;
 import model.game.Civilization;
 import model.map.Map;
+import model.research.Research;
+import model.resource.Resource;
 import model.tile.Tile;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
@@ -10,7 +13,8 @@ public abstract class Unit {
     protected Civilization civilization;
     protected int cost;
 
-    protected boolean hasBuilt;
+    protected City startingCity; // where to spawn when created
+
 
     protected Tile tile;
     protected int maxMovement;
@@ -27,9 +31,9 @@ public abstract class Unit {
     protected int healingSpeed;
     protected int healingBonus;
 
-    protected int remainingProductionNeeded;
 
-    protected boolean createdYet;
+    protected Resource requiredResource;
+    protected Research requiredResearch;
 
     protected UnitState unitState;
 
@@ -42,7 +46,9 @@ public abstract class Unit {
         this.experience = 0;
         this.health = 10;
         this.level = 0;
-        this.hasBuilt = false;
+        this.requiredResource = Resource.NO_RESOURCE;
+        this.requiredResearch = Research.NO_RESEARCH;
+        this.startingCity = null;
     }
 
     //TODO... Read game.pdf page 21 and implement the functions below
@@ -78,7 +84,7 @@ public abstract class Unit {
     }
 
     public void setup() {
-        //TODO..
+
     }
 
     public void pillaging() { // pillage a tile
@@ -154,8 +160,17 @@ public abstract class Unit {
     public void setCost(int cost) {
         this.cost = cost;
     }
+    public void setStartingCity(City startingCity) {
+        this.startingCity = startingCity;
+    }
 
     //GETTERS
+
+
+    public City getStartingCity() {
+        return startingCity;
+    }
+
     public int getRemainingMovement() {
         return remainingMovement;
     }
@@ -197,6 +212,14 @@ public abstract class Unit {
         return cost;
     }
 
+    public Research getRequiredResearch() {
+        return requiredResearch;
+    }
+
+    public Resource getRequiredResource() {
+        return requiredResource;
+    }
+
     public boolean hasTask() {
         if (this.getUnitState() == UnitState.AWAKE) {
             return true;
@@ -204,9 +227,4 @@ public abstract class Unit {
         return false;
     }
 
-    public void done() {
-        this.hasBuilt = true;
-        this.civilization.addUnit(this);
-        this.civilization.unitInProgress = null;
-    }
 }

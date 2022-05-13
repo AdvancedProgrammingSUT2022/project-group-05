@@ -1,6 +1,8 @@
 package model.unit.soldier.ranged.siege;
 
 import model.game.Civilization;
+import model.research.Research;
+import model.resource.Resource;
 import model.tile.Tile;
 
 public class Catapult extends Siege {
@@ -11,6 +13,8 @@ public class Catapult extends Siege {
         this.rangedStrength = 14;
         this.maxAttackRange = 2;
         this.maxMovement = 2;
+        this.requiredResource = Resource.IRON;
+        this.requiredResearch = Research.MATHEMATICS;
     }
 
     @Override

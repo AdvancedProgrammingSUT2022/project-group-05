@@ -100,7 +100,7 @@ public class CivilizationController {
                 requiredActions.add("Unit needs order");
             }
         }
-        if (this.civilization.unitInProgress == null) {
+        if (this.civilization.getUnitInProgress() == null) {
             requiredActions.add("Choose production"); // TODO add building later..
         }
         if (requiredActions.size() == 0) {

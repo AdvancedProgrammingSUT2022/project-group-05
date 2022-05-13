@@ -40,7 +40,7 @@ public class GameMenuController {
             this.currentTurn++;
             this.currentTurn %= this.civilizationCount;
             this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
-            //TODO increase production for new Turn
+            //TODO increase production and gold and ... for new Turn
             this.currentCivilizationController.getCivilization().applyNewTurnChanges(); // add production, decrease cost of units
             for (int i = 0; i < this.currentCivilizationController.getCivilization().getUnits().size(); i++) { // apply unit state effects for new turn
                 UnitController.updateInstance(this.currentCivilizationController.getCivilization().getUnits().get(i));
