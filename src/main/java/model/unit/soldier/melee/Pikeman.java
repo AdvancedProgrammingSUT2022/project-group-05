@@ -3,8 +3,9 @@ package model.unit.soldier.melee;
 import model.game.Civilization;
 import model.research.Research;
 import model.tile.Tile;
+import model.unit.addOns.BonusVsMounted;
 
-public class Pikeman extends Melee {
+public class Pikeman extends Melee implements BonusVsMounted {
     public Pikeman(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 100;

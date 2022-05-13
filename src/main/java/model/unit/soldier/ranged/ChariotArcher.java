@@ -3,8 +3,10 @@ package model.unit.soldier.ranged;
 import model.game.Civilization;
 import model.research.Research;
 import model.tile.Tile;
+import model.unit.addOns.Mounted;
+import model.unit.addOns.NoDefensiveBonus;
 
-public class ChariotArcher extends Ranged {
+public class ChariotArcher extends Ranged implements Mounted, NoDefensiveBonus {
     public ChariotArcher(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 60;

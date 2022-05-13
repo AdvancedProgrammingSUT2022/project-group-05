@@ -6,8 +6,10 @@ import model.map.Map;
 import model.research.Research;
 import model.resource.Resource;
 import model.tile.Tile;
+import model.unit.addOns.NoDefensiveBonus;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
+import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
 public abstract class Unit {
     protected Civilization civilization;
@@ -51,7 +53,6 @@ public abstract class Unit {
         this.startingCity = null;
     }
 
-    //TODO... Read game.pdf page 21 and implement the functions below
     public boolean canMoveTo(Tile tile) { //checks if unit can move to a given tile
         if (Map.getInstance().bestPathFinder(this.tile, tile, remainingMovement) == null) {
             return false;
@@ -114,8 +115,11 @@ public abstract class Unit {
     }
 
     protected int boost(int initialStrength) { //boosts initial Strength based on current tile stats
-        //TODO...
-        int combatPercentage = this.tile.getCombatBoost();
+        int combatPercentage;
+        if (!(this instanceof NoDefensiveBonus))
+            combatPercentage = this.tile.getCombatBoost();
+        else
+            combatPercentage = 0;
         return initialStrength + (initialStrength * combatPercentage) / 100 + (initialStrength * this.temporaryDefenceBonusPercentage) / 100;
     }
 
@@ -130,6 +134,13 @@ public abstract class Unit {
     public void heal() {
         this.health += healingSpeed;
     }
+
+    public boolean isTileInRange(Tile tile) {
+        if (Map.getInstance().findDistance(this.getTile(), tile) <= this.maxAttackRange)
+            return true;
+        return false;
+    }
+
 
     //SETTERS
 

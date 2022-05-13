@@ -68,6 +68,13 @@ public enum GameMenuCommand{
     //CHEAT CODES
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
+    REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()),
+
+
+    //UNIT CHEAT CODE
+    UNIT_MOVE_WITHOUT_COST("\\s*unit-move-without-cost(?<entities>.*)",List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+
+
 
     //END OF TURN
     END_TURN("\\s*end\\s+turn(?<entities>.*)", List.of()),

@@ -4,8 +4,11 @@ import model.game.Civilization;
 import model.research.Research;
 import model.resource.Resource;
 import model.tile.Tile;
+import model.unit.addOns.CanMoveAfterAttacking;
+import model.unit.addOns.Mounted;
+import model.unit.addOns.NoDefensiveBonus;
 
-public class Cavalry extends Melee {
+public class Cavalry extends Melee implements Mounted, CanMoveAfterAttacking, NoDefensiveBonus {
     public Cavalry(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 260;

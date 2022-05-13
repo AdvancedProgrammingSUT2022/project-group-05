@@ -3,8 +3,12 @@ package model.unit.soldier.melee;
 import model.game.Civilization;
 import model.research.Research;
 import model.tile.Tile;
+import model.unit.addOns.CanMoveAfterAttacking;
+import model.unit.addOns.LimitedVisibility;
+import model.unit.addOns.NoDefensiveBonus;
+import model.unit.addOns.Tank;
 
-public class Panzer extends Melee {
+public class Panzer extends Melee implements CanMoveAfterAttacking, Tank, NoDefensiveBonus, LimitedVisibility {
     public Panzer(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 450;
