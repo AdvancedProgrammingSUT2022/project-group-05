@@ -1,6 +1,8 @@
 package model.map;
 
 import model.game.Civilization;
+import model.tile.Feature;
+import model.tile.Terrain;
 import model.tile.Tile;
 
 public class ColorChar {
@@ -118,8 +120,16 @@ public class ColorChar {
         }
     }
     private static String getColorForTile (Tile tempTile) {
-        //TODO .. get tile feature String and change it to colors above
-        return "HELLO";
+        Terrain temp = tempTile.getTerrain();
+        if (temp.equals(Terrain.OCEAN)) return BLACK_BACKGROUND;
+        if (temp.equals(Terrain.DESERT)) return RED_BACKGROUND;;
+        if (temp.equals(Terrain.GRASS)) return GREEN_BACKGROUND;
+        if (temp.equals(Terrain.FIELD)) return YELLOW_BACKGROUND;
+        if (temp.equals(Terrain.TUNDRA)) return BLUE_BACKGROUND;
+        if (temp.equals(Terrain.MOUNTAIN)) return PURPLE_BACKGROUND;
+        if (temp.equals(Terrain.SNOW)) return CYAN_BACKGROUND;
+        if (temp.equals(Terrain.HILL)) return WHITE_BACKGROUND;
+        return BLACK_BACKGROUND;
     }
 
     //ADDING TEXT
@@ -129,7 +139,7 @@ public class ColorChar {
         addCenteredText("" + tempTile.getXPlace() ,input ,fromT - 3, fromL - 2); //xpos
         addCenteredText("" + tempTile.getYPlace() ,input ,fromT - 3, fromL + 2); //ypos
         addCenteredText(tempTile.getCity().getCivilization().getPlayer().getNickname() ,input ,fromT - 1, fromL); //Civilization
-        //TODO can change later
+        //can change later
         addCenteredText(tempTile.getSoldier().toString() ,input ,fromT + 1, fromL - 5); //Soldier
         addCenteredText(tempTile.getSoldier().getCivilization().getPlayer().getNickname(),input ,fromT - 1, fromL - 5);
         addCenteredText(tempTile.getCivilian().toString() ,input ,fromT + 1, fromL + 5); //Civ
