@@ -1,5 +1,8 @@
 user login -p kabab -u babak
 play game --player2 mohammadreza -p1 babak
+map show
+select unit civilian -x 6 -y 0
+unit move -x 6 -y 1
 select unit civilian -x 6 -y 0
 unit found city -c Tehran
 end turn
@@ -20,4 +23,3 @@ increase-gold --amount 1000
 city buy tile -x
 
 unit move -x ? -y ?
-

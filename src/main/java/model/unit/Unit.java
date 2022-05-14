@@ -5,6 +5,8 @@ import model.game.Civilization;
 import model.map.Map;
 import model.research.Research;
 import model.resource.Resource;
+import model.tile.Feature;
+import model.tile.Terrain;
 import model.tile.Tile;
 import model.unit.addOns.NoDefensiveBonus;
 import model.unit.civilian.Civilian;
@@ -54,7 +56,10 @@ public abstract class Unit {
     }
 
     public boolean canMoveTo(Tile tile) { //checks if unit can move to a given tile
-        return Map.getInstance().bestPathFinder(this.tile, tile, remainingMovement) != null;
+        if (tile == null || tile.getTerrain().equals(Terrain.MOUNTAIN) ||
+            tile.getTerrain().equals(Terrain.OCEAN) || tile.getFeature().equals(Feature.ICE))
+            return false;
+        return true;
     }
 
     public void sleep() { //sets unit to asleep state
