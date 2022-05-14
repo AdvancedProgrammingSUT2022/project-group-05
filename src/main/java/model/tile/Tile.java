@@ -199,6 +199,14 @@ public class Tile{
         return this.hasCitizen;
     }
 
+    public boolean hasCivilian() {
+        return this.civilian != null;
+    }
+
+    public boolean hasSoldier() {
+        return this.soldier != null;
+    }
+
     public boolean hasRoute() {
         return this.route != null && this.route != Route.NO_ROUTE;
     }

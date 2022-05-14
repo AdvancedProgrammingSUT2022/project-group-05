@@ -36,8 +36,8 @@ public class GameMenuController {
             this.civilizationControllers.add(new CivilizationController(civilizations.get(i)));
         }
 
-        //debugging purposes
-        this.currentCivilizationController = civilizationControllers.get(0);
+        this.currentCivilizationController = this.civilizationControllers.get(0);
+
     }
 
     public String nextCivilization() {
@@ -55,8 +55,7 @@ public class GameMenuController {
             CityController.updateInstance(null); // deselect city in new turn
             UnitController.updateInstance(null); // deselect unit in new turn
 
-            return "Year " + this.currentYear + ":\n" +
-                    currentCivilizationController.getCivilization().getPlayer().getNickname() + "'s turn";
+            return this.whoseTurnIsIt();
         }
     }
 
@@ -68,9 +67,21 @@ public class GameMenuController {
         instance = new GameMenuController(civilizationCount, civilizations);
     }
 
+    public static void destroyInstance() {
+        instance = null;
+    }
+
     // end of singleton design pattern
+    public String whoseTurnIsIt() {
+        return  "Year " + this.currentYear + ": " + currentCivilizationController.getCivilization().getPlayer().getNickname() + "'s turn";
+    }
 
     //SELECT COMMANDS
+    public String menuExit(HashMap<String, String> command) {
+        destroyInstance();
+        return "exiting Game";
+    }
+
     public String selectResearch(HashMap<String, String> command) {
         //TODO
         return "";

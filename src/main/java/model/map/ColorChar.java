@@ -158,11 +158,11 @@ public class ColorChar {
             addCenteredText(tempTile.getCity().getCivilization().getPlayer().getNickname() ,input ,fromT - 1, fromL); //Civilization
         if (soldier != null) {
             addCenteredText(tempTile.getSoldier().toString(), input, fromT + 1, fromL - 5); //Soldier
-            addCenteredText(tempTile.getSoldier().getCivilization().getPlayer().getNickname(), input, fromT - 1, fromL - 5);
+            addCenteredText(tempTile.getSoldier().getCivilization().getPlayer().getNickname(), input, fromT, fromL - 5);
         }
         if (civilian != null) {
             addCenteredText(tempTile.getCivilian().toString(), input, fromT + 1, fromL + 5); //Civ
-            addCenteredText(tempTile.getCivilian().getCivilization().getPlayer().getNickname(), input, fromT - 1, fromL + 5);
+            addCenteredText(tempTile.getCivilian().getCivilization().getPlayer().getNickname(), input, fromT, fromL + 5);
         }
         addCenteredText(tempTile.getFeature().toString() ,input ,fromT + 3, fromL); //Feature
         addCenteredText(tempTile.getResource().toString() ,input ,fromT + 4, fromL); //Resource

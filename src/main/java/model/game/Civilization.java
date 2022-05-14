@@ -4,6 +4,7 @@ import controller.UnitController;
 import model.User;
 import model.map.FogOfWar;
 import model.map.FogOfWarStates;
+import model.map.Map;
 import model.research.Research;
 import model.research.ResearchTree;
 import model.resource.Resource;
@@ -11,6 +12,9 @@ import model.resource.ResourceList;
 import model.resource.ResourceType;
 import model.tile.Tile;
 import model.unit.Unit;
+import model.unit.civilian.Civilian;
+import model.unit.civilian.Settler;
+import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,6 +48,7 @@ public class Civilization{
         this.cities = new ArrayList<>();
 
         this.units = new ArrayList<>();
+        this.initializeUnits();
 
         this.player = player;
         this.color = color;
@@ -61,16 +66,26 @@ public class Civilization{
         FogOfWar.updateFogOfWar(this);
     }
 
+    private void initializeUnits() {
+        Tile tile = Map.getInstance().randomEmptyTile();
+        this.addUnit(new Settler(this, tile));
+    }
+
     public Boolean hasCity(City city) {
         return this.cities.contains(city);
     }
 
     public void addUnit(Unit unit) {
         this.units.add(unit);
+        if (unit instanceof Civilian) unit.getTile().setCivilian((Civilian) unit);
+
+        if (unit instanceof Soldier) unit.getTile().setSoldier((Soldier) unit);
     }
 
     public void removeUnit(Unit unit) {
         units.removeAll(Collections.singleton(unit));
+        if (unit instanceof Civilian) unit.getTile().removeCivilian();
+        if (unit instanceof Soldier) unit.getTile().removeSoldier();
     }
 
     public void addUnitToQueue(Unit unit) {

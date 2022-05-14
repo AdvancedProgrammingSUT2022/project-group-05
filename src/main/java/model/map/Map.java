@@ -5,6 +5,7 @@ import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
+import utility.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -212,9 +213,20 @@ public class Map{
     }
 
 
-    //
+    //Don't know why
     public void tilesVisibleRefresh(Tile tile, Unit unitType) {
 
+    }
+
+    //Random tile for settler spawning
+    public Tile randomEmptyTile() {
+        while (true) {
+            int x = RandomGenerator.nextInt(sizeOfMap);
+            int y = RandomGenerator.nextInt(sizeOfMap);
+
+            Tile tile = getTileFromMap(x, y);
+            if (!tile.hasCivilian() && !tile.hasSoldier()) return tile;
+        }
     }
 
     //MAKING READY FOR PRINT

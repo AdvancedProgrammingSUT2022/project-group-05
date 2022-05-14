@@ -9,7 +9,6 @@ import static view.enums.GameMenuCommand.*;
 
 public class GameMenu extends Menu {
 
-
     public GameMenu(Scanner scanner) {
         super(scanner);
     }
@@ -31,7 +30,7 @@ public class GameMenu extends Menu {
             else if ((command = getHashMap(input, END_TURN)) != null)
                 printMessage(GameMenuController.getInstance().endOfTurn(command));
             else if ((command = getHashMap(input, MENU_EXIT)) != null) {
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().menuExit(command));
                 return MenuType.MAIN;
             }
 

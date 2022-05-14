@@ -70,7 +70,7 @@ public class MainMenuController {
             civilizations.add(new Civilization(users.get(i), i));
         }
         GameMenuController.updateInstance(usernames.size(), civilizations);
-        return "game started successfully";
+        return "game started successfully\n" + GameMenuController.getInstance().whoseTurnIsIt();
 
     }
 

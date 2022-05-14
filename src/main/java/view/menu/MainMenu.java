@@ -1,5 +1,6 @@
 package view.menu;
 
+import controller.GameMenuController;
 import controller.MainMenuController;
 
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class MainMenu extends Menu {
             else if ((command = getHashMap(input, PLAY_GAME)) != null) {
                 String response = MainMenuController.getInstance().startGame(command);
                 printMessage(response);
-                if (response.equals("game started successfully")) // TODO clean programming...
+                if (GameMenuController.getInstance() != null)
                     return MenuType.GAME;
             }
             else
