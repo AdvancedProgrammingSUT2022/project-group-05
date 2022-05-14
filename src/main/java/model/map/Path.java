@@ -15,6 +15,7 @@ public class Path{
 
     public Path(Tile tile) {
         this.pathTiles = new ArrayList<>();
+        this.pathTiles.add(tile);
         this.mpCost = 0;
     }
 

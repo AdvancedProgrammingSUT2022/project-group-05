@@ -3,12 +3,17 @@ package model.game;
 import model.building.BuildingList;
 import model.map.Map;
 import model.tile.Tile;
+import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
 
 public class City {
+
+    private ArrayList<Unit> unitsInQueue = new ArrayList<>();
+    private Unit unitInProgress;
+
     private final String name;
     private final Tile center;
 
@@ -49,6 +54,19 @@ public class City {
         for (Tile tile : Map.getInstance().findNeighbors(center)) {
             if (this.canAddTile(tile)) this.addTile(tile);
         }
+    }
+
+    public void addUnitToQueue(Unit unit) {
+        this.unitsInQueue.add(unit);
+    }
+
+    public Unit getUnitFromQueue(Unit unit) {
+        for (Unit value : this.unitsInQueue) {
+            if (value.equals(unit)) {
+                return value;
+            }
+        }
+        return null;
     }
 
     public boolean hasJoblessCitizen() {
@@ -100,6 +118,10 @@ public class City {
    }
 
     public void applyNewTurnChanges() {
+
+        //spend production for unitInProgress
+        this.spendProductionForUnitInProgress();
+
         //calculate foodSurplus
         int foodSurplus = 0;
 
@@ -120,6 +142,11 @@ public class City {
     }
 
     //GETTERS
+
+    public Unit getUnitInProgress() {
+        return unitInProgress;
+    }
+
     public int getHealth() {
         return this.health;
     }
@@ -161,6 +188,11 @@ public class City {
     }
 
     //SETTER
+
+    public void setUnitInProgress(Unit unitInProgress) {
+        this.unitInProgress = unitInProgress;
+    }
+
     public void addCitizen() {
         this.totalCitizenCount++;
         this.joblessCitizenCount++;
@@ -210,5 +242,22 @@ public class City {
         int n = this.totalCitizenCount;
 
         return 15 + 6 * (n - 1) + ((int) Math.pow(n - 1, 1.5));
+    }
+
+
+    public void spendProductionForUnitInProgress() {
+        if (this.unitInProgress == null) return ;
+        this.unitInProgress.setCost(this.unitInProgress.getCost() - this.getCivilization().getProduction());
+        if (this.unitInProgress.getCost() <= 0) {
+            this.unitInProgress.setTile(unitInProgress.getStartingCity().getCenter());
+            this.getCivilization().addUnit(this.unitInProgress);
+            this.unitInProgress = null;
+            //debugging purposes
+            System.out.println("unit created successfully");
+        }
+    }
+
+    public void removeUnitFromQueue(Unit unitFromQueue) {
+        this.unitsInQueue.remove(unitFromQueue);
     }
 }

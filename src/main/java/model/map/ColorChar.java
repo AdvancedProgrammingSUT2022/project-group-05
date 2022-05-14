@@ -10,8 +10,8 @@ import model.unit.soldier.Soldier;
 
 public class ColorChar {
     //CONSTANTS
-    private static final int TOLEFT = 20;
-    private static final int TODOWN = 20;
+    private static final int TOLEFT;
+    private static final int TODOWN;
     private static final int WIDTH;
     private static final int HEIGHT;
     private static final int ZARIBMAP = 5;
@@ -19,6 +19,8 @@ public class ColorChar {
     static {
         WIDTH = 4 * ZARIBMAP - 1;
         HEIGHT = 2 * ZARIBMAP;
+        TODOWN = ZARIBMAP - 1;
+        TOLEFT = WIDTH/2;
     }
 
 
@@ -79,9 +81,8 @@ public class ColorChar {
     //CREATING PRINT PATTERN BY MAP
     public static ColorChar[][] mapConsoleOutputCreator (Civilization civilization) {
         int mapSize = Map.getInstance().getSizeOfMap();
-        //TODO... fix out of bound
-        int printH = ColorChar.ZARIBMAP * (mapSize - 1) + 2 * ColorChar.TODOWN + 200;
-        int printW = ColorChar.ZARIBMAP * 3 * (mapSize - 1) + 2 * ColorChar.TOLEFT + 200;
+        int printH = HEIGHT * mapSize;
+        int printW = WIDTH * mapSize + (WIDTH - HEIGHT + 2) * (mapSize - 1);
 
         ColorChar[][] output = new ColorChar[printH][printW];
         for (int i = 0; i < printH; i++) {
@@ -164,6 +165,8 @@ public class ColorChar {
             addCenteredText(tempTile.getCivilian().toString(), input, fromT + 1, fromL + 5); //Civ
             addCenteredText(tempTile.getCivilian().getCivilization().getPlayer().getNickname(), input, fromT, fromL + 5);
         }
+
+        addCenteredText(tempTile.getTerrain().toString() ,input ,fromT + 2, fromL); //Terrain
         addCenteredText(tempTile.getFeature().toString() ,input ,fromT + 3, fromL); //Feature
         addCenteredText(tempTile.getResource().toString() ,input ,fromT + 4, fromL); //Resource
     }

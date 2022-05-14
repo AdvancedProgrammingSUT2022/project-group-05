@@ -29,15 +29,17 @@ public class CityController {
 
     public String cityCreateUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
+        if (newUnit == null)
+            return "error: there is no unit with this name";
         newUnit.setStartingCity(this.city);
-        Unit unitFromQueue = this.city.getCivilization().getUnitFromQueue(newUnit);
+        Unit unitFromQueue = this.city.getUnitFromQueue(newUnit);
         if (unitFromQueue != null) { // for units that were already in queue
-            this.city.getCivilization().removeUnitFromQueue(unitFromQueue);
-            if (this.city.getCivilization().getUnitInProgress() != null)
-                this.city.getCivilization().addUnitToQueue(this.city.getCivilization().getUnitInProgress());
-            this.city.getCivilization().setUnitInProgress(unitFromQueue);
+            this.city.removeUnitFromQueue(unitFromQueue);
+            if (this.city.getUnitInProgress() != null)
+                this.city.addUnitToQueue(this.city.getUnitInProgress());
+            this.city.setUnitInProgress(unitFromQueue);
         } else {
-            if (newUnit.equals(this.city.getCivilization().getUnitInProgress())) { // building same unit that is being built
+            if (newUnit.equals(this.city.getUnitInProgress())) { // building same unit that is being built
                 return "this unit is already being built";
             }
             if (!this.city.getCivilization().getResearchTree().isResearchDone(newUnit.getRequiredResearch())) { // check reserch
@@ -45,9 +47,9 @@ public class CityController {
             } else if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1)) {
                 return "not enough resource";
             } else { // moving previous unit to queue and set new unit
-                if (this.city.getCivilization().getUnitInProgress() != null)
-                    this.city.getCivilization().addUnitToQueue(this.city.getCivilization().getUnitInProgress());
-                this.city.getCivilization().setUnitInProgress(newUnit);
+                if (this.city.getUnitInProgress() != null)
+                    this.city.addUnitToQueue(this.city.getUnitInProgress());
+                this.city.setUnitInProgress(newUnit);
             }
         }
         return "Creating Unit started";

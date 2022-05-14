@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CivilizationController {
-    private Civilization civilization ;
+    private Civilization civilization;
     private boolean hasRequiredAction;
 
     private ArrayList<String> requiredActions;
@@ -133,15 +133,21 @@ public class CivilizationController {
     public void searchForRequiredActions() {
         //TODO find problems such as stacked unit , units without orders, no research chosen, ... and add their comments in required actions
         // requiredActions.add(" comment ");...
-        this.requiredActions = null;
+        this.requiredActions = new ArrayList<>();
         for (int i = 0; i < this.civilization.getUnits().size(); i++) {
             if (this.civilization.getUnits().get(i).hasTask()) {
                 requiredActions.add("Unit needs order");
             }
         }
-        if (this.civilization.getUnitInProgress() == null) {
-            requiredActions.add("Choose production"); // TODO add building later..
+        for (City city : this.civilization.getCities()) {
+            if (city.getUnitInProgress() == null) {
+                requiredActions.add("Choose production"); //TODO add building later...
+            }
         }
+
+        //TODO check if there is a research in progress or not
+
+
         if (requiredActions.size() == 0) {
             this.hasRequiredAction = false;
         } else {

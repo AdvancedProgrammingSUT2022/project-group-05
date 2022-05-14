@@ -54,22 +54,22 @@ public class GameMenuController {
     // end of singleton design pattern
 
     public String nextCivilization() {
+        if (currentTurn > -1)
+            this.currentCivilizationController.searchForRequiredActions(); // search if there is any required actions left
         if (currentTurn > -1 && currentCivilizationController.hasRequiredAction()) { // check conditions for changing turn
-            this.currentCivilizationController.searchForRequiredActions();
             return "error: " + currentCivilizationController.getRequiredActions();
-        } else {
-            this.currentTurn++;
-            this.currentTurn %= this.civilizationCount;
-            if (this.currentTurn == 0) this.currentYear++;
-
-            this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
-            this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
-
-            CityController.updateInstance(null); // deselect city in new turn
-            UnitController.updateInstance(null); // deselect unit in new turn
-
-            return this.whoseTurnIsIt();
         }
+        this.currentTurn++;
+        this.currentTurn %= this.civilizationCount;
+        if (this.currentTurn == 0) this.currentYear++;
+
+        this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
+        this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
+
+        CityController.updateInstance(null); // deselect city in new turn
+        UnitController.updateInstance(null); // deselect unit in new turn
+
+        return this.whoseTurnIsIt();
     }
 
     public String whoseTurnIsIt() {
@@ -219,9 +219,6 @@ public class GameMenuController {
         if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            //debugging purposes
-            System.out.println(UnitController.getInstance().getUnit().getRemainingMovement());
-
             int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
             int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
             return UnitController.getInstance().unitMove(xPlace, yPlace);
