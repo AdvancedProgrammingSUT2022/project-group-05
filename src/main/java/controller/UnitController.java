@@ -68,8 +68,10 @@ public class UnitController{
 
 
         if (!this.unit.canMoveTo(destination)) {
-            return "can't move to this tile";
+            //return "can't move to this tile";
+            //TODO ostad khosravian in tabe bayad check kone kooh nabashe
         }
+
         if ((this.unit instanceof Soldier && destination.hasSoldier()) ||
                 (this.unit instanceof Civilian && destination.hasCivilian())) {
             return Responses.ALREADY_A_UNIT_IN_TILE.toString();
