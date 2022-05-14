@@ -111,7 +111,10 @@ public class City {
         if (this.food < 0) this.food = 0;
 
         if (foodSurplus < 0 && totalCitizenCount > 1) this.removeCitizen();
-        else if (foodSurplus > 0 && this.food >= nextThreshold()) this.addCitizen();
+        else if (foodSurplus > 0 && this.food >= this.nextThreshold()) this.addCitizen();
+
+        //increase city health
+        if (this.health < 20) this.setHealth(this.getHealth() + 1);
     }
 
     //GETTERS

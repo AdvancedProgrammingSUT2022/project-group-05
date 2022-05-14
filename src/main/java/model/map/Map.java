@@ -1,10 +1,12 @@
 package model.map;
 
+import model.game.Civilization;
 import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Map{
@@ -217,7 +219,18 @@ public class Map{
     }
 
     //MAKING READY FOR PRINT
-    public void printMap() {
+    public ArrayList<String> printMap(Civilization civilization) {
+        ArrayList<String> result = new ArrayList<>();
+        ColorChar[][] civilizationMap = ColorChar.mapConsoleOutputCreator(civilization);
 
+        for (ColorChar[] line : civilizationMap) {
+            StringBuilder lineBuilder = new StringBuilder();
+            for (ColorChar colorChar : line) {
+                lineBuilder.append(colorChar.toString());
+            }
+            result.add(lineBuilder.toString());
+        }
+
+        return result;
     }
 }

@@ -74,12 +74,19 @@ public class ColorChar {
 
 
     //CREATING PRINT PATTERN BY MAP
-    public static ColorChar[][] mapConsoleOutputCreator (Map gameMap, Civilization civilization) {
-        int mapSize = gameMap.getSizeOfMap();
+    public static ColorChar[][] mapConsoleOutputCreator (Civilization civilization) {
+        int mapSize = Map.getInstance().getSizeOfMap();
         int printH = ColorChar.ZARIBMAP * (mapSize-1) + 2 * ColorChar.TODOWN;
         int printW = ColorChar.ZARIBMAP * 3 * (mapSize-1) + 2 * ColorChar.TOLEFT;
+
         ColorChar[][] output = new ColorChar[printH][printW];
-        coloringTiles(gameMap, output, civilization);
+        for (ColorChar[] row : output) {
+            for (ColorChar cell : row) {
+                cell = new ColorChar();
+            }
+        }
+
+        coloringTiles(Map.getInstance(), output, civilization);
         return output;
     }
 

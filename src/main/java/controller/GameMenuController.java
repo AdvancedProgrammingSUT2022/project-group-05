@@ -342,6 +342,11 @@ public class GameMenuController {
     }
 
     // MAP COMMAND
+    public ArrayList<String> mapShowAll(HashMap<String, String> command) {
+        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
+
+        return Map.getInstance().printMap(currentCivilization);
+    }
 
     public String mapShowCity(HashMap<String, String> command) {
         String cityName = command.get(CITY_NAME.getKey());
