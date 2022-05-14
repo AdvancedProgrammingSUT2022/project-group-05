@@ -123,6 +123,8 @@ public class UnitController{
     }
 
     public String unitGarrison() {
+        if (!(this.unit instanceof Soldier))
+            return "error: cannot garrison civilian unit";
         if (!this.unit.getTile().hasCity())
             return "This tile does not belong to city";
         if (this.unit.getTile().getCity().getCivilization() != this.unit.getCivilization())
@@ -132,6 +134,7 @@ public class UnitController{
         if (!this.unit.getUnitState().equals(UnitState.GARRISONED)) {
             this.setDefenceBonusInFortifyState(0);
             this.unit.garrison();
+            this.unit.getTile().getCity().garrisonUnit((Soldier) this.unit);
             return Responses.UNIT_GARRISONED.toString();
         }
         return Responses.ALREADY_GARRISONED.toString();

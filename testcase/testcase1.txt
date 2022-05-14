@@ -3,6 +3,15 @@ play game --player2 mohammadreza -p1 babak
 select unit civilian -x 6 -y 0
 unit found city -c Tehran
 end turn
+select city -c Tehran
+city create unit -un Warrior
+end turn
+select unit civilian -x 8 -y 2
+unit sleep
+
+
+
+
 select unit civilian -x 8 -y 2
 unit sleep
 end turn

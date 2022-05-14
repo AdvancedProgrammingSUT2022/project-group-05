@@ -25,8 +25,6 @@ public class Civilization{
     private ArrayList<City> annexedCities;
     private ArrayList<Unit> units;
 
-    private ArrayList<Unit> unitsInQueue = new ArrayList<>();
-    private Unit unitInProgress;
 
     private final User player;
     private final int color;
@@ -88,18 +86,7 @@ public class Civilization{
         if (unit instanceof Soldier) unit.getTile().removeSoldier();
     }
 
-    public void addUnitToQueue(Unit unit) {
 
-    }
-
-    public Unit getUnitFromQueue(Unit unit) {
-        for (int i = 0; i < this.unitsInQueue.size(); i++) {
-            if (this.unitsInQueue.get(i).equals(unit)) {
-                return this.unitsInQueue.get(i);
-            }
-        }
-        return null;
-    }
 
     public void startResearch(Research research) {
         this.researchTree.startResearch(research);
@@ -126,9 +113,6 @@ public class Civilization{
     }
 
     //SETTERS
-    public void setUnitInProgress(Unit unitInProgress) {
-        this.unitInProgress = unitInProgress;
-    }
 
     public void setGold(int gold) {
         this.gold = gold;
@@ -159,10 +143,6 @@ public class Civilization{
     }
 
     //GETTERS
-
-    public Unit getUnitInProgress() {
-        return unitInProgress;
-    }
 
     public User getPlayer() {
         return player;
@@ -225,9 +205,7 @@ public class Civilization{
 
     public void applyNewTurnChanges(int currentYear) {
         this.turn = currentYear;
-      
-        //update production queue
-        this.spendProductionForUnitInProgress();
+
 
         //update unit state for new turn
         for (Unit unit : this.units) {
@@ -243,7 +221,7 @@ public class Civilization{
         //update production after changes
         this.production = 0;
         for (Tile tile : this.getTiles()) {
-            this.production += tile.getProduction();
+            this.setProduction(this.getProduction() + tile.getProduction());
         }
 
         //update gold and tiles after changes
@@ -260,21 +238,7 @@ public class Civilization{
         }
 
         //update happiness after changes
-        this.happiness = this.calculateHappiness();
-    }
-
-    public void spendProductionForUnitInProgress() {
-        if (this.unitInProgress == null) return;
-        this.unitInProgress.setCost(this.unitInProgress.getCost() - this.production);
-        if (this.unitInProgress.getCost() <= 0) {
-            this.unitInProgress.setTile(unitInProgress.getStartingCity().getCenter());
-            this.addUnit(this.unitInProgress);
-            this.unitInProgress = null;
-        }
-    }
-
-    public void removeUnitFromQueue(Unit unitFromQueue) {
-        this.unitsInQueue.remove(unitFromQueue);
+        this.setHappiness(this.calculateHappiness());
     }
 
     //CHEAT
