@@ -71,11 +71,14 @@ public enum GameMenuCommand{
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_RESEARCH_POINT("\\s*increase-research-point(?<entities>.*)", List.of(AMOUNT.getKey())),
 
+    KILL_SOLDIER("kill-soldier", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
+    KILL_CIVILIAN("\\s*kill-civilian", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+    SPAWN_UNIT("\\s*spawn(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
     REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed
     WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 4000
 
     //UNIT CHEAT CODES
-    MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for 4000 MP
+    MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for 4000 MP on everything
     TERMINATOR("\\s*terminator(?<entities>.*)", List.of()), //unit can have 4000 strength
     INSTANT_HEAL("\\s*instant-heal(?<entities>.*)", List.of()), //unit gets to maximum health instantly
 

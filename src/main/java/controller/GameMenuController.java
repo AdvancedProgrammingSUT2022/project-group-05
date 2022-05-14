@@ -45,14 +45,7 @@ public class GameMenuController {
             if (this.currentTurn == 0) this.currentYear++;
 
             this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
-            this.currentCivilizationController.getCivilization().applyNewTurnChanges(); // add production and gold and ... and progress production
-
-            for (int i = 0; i < this.currentCivilizationController.getCivilization().getUnits().size(); i++) { // apply unit state effects for new turn
-                UnitController.updateInstance(this.currentCivilizationController.getCivilization().getUnits().get(i));
-                UnitController.getInstance().applyUnitStateForNewTurn();
-
-                //TODO... add this loop to Civilization.applyNewTurnChanges if possible. If not, just delete this comment.
-            }
+            this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress production
 
             CityController.updateInstance(null); // deselect city in new turn
             UnitController.updateInstance(null); // deselect unit in new turn
@@ -301,7 +294,7 @@ public class GameMenuController {
     }
     
     //CITY COMMANDS
-    
+
     public String cityCreateUnit(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
             return "error : no city selected";
@@ -384,7 +377,7 @@ public class GameMenuController {
         if (amount < 0) return "error: Illegal amount of turns";
 
         for (int i = 0; i < amount; i++) {
-            currentCivilization.applyNewTurnChanges();
+            currentCivilization.applyNewTurnChanges(currentYear);
             this.currentYear++;
         }
 

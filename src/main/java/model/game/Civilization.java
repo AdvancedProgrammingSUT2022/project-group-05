@@ -1,5 +1,6 @@
 package model.game;
 
+import controller.UnitController;
 import model.User;
 import model.map.FogOfWarStates;
 import model.research.Research;
@@ -196,9 +197,15 @@ public class Civilization{
 
     //END OF GETTERS
 
-    public void applyNewTurnChanges() {
-        this.turn++;
+    public void applyNewTurnChanges(int currentYear) {
+        this.turn = currentYear;
         this.spendProductionForUnitInProgress(); // decrease cost of unit
+
+        //update unit state for new turn
+        for (Unit unit : this.units) {
+            UnitController.updateInstance(unit);
+            UnitController.getInstance().applyUnitStateForNewTurn();
+        }
 
         //update research (science is declined if negative gold)
         this.getResearchTree().continueResearch(this.gold >= 0 ? this.researchPoint : this.gold);
