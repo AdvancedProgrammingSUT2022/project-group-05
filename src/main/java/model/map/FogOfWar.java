@@ -50,7 +50,9 @@ public class FogOfWar{
         int mapSize = Map.getInstance().getSizeOfMap();
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
-                if (Map.getInstance().getTileFromMap(i, j).getCivilization().equals(civilization))
+                Tile tile =  Map.getInstance().getTileFromMap(i, j);
+                if (tile.getCivilization() == null) continue;
+                if (tile.getCivilization().equals(civilization))
                     fogOfWar[i][j] = FogOfWarStates.VISIBLE;
             }
         }

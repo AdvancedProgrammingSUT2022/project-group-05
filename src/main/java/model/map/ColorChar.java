@@ -1,9 +1,12 @@
 package model.map;
 
+import model.game.City;
 import model.game.Civilization;
 import model.tile.Feature;
 import model.tile.Terrain;
 import model.tile.Tile;
+import model.unit.civilian.Civilian;
+import model.unit.soldier.Soldier;
 
 public class ColorChar {
     //CONSTANTS
@@ -76,13 +79,14 @@ public class ColorChar {
     //CREATING PRINT PATTERN BY MAP
     public static ColorChar[][] mapConsoleOutputCreator (Civilization civilization) {
         int mapSize = Map.getInstance().getSizeOfMap();
-        int printH = ColorChar.ZARIBMAP * (mapSize-1) + 2 * ColorChar.TODOWN;
-        int printW = ColorChar.ZARIBMAP * 3 * (mapSize-1) + 2 * ColorChar.TOLEFT;
+        //TODO... fix out of bound
+        int printH = ColorChar.ZARIBMAP * (mapSize - 1) + 2 * ColorChar.TODOWN + 200;
+        int printW = ColorChar.ZARIBMAP * 3 * (mapSize - 1) + 2 * ColorChar.TOLEFT + 200;
 
         ColorChar[][] output = new ColorChar[printH][printW];
-        for (ColorChar[] row : output) {
-            for (ColorChar cell : row) {
-                cell = new ColorChar();
+        for (int i = 0; i < printH; i++) {
+            for (int j = 0; j < printW; j++) {
+                output[i][j] = new ColorChar();
             }
         }
 
@@ -141,16 +145,25 @@ public class ColorChar {
 
     //ADDING TEXT
     private static void addingTexts (Tile tempTile, ColorChar[][] input) {
+        Civilization civilization = tempTile.getCivilization();
+        Civilian civilian = tempTile.getCivilian();
+        Soldier soldier = tempTile.getSoldier();
+        City city = tempTile.getCity();
+
         int fromL = ColorChar.getFromLeft(tempTile);
         int fromT = ColorChar.getFromTop(tempTile);
         addCenteredText("" + tempTile.getXPlace() ,input ,fromT - 3, fromL - 2); //xpos
         addCenteredText("" + tempTile.getYPlace() ,input ,fromT - 3, fromL + 2); //ypos
-        addCenteredText(tempTile.getCity().getCivilization().getPlayer().getNickname() ,input ,fromT - 1, fromL); //Civilization
-        //can change later
-        addCenteredText(tempTile.getSoldier().toString() ,input ,fromT + 1, fromL - 5); //Soldier
-        addCenteredText(tempTile.getSoldier().getCivilization().getPlayer().getNickname(),input ,fromT - 1, fromL - 5);
-        addCenteredText(tempTile.getCivilian().toString() ,input ,fromT + 1, fromL + 5); //Civ
-        addCenteredText(tempTile.getCivilian().getCivilization().getPlayer().getNickname(),input ,fromT - 1, fromL + 5);
+        if (civilization != null)
+            addCenteredText(tempTile.getCity().getCivilization().getPlayer().getNickname() ,input ,fromT - 1, fromL); //Civilization
+        if (soldier != null) {
+            addCenteredText(tempTile.getSoldier().toString(), input, fromT + 1, fromL - 5); //Soldier
+            addCenteredText(tempTile.getSoldier().getCivilization().getPlayer().getNickname(), input, fromT - 1, fromL - 5);
+        }
+        if (civilian != null) {
+            addCenteredText(tempTile.getCivilian().toString(), input, fromT + 1, fromL + 5); //Civ
+            addCenteredText(tempTile.getCivilian().getCivilization().getPlayer().getNickname(), input, fromT - 1, fromL + 5);
+        }
         addCenteredText(tempTile.getFeature().toString() ,input ,fromT + 3, fromL); //Feature
         addCenteredText(tempTile.getResource().toString() ,input ,fromT + 4, fromL); //Resource
     }

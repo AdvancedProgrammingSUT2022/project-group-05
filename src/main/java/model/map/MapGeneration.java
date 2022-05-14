@@ -53,7 +53,7 @@ public class MapGeneration {
     private static final int RESOURCE_IRON_PROB = 5;
 
 
-    static void mapCreator() {
+    public static void mapCreator() {
         addTerrains();
         addRiver();
         addFeatures();

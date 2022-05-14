@@ -2,6 +2,7 @@ package model.game;
 
 import controller.UnitController;
 import model.User;
+import model.map.FogOfWar;
 import model.map.FogOfWarStates;
 import model.research.Research;
 import model.research.ResearchTree;
@@ -37,7 +38,7 @@ public class Civilization{
     private final ResourceList resourceList;
     private final ResearchTree researchTree;
 
-    private FogOfWarStates[][] fogOfWar = null;
+    private FogOfWarStates[][] fogOfWar;
 
     public Civilization(User player, int color) {
         this.cities = new ArrayList<>();
@@ -56,6 +57,8 @@ public class Civilization{
         this.researchTree = new ResearchTree();
 
         this.researchPoint = 0;
+
+        FogOfWar.updateFogOfWar(this);
     }
 
     public Boolean hasCity(City city) {

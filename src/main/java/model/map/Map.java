@@ -16,7 +16,6 @@ public class Map{
     //Map singleton pattern
     private static Map instance = null;
 
-
     private Map(int sizeOfMap) {
         this.sizeOfMap = sizeOfMap;
         gameMap = new Tile[sizeOfMap][sizeOfMap];
@@ -223,12 +222,12 @@ public class Map{
         ArrayList<String> result = new ArrayList<>();
         ColorChar[][] civilizationMap = ColorChar.mapConsoleOutputCreator(civilization);
 
-        for (ColorChar[] line : civilizationMap) {
-            StringBuilder lineBuilder = new StringBuilder();
-            for (ColorChar colorChar : line) {
-                lineBuilder.append(colorChar.toString());
+        for (ColorChar[] row : civilizationMap) {
+            StringBuilder rowBuilder = new StringBuilder();
+            for (ColorChar colorChar : row) {
+                rowBuilder.append(colorChar.toString());
             }
-            result.add(lineBuilder.toString());
+            result.add(rowBuilder.toString());
         }
 
         return result;

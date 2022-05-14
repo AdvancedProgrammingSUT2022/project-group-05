@@ -2,6 +2,7 @@ package controller;
 
 import model.User;
 import model.game.Civilization;
+import model.map.MapGeneration;
 import utility.ListUtility;
 import view.enums.Entity;
 
@@ -45,23 +46,32 @@ public class MainMenuController {
 
         if (!ListUtility.isEqualInteger(oneToSize, indices)) {
             return "illegal player number";
-        } else {
-            ArrayList<String> usernames = new ArrayList<>(command.values());
-            for (int i = 0; i < usernames.size(); i++) {
-                User user = UserDatabaseController.getUserByUsername(usernames.get(i));
-                if (user == null) {
-                    return "username not found";
-                } else {
-                    users.add(user);
-                }
-            }
-            ArrayList<Civilization> civilizations = new ArrayList<>();
-            for (int i = 0; i < users.size(); i++) {
-                civilizations.add(new Civilization(users.get(i), i));
-            }
-            GameMenuController.updateInstance(usernames.size(), civilizations);
-            return "game started successfully";
         }
+
+        //User catching phase
+        ArrayList<String> usernames = new ArrayList<>(command.values());
+        for (String username : usernames) {
+            User user = UserDatabaseController.getUserByUsername(username);
+            if (user == null) {
+                return "username not found";
+            } else {
+                users.add(user);
+            }
+        }
+
+        //Game initialization phase
+        //map instantiation
+        model.map.Map.updateInstance(10); //debugging purposes
+        MapGeneration.mapCreator();
+
+        //civilizations instantiation
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            civilizations.add(new Civilization(users.get(i), i));
+        }
+        GameMenuController.updateInstance(usernames.size(), civilizations);
+        return "game started successfully";
+
     }
 
     //Setters

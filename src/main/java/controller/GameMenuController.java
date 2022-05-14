@@ -5,6 +5,7 @@ import model.game.Civilization;
 import model.improvement.Improvement;
 import model.map.FogOfWar;
 import model.map.Map;
+import model.map.MapGeneration;
 import model.tile.Route;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
@@ -30,9 +31,13 @@ public class GameMenuController {
     private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
         this.currentTurn = 0;
         this.currentYear = 0;
+
         for (int i = 0; i < civilizationCount; i++) {
             this.civilizationControllers.add(new CivilizationController(civilizations.get(i)));
         }
+
+        //debugging purposes
+        this.currentCivilizationController = civilizationControllers.get(0);
     }
 
     public String nextCivilization() {
@@ -345,6 +350,9 @@ public class GameMenuController {
     public ArrayList<String> mapShowAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
+        //debugging purposes
+        this.revealAll(null);
+
         return Map.getInstance().printMap(currentCivilization);
     }
 
@@ -409,7 +417,8 @@ public class GameMenuController {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         FogOfWar.fogOfWarRevealAll(currentCivilization);
-        FogOfWar.updateFogOfWar(currentCivilization);
+        //debugging purposes
+        //FogOfWar.updateFogOfWar(currentCivilization);
 
         return "now you know where you're going";
     }

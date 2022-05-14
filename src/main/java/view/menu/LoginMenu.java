@@ -1,6 +1,7 @@
 package view.menu;
 
 import controller.LoginMenuController;
+import controller.MainMenuController;
 import controller.UserDatabaseController;
 
 import java.util.HashMap;
@@ -40,6 +41,7 @@ public class LoginMenu extends Menu {
                 printMessage(message);
                 if (message.equals("user logged in successfully!")) {
                     MainMenu.setUsername(command.get(USERNAME.getKey()));
+                    MainMenuController.updateInstance();
                     return MenuType.MAIN;
                 }
             }
