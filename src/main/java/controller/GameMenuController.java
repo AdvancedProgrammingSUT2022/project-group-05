@@ -160,11 +160,6 @@ public class GameMenuController {
         return "exiting Game";
     }
 
-    public String selectResearch(HashMap<String, String> command) {
-        //TODO
-        return "";
-    }
-
     public String selectUnitSoldier(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
@@ -214,7 +209,6 @@ public class GameMenuController {
     }
 
     //UNIT COMMANDS
-
     public String unitMove(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
@@ -441,10 +435,7 @@ public class GameMenuController {
     public ArrayList<String> mapShowAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
-        //debugging purposes
-        this.revealAll(null);
-
-        return Map.getInstance().printMap(currentCivilization);
+        return Map.getInstance().updateAndPrintMap(currentCivilization);
     }
 
     public String mapShowCity(HashMap<String, String> command) {
@@ -529,10 +520,8 @@ public class GameMenuController {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         FogOfWar.fogOfWarRevealAll(currentCivilization);
-        //debugging purposes
-        //FogOfWar.updateFogOfWar(currentCivilization);
 
-        return "now you know where you're going";
+        return Map.getInstance().printMap(currentCivilization) + "\nnow you know where you're going";
     }
 
     public String welcomeToUtopia(HashMap<String, String> command) {

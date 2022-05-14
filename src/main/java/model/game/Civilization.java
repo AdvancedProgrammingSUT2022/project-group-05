@@ -35,6 +35,7 @@ public class Civilization{
     private int turn;
     private int gold;
     private int production;
+    private int baseProduction;
     private int researchPoint;
 
     private final ResourceList resourceList;
@@ -53,7 +54,8 @@ public class Civilization{
 
         this.turn = 0;
         this.gold = 0;
-        this.production = 0; // it could be increased with some resources and buildings
+        this.production = 10;
+        this.baseProduction = 10;
         this.happiness = 10;
 
         this.resourceList = new ResourceList();
@@ -86,8 +88,6 @@ public class Civilization{
         if (unit instanceof Soldier) unit.getTile().removeSoldier();
     }
 
-
-
     public void startResearch(Research research) {
         this.researchTree.startResearch(research);
     }
@@ -109,7 +109,7 @@ public class Civilization{
         int unitCount = this.units.size();
         int currentTurn = this.turn;
 
-        return ((unitCount + 1)/2) * ((currentTurn)/30 + 1);
+        return ((unitCount + 1) / 2) * ((currentTurn) / 30 + 1);
     }
 
     //SETTERS
@@ -206,7 +206,6 @@ public class Civilization{
     public void applyNewTurnChanges(int currentYear) {
         this.turn = currentYear;
 
-
         //update unit state for new turn
         for (Unit unit : this.units) {
             unit.initializeRemainingMovement();
@@ -219,7 +218,7 @@ public class Civilization{
         this.getResearchTree().continueResearch(this.gold >= 0 ? this.researchPoint : this.gold);
 
         //update production after changes
-        this.production = 0;
+        this.production = this.baseProduction;
         for (Tile tile : this.getTiles()) {
             this.setProduction(this.getProduction() + tile.getProduction());
         }
