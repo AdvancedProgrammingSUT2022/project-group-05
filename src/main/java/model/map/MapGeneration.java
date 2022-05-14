@@ -171,14 +171,11 @@ public class MapGeneration {
                 }
             }
         }
-        //Collections.shuffle(tiles);
+
+        Collections.shuffle(tiles);
+
         int count = (tiles.size() * PROB) / 100;
-        //TODO DENUg
-        for (int i = 0; i < count; i++) {
-            //if (tiles.get(i).getTerrain().equals(Terrain.FIELD)) System.out.println("SHIT MAN");//WTFFFFFFFf
-            //tiles.get(i).setFeature(feature);
-            //System.out.println(tiles.get(i).getTerrain());
-        }
+        for (int i = 0; i < count; i++) tiles.get(i).setFeature(feature);
     }
 
 
@@ -220,6 +217,6 @@ public class MapGeneration {
         }
         Collections.shuffle(tiles);
         int count = (tiles.size() * PROB) / 100;
-        //for (int i = 0; i < count; i++) tiles.get(i).setResource(resource);
+        for (int i = 0; i < count; i++) tiles.get(i).setResource(resource);
     }
 }

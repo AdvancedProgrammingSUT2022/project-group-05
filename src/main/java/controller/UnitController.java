@@ -68,58 +68,57 @@ public class UnitController{
 
 
         if (!this.unit.canMoveTo(destination)) {
-            //return "can't move to this tile";
-            //TODO ostad khosravian in tabe bayad check kone kooh nabashe
+            return "error: unreachable destination";
         }
 
         if ((this.unit instanceof Soldier && destination.hasSoldier()) ||
                 (this.unit instanceof Civilian && destination.hasCivilian())) {
-            return Responses.ALREADY_A_UNIT_IN_TILE.toString();
+            return Responses.ALREADY_A_UNIT_IN_TILE.getResponse();
         }
         Path bestPath = Map.getInstance().bestPathFinder(here, destination, this.unit.getRemainingMovement());
         if (bestPath == null) {
-            return Responses.UNABLE_TO_MOVE_UNIT_HERE.toString();
+            return Responses.UNABLE_TO_MOVE_UNIT_HERE.getResponse();
         }
         if (this.unit instanceof Soldier) {
             Map.getInstance().moveSoldier((Soldier) this.unit, bestPath);
         } else if (this.unit instanceof Civilian) {
             Map.getInstance().moveCivilian((Civilian) this.unit, bestPath);
         }
-        return Responses.UNIT_MOVED.toString();
+        return Responses.UNIT_MOVED.getResponse();
     }
 
     public String unitSleep() {
         if (this.unit.getUnitState().equals(UnitState.ASLEEP))
-            return Responses.ALREADY_ASLEEP.toString();
+            return Responses.ALREADY_ASLEEP.getResponse();
         this.unit.sleep();
         this.setDefenceBonusInFortifyState(0);
-        return Responses.UNIT_SLEPT.toString();
+        return Responses.UNIT_SLEPT.getResponse();
     }
 
     public String unitAlert() {
         if (this.unit.getUnitState().equals(UnitState.ALERTED))
-            return Responses.ALREADY_ALERTED.toString();
+            return Responses.ALREADY_ALERTED.getResponse();
         this.unit.alert();
-        return Responses.UNIT_ALERTED.toString();
+        return Responses.UNIT_ALERTED.getResponse();
     }
 
     public String unitFortify() {
         if (!this.unit.getUnitState().equals(UnitState.FORTIFY)) {
             this.setDefenceBonusInFortifyState(1);
             this.unit.fortify();
-            return Responses.UNIT_FORTIFIED.toString();
+            return Responses.UNIT_FORTIFIED.getResponse();
         }
-        return Responses.ALREADY_FORTIFIED.toString();
+        return Responses.ALREADY_FORTIFIED.getResponse();
     }
 
     public String unitRecover() {
         if (!this.unit.getUnitState().equals(UnitState.RECOVERING)) {
-            return Responses.ALREADY_RECOVERED.toString();
+            return Responses.ALREADY_RECOVERED.getResponse();
         }
         this.setDefenceBonusInFortifyState(0);
         this.unit.recovering();
         if (!this.recoverUnitInRecoveringState()) {
-            return Responses.UNIT_RECOVERING.toString();
+            return Responses.UNIT_RECOVERING.getResponse();
         }
         return "Unit is in full health";
     }
@@ -134,9 +133,9 @@ public class UnitController{
         if (!this.unit.getUnitState().equals(UnitState.GARRISONED)) {
             this.setDefenceBonusInFortifyState(0);
             this.unit.garrison();
-            return Responses.UNIT_GARRISONED.toString();
+            return Responses.UNIT_GARRISONED.getResponse();
         }
-        return Responses.ALREADY_GARRISONED.toString();
+        return Responses.ALREADY_GARRISONED.getResponse();
     }
 
     public String unitSetupRanged() {
@@ -146,9 +145,9 @@ public class UnitController{
             this.setDefenceBonusInFortifyState(0);
             Siege siege = (Siege) this.unit;
             siege.setup();
-            return Responses.UNIT_SETUP.toString();
+            return Responses.UNIT_SETUP.getResponse();
         }
-        return Responses.ALREADY_SETUP.toString();
+        return Responses.ALREADY_SETUP.getResponse();
 
     }
 
@@ -220,17 +219,17 @@ public class UnitController{
 
     public String unitWake() {
         if (this.unit.getUnitState() != UnitState.ASLEEP) {
-            return Responses.ALREADY_AWAKE.toString();
+            return Responses.ALREADY_AWAKE.getResponse();
         }
         this.unit.wake();
-        return Responses.UNIT_AWAKENED.toString();
+        return Responses.UNIT_AWAKENED.getResponse();
 
     }
 
     public String unitDelete() {
         this.setDefenceBonusInFortifyState(0);
         this.unit.killWithGold();
-        return Responses.UNIT_DELETED.toString();
+        return Responses.UNIT_DELETED.getResponse();
     }
 
     public String unitFoundCity() {
