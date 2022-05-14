@@ -75,13 +75,11 @@ public enum GameMenuCommand{
     WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 200
 
     //UNIT CHEAT CODES
-    UNDYNE("\\s*undyne(?<entities>.*)", List.of()), //unit can take so much damage
     MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for so long
     TERMINATOR("\\s*terminator(?<entities>.*)", List.of()), //unit can deal so much damage
+    INSTANT_HEAL("\\s*instant-heal(?<entities>.*)", List.of()),
+    INSTANT_BUILD_ROUTE("\\s*instant-build(?<entities>.*)", List.of(ROUTE.getKey())),
     INSTANT_BUILD_IMPROVEMENT("\\s*instant-build(?<entities>.*)", List.of(IMPROVEMENT.getKey())),
-
-    //CITY CHEAT CODES
-    INSTANT_CREATE_UNIT("\\s*instant-create-unit(?<entities>.*)", List.of(UNIT_NAME.getKey())),
 
     //END OF TURN
     END_TURN("\\s*end\\s+turn(?<entities>.*)", List.of()),

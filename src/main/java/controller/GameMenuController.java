@@ -3,8 +3,10 @@ package controller;
 import model.game.City;
 import model.game.Civilization;
 import model.improvement.Improvement;
+import model.map.FogOfWar;
 import model.map.Map;
 import model.tile.Route;
+import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
@@ -18,6 +20,7 @@ public class GameMenuController {
     private int civilizationCount;
     private ArrayList<CivilizationController> civilizationControllers = new ArrayList<>();
     private int currentTurn;
+    private int currentYear;
     private CivilizationController currentCivilizationController;
 
 
@@ -26,6 +29,7 @@ public class GameMenuController {
 
     private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
         this.currentTurn = 0;
+        this.currentYear = 0;
         for (int i = 0; i < civilizationCount; i++) {
             this.civilizationControllers.add(new CivilizationController(civilizations.get(i)));
         }
@@ -36,18 +40,25 @@ public class GameMenuController {
             this.currentCivilizationController.searchForRequiredActions();
             return "error: " + currentCivilizationController.getRequiredActions();
         } else {
-            CityController.updateInstance(null); // deselect city in new turn
             this.currentTurn++;
             this.currentTurn %= this.civilizationCount;
+            if (this.currentTurn == 0) this.currentYear++;
+
             this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
-            //TODO increase production and gold and ... for new Turn
-            this.currentCivilizationController.getCivilization().applyNewTurnChanges(); // add production, decrease cost of units
+            this.currentCivilizationController.getCivilization().applyNewTurnChanges(); // add production and gold and ... and progress production
+
             for (int i = 0; i < this.currentCivilizationController.getCivilization().getUnits().size(); i++) { // apply unit state effects for new turn
                 UnitController.updateInstance(this.currentCivilizationController.getCivilization().getUnits().get(i));
                 UnitController.getInstance().applyUnitStateForNewTurn();
+
+                //TODO... add this loop to Civilization.applyNewTurnChanges if possible. If not, just delete this comment.
             }
+
+            CityController.updateInstance(null); // deselect city in new turn
             UnitController.updateInstance(null); // deselect unit in new turn
-            return currentCivilizationController.getCivilization().getPlayer().getNickname() + "'s turn";
+
+            return "Year " + this.currentYear + ":\n" +
+                    currentCivilizationController.getCivilization().getPlayer().getNickname() + "'s turn";
         }
     }
 
@@ -62,7 +73,10 @@ public class GameMenuController {
     // end of singleton design pattern
 
     //SELECT COMMANDS
-
+    public String selectResearch(HashMap<String, String> command) {
+        //TODO
+        return "";
+    }
 
     public String selectUnitSoldier(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
@@ -217,23 +231,33 @@ public class GameMenuController {
 
 
     public String unitBuildImprovement(HashMap<String, String> command) {
-        if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
-        } else {
-            String improvementName = command.get(IMPROVEMENT.getKey());
-            Improvement improvement = Improvement.valueOf(improvementName.toUpperCase());
-            return UnitController.getInstance().unitBuildImprovement(improvement);
+        String improvementName = command.get(IMPROVEMENT.getKey());
+        Improvement improvement;
+
+        if (UnitController.getInstance().getUnit() == null) return "error : no unit selected";
+
+        try {
+            improvement = Improvement.valueOf(improvementName.toUpperCase());
+        } catch (IllegalArgumentException iae) {
+            return "error: no improvement exists with given name";
         }
+
+        return UnitController.getInstance().unitBuildImprovement(improvement);
     }
 
     public String unitBuildRoute(HashMap<String, String> command) {
-        if (UnitController.getInstance().getUnit() == null) {
-            return "error: no unit selected";
-        } else {
-            String routeName = command.get(ROUTE.getKey());
-            Route route = Route.valueOf(routeName.toUpperCase());
-            return UnitController.getInstance().unitBuildRoute(route);
+        String routeName = command.get(ROUTE.getKey());
+        Route route;
+
+        if (UnitController.getInstance().getUnit() == null) return "error : no unit selected";
+
+        try {
+            route = Route.valueOf(routeName.toUpperCase());
+        } catch (IllegalArgumentException iae) {
+            return "error: no route exists with given name";
         }
+
+        return UnitController.getInstance().unitBuildRoute(route);
     }
 
     public String unitRemoveJungle(HashMap<String, String> command) {
@@ -345,24 +369,122 @@ public class GameMenuController {
         return "";
     }
 
-    // CHEAT CODE COMMANDS
+    // END OF TURN
+    public String endOfTurn(HashMap<String, String> command) {
+        return this.nextCivilization();
+    }
 
+
+    // LET THE FUN BEGIN
+    // CHEAT CODE COMMANDS
     public String increaseTurn(HashMap<String, String> command) {
         int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
-        //TODO change variables with respect to amount of turn
+        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
+
+        if (amount < 0) return "error: Illegal amount of turns";
+
+        for (int i = 0; i < amount; i++) {
+            currentCivilization.applyNewTurnChanges();
+            this.currentYear++;
+        }
+
         return "turn increased";
     }
 
     public String increaseGold(HashMap<String, String> command) {
         int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
-        this.currentCivilizationController.getCivilization().setGold(this.currentCivilizationController.getCivilization().getGold() + amount);
-        return "turn increased";
+        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
+
+        currentCivilization.setGold(currentCivilization.getGold() + amount);
+        return "gold increased";
     }
 
-    // END OF TURN
+    public String increaseResearchPoint(HashMap<String, String> command) {
+        int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
+        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
-    public String endOfTurn(HashMap<String, String> command) {
-        return this.nextCivilization();
+        currentCivilization.setResearchPoint(currentCivilization.getResearchPoint() + amount);
+        return "research point increased";
     }
 
+    public String revealAll(HashMap<String, String> command) {
+        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
+
+        FogOfWar.fogOfWarRevealAll(currentCivilization);
+        FogOfWar.updateFogOfWar(currentCivilization);
+
+        return "now you know where you're going";
+    }
+
+    public String welcomeToUtopia(HashMap<String, String> command) {
+        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
+
+        currentCivilization.setBaseHappiness(4000);
+        currentCivilization.setHappiness(currentCivilization.calculateHappiness());
+
+        switch (currentYear % 3) {
+            case 0: return "so that's what living in Tehran feels like";
+            case 1: return "now everybody loves you :)";
+            case 2: return "here, you dropped this \uD83D\uDC51"; //the character is crown emoji
+        }
+        return "";
+    }
+
+    //UNIT CHEAT CODES
+    public String marcopolo(HashMap<String, String> command) {
+        Unit currentUnit = UnitController.getInstance().getUnit();
+        if (currentUnit == null) return "error: no unit selected";
+
+        currentUnit.setMaxMovement(4000);
+        return "what souvenirs have you brought along Marco?";
+    }
+
+    public String terminator(HashMap<String, String> command) {
+        Unit currentUnit = UnitController.getInstance().getUnit();
+        if (currentUnit == null) return "error: no unit selected";
+
+        currentUnit.setMeleeStrength(4000);
+        currentUnit.setRangedStrength(4000);
+        return "hasta la vista baby!";
+    }
+
+    public String instantHeal(HashMap<String, String> command) {
+        Unit currentUnit = UnitController.getInstance().getUnit();
+        if (currentUnit == null) return "error: no unit selected";
+
+        currentUnit.setHealth(10);
+        return "unit healed completely";
+    }
+
+    public String instantBuildRoute(HashMap<String, String> command) {
+        String routeName = command.get(ROUTE.getKey());
+        Route route;
+        Unit unit;
+
+        unit = UnitController.getInstance().getUnit();
+        if (unit == null) return "error : no unit selected";
+        try {
+            route = Route.valueOf(routeName.toUpperCase());
+        } catch (IllegalArgumentException iae) {
+            return "error: no route exists with given name";
+        }
+
+        return UnitController.getInstance().instantBuildRoute();
+    }
+
+    public String instantBuildImprovement(HashMap<String, String> command) {
+        String improvementName = command.get(IMPROVEMENT.getKey());
+        Improvement improvement;
+        Unit unit;
+
+        unit = UnitController.getInstance().getUnit();
+        if (unit == null) return "error : no unit selected";
+        try {
+            improvement = Improvement.valueOf(improvementName.toUpperCase());
+        } catch (IllegalArgumentException iae) {
+            return "error: no improvement exists with given name";
+        }
+
+        return UnitController.getInstance().instantBuildImprovement();
+    }
 }

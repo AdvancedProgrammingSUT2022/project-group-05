@@ -115,4 +115,16 @@ public class FogOfWar{
         if (xDown && yUp)
             fogOfWar[xPlace -1][yPlace +1] = state;
     }
+
+    //CHEAT CODE
+    public static void fogOfWarRevealAll(Civilization civilization) {
+        int mapSize = Map.getInstance().getSizeOfMap();
+        FogOfWarStates[][] fogOfWar = new FogOfWarStates[mapSize][mapSize];
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                fogOfWar[i][j] = FogOfWarStates.VISIBLE;
+            }
+        }
+        civilization.setFogOfWar(fogOfWar);
+    }
 }

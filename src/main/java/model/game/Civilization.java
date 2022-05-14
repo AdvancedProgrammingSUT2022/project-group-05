@@ -14,12 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Civilization{
-    private static int baseHappiness;
-
-    static {
-        baseHappiness = 10;
-    }
-
     private City capital;
     private ArrayList<City> cities;
     private ArrayList<City> annexedCities;
@@ -31,8 +25,10 @@ public class Civilization{
     private final User player;
     private final int color;
 
-    private int gold;
     private int happiness;
+    private int baseHappiness;
+
+    private int gold;
     private int production;
     private int researchPoint;
 
@@ -89,7 +85,7 @@ public class Civilization{
     }
 
     public int calculateHappiness() {
-        int result = baseHappiness;
+        int result = this.baseHappiness;
         for (Resource resource : Resource.values()) {
             if (resource.getResourceType().equals(ResourceType.LUXURIOUS) &&
                     this.resourceList.hasEnough(resource, 1))
@@ -234,7 +230,7 @@ public class Civilization{
     }
 
     //CHEAT
-    public static void setBaseHappiness(int newBaseHappiness) {
-        baseHappiness = newBaseHappiness;
+    public void setBaseHappiness(int newBaseHappiness) {
+        this.baseHappiness = newBaseHappiness;
     }
 }
