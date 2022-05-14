@@ -143,7 +143,6 @@ public abstract class Unit {
 
 
     //SETTERS
-
     public void setTile(Tile tile) {
         this.tile = tile;
     }
@@ -176,8 +175,6 @@ public abstract class Unit {
     }
 
     //GETTERS
-
-
     public City getStartingCity() {
         return startingCity;
     }
@@ -238,4 +235,17 @@ public abstract class Unit {
         return false;
     }
 
+
+    //CHEAT
+    public void setMaxMovement(int maxMovement) {
+        this.maxMovement = maxMovement;
+        this.remainingMovement = maxMovement;
+    }
+
+    public void setMeleeStrength(int meleeStrength) {
+        this.meleeStrength = meleeStrength;
+    }
+    public void setRangedStrength(int rangedStrength) {
+        this.rangedStrength = rangedStrength;
+    }
 }

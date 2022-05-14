@@ -57,7 +57,7 @@ public class MainMenuController {
             }
             ArrayList<Civilization> civilizations = new ArrayList<>();
             for (int i = 0; i < users.size(); i++) {
-                civilizations.add(new Civilization(users.get(i), i, 0));
+                civilizations.add(new Civilization(users.get(i), i));
             }
             GameMenuController.updateInstance(usernames.size(), civilizations);
             return "game started successfully";

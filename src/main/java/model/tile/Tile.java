@@ -110,6 +110,10 @@ public class Tile{
     }
 
     public void applyNewTurnChanges() { //progresses the current project on this tile
+        //Gold calculation
+
+
+        //WorkerStuff
         if (this.civilian instanceof Worker) this.projectManager.continueProject();
 
         if (this.projectManager.hasFinishedProject()) {
@@ -118,7 +122,7 @@ public class Tile{
             if (type == ProjectType.FEATURE_REMOVAL)
                 this.removeFeature();
             else if (type == ProjectType.REPAIR)
-                this.isRepaired = true;
+                this.setIsRepaired(true);
 
             else if (type == ProjectType.ROUTE_CONSTRUCTION)
                 this.setRoute(this.projectManager.getRouteProject());
@@ -134,13 +138,10 @@ public class Tile{
         }
     }
 
-    //TODO... if (this.city.getCivilization().getResearchTree().isResearchDone(resource.neededImprovement))
-
     public boolean canSeeThrough(Tile tile) { //returns if a unit on this tile can see through given tile
-        //TODO..
         if (this.terrain == Terrain.HILL) return true;
 
-        return this.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST;
+        return tile.terrain != Terrain.MOUNTAIN && tile.feature != Feature.FOREST && tile.feature != Feature.JUNGLE;
     }
 
     private int fromLeftFinder(int xPlace, int yPlace, int mapSize) { //places in print map
@@ -219,15 +220,15 @@ public class Tile{
     }
 
     public int getFood() {
-        return this.food;
+        return this.hasCitizen ? this.food : 0;
     }
 
     public int getGold() {
-        return this.gold;
+        return this.hasCitizen ? this.gold : 0;
     }
 
     public int getProduction() {
-        return this.production;
+        return this.hasCitizen ? this.production : 0;
     }
 
     public int getCombatBoost() {
@@ -255,7 +256,11 @@ public class Tile{
     }
 
     public Improvement getImprovement() {
-        return this.improvement;
+        if (!this.hasCity()) return Improvement.NO_IMPROVEMENT;
+
+        if (this.getCivilization().getResearchTree().isResearchDone(improvement.getNeededResearch()))
+            return this.improvement;
+        return Improvement.NO_IMPROVEMENT;
     }
 
     public boolean hasCity() {
@@ -268,6 +273,10 @@ public class Tile{
             if (hasRiver) count++;
         }
         return count;
+    }
+
+    public int getRouteMaintenanceCost() {
+        return this.route.getMaintenanceCost();
     }
 
     public boolean hasRiver() {
@@ -356,31 +365,62 @@ public class Tile{
     }
 
     public void setResource(Resource resource) {
-        if (this.hasResource()) this.removeResource();
         this.resource = resource;
-        //TODO is there more to do?
-    }
-    public void removeResource() {
-        //TODO is there more to do?
-        this.resource = Resource.NO_RESOURCE;
     }
 
     public void setImprovement(Improvement improvement) {
         if (this.hasImprovement()) this.removeImprovement();
         this.improvement = improvement;
-        //TODO is there more to do?
+        this.isRepaired = true;
+
+        this.applyImprovementEffects();
     }
     public void removeImprovement() {
-        //TODO is there more to do?
+        this.disableImprovementEffects();
+
         this.improvement = Improvement.NO_IMPROVEMENT;
+    }
+
+    private void applyImprovementEffects() {
+        this.gold += this.improvement.getGold();
+        this.food += this.improvement.getFood();
+        this.production += this.improvement.getProduction();
+
+        if (this.resource.getNeededImprovement() == this.improvement) {
+            this.gold += this.resource.getGold();
+            this.food += this.resource.getFood();
+            this.production += this.resource.getProduction();
+        }
+    }
+    private void disableImprovementEffects() {
+        this.gold -= this.improvement.getGold();
+        this.food -= this.improvement.getFood();
+        this.production -= this.improvement.getProduction();
+
+        if (this.resource.getNeededImprovement() == this.improvement) {
+            this.gold -= this.resource.getGold();
+            this.food -= this.resource.getFood();
+            this.production -= this.resource.getProduction();
+        }
     }
 
     public void setHasCitizen(boolean hasCitizen) {
         this.hasCitizen = hasCitizen;
     }
 
+    public void setIsRepaired(boolean isRepaired) {
+        if (isRepaired) {
+            this.applyImprovementEffects();
+        } else {
+            this.disableImprovementEffects();
+        }
+    }
+
     public void addRiver(int i) {
+        if (rivers[i]) return;
+
         rivers[i] = true;
+        this.gold += 1;
     }
 
     //Default Overrides

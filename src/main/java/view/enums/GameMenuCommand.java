@@ -59,22 +59,28 @@ public enum GameMenuCommand{
     CITY_PURCHASE_UNIT("\\s*city\\s+purchase\\s+unit(?<entities>.*)", List.of(UNIT_NAME.getKey())),
     CITY_PURCHASE_BUILDING("\\s*city\\s+purchase\\s+building(?<entities>.*)", List.of(BUILDING.getKey())),
 
-
     //MAP COMMANDS
     MAP_SHOW_CITY("\\s*map\\s+show(?<entities>.*)", List.of(CITY_NAME.getKey())),
     MAP_SHOW_POSITION("\\s*map\\s+show(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     MAP_MOVE("\\s*map\\s+move(?<entities>.*)", List.of(DIRECTION.getKey())),
 
+    //RESEARCH COMMANDS
+
     //CHEAT CODES
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
-    REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()),
+    INCREASE_RESEARCH_POINT("\\s*increase-research-point(?<entities>.*)", List.of(AMOUNT.getKey())),
 
+    KILL_SOLDIER("kill-soldier", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
+    KILL_CIVILIAN("\\s*kill-civilian", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+    SPAWN_UNIT("\\s*spawn(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
+    REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed
+    WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 4000
 
-    //UNIT CHEAT CODE
-    UNIT_MOVE_WITHOUT_COST("\\s*unit-move-without-cost(?<entities>.*)",List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
-
-
+    //UNIT CHEAT CODES
+    MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for 4000 MP on everything
+    TERMINATOR("\\s*terminator(?<entities>.*)", List.of()), //unit can have 4000 strength
+    INSTANT_HEAL("\\s*instant-heal(?<entities>.*)", List.of()), //unit gets to maximum health instantly
 
     //END OF TURN
     END_TURN("\\s*end\\s+turn(?<entities>.*)", List.of()),

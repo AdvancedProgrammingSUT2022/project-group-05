@@ -3,8 +3,9 @@ package model.research;
 import static model.research.ResearchStatus.*;
 
 public class ResearchTree{
-    private ResearchNode root;
+    private final ResearchNode root;
     private Research currentResearch;
+    private int researchPoints;
 
     public ResearchTree() {
         this.root = new ResearchNode(Research.AGRICULTURE);
@@ -15,6 +16,7 @@ public class ResearchTree{
         }
 
         this.currentResearch = Research.NO_RESEARCH;
+        this.researchPoints = 0;
     }
 
     //Research time handling
@@ -26,8 +28,33 @@ public class ResearchTree{
         return this.currentResearch != Research.NO_RESEARCH;
     }
 
-    public boolean continueResearch() {
-        return true; //TODO
+    public void continueResearch(int researchPointsIncrease) {
+        this.researchPoints += researchPointsIncrease;
+        if (this.researchPoints < 0) this.researchPoints = 0;
+
+        if (!this.hasResearch()) return;
+        if (this.researchPoints >= this.currentResearch.getCost()) {
+            this.researchPoints -= this.currentResearch.getCost();
+
+            this.doResearch(currentResearch);
+            setCurrentResearch(Research.NO_RESEARCH);
+        }
+    }
+
+    public int getResearchProgressPercentage() {
+        if (!this.hasResearch()) return 0;
+        if (this.researchPoints > this.currentResearch.getCost()) return 1;
+
+        return this.researchPoints * 100 / this.currentResearch.getCost();
+    }
+    //GETTER
+    public void setCurrentResearch(Research research) {
+        this.currentResearch = research;
+    }
+
+    //SETTER
+    public Research getCurrentResearch() {
+        return this.currentResearch;
     }
 
     //Research tree changes handling
@@ -54,7 +81,7 @@ public class ResearchTree{
     }
 
     public Boolean isResearchDone(Research research) {
-        return getResearchStatus(research) == DONE;
+        return research == Research.NO_RESEARCH ||getResearchStatus(research) == DONE;
     }
 
     public Boolean isResearchLocked(Research research) {
@@ -102,7 +129,11 @@ public class ResearchTree{
     //PRINT
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder("RESEARCH INFO:\n\n");
+        StringBuilder result = new StringBuilder();
+
+        result.append("RESEARCH INFO:").append("\n");
+        result.append("CURRENT RESEARCH: ").append(this.getCurrentResearch().toString()).append("\n");
+        result.append("CURRENT PROGRESS: ").append(this.getResearchProgressPercentage()).append("%\n");
 
         for (Research research : Research.values()) {
             result.append(getResearch(research).toString());
