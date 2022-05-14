@@ -139,9 +139,6 @@ public class GameMenuController {
         if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            //debugging purposes
-            System.out.println(UnitController.getInstance().getUnit().getRemainingMovement());
-
             int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
             int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
             return UnitController.getInstance().unitMove(xPlace, yPlace);

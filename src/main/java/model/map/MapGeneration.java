@@ -24,12 +24,12 @@ public class MapGeneration {
     private static final int RIVER_PROB = 5;
 
     //per 100
-    private static final int FEATURE_PLAIN_PROB = 5;
-    private static final int FEATURE_FOREST_PROB = 5;
-    private static final int FEATURE_ICE_PROB = 5;
-    private static final int FEATURE_JUNGLE_PROB = 5;
-    private static final int FEATURE_MARSH_PROB = 5;
-    private static final int FEATURE_OASIS_PROB = 5;
+    private static final int FEATURE_PLAIN_PROB = 20;
+    private static final int FEATURE_FOREST_PROB = 20;
+    private static final int FEATURE_ICE_PROB = 20;
+    private static final int FEATURE_JUNGLE_PROB = 20;
+    private static final int FEATURE_MARSH_PROB = 20;
+    private static final int FEATURE_OASIS_PROB = 20;
 
     //per 100
     private static final int RESOURCE_BANANA_PROB = 5;
@@ -166,11 +166,14 @@ public class MapGeneration {
             for (int j = 0; j < sizeOfMap; j++) {
                 Tile temp = map.getTileFromMap(i, j);
                 if (feature.matchesTerrain(temp.getTerrain()) && !temp.hasFeature() &&
-                        !(feature.equals(Feature.PLAIN) && !temp.hasRiver()))
+                        !(feature.equals(Feature.PLAIN) && !temp.hasRiver())) {
                     tiles.add(temp);
+                }
             }
         }
+
         Collections.shuffle(tiles);
+
         int count = (tiles.size() * PROB) / 100;
         for (int i = 0; i < count; i++) tiles.get(i).setFeature(feature);
     }

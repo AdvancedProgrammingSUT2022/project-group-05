@@ -62,7 +62,6 @@ public class MainMenuController {
         //Game initialization phase
         //map instantiation
         model.map.Map.updateInstance(10); //debugging purposes
-        MapGeneration.mapCreator();
 
         //civilizations instantiation
         ArrayList<Civilization> civilizations = new ArrayList<>();
