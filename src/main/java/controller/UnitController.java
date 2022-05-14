@@ -3,6 +3,7 @@ package controller;
 import model.improvement.Improvement;
 import model.map.Map;
 import model.map.Path;
+import model.research.Research;
 import model.tile.Feature;
 import model.tile.Route;
 import model.tile.Tile;
@@ -224,7 +225,7 @@ public class UnitController{
         return "City found successfully";
     }
 
-    //Worker stuff TODO
+    //Worker stuff
 
     public String unitBuildImprovement(Improvement improvement) {
         this.unitWake();
@@ -236,8 +237,12 @@ public class UnitController{
             return "error: Already an improvement on tile";
         if (!improvement.matchesTerrain(this.unit.getTile().getTerrain()) &&
                 !improvement.matchesFeature(this.unit.getTile().getFeature()))
-            return "error: this improvement doesn't match this feature and terrain";
+            return "error: This improvement doesn't match this feature and terrain";
+        if (!this.unit.getCivilization().getResearchTree().isResearchDone(improvement.getNeededResearch()))
+            return "error: Prerequisite tech" + improvement.getNeededResearch() + "has not been researched";
 
+        Worker worker = (Worker) this.unit;
+        worker.addImprovement(improvement);
         return "Improvement construction started";
     }
 
@@ -249,8 +254,12 @@ public class UnitController{
             return "error: Tile not in territory";
         if (this.unit.getTile().hasRoute())
             return "error: Already a route on tile";
+        if (!this.unit.getCivilization().getResearchTree().isResearchDone(route.getNeededResearch()))
+            return "error: Prerequisite tech " + route.getNeededResearch() + " has not been researched";
 
-        //TODO
+
+        Worker worker = (Worker) this.unit;
+        worker.addRoute(route);
         return "Route construction started";
     }
 
@@ -264,6 +273,8 @@ public class UnitController{
             return "error: No forest on current tile";
         if (this.unit.getTile().hasImprovement())
             return "error: Can't remove feature of a tile with improvement";
+        if (!this.unit.getCivilization().getResearchTree().isResearchDone(Research.BRONZE_WORKING))
+            return "error: You need " + Research.BRONZE_WORKING + " to remove forests";
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.FOREST);
@@ -280,6 +291,8 @@ public class UnitController{
             return "error: No jungle on current tile";
         if (this.unit.getTile().hasImprovement())
             return "error: Can't remove feature of a tile with improvement";
+        if (this.unit.getCivilization().getResearchTree().isResearchDone(Research.BRONZE_WORKING))
+            return "error: You need " + Research.BRONZE_WORKING + " to remove jungles";
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.JUNGLE);
@@ -296,6 +309,8 @@ public class UnitController{
             return "error: No marsh on current tile";
         if (this.unit.getTile().hasImprovement())
             return "error: Can't remove feature of a tile with improvement";
+        if (!this.unit.getCivilization().getResearchTree().isResearchDone(Research.MASONRY))
+            return "error: You need " + Research.MASONRY + " to removes marshes";
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.MARSH);
