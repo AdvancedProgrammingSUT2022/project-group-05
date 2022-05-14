@@ -190,6 +190,7 @@ public class Map{
         path.getFirstTile().getCivilian().setRemainingMovement(currentMPs);
 
         path.getLastTile().setCivilian(path.getFirstTile().getCivilian());
+        civilian.setTile(path.getLastTile()); //TODO ???
         path.getFirstTile().removeCivilian();
     }
 
@@ -200,6 +201,7 @@ public class Map{
         path.getFirstTile().getSoldier().setRemainingMovement(currentMPs);
 
         path.getLastTile().setSoldier(path.getFirstTile().getSoldier());
+        soldier.setTile(path.getLastTile()); //TODO ???
         path.getFirstTile().removeSoldier();
     }
 

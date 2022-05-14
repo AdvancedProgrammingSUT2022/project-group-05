@@ -4,8 +4,11 @@ import model.game.Civilization;
 import model.research.Research;
 import model.resource.Resource;
 import model.tile.Tile;
+import model.unit.addOns.CanMoveAfterAttacking;
+import model.unit.addOns.Mounted;
+import model.unit.addOns.NoDefensiveBonus;
 
-public class Lancer extends Melee {
+public class Lancer extends Melee implements Mounted, CanMoveAfterAttacking, NoDefensiveBonus {
     public Lancer(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 220;

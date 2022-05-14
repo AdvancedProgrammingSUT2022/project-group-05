@@ -41,6 +41,11 @@ public class GameMenuController {
             this.currentTurn %= this.civilizationCount;
             this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
             //TODO increase production and gold and ... for new Turn
+            for (int i = 0; i < this.currentCivilizationController.getCivilization().getCities().size(); i++) { // increase city health if it is under 20
+                City temp = this.currentCivilizationController.getCivilization().getCities().get(i);
+                if (temp.getHealth() < 20)
+                    temp.setHealth(temp.getHealth() + 1);
+            }
             this.currentCivilizationController.getCivilization().applyNewTurnChanges(); // add production, decrease cost of units
             for (int i = 0; i < this.currentCivilizationController.getCivilization().getUnits().size(); i++) { // apply unit state effects for new turn
                 UnitController.updateInstance(this.currentCivilizationController.getCivilization().getUnits().get(i));

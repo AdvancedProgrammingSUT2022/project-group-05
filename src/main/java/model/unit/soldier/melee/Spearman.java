@@ -3,8 +3,9 @@ package model.unit.soldier.melee;
 import model.game.Civilization;
 import model.research.Research;
 import model.tile.Tile;
+import model.unit.addOns.BonusVsMounted;
 
-public class Spearman extends Melee {
+public class Spearman extends Melee implements BonusVsMounted {
     public Spearman(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 50;

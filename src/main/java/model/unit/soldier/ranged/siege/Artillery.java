@@ -3,8 +3,10 @@ package model.unit.soldier.ranged.siege;
 import model.game.Civilization;
 import model.research.Research;
 import model.tile.Tile;
+import model.unit.addOns.BonusVsCity;
+import model.unit.addOns.NoDefensiveBonus;
 
-public class Artillery extends Siege {
+public class Artillery extends Siege implements NoDefensiveBonus, BonusVsCity {
     public Artillery(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 420;
