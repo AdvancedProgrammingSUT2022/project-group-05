@@ -60,6 +60,7 @@ public enum GameMenuCommand{
     CITY_PURCHASE_BUILDING("\\s*city\\s+purchase\\s+building(?<entities>.*)", List.of(BUILDING.getKey())),
 
     //MAP COMMANDS
+    MAP_SHOW_ALL("\\s*map\\s+show(?<entities>.*))", List.of()),
     MAP_SHOW_CITY("\\s*map\\s+show(?<entities>.*)", List.of(CITY_NAME.getKey())),
     MAP_SHOW_POSITION("\\s*map\\s+show(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     MAP_MOVE("\\s*map\\s+move(?<entities>.*)", List.of(DIRECTION.getKey())),
