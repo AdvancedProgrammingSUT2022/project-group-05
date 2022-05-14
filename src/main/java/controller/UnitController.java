@@ -232,12 +232,14 @@ public class UnitController{
         return Responses.UNIT_DELETED.getResponse();
     }
 
-    public String unitFoundCity() {
+    public String unitFoundCity(String cityName) {
         if (!(this.unit instanceof Settler))
             return "error: Not a settler";
+
         Settler settler = (Settler) this.unit;
-        String cityName = "New city";
         settler.foundCity(cityName);
+        unit.getCivilization().removeUnit(this.unit);
+
         return "City found successfully";
     }
 

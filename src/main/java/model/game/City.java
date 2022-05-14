@@ -44,6 +44,7 @@ public class City {
         this.totalCitizenCount = 1;
         this.joblessCitizenCount = 1;
 
+        this.tiles = new ArrayList<>();
         this.addTile(center);
         for (Tile tile : Map.getInstance().findNeighbors(center)) {
             if (this.canAddTile(tile)) this.addTile(tile);
@@ -70,10 +71,11 @@ public class City {
 
     public void addTile(Tile tile) {
         this.tiles.add(tile);
+        tile.setCity(this);
     }
 
     public boolean canAddTile(Tile tile) { //checks if tile is neighbouring city and is not owned by anybody
-        if (tile.hasCity()) return false;
+        if (tile == null || tile.hasCity()) return false;
 
         for (Tile territory : this.tiles) {
             if (Map.getInstance().findDistance(territory, tile) == 1) return true;

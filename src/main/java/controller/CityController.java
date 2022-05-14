@@ -62,8 +62,10 @@ public class CityController {
         Tile tile = Map.getInstance().getTileFromMap(x, y);
         if (!city.canAddTile(tile))
             return "can't add tile to city";
-        if (this.city.getCivilization().getGold() < 100) //TODO find how many gold is needed
+        if (this.city.getCivilization().getGold() < 100)
             return "not enough gold";
+
+        this.city.addTile(tile);
         return "tile bought successfully";
     }
 

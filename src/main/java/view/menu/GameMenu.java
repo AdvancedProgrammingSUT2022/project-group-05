@@ -18,8 +18,6 @@ public class GameMenu extends Menu {
         String input;
         HashMap<String, String> command;
 
-        printMessage("__GAME MENU__");
-
         while (true) {
             input = scanner.nextLine();
 
@@ -91,6 +89,7 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().unitWake(command));
             else if ((command = getHashMap(input, UNIT_DELETE)) != null)
                 printMessage(GameMenuController.getInstance().unitDelete(command));
+
             else if ((command =getHashMap(input, UNIT_FOUND_CITY)) != null)
                 printMessage(GameMenuController.getInstance().unitFoundCity(command));
             else if ((command = getHashMap(input, UNIT_BUILD_IMPROVEMENT)) != null)
