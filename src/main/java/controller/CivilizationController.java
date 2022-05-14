@@ -2,6 +2,7 @@ package controller;
 
 import model.game.City;
 import model.game.Civilization;
+import model.unit.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,43 +35,84 @@ public class CivilizationController {
     }
 
     public String showUnitsPanel() {
-        return "";
+        StringBuilder result = new StringBuilder();
+
+        result.append("Units panel:\n");
+        for (Unit unit : civilization.getUnits()) {
+            result.append(InfoController.getUnitInfo(unit)).append("\n");
+        }
+
+        return result.toString();
     }
 
     public String showCitiesPanel() {
-        return "";
+        StringBuilder result = new StringBuilder();
+
+        result.append("Cities panel:\n");
+        for (City city : civilization.getCities()) {
+            result.append(InfoController.getCityInfo(city)).append("\n");
+        }
+
+        return result.toString();
     }
 
     public String showDiplomacyPanel() {
-        return "";
+        return "Not needed yet"; //TODO
     }
 
     public String showVictoryProgress() {
-        return "";
+        return "Not needed yet"; //TODO
     }
 
     public String showDemographic() {
-        return "";
+        StringBuilder result = new StringBuilder();
+
+        result.append("Demographic:\n");
+
+        result.append("Soldier count: ").append(InfoController.getSoldierCount(civilization)).append("\n");
+        result.append("Civilian count: ").append(InfoController.getCivilianCount(civilization)).append("\n");
+        result.append("Total area: ").append(InfoController.getTileCount(civilization)).append(" square km\n");
+
+        result.append("Total gold: ").append(civilization.getGold()).append("\n");
+        result.append("Total happiness: ").append(civilization.getHappiness()).append("\n");
+
+        result.append("Luxury resource count: ").append(InfoController.getLuxuryResourceCount(civilization)).append("\n");
+
+        return result.toString();
     }
 
     public String showNotificationHistory() {
-        return "";
+        return "notification history(needs pop up notification)"; //TODO when notifications exist
     }
 
     public String showMilitaryOverview() {
-        return "";
+        StringBuilder result = new StringBuilder();
+
+        result.append("Military Overview:\n");
+        for (Unit unit : civilization.getUnits()) {
+            result.append(InfoController.getUnitInfoInDepth(unit)).append("\n");
+        }
+
+        return result.toString();
     }
 
     public String showEconomicOverview() {
-        return "";
+        StringBuilder result = new StringBuilder();
+
+        result.append("Economic overview:\n");
+        for (City city : civilization.getCities()) {
+            result.append(InfoController.getCityInfoInDepth(city)).append("\n");
+        }
+
+        return result.toString();
     }
 
     public String showDiplomaticOverview() {
-        return "";
+        return "Not needed yet"; //TODO
     }
 
     public String showTradeHistory() {
-        return "";
+        return "Not needed yet"; //TODO
     }
 
     //GETTERS

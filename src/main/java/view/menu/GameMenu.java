@@ -34,27 +34,33 @@ public class GameMenu extends Menu {
 
             //INFO COMMANDS
             else if ((command = getHashMap(input, INFO_RESEARCH)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoResearch(command)); //TODO... add controller function
             else if ((command = getHashMap(input, INFO_UNITS)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoUnits(command));
             else if ((command = getHashMap(input, INFO_CITIES)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoCities(command));
             else if ((command = getHashMap(input, INFO_DIPLOMACY)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoDiplomacy(command));
             else if ((command = getHashMap(input, INFO_VICTORY)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoVictory(command));
             else if ((command = getHashMap(input, INFO_DEMOGRAPHICS)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoDemographics(command));
             else if ((command = getHashMap(input, INFO_NOTIFICATIONS)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoNotification(command));
             else if ((command = getHashMap(input, INFO_MILITARY)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoMilitary(command));
             else if ((command = getHashMap(input, INFO_ECONOMIC)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoEconomic(command));
             else if ((command = getHashMap(input, INFO_DIPLOMATIC)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoDiplomatic(command));
             else if ((command = getHashMap(input, INFO_DEALS)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoDeals(command));
+            else if ((command = getHashMap(input, INFO_TILE)) != null)
+                printMessage(GameMenuController.getInstance().infoTile(command));
+            else if ((command = getHashMap(input, INFO_TILE_STATS)) != null)
+                printMessage(GameMenuController.getInstance().infoTileStats(command));
+            else if ((command = getHashMap(input, INFO_TILE_PROJECT)) != null)
+                printMessage(GameMenuController.getInstance().infoTileProject(command));
 
             //SELECT COMMANDS
             else if ((command = getHashMap(input, SELECT_UNIT_SOLDIER)) != null)
@@ -129,12 +135,40 @@ public class GameMenu extends Menu {
             else if ((command = getHashMap(input, MAP_MOVE)) != null)
                 printMessage(GameMenuController.getInstance().mapMove(command));
 
+            //RESEARCH COMMANDS
+            else if ((command = getHashMap(input, RESEARCH_SET)) != null)
+                printMessage(GameMenuController.getInstance().researchSet(command));
+
             //CHEAT CODES
             else if ((command = getHashMap(input, INCREASE_TURN)) != null)
                 printMessage(GameMenuController.getInstance().increaseTurn(command));
             else if ((command = getHashMap(input, INCREASE_GOLD)) != null)
                 printMessage(GameMenuController.getInstance().increaseGold(command));
-            //TODO add more cheat codes
+            else if ((command = getHashMap(input, INCREASE_TURN)) != null)
+                printMessage(GameMenuController.getInstance().increaseTurn(command));
+            else if ((command = getHashMap(input, INCREASE_GOLD)) != null)
+                printMessage(GameMenuController.getInstance().increaseGold(command));
+            else if ((command = getHashMap(input, INCREASE_RESEARCH_POINT)) != null)
+                printMessage(GameMenuController.getInstance().increaseResearchPoint(command));
+
+            else if ((command = getHashMap(input, KILL_SOLDIER)) != null)
+                printMessage(""); //TODO... add controller function
+            else if ((command = getHashMap(input, KILL_CIVILIAN)) != null)
+                printMessage(""); //TODO... add controller function
+            else if ((command = getHashMap(input, SPAWN_UNIT)) != null)
+                printMessage(""); //TODO... add controller function
+            else if ((command = getHashMap(input, REVEAL_ALL)) != null)
+                printMessage(GameMenuController.getInstance().revealAll(command));
+            else if ((command = getHashMap(input, WELCOME_TO_UTOPIA)) != null)
+                printMessage(GameMenuController.getInstance().welcomeToUtopia(command));
+
+            //UNIT CHEAT CODES
+            else if ((command = getHashMap(input, MARCOPOLO)) != null)
+                printMessage(GameMenuController.getInstance().marcopolo(command));
+            else if ((command = getHashMap(input, TERMINATOR)) != null)
+                printMessage(GameMenuController.getInstance().terminator(command));
+            else if ((command = getHashMap(input, INSTANT_HEAL)) != null)
+                printMessage(GameMenuController.getInstance().instantHeal(command));
 
             //INVALID
             else

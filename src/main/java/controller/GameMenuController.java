@@ -5,7 +5,9 @@ import model.game.Civilization;
 import model.improvement.Improvement;
 import model.map.FogOfWar;
 import model.map.Map;
+import model.research.Research;
 import model.tile.Route;
+import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
@@ -38,6 +40,19 @@ public class GameMenuController {
         }
     }
 
+    public static GameMenuController getInstance() {
+        return instance;
+    }
+
+    public static void updateInstance(int civilizationCount, ArrayList<Civilization> civilizations) {
+        instance = new GameMenuController(civilizationCount, civilizations);
+    }
+
+    public static void destroyInstance() {
+        instance = null;
+    }
+    // end of singleton design pattern
+
     public String nextCivilization() {
         if (currentTurn > -1)
             this.currentCivilizationController.searchForRequiredActions(); // search if there is any required actions left
@@ -57,21 +72,86 @@ public class GameMenuController {
         return this.whoseTurnIsIt();
     }
 
-    public static GameMenuController getInstance() {
-        return instance;
-    }
-
-    public static void updateInstance(int civilizationCount, ArrayList<Civilization> civilizations) {
-        instance = new GameMenuController(civilizationCount, civilizations);
-    }
-
-    public static void destroyInstance() {
-        instance = null;
-    }
-
-    // end of singleton design pattern
     public String whoseTurnIsIt() {
         return  "Year " + this.currentYear + ": " + currentCivilizationController.getCivilization().getPlayer().getNickname() + "'s turn";
+    }
+
+    //INFO COMMANDS
+    public String infoResearch(HashMap<String, String> command) {
+        return currentCivilizationController.showResearch();
+    }
+
+    public String infoUnits(HashMap<String, String> command) {
+        return currentCivilizationController.showUnitsPanel();
+    }
+
+    public String infoCities(HashMap<String, String> command) {
+        return currentCivilizationController.showCitiesPanel();
+    }
+
+    public String infoDiplomacy(HashMap<String, String> command) {
+        return currentCivilizationController.showDiplomacyPanel();
+    }
+
+    public String infoVictory(HashMap<String, String> command) {
+        return currentCivilizationController.showVictoryProgress();
+    }
+
+    public String infoDemographics(HashMap<String, String> command) {
+        return currentCivilizationController.showDemographic();
+    }
+
+    public String infoNotification(HashMap<String, String> command) {
+        return currentCivilizationController.showNotificationHistory();
+    }
+
+    public String infoMilitary(HashMap<String, String> command) {
+        return currentCivilizationController.showMilitaryOverview();
+    }
+
+    public String infoEconomic(HashMap<String, String> command) {
+        return currentCivilizationController.showEconomicOverview();
+    }
+
+    public String infoDiplomatic(HashMap<String, String> command) {
+        return currentCivilizationController.showDiplomaticOverview();
+    }
+
+    public String infoDeals(HashMap<String, String> command) {
+        return currentCivilizationController.showTradeHistory();
+    }
+
+    public String infoTile(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return "error: out of bounds";
+
+        return InfoController.getTileInfo(tile);
+    }
+
+    public String infoTileStats(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return "error: out of bounds";
+
+        return InfoController.getTileStats(tile);
+    }
+
+    public String infoTileProject(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return "error: out of bounds";
+
+        return InfoController.getTileProjectInfo(tile);
     }
 
     //SELECT COMMANDS
@@ -311,7 +391,6 @@ public class GameMenuController {
     }
     
     //CITY COMMANDS
-
     public String cityCreateUnit(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
             return "error : no city selected";
@@ -385,6 +464,27 @@ public class GameMenuController {
         String direction = command.get(DIRECTION.getKey());
         //TODO move Map to desired direction and print Map
         return "";
+    }
+
+    // RESEARCH COMMANDS
+    public String researchSet(HashMap<String, String> command) {
+        String techName = command.get(TECHNOLOGY.getKey());
+        Research research;
+
+        try {
+            research = Research.valueOf(techName.toUpperCase());
+        } catch (IllegalArgumentException iae) {
+            return "error: no research exists with given name";
+        }
+
+        Civilization civilization = currentCivilizationController.getCivilization();
+        if (civilization.getResearchTree().isResearchLocked(research))
+            return "error: research still locked";
+        if (civilization.getResearchTree().isResearchDone(research))
+            return "error: research already done";
+
+        civilization.startResearch(research);
+        return "started researching " + research;
     }
 
     // END OF TURN

@@ -84,4 +84,19 @@ public class ProjectManager{
     public Route getRouteProject() {
         return this.routeProject;
     }
+
+    public String getStatus() {
+        StringBuilder result = new StringBuilder();
+
+        if (!this.hasProject()) return result.append("No ongoing project\n").toString();
+
+        result.append("Current project type: ").append(this.getProjectType()).append("\n");
+        if (this.getProjectType().equals(ProjectType.IMPROVEMENT_CONSTRUCTION))
+            result.append("improvement: ").append(this.getImprovementProject()).append("\n");
+        if (this.getProjectType().equals(ProjectType.ROUTE_CONSTRUCTION))
+            result.append("route: ").append(this.getRouteProject()).append("\n");
+        result.append("remaining turns: ").append(this.delay).append("\n");
+
+        return result.toString();
+    }
 }

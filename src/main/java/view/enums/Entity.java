@@ -21,7 +21,7 @@ public enum Entity{
     BUILDING("building", "(--building|-b)\\s+(?<building>[a-zA-Z ]+)\\s*"),
     IMPROVEMENT("improvement", "(--improvement|-i)\\s+(?<improvement>\\S+)\\s*"),
     ROUTE("route", "(--route|-r)\\s+(?<route>\\S+)\\s*"),
-    RESEARCH("technology", "(--technology|-t)\\s+(?<technology>\\S+)\\s*"),
+    TECHNOLOGY("technology", "(--technology|-t)\\s+(?<technology>\\S+)\\s*"),
     PLAYER("player", "(--player|-p)(?<index>[1-9]\\d*)\\s+(?<username>\\w+)\\s*");
 
     private final String key;
