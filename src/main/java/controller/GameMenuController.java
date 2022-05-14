@@ -232,10 +232,13 @@ public class GameMenuController {
 
 
     public String unitFoundCity(HashMap<String, String> command) {
+        String cityName = command.get(CITY_NAME.getKey());
+
+        if (cityName.length() > 7) return "error: city name cannot exceed 7 characters";
         if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
-            return UnitController.getInstance().unitFoundCity();
+            return UnitController.getInstance().unitFoundCity(cityName);
         }
     }
 
