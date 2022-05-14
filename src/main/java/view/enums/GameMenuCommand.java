@@ -59,15 +59,29 @@ public enum GameMenuCommand{
     CITY_PURCHASE_UNIT("\\s*city\\s+purchase\\s+unit(?<entities>.*)", List.of(UNIT_NAME.getKey())),
     CITY_PURCHASE_BUILDING("\\s*city\\s+purchase\\s+building(?<entities>.*)", List.of(BUILDING.getKey())),
 
-
     //MAP COMMANDS
     MAP_SHOW_CITY("\\s*map\\s+show(?<entities>.*)", List.of(CITY_NAME.getKey())),
     MAP_SHOW_POSITION("\\s*map\\s+show(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     MAP_MOVE("\\s*map\\s+move(?<entities>.*)", List.of(DIRECTION.getKey())),
 
+    //RESEARCH COMMANDS
+
     //CHEAT CODES
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
+    INCREASE_RESEARCH_POINT("\\s*increase-research-point(?<entities>.*)", List.of(AMOUNT.getKey())),
+
+    REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed
+    WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 200
+
+    //UNIT CHEAT CODES
+    UNDYNE("\\s*undyne(?<entities>.*)", List.of()), //unit can take so much damage
+    MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for so long
+    TERMINATOR("\\s*terminator(?<entities>.*)", List.of()), //unit can deal so much damage
+    INSTANT_BUILD_IMPROVEMENT("\\s*instant-build(?<entities>.*)", List.of(IMPROVEMENT.getKey())),
+
+    //CITY CHEAT CODES
+    INSTANT_CREATE_UNIT("\\s*instant-create-unit(?<entities>.*)", List.of(UNIT_NAME.getKey())),
 
     //END OF TURN
     END_TURN("\\s*end\\s+turn(?<entities>.*)", List.of()),
