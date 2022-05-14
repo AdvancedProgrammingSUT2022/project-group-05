@@ -1,3 +1,5 @@
 user login -p kabab -u babak
 play game --player2 mohammadreza -p1 babak
+unit select civilian -x 6 -y 0
+unit move -x ? -y ?
 

@@ -231,6 +231,8 @@ public class Civilization{
 
         //update unit state for new turn
         for (Unit unit : this.units) {
+            unit.initializeRemainingMovement();
+
             UnitController.updateInstance(unit);
             UnitController.getInstance().applyUnitStateForNewTurn();
         }
@@ -262,6 +264,7 @@ public class Civilization{
     }
 
     public void spendProductionForUnitInProgress() {
+        if (this.unitInProgress == null) return;
         this.unitInProgress.setCost(this.unitInProgress.getCost() - this.production);
         if (this.unitInProgress.getCost() <= 0) {
             this.unitInProgress.setTile(unitInProgress.getStartingCity().getCenter());

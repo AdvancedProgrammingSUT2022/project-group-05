@@ -5,7 +5,6 @@ import model.game.Civilization;
 import model.improvement.Improvement;
 import model.map.FogOfWar;
 import model.map.Map;
-import model.map.MapGeneration;
 import model.tile.Route;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
@@ -29,19 +28,18 @@ public class GameMenuController {
     private static GameMenuController instance;
 
     private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
-        this.currentTurn = 0;
-        this.currentYear = 0;
+        this.civilizationCount = civilizationCount;
+
+        this.currentTurn = -1;
+        this.currentYear = -1;
 
         for (int i = 0; i < civilizationCount; i++) {
             this.civilizationControllers.add(new CivilizationController(civilizations.get(i)));
         }
-
-        this.currentCivilizationController = this.civilizationControllers.get(0);
-
     }
 
     public String nextCivilization() {
-        if (currentCivilizationController.isHasRequiredAction()) { // check conditions for changing turn
+        if (currentTurn > -1 && currentCivilizationController.hasRequiredAction()) { // check conditions for changing turn
             this.currentCivilizationController.searchForRequiredActions();
             return "error: " + currentCivilizationController.getRequiredActions();
         } else {
@@ -141,6 +139,9 @@ public class GameMenuController {
         if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
         } else {
+            //debugging purposes
+            System.out.println(UnitController.getInstance().getUnit().getRemainingMovement());
+
             int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
             int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
             return UnitController.getInstance().unitMove(xPlace, yPlace);

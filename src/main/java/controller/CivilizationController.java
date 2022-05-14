@@ -1,10 +1,6 @@
 package controller;
 
-import model.game.City;
 import model.game.Civilization;
-import model.tile.Tile;
-import model.unit.Unit;
-import model.unit.soldier.ranged.Archer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,7 +83,7 @@ public class CivilizationController {
         return requiredActions.get(0);
     }
 
-    public boolean isHasRequiredAction() {
+    public boolean hasRequiredAction() {
         return hasRequiredAction;
     }
 

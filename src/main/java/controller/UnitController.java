@@ -70,8 +70,8 @@ public class UnitController{
         if (!this.unit.canMoveTo(destination)) {
             return "can't move to this tile";
         }
-        if ((this.unit instanceof Soldier && destination.getSoldier() != null) ||
-                (this.unit instanceof Civilian && destination.getCivilian() != null)) {
+        if ((this.unit instanceof Soldier && destination.hasSoldier()) ||
+                (this.unit instanceof Civilian && destination.hasCivilian())) {
             return Responses.ALREADY_A_UNIT_IN_TILE.toString();
         }
         Path bestPath = Map.getInstance().bestPathFinder(here, destination, this.unit.getRemainingMovement());

@@ -54,10 +54,7 @@ public abstract class Unit {
     }
 
     public boolean canMoveTo(Tile tile) { //checks if unit can move to a given tile
-        if (Map.getInstance().bestPathFinder(this.tile, tile, remainingMovement) == null) {
-            return false;
-        }
-        return true;
+        return Map.getInstance().bestPathFinder(this.tile, tile, remainingMovement) != null;
     }
 
     public void sleep() { //sets unit to asleep state
