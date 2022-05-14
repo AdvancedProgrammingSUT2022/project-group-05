@@ -146,45 +146,6 @@ public class Map{
         return bestPathFinder(gameMap[startXPlace][startYPlace], gameMap[endXPlace][endYPlace], pathSizeCab);
     }
 
-    /*private Path bestPathFindersBacktrack(Tile start, Tile end, int remainingMP, HashMap<Integer[], Path> pathsMap) {
-        if (remainingMP <= 0) return null;
-        Tile[] neighbors = findNeighbors(start);
-        Path[] pathsFinded = new Path[6];
-        //Finding paths from neighbors to end
-        for (int i = 0; i < 6; i++) {
-            if (neighbors[i] == null) {
-                pathsFinded[i] = null;
-                continue;
-            }
-
-            Integer[] keySet = {neighbors[i].getID(), end.getID()};
-            if (pathsMap.containsKey(keySet)) {
-                pathsFinded[i] = pathsMap.get(keySet);
-            } else {
-                int newRemainingMP = remainingMP -  Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
-                pathsFinded[i] = bestPathFindersBacktrack(neighbors[i], end, newRemainingMP, pathsMap);
-                pathsMap.put(keySet, pathsFinded[i]);
-            }
-        }
-        //creating paths from start to neighbor and then to end
-        for (int i = 0; i < 6; i++) {
-            if (pathsFinded[i] == null) continue;
-            pathsFinded[i] = new Path(start, pathsFinded[i]);
-        }
-        //finding the path with minimum mp
-        int minMP = 100;
-        int minMPIndex = 0;
-        for (int i = 0; i < 6; i++) {
-            if (pathsFinded[i] == null) continue;
-            if (minMP > pathsFinded[i].getMpCost()) {
-                minMP = pathsFinded[i].getMpCost();
-                minMPIndex = i;
-            }
-        }
-        //returning minimum value
-        return pathsFinded[minMPIndex];
-    }*/
-
     private Path bestPathFindersBacktrack(Tile start, Tile end, int remainingMP, HashMap<Tile, Path> pathsMap) {
         if (remainingMP <= 0) return null;
         Tile[] neighbors = findNeighbors(start);

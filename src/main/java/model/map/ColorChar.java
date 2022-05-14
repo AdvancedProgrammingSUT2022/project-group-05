@@ -81,7 +81,6 @@ public class ColorChar {
     //CREATING PRINT PATTERN BY MAP
     public static ColorChar[][] mapConsoleOutputCreator (Civilization civilization) {
         int mapSize = Map.getInstance().getSizeOfMap();
-        //TODO... fix out of bound
         int printH = HEIGHT * mapSize;
         int printW = WIDTH * mapSize + (WIDTH - HEIGHT + 2) * (mapSize - 1);
 
