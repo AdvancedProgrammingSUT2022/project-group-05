@@ -72,14 +72,12 @@ public enum GameMenuCommand{
     INCREASE_RESEARCH_POINT("\\s*increase-research-point(?<entities>.*)", List.of(AMOUNT.getKey())),
 
     REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed
-    WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 200
+    WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 4000
 
     //UNIT CHEAT CODES
-    MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for so long
-    TERMINATOR("\\s*terminator(?<entities>.*)", List.of()), //unit can deal so much damage
-    INSTANT_HEAL("\\s*instant-heal(?<entities>.*)", List.of()),
-    INSTANT_BUILD_ROUTE("\\s*instant-build(?<entities>.*)", List.of(ROUTE.getKey())),
-    INSTANT_BUILD_IMPROVEMENT("\\s*instant-build(?<entities>.*)", List.of(IMPROVEMENT.getKey())),
+    MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for 4000 MP
+    TERMINATOR("\\s*terminator(?<entities>.*)", List.of()), //unit can have 4000 strength
+    INSTANT_HEAL("\\s*instant-heal(?<entities>.*)", List.of()), //unit gets to maximum health instantly
 
     //END OF TURN
     END_TURN("\\s*end\\s+turn(?<entities>.*)", List.of()),

@@ -455,36 +455,4 @@ public class GameMenuController {
         currentUnit.setHealth(10);
         return "unit healed completely";
     }
-
-    public String instantBuildRoute(HashMap<String, String> command) {
-        String routeName = command.get(ROUTE.getKey());
-        Route route;
-        Unit unit;
-
-        unit = UnitController.getInstance().getUnit();
-        if (unit == null) return "error : no unit selected";
-        try {
-            route = Route.valueOf(routeName.toUpperCase());
-        } catch (IllegalArgumentException iae) {
-            return "error: no route exists with given name";
-        }
-
-        return UnitController.getInstance().instantBuildRoute();
-    }
-
-    public String instantBuildImprovement(HashMap<String, String> command) {
-        String improvementName = command.get(IMPROVEMENT.getKey());
-        Improvement improvement;
-        Unit unit;
-
-        unit = UnitController.getInstance().getUnit();
-        if (unit == null) return "error : no unit selected";
-        try {
-            improvement = Improvement.valueOf(improvementName.toUpperCase());
-        } catch (IllegalArgumentException iae) {
-            return "error: no improvement exists with given name";
-        }
-
-        return UnitController.getInstance().instantBuildImprovement();
-    }
 }

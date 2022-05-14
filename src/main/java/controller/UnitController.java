@@ -397,12 +397,9 @@ public class UnitController{
         }
     }
 
-    //GETTER (NOT NEEDED?)
+    //GETTER
     public Unit getUnit() {
         return this.unit;
     }
-
-
-
 
 }
