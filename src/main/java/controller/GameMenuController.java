@@ -45,8 +45,8 @@ public class GameMenuController {
             if (this.currentTurn == 0) this.currentYear++;
 
             this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
-            this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress production
-
+            this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions      
+            
             CityController.updateInstance(null); // deselect city in new turn
             UnitController.updateInstance(null); // deselect unit in new turn
 

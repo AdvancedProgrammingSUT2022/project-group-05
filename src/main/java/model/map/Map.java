@@ -78,11 +78,28 @@ public class Map{
         return findDistance(start, end);
     }
 
+    //returns -1 if they are not neighbors or etc
+    public int whichNeighbor (Tile first, Tile second) {
+        Tile[] neighbors = findNeighbors(first);
+        for (int i = 0; i < 6; i++) {
+            if (second.equals(neighbors[i])) return i;
+        }
+        return -1;
+    }
 
-    //FIND MP COST OF TWO TILE
+    //is there river ?
+    public boolean isRiverBetweenTiles (Tile first, Tile second) {
+        int whichNeighbor = whichNeighbor(first, second);
+        if (whichNeighbor == -1) return false;
+        return first.hasRiver(whichNeighbor);
+    }
+
+    //FIND MP COST OF TWO TILE entering from first to second input
     public int getMPNeededBetweenTiles(Tile first, Tile second) {
-        //TODO... calculate mps
-        return 0;
+        if (isRiverBetweenTiles(first, second)) {
+            return 100;
+        }
+        return second.getMovementCost();
     }
 
     public int getMPNeededBetweenTiles(Tile temp, int neighbour) {
@@ -142,7 +159,7 @@ public class Map{
             if (pathsMap.containsKey(keySet)) {
                 pathsFinded[i] = pathsMap.get(keySet);
             } else {
-                int newRemainingMP = remainingMP - neighbors[i].movePointsNeededToEnterFrom(start);
+                int newRemainingMP = remainingMP -  Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
                 pathsFinded[i] = bestPathFindersBacktrack(neighbors[i], end, newRemainingMP, pathsMap);
                 pathsMap.put(keySet, pathsFinded[i]);
             }
@@ -173,6 +190,7 @@ public class Map{
         path.getFirstTile().getCivilian().setRemainingMovement(currentMPs);
 
         path.getLastTile().setCivilian(path.getFirstTile().getCivilian());
+        civilian.setTile(path.getLastTile()); //TODO ???
         path.getFirstTile().removeCivilian();
     }
 
@@ -183,6 +201,7 @@ public class Map{
         path.getFirstTile().getSoldier().setRemainingMovement(currentMPs);
 
         path.getLastTile().setSoldier(path.getFirstTile().getSoldier());
+        soldier.setTile(path.getLastTile()); //TODO ???
         path.getFirstTile().removeSoldier();
     }
 

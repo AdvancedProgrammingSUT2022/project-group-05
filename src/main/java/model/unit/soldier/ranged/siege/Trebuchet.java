@@ -4,8 +4,11 @@ import model.game.Civilization;
 import model.research.Research;
 import model.resource.Resource;
 import model.tile.Tile;
+import model.unit.addOns.BonusVsCity;
+import model.unit.addOns.LimitedVisibility;
+import model.unit.addOns.NoDefensiveBonus;
 
-public class Trebuchet extends Siege {
+public class Trebuchet extends Siege implements NoDefensiveBonus, BonusVsCity, LimitedVisibility {
     public Trebuchet(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 170;

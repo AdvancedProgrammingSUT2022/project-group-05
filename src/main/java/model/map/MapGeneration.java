@@ -11,17 +11,19 @@ import java.util.Random;
 
 public class MapGeneration {
     //MAP CREATOR FUNCTIONS
-    private static final int TERRAIN_DESERT_PROB = 5;
-    private static final int TERRAIN_GRASS_PROB = 5;
-    private static final int TERRAIN_HILL_PROB = 5;
-    private static final int TERRAIN_MOUNTAIN_PROB = 5;
+    private static final int TERRAIN_DESERT_PROB = 20;
+    private static final int TERRAIN_GRASS_PROB = 18;
+    private static final int TERRAIN_HILL_PROB = 18;
+    private static final int TERRAIN_MOUNTAIN_PROB = 10;
     private static final int TERRAIN_OCEAN_PROB = 5;
-    private static final int TERRAIN_FIELD_PROB = 5;
+    private static final int TERRAIN_FIELD_PROB = 20;
     private static final int TERRAIN_SNOW_PROB = 5;
-    private static final int RESOURCE_TUNDRA_PROB = 5;
+    private static final int TERRAIN_TUNDRA_PROB = 4;
 
+    // per 100
     private static final int RIVER_PROB = 5;
 
+    //per 100
     private static final int FEATURE_PLAIN_PROB = 5;
     private static final int FEATURE_FOREST_PROB = 5;
     private static final int FEATURE_ICE_PROB = 5;
@@ -29,6 +31,7 @@ public class MapGeneration {
     private static final int FEATURE_MARSH_PROB = 5;
     private static final int FEATURE_OASIS_PROB = 5;
 
+    //per 100
     private static final int RESOURCE_BANANA_PROB = 5;
     private static final int RESOURCE_COW_PROB = 5;
     private static final int RESOURCE_DEER_PROB = 5;
@@ -57,10 +60,63 @@ public class MapGeneration {
         addResource();
     }
 
-    //ADDING TERRAINS TODO
+    //ADDING TERRAINS
     private static void addTerrains() {
         Map map = Map.getInstance();
+        Random rand = new Random();
+        rand.setSeed(System.currentTimeMillis());
         int sizeOfMap = map.getSizeOfMap();
+        for (int i = 0; i < sizeOfMap; i++) {
+            for (int j = 0; j < sizeOfMap; j++) {
+                Tile temp = map.getTileFromMap(i, j);
+                int a = Math.abs(rand.nextInt()) % 100;
+                int sum = 0;
+
+                if (a < sum + TERRAIN_DESERT_PROB) {
+                    temp.setTerrain(Terrain.DESERT);
+                    continue;
+                }
+                sum += TERRAIN_DESERT_PROB;
+
+                if (a < sum + TERRAIN_GRASS_PROB) {
+                    temp.setTerrain(Terrain.GRASS);
+                    continue;
+                }
+                sum += TERRAIN_GRASS_PROB;
+
+                if (a < sum + TERRAIN_HILL_PROB) {
+                    temp.setTerrain(Terrain.HILL);
+                    continue;
+                }
+                sum += TERRAIN_HILL_PROB;
+
+                if (a < sum + TERRAIN_MOUNTAIN_PROB) {
+                    temp.setTerrain(Terrain.MOUNTAIN);
+                    continue;
+                }
+                sum += TERRAIN_MOUNTAIN_PROB;
+
+                if (a < sum + TERRAIN_OCEAN_PROB) {
+                    temp.setTerrain(Terrain.OCEAN);
+                    continue;
+                }
+                sum += TERRAIN_OCEAN_PROB;
+
+                if (a < sum + TERRAIN_FIELD_PROB) {
+                    temp.setTerrain(Terrain.FIELD);
+                    continue;
+                }
+                sum += TERRAIN_FIELD_PROB;
+
+                if (a < sum + TERRAIN_SNOW_PROB) {
+                    temp.setTerrain(Terrain.SNOW);
+                    continue;
+                }
+                sum += TERRAIN_SNOW_PROB;
+
+                temp.setTerrain(Terrain.TUNDRA);
+            }
+        }
     }
 
 

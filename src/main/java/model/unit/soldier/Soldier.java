@@ -10,7 +10,21 @@ public abstract class Soldier extends Unit{
         super(civilization, tile);
     }
 
-    public abstract boolean canAttackTile(Tile tile); //Checks if this unit is in range to attack given tile
+    public boolean canAttackTile(Tile tile){
+        if (!this.isTileInRange(tile))
+            return false;
+        if (tile.getSoldier() == null && tile.getCivilian() == null)
+            return false;
+        if (tile.getSoldier() == null) {
+            if (tile.getCivilian().getCivilization() == this.getCivilization())
+                return false;
+            else
+                return true;
+        }
+        if (tile.getSoldier().getCivilization() == this.getCivilization())
+            return false;
+        return true;
+    }
 
     @Override
     public String toString () {

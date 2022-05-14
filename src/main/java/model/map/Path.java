@@ -21,14 +21,14 @@ public class Path{
     public Path(Path pathTemp, Tile lastTile) {
         this.pathTiles = new ArrayList<>(pathTemp.getPathTiles());
         this.mpCost = pathTemp.getMpCost();
-        this.mpCost += lastTile.movePointsNeededToEnterFrom(this.getLastTile());
+        this.mpCost += Map.getInstance().getMPNeededBetweenTiles(this.getLastTile(), lastTile);
         this.pathTiles.add(lastTile);
     }
 
     public Path(Tile firstTile, Path pathTemp) {
         this.pathTiles = new ArrayList<>(pathTemp.getPathTiles());
         this.mpCost = pathTemp.getMpCost();
-        this.mpCost += this.getLastTile().movePointsNeededToEnterFrom(firstTile);
+        this.mpCost += Map.getInstance().getMPNeededBetweenTiles(firstTile, this.getFirstTile());
         this.pathTiles.add(0, firstTile);
     }
 
@@ -36,7 +36,7 @@ public class Path{
         this.pathTiles = new ArrayList<>(startPath.getPathTiles());
         this.pathTiles.addAll(endPath.getPathTiles());
         this.mpCost = startPath.getMpCost() + endPath.getMpCost();
-        this.mpCost += endPath.getFirstTile().movePointsNeededToEnterFrom(startPath.getLastTile());
+        this.mpCost += Map.getInstance().getMPNeededBetweenTiles(startPath.getLastTile(), endPath.getFirstTile());
     }
 
     //GETTERS

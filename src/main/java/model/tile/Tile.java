@@ -138,12 +138,6 @@ public class Tile{
         }
     }
 
-    //Map stuff
-    public int movePointsNeededToEnterFrom(Tile currentTile) { //returns move points needed to enter this tile
-        //TODO... return the needed mp for this tile MRB MRB MRB MRB
-        return 0;
-    }
-
     public boolean canSeeThrough(Tile tile) { //returns if a unit on this tile can see through given tile
         if (this.terrain == Terrain.HILL) return true;
 
@@ -287,6 +281,9 @@ public class Tile{
 
     public boolean hasRiver() {
         return this.getRiverCount() > 0;
+    }
+    public boolean hasRiver(int placec) {
+        return this.rivers[placec];
     }
 
     public boolean isCityCenter() {

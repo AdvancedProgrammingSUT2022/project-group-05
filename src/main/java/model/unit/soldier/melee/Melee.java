@@ -11,14 +11,6 @@ public abstract class Melee extends Soldier{
         super(civilization, tile);
     }
 
-    @Override
-    public boolean canAttackTile(Tile tile) { //checks if a tile can be attacked by this unit
-        //TODO... Check necessary conditions and handle error separately
-        if (Map.getInstance().findDistance(this.tile, tile) == 1 && tile.getSoldier().getCivilization() != this.civilization) {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public String toString () {

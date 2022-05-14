@@ -20,7 +20,7 @@ public class Civilization{
     private ArrayList<City> annexedCities;
     private ArrayList<Unit> units;
 
-    private ArrayList<Unit> unitsInQueue;
+    private ArrayList<Unit> unitsInQueue = new ArrayList<>();
     private Unit unitInProgress;
 
     private final User player;
@@ -49,7 +49,7 @@ public class Civilization{
 
         this.turn = 0;
         this.gold = 0;
-        this.production = 0;
+        this.production = 0; // it could be increased with some resources and buildings
         this.happiness = 10;
 
         this.resourceList = new ResourceList();
@@ -116,6 +116,10 @@ public class Civilization{
         this.gold = gold;
     }
 
+    public void setProduction(int production) {
+        this.production = production;
+    }
+
     public void setHappiness(int happiness) {
         this.happiness = happiness;
     }
@@ -152,6 +156,10 @@ public class Civilization{
 
     public int getGold() {
         return gold;
+    }
+
+    public int getProduction() {
+        return production;
     }
 
     public int getHappiness() {
@@ -199,7 +207,9 @@ public class Civilization{
 
     public void applyNewTurnChanges(int currentYear) {
         this.turn = currentYear;
-        this.spendProductionForUnitInProgress(); // decrease cost of unit
+      
+        //update production queue
+        this.spendProductionForUnitInProgress();
 
         //update unit state for new turn
         for (Unit unit : this.units) {
@@ -235,7 +245,6 @@ public class Civilization{
 
     public void spendProductionForUnitInProgress() {
         this.unitInProgress.setCost(this.unitInProgress.getCost() - this.production);
-        this.production = 0;
         if (this.unitInProgress.getCost() <= 0) {
             this.unitInProgress.setTile(unitInProgress.getStartingCity().getCenter());
             this.addUnit(this.unitInProgress);

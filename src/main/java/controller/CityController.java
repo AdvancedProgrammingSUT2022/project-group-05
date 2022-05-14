@@ -60,7 +60,10 @@ public class CityController {
 
     public String buyTile(int x, int y) {
         Tile tile = Map.getInstance().getTileFromMap(x, y);
-        //TODO check required gold for purchase , check adjacency of tile with city, ...
+        if (!city.canAddTile(tile))
+            return "can't add tile to city";
+        if (this.city.getCivilization().getGold() < 100) //TODO find how many gold is needed
+            return "not enough gold";
         return "tile bought successfully";
     }
 
