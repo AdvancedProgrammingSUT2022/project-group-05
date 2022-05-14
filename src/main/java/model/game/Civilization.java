@@ -28,6 +28,7 @@ public class Civilization{
     private int happiness;
     private int baseHappiness;
 
+    private int turn;
     private int gold;
     private int production;
     private int researchPoint;
@@ -45,6 +46,7 @@ public class Civilization{
         this.player = player;
         this.color = color;
 
+        this.turn = 0;
         this.gold = 0;
         this.production = 0;
         this.happiness = 10;
@@ -96,8 +98,15 @@ public class Civilization{
         }
         return result;
     }
-    //SETTERS
 
+    public int calculateUnitMaintenance() {
+        int unitCount = this.units.size();
+        int currentTurn = this.turn;
+
+        return ((unitCount + 1)/2) * ((currentTurn)/30 + 1);
+    }
+
+    //SETTERS
     public void setUnitInProgress(Unit unitInProgress) {
         this.unitInProgress = unitInProgress;
     }
@@ -188,6 +197,7 @@ public class Civilization{
     //END OF GETTERS
 
     public void applyNewTurnChanges() {
+        this.turn++;
         this.spendProductionForUnitInProgress(); // decrease cost of unit
 
         //update research (science is declined if negative gold)
@@ -199,12 +209,13 @@ public class Civilization{
             this.production += tile.getProduction();
         }
 
-        //update gold after changes
+        //update gold and tiles after changes
         for (Tile tile : this.getTiles()) {
             this.gold += tile.getGold() - tile.getRouteMaintenanceCost();
 
             tile.applyNewTurnChanges();
         }
+        this.gold -= this.calculateUnitMaintenance();
 
         //update city status
         for (City city : this.getCities()) {
