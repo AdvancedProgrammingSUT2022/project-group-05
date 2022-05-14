@@ -79,6 +79,10 @@ public class Tile{
     }
 
     //Project stuff
+    public String getProjectStatus() {
+        return this.projectManager.getStatus();
+    }
+
     public void startImprovementConstruction(Improvement improvement) {
         this.projectManager.closeProject();
         this.projectManager.startImprovementConstruction(improvement);
@@ -110,9 +114,6 @@ public class Tile{
     }
 
     public void applyNewTurnChanges() { //progresses the current project on this tile
-        //Gold calculation
-
-
         //WorkerStuff
         if (this.civilian instanceof Worker) this.projectManager.continueProject();
 
@@ -263,6 +264,8 @@ public class Tile{
         return this.resource;
     }
 
+    public boolean[] getRivers() {return this.rivers;}
+
     public Improvement getImprovement() {
         if (!this.hasCity()) return Improvement.NO_IMPROVEMENT;
 
@@ -290,8 +293,8 @@ public class Tile{
     public boolean hasRiver() {
         return this.getRiverCount() > 0;
     }
-    public boolean hasRiver(int placec) {
-        return this.rivers[placec];
+    public boolean hasRiver(int place) {
+        return this.rivers[place];
     }
 
     public boolean isCityCenter() {

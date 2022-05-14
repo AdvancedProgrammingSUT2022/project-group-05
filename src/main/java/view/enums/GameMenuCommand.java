@@ -66,6 +66,8 @@ public enum GameMenuCommand{
     MAP_MOVE("\\s*map\\s+move(?<entities>.*)", List.of(DIRECTION.getKey())),
 
     //RESEARCH COMMANDS
+    RESEARCH_SET("\\s*research\\s+start(?<entities>.*)", List.of(RESEARCH.getKey())),
+    RESEARCH_SHOW("\\s*research\\s+show(?<entities>.*)", List.of()),
 
     //CHEAT CODES
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
