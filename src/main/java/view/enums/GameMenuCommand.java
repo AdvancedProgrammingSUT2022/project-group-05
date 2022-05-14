@@ -70,7 +70,7 @@ public enum GameMenuCommand{
     MAP_MOVE("\\s*map\\s+move(?<entities>.*)", List.of(DIRECTION.getKey())),
 
     //RESEARCH COMMANDS
-    RESEARCH_SET("\\s*research\\s+start(?<entities>.*)", List.of(TECHNOLOGY.getKey())),
+    RESEARCH_SET("\\s*research\\s+set(?<entities>.*)", List.of(TECHNOLOGY.getKey())),
 
     //CHEAT CODES
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),

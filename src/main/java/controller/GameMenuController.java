@@ -164,6 +164,8 @@ public class GameMenuController {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
         Soldier soldier = Map.getInstance().getTileFromMap(x, y).getSoldier();
+        if (soldier == null)
+            return "error: no soldier on selected tile";
         if (soldier.getCivilization() != currentCivilizationController.getCivilization()) {
             return "This unit is not from your civilization";
         } else {
@@ -176,6 +178,9 @@ public class GameMenuController {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
         Civilian civilian = Map.getInstance().getTileFromMap(x, y).getCivilian();
+
+        if (civilian == null)
+            return "error: no civilian on selected tile";
         if (civilian.getCivilization() != currentCivilizationController.getCivilization()) {
             return "This unit is not from your civilization";
         } else {
@@ -187,9 +192,14 @@ public class GameMenuController {
     public String selectCityPosition(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
-        City city = Map.getInstance().getTileFromMap(x, y).getCity();
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return "error: out of bounds";
+        if (!tile.isCityCenter()) return "error: not a city center";
+
+        City city = tile.getCity();
         if (city.getCivilization() != currentCivilizationController.getCivilization()) {
-            return "This city is not from your civilization";
+            return "error: this city is not from your civilization";
         } else {
             CityController.updateInstance(city);
             return "City selected successfully";
@@ -516,12 +526,15 @@ public class GameMenuController {
         return "research point increased";
     }
 
-    public String revealAll(HashMap<String, String> command) {
+    public ArrayList<String> revealAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         FogOfWar.fogOfWarRevealAll(currentCivilization);
 
-        return Map.getInstance().printMap(currentCivilization) + "\nnow you know where you're going";
+        ArrayList<String> result = Map.getInstance().printMap(currentCivilization);
+        result.add("now you know where you're going");
+
+        return result;
     }
 
     public String welcomeToUtopia(HashMap<String, String> command) {

@@ -15,6 +15,9 @@ public class ResearchTree{
             addResearch(research);
         }
 
+        this.doResearch(Research.AGRICULTURE);
+        this.updateTree();
+
         this.currentResearch = Research.NO_RESEARCH;
         this.researchPoints = 0;
     }
@@ -68,6 +71,8 @@ public class ResearchTree{
     private void updateTree() {
         mainLoop:
         for (Research research : Research.values()) {
+            if (research == Research.NO_RESEARCH) continue;
+
             ResearchNode node = getResearch(research);
 
             if (node.getStatus() != LOCKED) continue;
@@ -133,9 +138,10 @@ public class ResearchTree{
 
         result.append("RESEARCH INFO:").append("\n");
         result.append("CURRENT RESEARCH: ").append(this.getCurrentResearch().toString()).append("\n");
-        result.append("CURRENT PROGRESS: ").append(this.getResearchProgressPercentage()).append("%\n");
+        result.append("CURRENT PROGRESS: ").append(this.getResearchProgressPercentage()).append("%\n\n");
 
         for (Research research : Research.values()) {
+            if (research == Research.NO_RESEARCH) continue;
             result.append(getResearch(research).toString());
             result.append("\n");
         }
