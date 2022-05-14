@@ -273,6 +273,9 @@ public class Tile{
     public boolean hasRiver() {
         return this.getRiverCount() > 0;
     }
+    public boolean hasRiver(int placec) {
+        return this.rivers[placec];
+    }
 
     public boolean isCityCenter() {
         return this.hasCity() && this.equals(this.city.getCenter());

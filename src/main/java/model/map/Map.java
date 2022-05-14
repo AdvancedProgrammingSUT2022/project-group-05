@@ -78,11 +78,28 @@ public class Map{
         return findDistance(start, end);
     }
 
+    //returns -1 if they are not neighbors or etc
+    public int whichNeighbor (Tile first, Tile second) {
+        Tile[] neighbors = findNeighbors(first);
+        for (int i = 0; i < 6; i++) {
+            if (second.equals(neighbors[i])) return i;
+        }
+        return -1;
+    }
+
+    //is there river ?
+    public boolean isRiverBetweenTiles (Tile first, Tile second) {
+        int whichNeighbor = whichNeighbor(first, second);
+        if (whichNeighbor == -1) return false;
+        return first.hasRiver(whichNeighbor);
+    }
 
     //FIND MP COST OF TWO TILE entering from first to second input
     public int getMPNeededBetweenTiles(Tile first, Tile second) {
-        //TODO... calculate mps
-        return 0;
+        if (isRiverBetweenTiles(first, second)) {
+            return 100;
+        }
+        return second.getMovementCost();
     }
 
     public int getMPNeededBetweenTiles(Tile temp, int neighbour) {
