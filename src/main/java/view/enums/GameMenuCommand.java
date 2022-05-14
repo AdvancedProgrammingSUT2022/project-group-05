@@ -23,6 +23,10 @@ public enum GameMenuCommand{
     INFO_ECONOMIC("\\s*info\\s+economic(?<entities>.*)", List.of()),
     INFO_DIPLOMATIC("\\s*info\\s+diplomatic(?<entities>.*)", List.of()),
     INFO_DEALS("\\s*info\\s+deals(?<entities>.*)", List.of()),
+    INFO_TILE("\\s*info\\s+tile(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+    INFO_TILE_STATS("\\s*info\\s+tile\\s+stats(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+    INFO_TILE_PROJECT("\\s*info\\s+tile\\s+project(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+
 
     //SELECT COMMANDS
     SELECT_UNIT_SOLDIER("\\s*select\\s+unit\\s+soldier(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
@@ -66,8 +70,7 @@ public enum GameMenuCommand{
     MAP_MOVE("\\s*map\\s+move(?<entities>.*)", List.of(DIRECTION.getKey())),
 
     //RESEARCH COMMANDS
-    RESEARCH_SET("\\s*research\\s+start(?<entities>.*)", List.of(RESEARCH.getKey())),
-    RESEARCH_SHOW("\\s*research\\s+show(?<entities>.*)", List.of()),
+    RESEARCH_SET("\\s*research\\s+start(?<entities>.*)", List.of(TECHNOLOGY.getKey())),
 
     //CHEAT CODES
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
