@@ -145,7 +145,8 @@ public class CivilizationController {
             }
         }
 
-        //TODO check if there is a research in progress or not
+        if (!this.civilization.getResearchTree().hasResearch())
+            requiredActions.add("Choose a research");
 
 
         if (requiredActions.size() == 0) {

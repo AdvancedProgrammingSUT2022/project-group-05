@@ -252,8 +252,6 @@ public class City {
             this.unitInProgress.setTile(unitInProgress.getStartingCity().getCenter());
             this.getCivilization().addUnit(this.unitInProgress);
             this.unitInProgress = null;
-            //debugging purposes
-            System.out.println("unit created successfully");
         }
     }
 

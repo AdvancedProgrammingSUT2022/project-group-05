@@ -17,8 +17,7 @@ public class FogOfWar{
         FogOfWarStates[][] fogOfWar = civilization.getFogOfWar();
 
         setVisToRev(fogOfWar);
-        checkCities(civilization, fogOfWar);
-        checkTiles(fogOfWar);
+        checkTerritory(civilization, fogOfWar);
         checkUnits(civilization, fogOfWar);
     }
 
@@ -46,25 +45,15 @@ public class FogOfWar{
     }
 
     //Update Tiles civ own
-    private static void checkCities (Civilization civilization, FogOfWarStates[][] fogOfWar) {
+    private static void checkTerritory(Civilization civilization, FogOfWarStates[][] fogOfWar) {
         int mapSize = Map.getInstance().getSizeOfMap();
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
                 Tile tile =  Map.getInstance().getTileFromMap(i, j);
                 if (tile.getCivilization() == null) continue;
-                if (tile.getCivilization().equals(civilization))
+                if (tile.getCivilization().equals(civilization)) {
                     fogOfWar[i][j] = FogOfWarStates.VISIBLE;
-            }
-        }
-    }
-
-    //Update Tiles civ own neighbors
-    private static void checkTiles (FogOfWarStates[][] fogOfWar) {
-        int mapSize = Map.getInstance().getSizeOfMap();
-        for (int i = 0; i < mapSize; i++) {
-            for (int j = 0; j < mapSize; j++) {
-                if (fogOfWar[i][j] == FogOfWarStates.VISIBLE) {
-                    setNeighborsState(i, j, fogOfWar, FogOfWarStates.VISIBLE);
+                    setNeighborsState(tile, fogOfWar, FogOfWarStates.VISIBLE);
                 }
             }
         }
@@ -97,11 +86,11 @@ public class FogOfWar{
     private static void setNeighborsState (int xPlace, int yPlace, FogOfWarStates[][] fogOfWar, FogOfWarStates state) {
         int mapSize = Map.getInstance().getSizeOfMap();
 
-        boolean xUp = xPlace < mapSize;
-        boolean xDown = xPlace >= 0;
+        boolean xUp = xPlace < mapSize - 1;
+        boolean xDown = xPlace > 0;
 
-        boolean yUp = yPlace < mapSize;
-        boolean yDown = yPlace >= 0;
+        boolean yUp = yPlace < mapSize - 1;
+        boolean yDown = yPlace > 0;
 
         if (xUp)
             fogOfWar[xPlace + 1][yPlace] = state;
@@ -112,7 +101,7 @@ public class FogOfWar{
         if (yDown)
             fogOfWar[xPlace][yPlace - 1] = state;
 
-        if (xUp && yDown) //TODO WTF
+        if (xUp && yDown)
             fogOfWar[xPlace +1][yPlace -1] = state;
         if (xDown && yUp)
             fogOfWar[xPlace -1][yPlace +1] = state;

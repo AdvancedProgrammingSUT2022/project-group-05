@@ -244,4 +244,9 @@ public class Map{
 
         return result;
     }
+
+    public ArrayList<String> updateAndPrintMap(Civilization civilization) {
+        FogOfWar.updateFogOfWar(civilization);
+        return this.printMap(civilization);
+    }
 }

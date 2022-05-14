@@ -160,15 +160,12 @@ public class GameMenuController {
         return "exiting Game";
     }
 
-    public String selectResearch(HashMap<String, String> command) {
-        //TODO
-        return "";
-    }
-
     public String selectUnitSoldier(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
         Soldier soldier = Map.getInstance().getTileFromMap(x, y).getSoldier();
+        if (soldier == null)
+            return "error: no soldier on selected tile";
         if (soldier.getCivilization() != currentCivilizationController.getCivilization()) {
             return "This unit is not from your civilization";
         } else {
@@ -181,6 +178,9 @@ public class GameMenuController {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
         Civilian civilian = Map.getInstance().getTileFromMap(x, y).getCivilian();
+
+        if (civilian == null)
+            return "error: no civilian on selected tile";
         if (civilian.getCivilization() != currentCivilizationController.getCivilization()) {
             return "This unit is not from your civilization";
         } else {
@@ -192,9 +192,14 @@ public class GameMenuController {
     public String selectCityPosition(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
-        City city = Map.getInstance().getTileFromMap(x, y).getCity();
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return "error: out of bounds";
+        if (!tile.isCityCenter()) return "error: not a city center";
+
+        City city = tile.getCity();
         if (city.getCivilization() != currentCivilizationController.getCivilization()) {
-            return "This city is not from your civilization";
+            return "error: this city is not from your civilization";
         } else {
             CityController.updateInstance(city);
             return "City selected successfully";
@@ -214,7 +219,6 @@ public class GameMenuController {
     }
 
     //UNIT COMMANDS
-
     public String unitMove(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
@@ -441,10 +445,7 @@ public class GameMenuController {
     public ArrayList<String> mapShowAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
-        //debugging purposes
-        this.revealAll(null);
-
-        return Map.getInstance().printMap(currentCivilization);
+        return Map.getInstance().updateAndPrintMap(currentCivilization);
     }
 
     public String mapShowCity(HashMap<String, String> command) {
@@ -525,14 +526,15 @@ public class GameMenuController {
         return "research point increased";
     }
 
-    public String revealAll(HashMap<String, String> command) {
+    public ArrayList<String> revealAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         FogOfWar.fogOfWarRevealAll(currentCivilization);
-        //debugging purposes
-        //FogOfWar.updateFogOfWar(currentCivilization);
 
-        return "now you know where you're going";
+        ArrayList<String> result = Map.getInstance().printMap(currentCivilization);
+        result.add("now you know where you're going");
+
+        return result;
     }
 
     public String welcomeToUtopia(HashMap<String, String> command) {

@@ -1,25 +1,10 @@
 user login -p kabab -u babak
 play game --player2 mohammadreza -p1 babak
-map show
-select unit civilian -x 6 -y 0
-unit move -x 6 -y 1
-select unit civilian -x 6 -y 0
-unit found city -c Tehran
 end turn
-select city -c Tehran
+select unit civilian -x 6 -y 0
+unit move -x 5 -y 1
+unit found city -c Babylon
+select city -c Babylon
+city create unit -un Archer
 city create unit -un Warrior
 end turn
-select unit civilian -x 8 -y 2
-unit sleep
-
-
-
-
-select unit civilian -x 8 -y 2
-unit sleep
-end turn
-select city -x 6 -y 0
-increase-gold --amount 1000
-city buy tile -x
-
-unit move -x ? -y ?
