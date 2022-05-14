@@ -15,7 +15,8 @@ public class ResourceList{
 
     public boolean hasEnough(Resource resource, int amount) {
         //Checks if the list has a given "amount" of a model.resource
-
+        if (resource == Resource.NO_RESOURCE)
+            return true;
         return this.getResourceCount(resource) >= amount;
     }
 
