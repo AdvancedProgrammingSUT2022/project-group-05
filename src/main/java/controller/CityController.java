@@ -96,7 +96,7 @@ public class CityController {
             return "error: selected tile is out of city territory";
         if (tile.hasCitizen())
             return "error: selected tile already has a citizen";
-        if (this.city.getJoblessCitizenCount() <= 0)
+        if (!this.city.hasJoblessCitizen())
             return "error: not enough jobless citizens";
 
         this.city.assignCitizenToTile(tile);

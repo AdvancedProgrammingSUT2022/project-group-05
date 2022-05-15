@@ -35,7 +35,7 @@ public class GameMenu extends Menu {
 
             //INFO COMMANDS
             else if ((command = getHashMap(input, INFO_RESEARCH)) != null)
-                printMessage(GameMenuController.getInstance().infoResearch(command)); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoResearch(command));
             else if ((command = getHashMap(input, INFO_UNITS)) != null)
                 printMessage(GameMenuController.getInstance().infoUnits(command));
             else if ((command = getHashMap(input, INFO_CITIES)) != null)

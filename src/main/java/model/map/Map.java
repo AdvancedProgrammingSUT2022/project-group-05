@@ -1,6 +1,8 @@
 package model.map;
 
 import model.game.Civilization;
+import model.tile.Feature;
+import model.tile.Terrain;
 import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
@@ -225,7 +227,14 @@ public class Map{
             int y = RandomGenerator.nextInt(sizeOfMap);
 
             Tile tile = getTileFromMap(x, y);
-            if (!tile.hasCivilian() && !tile.hasSoldier()) return tile;
+            if (tile.hasCivilian() || tile.hasSoldier())
+                continue;
+            if (tile.getTerrain().equals(Terrain.MOUNTAIN)  ||
+                    tile.getTerrain().equals(Terrain.OCEAN) ||
+                    tile.getFeature().equals(Feature.ICE))
+                continue;
+
+            return tile;
         }
     }
 

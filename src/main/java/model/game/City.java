@@ -70,7 +70,7 @@ public class City {
     }
 
     public boolean hasJoblessCitizen() {
-        return this.joblessCitizenCount > 0;
+        return this.getJoblessCitizenCount() > 0;
     }
 
     public boolean isInTerritory(Tile tile) {
@@ -78,13 +78,13 @@ public class City {
     }
 
     public void assignCitizenToTile(Tile tile) {
-            this.setJoblessCitizenCount(this.getJoblessCitizenCount() - 1);
-            tile.setHasCitizen(true);
+        this.setJoblessCitizenCount(this.getJoblessCitizenCount() - 1);
+        tile.removeCitizen();
     }
 
     public void removeCitizenFromTile(Tile tile) {
         this.setJoblessCitizenCount(this.getJoblessCitizenCount() + 1);
-        tile.setHasCitizen(false);
+        tile.assignCitizen();
     }
 
     public void addTile(Tile tile) {

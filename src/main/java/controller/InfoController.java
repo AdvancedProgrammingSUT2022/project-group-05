@@ -146,9 +146,9 @@ public class InfoController{
 
     public static String getTileStats(Tile tile) {
         return  "Location: " + tile.getXPlace() + ", " + tile.getYPlace() + "\n" +
-                "Gold: " + tile.getGold() + "\n" +
-                "Food: " + tile.getFood() + "\n" +
-                "Production: " + tile.getProduction() + "\n" +
+                "Gold(potential): " + tile.getGold() + "(" + tile.getGoldPotential() + ")" + "\n" +
+                "Food(potential): " + tile.getFood() + "(" + tile.getFoodPotential() + ")" + "\n" +
+                "Production(potential): " + tile.getProduction() + "(" + tile.getProductionPotential() + ")" + "\n" +
                 "CombatBoost: " + tile.getCombatBoost() + "\n" +
                 "MovementCost: " + tile.getMovementCost() + "\n";
     }
