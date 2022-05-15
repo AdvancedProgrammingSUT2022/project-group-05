@@ -147,12 +147,7 @@ public class Map{
     }
 
     private Path bestPathFindersBacktrack(Tile start, Tile end, int remainingMP, HashMap<Tile, Path> pathsMap) {
-        if (pathsMap.containsKey(start)) {
-            return pathsMap.get(start);
-        }
-
         if (remainingMP <= 0) return null;
-
         Tile[] neighbors = findNeighbors(start);
         Path[] pathsFound = new Path[6];
         //Finding paths from neighbors to end
@@ -161,9 +156,57 @@ public class Map{
                 pathsFound[i] = null;
                 continue;
             }
-            int MPLeft = remainingMP - Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
-            pathsFound[i] = bestPathFindersBacktrack(neighbors[i], end, MPLeft, pathsMap);
+
+            if (pathsMap.containsKey(neighbors[i])) {
+                pathsFound[i] = pathsMap.get(neighbors[i]);
+            } else {
+                int newRemainingMP = remainingMP -  Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
+                pathsFound[i] = bestPathFindersBacktrack(neighbors[i], end, newRemainingMP, pathsMap);
+                pathsMap.put(neighbors[i], pathsFound[i]);
+            }
         }
+
+        /*DEGUGING PURPOSE
+            private Path bestPathFindersBacktrack(Tile start, Tile end, int remainingMP, HashMap<Tile, Path> pathsMap) {
+                if (pathsMap.containsKey(start)) {
+                    return pathsMap.get(start);
+                }
+
+                if (remainingMP <= 0) return null;
+
+                Tile[] neighbors = findNeighbors(start);
+                Path[] pathsFound = new Path[6];
+                //Finding paths from neighbors to end
+                for (int i = 0; i < 6; i++) {
+                    if (neighbors[i] == null) {
+                        pathsFound[i] = null;
+                        continue;
+                    }
+                    int MPLeft = remainingMP - Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
+                    pathsFound[i] = bestPathFindersBacktrack(neighbors[i], end, MPLeft, pathsMap);
+                }
+
+                //creating paths from start to neighbor and then to end
+                for (int i = 0; i < 6; i++) {
+                    if (pathsFound[i] == null) continue;
+                    pathsFound[i] = new Path(start, pathsFound[i]);
+                }
+                //finding the path with minimum mp
+                int minMP = 100;
+                int minMPIndex = 0;
+                for (int i = 0; i < 6; i++) {
+                    if (pathsFound[i] == null) continue;
+                    if (minMP > pathsFound[i].getMpCost()) {
+                        minMP = pathsFound[i].getMpCost();
+                        minMPIndex = i;
+                    }
+                }
+                //returning minimum value
+                pathsMap.put(start, pathsFound[minMPIndex]);
+                return pathsFound[minMPIndex];
+            }
+
+         */
 
         //creating paths from start to neighbor and then to end
         for (int i = 0; i < 6; i++) {
@@ -181,7 +224,6 @@ public class Map{
             }
         }
         //returning minimum value
-        pathsMap.put(start, pathsFound[minMPIndex]);
         return pathsFound[minMPIndex];
     }
 

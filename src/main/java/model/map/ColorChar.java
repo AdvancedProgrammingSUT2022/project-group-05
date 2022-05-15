@@ -129,6 +129,8 @@ public class ColorChar {
                 input[i][j].setBackgroundColor(getColorForTile(tempTile));
             }
         }
+
+        addRiver(tempTile, input);
     }
     private static String getColorForTile (Tile tempTile) {
         Terrain temp = tempTile.getTerrain();
@@ -178,11 +180,49 @@ public class ColorChar {
         addCenteredText(tempTile.getFeature().toString() ,input ,fromT + 3, fromL); //Feature
         if (isVisible) addCenteredText(tempTile.getResource().toString() ,input ,fromT + 4, fromL); //Resource
     }
+
     private static void addCenteredText (String text, ColorChar[][] input, int fromT, int fromL) {
         int size = text.length();
 
         for (int i = 0; i < size; i++) {
             input[fromT][fromL - size/2 + i].setText(text.charAt(i));
+        }
+    }
+
+    private static void addRiver (Tile tempTile, ColorChar[][] input) {
+        int fromL = ColorChar.getFromLeft(tempTile);
+        int fromT = ColorChar.getFromTop(tempTile);
+
+        if (tempTile.hasRiver(0)) {
+            for (int i = -5; i < 6; i++) {
+                input[fromT - 4][i + fromL].setBackgroundColor(BLACK_BACKGROUND);
+            }
+        }
+        if (tempTile.hasRiver(3)) {
+            for (int i = -5; i < 6; i++) {
+                input[fromT + 5][i + fromL].setBackgroundColor(BLACK_BACKGROUND);
+            }
+        }
+
+        if (tempTile.hasRiver(1)) {
+            for (int i = 0; i < 5; i++) {
+                input[fromT - 4 + i][fromL + 5 + i].setBackgroundColor(BLACK_BACKGROUND);
+            }
+        }
+        if (tempTile.hasRiver(2)) {
+            for (int i = 0; i < 5; i++) {
+                input[fromT + 5 - i][fromL + 5 + i].setBackgroundColor(BLACK_BACKGROUND);
+            }
+        }
+        if (tempTile.hasRiver(4)) {
+            for (int i = 0; i < 5; i++) {
+                input[fromT + 5 - i][fromL - 5 - i].setBackgroundColor(BLACK_BACKGROUND);
+            }
+        }
+        if (tempTile.hasRiver(5)) {
+            for (int i = 0; i < 5; i++) {
+                input[fromT - 4 + i][fromL - 5 - i].setBackgroundColor(BLACK_BACKGROUND);
+            }
         }
     }
 

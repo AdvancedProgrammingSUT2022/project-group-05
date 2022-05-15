@@ -139,7 +139,7 @@ public class MapGeneration {
                     if (tempNeighbors[s].getTerrain().equals(Terrain.OCEAN)) continue;
                     if(Math.abs(rand.nextInt())%100 < RIVER_PROB) {
                         temp.addRiver(s);
-                        tempNeighbors[s].addRiver((s+3)%6);
+                        tempNeighbors[s].addRiver((s + 3) % 6);
                     }
                 }
             }
