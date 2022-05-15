@@ -68,7 +68,7 @@ public class UnitController{
 
 
         if (!this.unit.canMoveTo(destination)) {
-            return "error: unreachable destination";
+            return Responses.UNREACHABLE_DESTINATION.getResponse();
         }
 
         if ((this.unit instanceof Soldier && destination.hasSoldier()) ||
@@ -164,14 +164,14 @@ public class UnitController{
 
         Soldier soldier;
         if (!(this.unit instanceof Soldier)) {
-            return "This is not a soldier unit";
+            return Responses.UNIT_NOT_SOLDIER.getResponse();
         }
         soldier = (Soldier) this.unit;
         if (end.hasCity() && end.getCity().getCenter().equals(end)) {
             return this.attackCity(end.getCity(), soldier);
         }
         if (!soldier.canAttackTile(end)) {
-            return "Can't attack tile";
+            return Responses.CANT_ATTACK_THIS_TILE.getResponse();
         }
         this.setDefenceBonusInFortifyState(0);
 
@@ -181,7 +181,7 @@ public class UnitController{
         else {
             //TODO rangedAttack
         }
-        return "unit attacked successfully";
+        return Responses.UNIT_ATTACKED.getResponse();
     }
 
     private void attack(Soldier soldier, Soldier enemySoldier) {
@@ -238,18 +238,18 @@ public class UnitController{
 
     public String unitFoundCity(String cityName) {
         if (!(this.unit instanceof Settler))
-            return "error: Not a settler";
+            return Responses.UNIT_NOT_SETTLER.getResponse();
 
         Settler settler = (Settler) this.unit;
         settler.foundCity(cityName);
         unit.getCivilization().removeUnit(this.unit);
 
-        return "City found successfully";
+        return Responses.CITY_FOUNDED.getResponse();
     }
 
     public String attackCity(City city, Soldier soldier) {
         if (city.getCivilization() == soldier.getCivilization())
-            return "can't attack our city";
+            return Responses.CANT_ATTACK_OUR_CITY.getResponse();
 
 
         //TODO calculate health after attack...??????
@@ -275,7 +275,7 @@ public class UnitController{
             }
         }
         //TODO increase xp and ...
-        return "attack complete";
+        return Responses.ATTACK_COMPLETE.getResponse();
     }
 
     public String conquerCity(City city, Soldier soldier) {
@@ -284,7 +284,7 @@ public class UnitController{
         city.setHealth(20);
         soldier.getCivilization().addCity(city);
         Map.getInstance().moveSoldierWithoutMP(soldier, city.getCenter());
-        return "city conquered successfully";
+        return Responses.CITY_CONQUERED.getResponse();
     }
 
 
@@ -293,81 +293,81 @@ public class UnitController{
     public String unitBuildImprovement(Improvement improvement) {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (this.unit.getTile().hasRoute())
-            return "error: Already an improvement on tile";
+            return Responses.ALREADY_IMPROVEMENT_ON_TILE.getResponse();
         if (!improvement.matchesTerrain(this.unit.getTile().getTerrain()) &&
                 !improvement.matchesFeature(this.unit.getTile().getFeature()))
-            return "error: This improvement doesn't match this feature and terrain";
+            return Responses.IMPROVEMENT_DOESNT_MATCH_TERRAIN.getResponse();
         if (!this.unit.getCivilization().getResearchTree().isResearchDone(improvement.getNeededResearch()))
             return "error: Prerequisite tech" + improvement.getNeededResearch() + "has not been researched";
 
         Worker worker = (Worker) this.unit;
         worker.addImprovement(improvement);
-        return "Improvement construction started";
+        return Responses.IMPROVEMENT_DONE.getResponse();
     }
 
     public String unitBuildRoute(Route route) {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (this.unit.getTile().hasRoute())
-            return "error: Already a route on tile";
+            return Responses.ALREADY_ROUTE.getResponse();
         if (!this.unit.getCivilization().getResearchTree().isResearchDone(route.getNeededResearch()))
             return "error: Prerequisite tech " + route.getNeededResearch() + " has not been researched";
 
 
         Worker worker = (Worker) this.unit;
         worker.addRoute(route);
-        return "Route construction started";
+        return Responses.ROUTE_DONE.getResponse();
     }
 
     public String unitRemoveForest() {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (this.unit.getTile().getFeature() != Feature.FOREST)
-            return "error: No forest on current tile";
+            return Responses.NO_FOREST_IN_TILE.getResponse();
         if (this.unit.getTile().hasImprovement())
-            return "error: Can't remove feature of a tile with improvement";
+            return Responses.FEATURE_AND_IMPROVEMENT_ERROR.getResponse();
         if (!this.unit.getCivilization().getResearchTree().isResearchDone(Research.BRONZE_WORKING))
             return "error: You need " + Research.BRONZE_WORKING + " to remove forests";
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.FOREST);
-        return "Forest removal started";
+        return Responses.FOREST_DONE.getResponse();
     }
 
     public String unitRemoveJungle() {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (this.unit.getTile().getFeature() != Feature.JUNGLE)
-            return "error: No jungle on current tile";
+            return Responses.NO_JUNGLE_IN_TILE.getResponse();
         if (this.unit.getTile().hasImprovement())
-            return "error: Can't remove feature of a tile with improvement";
+            return Responses.FEATURE_AND_IMPROVEMENT_ERROR.getResponse();
         if (this.unit.getCivilization().getResearchTree().isResearchDone(Research.BRONZE_WORKING))
             return "error: You need " + Research.BRONZE_WORKING + " to remove jungles";
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.JUNGLE);
-        return "Jungle removal started";
+        return Responses.JUNGLE_DONE.getResponse();
     }
 
     public String unitRemoveMarsh() {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (this.unit.getTile().getFeature() != Feature.MARSH)
             return "error: No marsh on current tile";
         if (this.unit.getTile().hasImprovement())

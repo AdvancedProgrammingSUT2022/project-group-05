@@ -127,7 +127,7 @@ public class GameMenuController {
 
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
-        if (tile == null) return "error: out of bounds";
+        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
 
         return InfoController.getTileInfo(tile);
     }
@@ -138,7 +138,7 @@ public class GameMenuController {
 
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
-        if (tile == null) return "error: out of bounds";
+        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
 
         return InfoController.getTileStats(tile);
     }
@@ -149,7 +149,7 @@ public class GameMenuController {
 
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
-        if (tile == null) return "error: out of bounds";
+        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
 
         return InfoController.getTileProjectInfo(tile);
     }
@@ -165,12 +165,12 @@ public class GameMenuController {
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
         Soldier soldier = Map.getInstance().getTileFromMap(x, y).getSoldier();
         if (soldier == null)
-            return "error: no soldier on selected tile";
+            return Responses.NO_SOLDIER_ON_TILE.getResponse();
         if (soldier.getCivilization() != currentCivilizationController.getCivilization()) {
-            return "This unit is not from your civilization";
+            return Responses.UNIT_NOT_FROM_CIVILIZATION.getResponse();
         } else {
             UnitController.updateInstance(soldier);
-            return "Soldier selected successfully";
+            return Responses.SOLDIER_SELECTED_SUCCESSFULLY.getResponse();
         }
     }
 
@@ -180,12 +180,12 @@ public class GameMenuController {
         Civilian civilian = Map.getInstance().getTileFromMap(x, y).getCivilian();
 
         if (civilian == null)
-            return "error: no civilian on selected tile";
+            return Responses.NO_CIVILIAN_IN_TILE.getResponse();
         if (civilian.getCivilization() != currentCivilizationController.getCivilization()) {
-            return "This unit is not from your civilization";
+            return Responses.UNIT_NOT_FROM_CIVILIZATION.getResponse();
         } else {
             UnitController.updateInstance(civilian);
-            return "Civilian selected successfully";
+            return Responses.CIVILIAN_SELECTED_SUCCESSFULLY.getResponse();
         }
     }
 
@@ -194,15 +194,15 @@ public class GameMenuController {
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
-        if (tile == null) return "error: out of bounds";
-        if (!tile.isCityCenter()) return "error: not a city center";
+        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
+        if (!tile.isCityCenter()) return Responses.NOT_CITY_CENTER.getResponse();
 
         City city = tile.getCity();
         if (city.getCivilization() != currentCivilizationController.getCivilization()) {
-            return "error: this city is not from your civilization";
+            return Responses.CITY_NOT_FROM_CIVILIZATION.getResponse();
         } else {
             CityController.updateInstance(city);
-            return "City selected successfully";
+            return Responses.CITY_SELECTED_SUCCESSFULLY.getResponse();
         }
     }
 
@@ -212,16 +212,16 @@ public class GameMenuController {
         for (City city : cities) {
             if (city.getName().equals(cityName)) {
                 CityController.updateInstance(city);
-                return "City selected successfully";
+                return Responses.CITY_SELECTED_SUCCESSFULLY.getResponse();
             }
         }
-        return "There is no city with this name";
+        return Responses.NO_CITY_WITH_NAME.getResponse();
     }
 
     //UNIT COMMANDS
     public String unitMove(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
             int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
@@ -239,7 +239,7 @@ public class GameMenuController {
 
     public String unitAlert(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitAlert();
         }
@@ -247,7 +247,7 @@ public class GameMenuController {
 
     public String unitFortify(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitFortify();
         }
@@ -255,7 +255,7 @@ public class GameMenuController {
 
     public String unitRecover(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitRecover();
         }
@@ -263,7 +263,7 @@ public class GameMenuController {
 
     public String unitGarrison(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitGarrison();
         }
@@ -271,7 +271,7 @@ public class GameMenuController {
 
     public String unitSetupRanged(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitSetupRanged();
         }
@@ -279,7 +279,7 @@ public class GameMenuController {
 
     public String unitAttack(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
             int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
@@ -289,7 +289,7 @@ public class GameMenuController {
 
     public String unitCancel(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitCancel();
         }
@@ -297,7 +297,7 @@ public class GameMenuController {
 
     public String unitWake(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitWake();
         }
@@ -305,7 +305,7 @@ public class GameMenuController {
 
     public String unitDelete(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitDelete();
         }
@@ -315,9 +315,9 @@ public class GameMenuController {
     public String unitFoundCity(HashMap<String, String> command) {
         String cityName = command.get(CITY_NAME.getKey());
 
-        if (cityName.length() > 7) return "error: city name cannot exceed 7 characters";
+        if (cityName.length() > 7) return Responses.CITY_NAME_CAB.getResponse();
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitFoundCity(cityName);
         }
@@ -328,12 +328,12 @@ public class GameMenuController {
         String improvementName = command.get(IMPROVEMENT.getKey());
         Improvement improvement;
 
-        if (UnitController.getInstance().getUnit() == null) return "error : no unit selected";
+        if (UnitController.getInstance().getUnit() == null) return Responses.NO_UNIT_SELECTED.getResponse();;
 
         try {
             improvement = Improvement.valueOf(improvementName.toUpperCase());
         } catch (IllegalArgumentException iae) {
-            return "error: no improvement exists with given name";
+            return Responses.NO_IMPROVEMENT_WITH_NAME.getResponse();
         }
 
         return UnitController.getInstance().unitBuildImprovement(improvement);
@@ -343,12 +343,12 @@ public class GameMenuController {
         String routeName = command.get(ROUTE.getKey());
         Route route;
 
-        if (UnitController.getInstance().getUnit() == null) return "error : no unit selected";
+        if (UnitController.getInstance().getUnit() == null) return Responses.NO_UNIT_SELECTED.getResponse();
 
         try {
             route = Route.valueOf(routeName.toUpperCase());
         } catch (IllegalArgumentException iae) {
-            return "error: no route exists with given name";
+            return Responses.NO_ROUTE_WITH_NAME.getResponse();
         }
 
         return UnitController.getInstance().unitBuildRoute(route);
@@ -356,7 +356,7 @@ public class GameMenuController {
 
     public String unitRemoveJungle(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitRemoveJungle();
         }
@@ -364,7 +364,7 @@ public class GameMenuController {
 
     public String unitRemoveForest(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitRemoveForest();
         }
@@ -372,7 +372,7 @@ public class GameMenuController {
 
     public String unitRemoveMarsh(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitRemoveMarsh();
         }
@@ -380,7 +380,7 @@ public class GameMenuController {
 
     public String unitRemoveRoute(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitRemoveRoute();
         }
@@ -388,7 +388,7 @@ public class GameMenuController {
 
     public String unitRepair(HashMap<String , String> command) {
         if (UnitController.getInstance().getUnit() == null) {
-            return "error : no unit selected";
+            return Responses.NO_UNIT_SELECTED.getResponse();
         } else {
             return UnitController.getInstance().unitRepair();
         }
@@ -397,7 +397,7 @@ public class GameMenuController {
     //CITY COMMANDS
     public String cityCreateUnit(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
-            return "error : no city selected";
+            return Responses.NO_CITY_SELECTED.getResponse();
         } else {
             String unitName = command.get(UNIT_NAME.getKey());
             return CityController.getInstance().cityCreateUnit(unitName);
@@ -406,7 +406,7 @@ public class GameMenuController {
     
     public String cityCreateBuilding(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
-            return "error : no city selected";
+            return Responses.NO_CITY_SELECTED.getResponse();
         } else {
             String buildingName = command.get(BUILDING.getKey());
             return CityController.getInstance().cityCreateBuilding(buildingName);
@@ -415,7 +415,7 @@ public class GameMenuController {
     
     public String buyTile(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
-            return "error : no city selected";
+            return Responses.NO_CITY_SELECTED.getResponse();
         } else {
             int x = Integer.parseInt(command.get(X_POSITION.getKey()));
             int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
@@ -425,7 +425,7 @@ public class GameMenuController {
 
     public String purchaseUnit(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
-            return "error: no city selected";
+            return Responses.NO_CITY_SELECTED.getResponse();
         } else {
             String unitName = command.get(UNIT_NAME.getKey());
             return CityController.getInstance().purchaseUnit(unitName);
@@ -434,7 +434,7 @@ public class GameMenuController {
 
     public String purchaseBuilding(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
-            return "error: no city selected";
+            return Responses.NO_CITY_SELECTED.getResponse();
         } else {
             String buildingName = command.get(BUILDING.getKey());
             return CityController.getInstance().purchaseBuilding(buildingName);
@@ -475,14 +475,14 @@ public class GameMenuController {
         try {
             research = Research.valueOf(techName.toUpperCase());
         } catch (IllegalArgumentException iae) {
-            return "error: no research exists with given name";
+            return Responses.NO_RESEARCH_WITH_NAME.getResponse();
         }
 
         Civilization civilization = currentCivilizationController.getCivilization();
         if (civilization.getResearchTree().isResearchLocked(research))
-            return "error: research still locked";
+            return Responses.LOCKED_RESEARCH.getResponse();
         if (civilization.getResearchTree().isResearchDone(research))
-            return "error: research already done";
+            return Responses.RESEARCH_ALREADY_DONE.getResponse();
 
         civilization.startResearch(research);
         return "started researching " + research;
@@ -500,14 +500,14 @@ public class GameMenuController {
         int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
-        if (amount < 0) return "error: Illegal amount of turns";
+        if (amount < 0) return Responses.ILLEGAL_TURNS.getResponse();
 
         for (int i = 0; i < amount; i++) {
             currentCivilization.applyNewTurnChanges(currentYear);
             this.currentYear++;
         }
 
-        return "turn increased";
+        return Responses.TURN_INCREASED.getResponse();
     }
 
     public String increaseGold(HashMap<String, String> command) {
@@ -515,7 +515,7 @@ public class GameMenuController {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         currentCivilization.setGold(currentCivilization.getGold() + amount);
-        return "gold increased";
+        return Responses.GOLD_INCREASED.getResponse();
     }
 
     public String increaseResearchPoint(HashMap<String, String> command) {
@@ -523,7 +523,7 @@ public class GameMenuController {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         currentCivilization.setResearchPoint(currentCivilization.getResearchPoint() + amount);
-        return "research point increased";
+        return Responses.RESEARCH_INCREASED.getResponse();
     }
 
     public ArrayList<String> revealAll(HashMap<String, String> command) {
@@ -532,7 +532,7 @@ public class GameMenuController {
         FogOfWar.fogOfWarRevealAll(currentCivilization);
 
         ArrayList<String> result = Map.getInstance().printMap(currentCivilization);
-        result.add("now you know where you're going");
+        result.add(Responses.REVEAL_MAP.getResponse());
 
         return result;
     }
@@ -544,9 +544,9 @@ public class GameMenuController {
         currentCivilization.setHappiness(currentCivilization.calculateHappiness());
 
         switch (currentYear % 3) {
-            case 0: return "so that's what living in Tehran feels like";
-            case 1: return "now everybody loves you :)";
-            case 2: return "here, you dropped this \uD83D\uDC51"; //the character is crown emoji
+            case 0: return Responses.UTOPIA1.getResponse();
+            case 1: return Responses.UTOPIA2.getResponse();
+            case 2: return Responses.UTOPIA3.getResponse();
         }
         return "";
     }
@@ -554,26 +554,26 @@ public class GameMenuController {
     //UNIT CHEAT CODES
     public String marcopolo(HashMap<String, String> command) {
         Unit currentUnit = UnitController.getInstance().getUnit();
-        if (currentUnit == null) return "error: no unit selected";
+        if (currentUnit == null) return Responses.NO_UNIT_SELECTED.getResponse();
 
         currentUnit.setMaxMovement(4000);
-        return "what souvenirs have you brought along Marco?";
+        return Responses.MARCO.getResponse();
     }
 
     public String terminator(HashMap<String, String> command) {
         Unit currentUnit = UnitController.getInstance().getUnit();
-        if (currentUnit == null) return "error: no unit selected";
+        if (currentUnit == null) return Responses.NO_UNIT_SELECTED.getResponse();
 
         currentUnit.setMeleeStrength(4000);
         currentUnit.setRangedStrength(4000);
-        return "hasta la vista baby!";
+        return Responses.TERMINATOR.getResponse();
     }
 
     public String instantHeal(HashMap<String, String> command) {
         Unit currentUnit = UnitController.getInstance().getUnit();
-        if (currentUnit == null) return "error: no unit selected";
+        if (currentUnit == null) return Responses.NO_UNIT_SELECTED.getResponse();
 
         currentUnit.setHealth(10);
-        return "unit healed completely";
+        return Responses.HEALING_UNIT.getResponse();
     }
 }

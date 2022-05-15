@@ -45,7 +45,7 @@ public class MainMenuController {
         }
 
         if (!ListUtility.isEqualInteger(oneToSize, indices)) {
-            return "illegal player number";
+            return Responses.ILLEGAL_PLAYER_NUMBER.getResponse();
         }
 
         //User catching phase
@@ -53,7 +53,7 @@ public class MainMenuController {
         for (String username : usernames) {
             User user = UserDatabaseController.getUserByUsername(username);
             if (user == null) {
-                return "username not found";
+                return Responses.USERNAME_NOT_FOUND.getResponse();
             } else {
                 users.add(user);
             }
