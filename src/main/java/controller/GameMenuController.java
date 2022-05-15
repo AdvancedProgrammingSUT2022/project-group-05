@@ -125,6 +125,9 @@ public class GameMenuController {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
 
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
         if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
@@ -136,6 +139,9 @@ public class GameMenuController {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
 
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
         if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
@@ -146,6 +152,9 @@ public class GameMenuController {
     public String infoTileProject(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
 
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
@@ -163,6 +172,10 @@ public class GameMenuController {
     public String selectUnitSoldier(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
         Soldier soldier = Map.getInstance().getTileFromMap(x, y).getSoldier();
         if (soldier == null)
             return Responses.NO_SOLDIER_ON_TILE.getResponse();
@@ -177,6 +190,10 @@ public class GameMenuController {
     public String selectUnitCivilian(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
         Civilian civilian = Map.getInstance().getTileFromMap(x, y).getCivilian();
 
         if (civilian == null)
@@ -192,6 +209,10 @@ public class GameMenuController {
     public String selectCityPosition(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
         Tile tile = Map.getInstance().getTileFromMap(x, y);
 
         if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
@@ -222,93 +243,92 @@ public class GameMenuController {
     public String unitMove(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
-            int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
-            return UnitController.getInstance().unitMove(xPlace, yPlace);
-        }
+        } 
+        int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (xPlace < 0 || xPlace > Map.getInstance().getSizeOfMap() - 1 || yPlace < 0 || yPlace > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        return UnitController.getInstance().unitMove(xPlace, yPlace);
     }
 
     public String unitSleep(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return "error : no unit selected";
-        } else {
-            return UnitController.getInstance().unitSleep();
         }
+        return UnitController.getInstance().unitSleep();
+
     }
 
     public String unitAlert(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitAlert();
-        }
+        } 
+        return UnitController.getInstance().unitAlert();
+
     }
 
     public String unitFortify(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitFortify();
         }
+        return UnitController.getInstance().unitFortify();
     }
 
     public String unitRecover(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitRecover();
-        }
+        } 
+        return UnitController.getInstance().unitRecover();
     }
 
     public String unitGarrison(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitGarrison();
         }
+        return UnitController.getInstance().unitGarrison();
     }
 
     public String unitSetupRanged(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitSetupRanged();
         }
+        return UnitController.getInstance().unitSetupRanged();
     }
 
     public String unitAttack(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
-            int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
-            return UnitController.getInstance().unitAttack(xPlace, yPlace);
         }
+        int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (xPlace < 0 || xPlace > Map.getInstance().getSizeOfMap() - 1 || yPlace < 0 || yPlace > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        return UnitController.getInstance().unitAttack(xPlace, yPlace);
     }
 
     public String unitCancel(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitCancel();
         }
+        return UnitController.getInstance().unitCancel();
     }
 
     public String unitWake(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitWake();
-        }
+        } 
+        return UnitController.getInstance().unitWake();
     }
 
     public String unitDelete(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitDelete();
         }
+        return UnitController.getInstance().unitDelete();
     }
 
 
@@ -318,9 +338,8 @@ public class GameMenuController {
         if (cityName.length() > 7) return Responses.CITY_NAME_CAB.getResponse();
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } else {
-            return UnitController.getInstance().unitFoundCity(cityName);
         }
+        return UnitController.getInstance().unitFoundCity(cityName);
     }
 
 
@@ -416,11 +435,14 @@ public class GameMenuController {
     public String buyTile(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
             return Responses.NO_CITY_SELECTED.getResponse();
-        } else {
-            int x = Integer.parseInt(command.get(X_POSITION.getKey()));
-            int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
-            return CityController.getInstance().buyTile(x, y);
         }
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        return CityController.getInstance().buyTile(x, y);
     }
 
     public String purchaseUnit(HashMap<String, String> command) {
@@ -487,6 +509,10 @@ public class GameMenuController {
     public String mapShowPosition(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
         //TODO check validity of x and y and print Map
         return "";
     }
@@ -542,11 +568,16 @@ public class GameMenuController {
 
     public String increaseGold(HashMap<String, String> command) {
         int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
+
+        if (amount < 0) return "error: Illegal amount of golds";
+
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         currentCivilization.setGold(currentCivilization.getGold() + amount);
         return Responses.GOLD_INCREASED.getResponse();
     }
+
+ 
 
     public ArrayList<String> revealAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
@@ -615,5 +646,51 @@ public class GameMenuController {
 
         currentUnit.setHealth(10);
         return Responses.HEALING_UNIT.getResponse();
+    }
+
+    public String killSoldier(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+        if (!tile.hasSoldier())
+            return "error: no soldier in tile";
+        tile.getSoldier().getCivilization().removeUnit(tile.getSoldier());
+        return "unit killed successfully";
+    }
+
+    public String killCivilian(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+        if (!tile.hasCivilian())
+            return "error: no civilian in tile";
+        tile.getCivilian().getCivilization().removeUnit(tile.getCivilian());
+        return "unit killed successfully";
+    }
+
+    public String spawnUnit(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        String unitName = command.get(UNIT_NAME.getKey());
+        Unit newUnit = GenerateUnit.StringToUnit(this.currentCivilizationController.getCivilization(), tile, unitName);
+        if (newUnit == null)
+            return "error: there is no unit with this name";
+        this.currentCivilizationController.getCivilization().addUnit(newUnit);
+        return "unit spawned successfully";
+
     }
 }

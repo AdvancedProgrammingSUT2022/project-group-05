@@ -157,12 +157,12 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().increaseGold(command));
 
             else if ((command = getHashMap(input, KILL_SOLDIER)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().killSoldier(command));
             else if ((command = getHashMap(input, KILL_CIVILIAN)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().killCivilian(command));
             else if ((command = getHashMap(input, SPAWN_UNIT)) != null)
-                printMessage(""); //TODO... add controller function
-
+                printMessage(GameMenuController.getInstance().spawnUnit(command));
+          
             else if ((command = getHashMap(input, REVEAL_ALL)) != null)
                 printMessage(GameMenuController.getInstance().revealAll(command));
             else if ((command = getHashMap(input, INDUSTRIAL_REVOLUTION)) != null)
