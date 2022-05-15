@@ -165,6 +165,7 @@ public class InfoController{
 
         result.append("Rivers: ");
         for (NeighbourType neighbourType : NeighbourType.values()) {
+            if (neighbourType.ordinal() == NeighbourType.NEIGHBOUR_COUNT.ordinal()) continue;
             if (rivers[neighbourType.ordinal()]) result.append(neighbourType).append(", ");
         }
 
