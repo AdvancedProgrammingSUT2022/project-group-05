@@ -2,7 +2,9 @@ package view.menu;
 
 import controller.GameMenuController;
 import controller.MainMenuController;
+import controller.Responses;
 
+import javax.print.DocFlavor;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -45,7 +47,7 @@ public class MainMenu extends Menu {
                     return MenuType.GAME;
             }
             else
-                printMessage("error: invalid command");
+                printMessage(Responses.INVALID_COMMAND.getResponse());
         }
     }
 

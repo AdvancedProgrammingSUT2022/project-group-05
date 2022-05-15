@@ -120,7 +120,10 @@ public enum Responses{
     UTOPIA3("here, you dropped this \uD83D\uDC51"), //the character is crown emoji
     MARCO("what souvenirs have you brought along Marco?"),
     TERMINATOR("hasta la vista baby!"),
-    HEALING_UNIT("unit healed completely")
+    HEALING_UNIT("unit healed completely"),
+
+
+    INVALID_COMMAND("error: invalid command")
     ;
 
     private final String response;

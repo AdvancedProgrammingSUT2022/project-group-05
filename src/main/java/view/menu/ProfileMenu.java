@@ -1,6 +1,7 @@
 package view.menu;
 
 import controller.ProfileMenuController;
+import controller.Responses;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -43,7 +44,7 @@ public class ProfileMenu extends Menu {
             else if ((command = getHashMap(input, PROFILE_CHANGE_NICKNAME)) != null)
                 printMessage(profileMenuController.changeNickname(command, username));
             else
-                printMessage("error: invalid command");
+                printMessage(Responses.INVALID_COMMAND.getResponse());
         }
     }
 
