@@ -30,7 +30,7 @@ public class CityController {
     public String cityCreateUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
         if (newUnit == null)
-            return "error: there is no unit with this name";
+            return Responses.NO_UNIT_WITH_THIS_NAME.getResponse();
         newUnit.setStartingCity(this.city);
         Unit unitFromQueue = this.city.getUnitFromQueue(newUnit);
         if (unitFromQueue != null) { // for units that were already in queue
@@ -40,51 +40,51 @@ public class CityController {
             this.city.setUnitInProgress(unitFromQueue);
         } else {
             if (newUnit.equals(this.city.getUnitInProgress())) { // building same unit that is being built
-                return "this unit is already being built";
+                return Responses.UNIT_IS_ALREADY_BEING_BUILT.getResponse();
             }
             if (!this.city.getCivilization().getResearchTree().isResearchDone(newUnit.getRequiredResearch())) { // check reserch
-                return "required research not found";
+                return Responses.REQUIRED_RESEARCH_NOT_FOUND.getResponse();
             } else if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1)) {
-                return "not enough resource";
+                return Responses.NOT_ENOUGH_RESOURCE.getResponse();
             } else { // moving previous unit to queue and set new unit
                 if (this.city.getUnitInProgress() != null)
                     this.city.addUnitToQueue(this.city.getUnitInProgress());
                 this.city.setUnitInProgress(newUnit);
             }
         }
-        return "Creating Unit started";
+        return Responses.CREATING_UNIT_STARTED.getResponse();
     }
 
     public String cityCreateBuilding(String buildingName) {
         //TODO find building and check conditions and add newBuilding to queue
-        return "Creating Building started";
+        return Responses.CREATING_BUILDING_STARTED.getResponse();
     }
 
     public String buyTile(int x, int y) {
         Tile tile = Map.getInstance().getTileFromMap(x, y);
         if (!city.canAddTile(tile))
-            return "can't add tile to city";
+            return Responses.CANT_ADD_TILE_TO_CITY.getResponse();
         if (this.city.getCivilization().getGold() < 100)
-            return "not enough gold";
+            return Responses.NOT_ENOUGH_GOLD.getResponse();
 
         this.city.addTile(tile);
-        return "tile bought successfully";
+        return Responses.TILE_BOUGHT_SUCCESSFULLY.getResponse();
     }
 
     public String purchaseUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
         newUnit.setStartingCity(this.city);
         if (newUnit.getCost() > this.city.getCivilization().getGold()) {
-            return "error: not enough gold";
+            return Responses.NOT_ENOUGH_GOLD.getResponse();
         } else {
             this.city.getCivilization().addUnit(newUnit);
-            return "unit purchased successfully";
+            return Responses.UNIT_PURCHASED_SUCCESSFULLY.getResponse();
         }
     }
 
     public String purchaseBuilding(String buildingName) {
         //TODO find building and check conditions and add building to city
-        return "";
+        return Responses.BUILDING_PURCHASED_SUCCESSFULLY.getResponse();
     }
 
     public String assignCitizen(Tile tile) {

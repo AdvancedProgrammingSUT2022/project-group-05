@@ -2,6 +2,7 @@ package view.menu;
 
 import controller.LoginMenuController;
 import controller.MainMenuController;
+import controller.Responses;
 import controller.UserDatabaseController;
 
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class LoginMenu extends Menu {
                 }
             }
             else
-                printMessage("error: invalid command");
+                printMessage(Responses.INVALID_COMMAND.getResponse());
         }
     }
 }

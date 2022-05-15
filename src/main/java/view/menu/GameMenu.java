@@ -1,6 +1,7 @@
 package view.menu;
 
 import controller.GameMenuController;
+import controller.Responses;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -182,7 +183,7 @@ public class GameMenu extends Menu {
 
             //INVALID
             else
-                printMessage("error: invalid command");
+                printMessage(Responses.INVALID_COMMAND.getResponse());
         }
     }
 }

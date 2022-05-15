@@ -2,6 +2,7 @@ package controller;
 
 import model.User;
 
+import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +19,7 @@ public class ProfileMenuController {
             return "user with nickname " + newNickname + " already exists";
         } else {
             userDatabaseController.changeNickname(userIndex, newNickname);
-            return "nickname changed successfully!";
+            return Responses.NICKNAME_CHANGED.getResponse();
         }
     }
 
@@ -27,12 +28,12 @@ public class ProfileMenuController {
         String newPassword = command.get(NEW_PASSWORD.getKey());
         int userIndex = userDatabaseController.getUserIndexByUsername(username);
         if (!userDatabaseController.getPasswordByIndex(userIndex).equals(oldPassword)) {
-            return "current password is invalid";
+            return Responses.INVALID_CURRENT_PASSWORD.getResponse();
         } else if (oldPassword.equals(newPassword)) {
-            return "please enter a new password";
+            return Responses.DUPLICATED_PASSWORD.getResponse();
         } else {
             userDatabaseController.changePassword(userIndex, newPassword);
-            return "password changed successfully!";
+            return Responses.PASSWORD_CHANGED.getResponse();
         }
     }
 }
