@@ -78,13 +78,15 @@ public enum GameMenuCommand{
     //CHEAT CODES
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
-    INCREASE_RESEARCH_POINT("\\s*increase-research-point(?<entities>.*)", List.of(AMOUNT.getKey())),
 
     KILL_SOLDIER("kill-soldier", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
     KILL_CIVILIAN("\\s*kill-civilian", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     SPAWN_UNIT("\\s*spawn(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
+
     REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed
+    INDUSTRIAL_REVOLUTION("\\s*industrial-revolution(?<entities>.*)", List.of()), //increases base production to 4000
     WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 4000
+    BIG_BRAIN("\\s*big-brain(?<entities>.*)", List.of()), //increase base research point to 4000
 
     //UNIT CHEAT CODES
     MARCOPOLO("\\s*marcopolo(?<entities>.*)", List.of()), //unit can travel for 4000 MP on everything
