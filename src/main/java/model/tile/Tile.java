@@ -418,8 +418,6 @@ public class Tile{
             this.gold += this.resource.getGold();
             this.food += this.resource.getFood();
             this.production += this.resource.getProduction();
-
-            this.getCivilization().getResourceList().addResource(this.resource, 1);
         }
     }
     private void disableImprovementEffects() {
@@ -431,8 +429,6 @@ public class Tile{
             this.gold -= this.resource.getGold();
             this.food -= this.resource.getFood();
             this.production -= this.resource.getProduction();
-
-            this.getCivilization().getResourceList().removeResource(this.resource, 1);
         }
     }
 
