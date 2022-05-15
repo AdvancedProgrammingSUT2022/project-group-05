@@ -124,6 +124,12 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().purchaseUnit(command));
             else if ((command = getHashMap(input, CITY_PURCHASE_BUILDING)) != null)
                 printMessage(GameMenuController.getInstance().purchaseBuilding(command));
+            else if ((command = getHashMap(input, CITY_ASSIGN_CITIZEN)) != null)
+                printMessage(GameMenuController.getInstance().cityAssignCitizen(command));
+            else if ((command = getHashMap(input, CITY_REMOVE_CITIZEN)) != null)
+                printMessage(GameMenuController.getInstance().cityRemoveCitizen(command));
+            else if ((command = getHashMap(input, CITY_SHOW_TILES_STATS)) != null)
+                printMessage(GameMenuController.getInstance().cityShowTilesStats(command));
 
             //MAP COMMANDS
             else if ((command = getHashMap(input, MAP_SHOW_ALL)) != null)

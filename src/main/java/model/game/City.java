@@ -147,6 +147,11 @@ public class City {
         return unitInProgress;
     }
 
+    public int getRemainingProductionTime() {
+        if (unitInProgress == null) return 0;
+        return unitInProgress.getCost() / this.getCivilization().getProduction();
+    }
+
     public int getHealth() {
         return this.health;
     }

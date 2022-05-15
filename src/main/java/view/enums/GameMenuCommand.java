@@ -64,6 +64,7 @@ public enum GameMenuCommand{
     CITY_PURCHASE_BUILDING("\\s*city\\s+purchase\\s+building(?<entities>.*)", List.of(BUILDING.getKey())),
     CITY_ASSIGN_CITIZEN("\\s*city\\s+assign\\s+citizen(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     CITY_REMOVE_CITIZEN("\\s*city\\s+assign\\s+citizen(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+    CITY_SHOW_TILES_STATS("\\s*city\\s+show\\s+tiles\\s+stats(?<entities>.*)", List.of()),
 
     //MAP COMMANDS
     MAP_SHOW_ALL("\\s*map\\s+show(?<entities>.*)", List.of()),

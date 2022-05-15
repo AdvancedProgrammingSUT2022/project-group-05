@@ -463,6 +463,14 @@ public class GameMenuController {
         return CityController.getInstance().removeCitizen(tile);
     }
 
+    public String cityShowTilesStats(HashMap<String, String> command) {
+        City city = CityController.getInstance().getCity();
+
+        if (city == null) return "error: no city selected";
+
+        return InfoController.getCityTilesStats(city);
+    }
+
     // MAP COMMAND
     public ArrayList<String> mapShowAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
