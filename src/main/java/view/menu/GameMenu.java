@@ -125,6 +125,12 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().purchaseUnit(command));
             else if ((command = getHashMap(input, CITY_PURCHASE_BUILDING)) != null)
                 printMessage(GameMenuController.getInstance().purchaseBuilding(command));
+            else if ((command = getHashMap(input, CITY_ASSIGN_CITIZEN)) != null)
+                printMessage(GameMenuController.getInstance().cityAssignCitizen(command));
+            else if ((command = getHashMap(input, CITY_REMOVE_CITIZEN)) != null)
+                printMessage(GameMenuController.getInstance().cityRemoveCitizen(command));
+            else if ((command = getHashMap(input, CITY_SHOW_TILES_STATS)) != null)
+                printMessage(GameMenuController.getInstance().cityShowTilesStats(command));
 
             //MAP COMMANDS
             else if ((command = getHashMap(input, MAP_SHOW_ALL)) != null)
@@ -149,8 +155,6 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().increaseTurn(command));
             else if ((command = getHashMap(input, INCREASE_GOLD)) != null)
                 printMessage(GameMenuController.getInstance().increaseGold(command));
-            else if ((command = getHashMap(input, INCREASE_RESEARCH_POINT)) != null)
-                printMessage(GameMenuController.getInstance().increaseResearchPoint(command));
 
             else if ((command = getHashMap(input, KILL_SOLDIER)) != null)
                 printMessage(""); //TODO... add controller function
@@ -158,10 +162,16 @@ public class GameMenu extends Menu {
                 printMessage(""); //TODO... add controller function
             else if ((command = getHashMap(input, SPAWN_UNIT)) != null)
                 printMessage(""); //TODO... add controller function
+
             else if ((command = getHashMap(input, REVEAL_ALL)) != null)
                 printMessage(GameMenuController.getInstance().revealAll(command));
+            else if ((command = getHashMap(input, INDUSTRIAL_REVOLUTION)) != null)
+                printMessage(GameMenuController.getInstance().industrialRevolution(command));
             else if ((command = getHashMap(input, WELCOME_TO_UTOPIA)) != null)
                 printMessage(GameMenuController.getInstance().welcomeToUtopia(command));
+            else if ((command = getHashMap(input, BIG_BRAIN)) != null)
+                printMessage(GameMenuController.getInstance().bigBrain(command));
+
 
             //UNIT CHEAT CODES
             else if ((command = getHashMap(input, MARCOPOLO)) != null)
