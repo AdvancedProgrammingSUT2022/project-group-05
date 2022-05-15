@@ -441,6 +441,28 @@ public class GameMenuController {
         }
     }
 
+    public String cityAssignCitizen(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return "error: tile out of bounds";
+        if (CityController.getInstance().getCity() == null) return "error: no city selected";
+
+        return CityController.getInstance().assignCitizen(tile);
+    }
+
+    public String cityRemoveCitizen(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (CityController.getInstance().getCity() == null) return "error: no city selected";
+        if (tile == null) return "error: tile out of bounds";
+
+        return CityController.getInstance().removeCitizen(tile);
+    }
+
     // MAP COMMAND
     public ArrayList<String> mapShowAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
