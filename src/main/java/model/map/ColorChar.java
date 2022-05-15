@@ -58,15 +58,15 @@ public class ColorChar {
     //GETTERS
 
     //SETTERS
-    public void setBackgroundColor(String backgroundColor) {
+    private void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
-    public void setTextColor(String textColor) {
+    private void setTextColor(String textColor) {
         this.textColor = textColor;
     }
 
-    public void setText(char text) {
+    private void setText(char text) {
         this.text = text;
     }
 
@@ -132,6 +132,11 @@ public class ColorChar {
 
         addRiver(tempTile, input);
     }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
     private static String getColorForTile (Tile tempTile) {
         Terrain temp = tempTile.getTerrain();
         if (temp.equals(Terrain.OCEAN)) return BLACK_BACKGROUND;

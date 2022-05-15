@@ -33,6 +33,9 @@ public class Map{
         instance = new Map(sizeOfMap);
         MapGeneration.mapCreator();
     }
+    public static void updateInstance(Map map) {
+        instance = map;
+    }
 
     public static Map getInstance() {
         return instance;
