@@ -64,6 +64,8 @@ public class FogOfWar{
         int mapSize = Map.getInstance().getSizeOfMap();
         for (Unit unit: civilization.getUnits()) {
             Tile place = unit.getTile();
+            fogOfWar[place.getXPlace()][place.getYPlace()] = FogOfWarStates.VISIBLE;
+
             boolean isHill = place.getTerrain().equals(Terrain.HILL);
 
             FogOfWar.setNeighborsState(place, fogOfWar, FogOfWarStates.VISIBLE);

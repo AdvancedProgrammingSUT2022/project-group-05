@@ -10,6 +10,7 @@ import model.tile.Terrain;
 import model.tile.Tile;
 import model.unit.addOns.NoDefensiveBonus;
 import model.unit.civilian.Civilian;
+import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
 import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
@@ -67,6 +68,7 @@ public abstract class Unit {
     }
 
     public void wake() { //sets unit to awake state
+
         this.unitState = UnitState.AWAKE;
     }
 
@@ -112,10 +114,6 @@ public abstract class Unit {
         return boost(this.meleeStrength);
     }
 
-    public int getDefenseStrength() {
-        return boost(this.meleeStrength);
-    }
-
     protected int boost(int initialStrength) { //boosts initial Strength based on current tile stats
         int combatPercentage;
         if (!(this instanceof NoDefensiveBonus))
@@ -130,11 +128,11 @@ public abstract class Unit {
     }
 
     public boolean isInFriendlyTile() {
-        return this.civilization == this.tile.getCivilization();
+        return this.getCivilization() == this.getTile().getCivilization();
     }
 
     public void heal() {
-        this.health += healingSpeed;
+        this.setHealth(this.getHealth() + healingSpeed);
     }
 
     public boolean isTileInRange(Tile tile) {
@@ -154,11 +152,7 @@ public abstract class Unit {
     }
 
     public void setHealth(int amount) {
-        if (amount < 0) {
-            this.health = 0;
-        } else {
-            this.health = amount;
-        }
+        this.health = Math.max(amount, 0);
     }
 
     public void setTemporaryDefenceBonusPercentage(int temporaryDefenceBonusPercentage) {
@@ -231,10 +225,9 @@ public abstract class Unit {
     }
 
     public boolean hasTask() {
-        if (this.getUnitState() == UnitState.AWAKE) {
-            return true;
-        }
-        return false;
+        if (this instanceof Worker && this.tile.hasProject()) this.unitState = UnitState.WORKING;
+
+        return this.getUnitState() == UnitState.AWAKE;
     }
 
 

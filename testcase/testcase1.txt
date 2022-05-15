@@ -5,6 +5,12 @@ select unit civilian -x 6 -y 0
 unit move -x 5 -y 1
 unit found city -c Babylon
 select city -c Babylon
+increase-gold -a 1000
+city purchase unit -un warrior
+select unit soldier -x 5 -y 1
+unit garrison
+unit wake
+end turn
 city create unit -un Archer
 city create unit -un Warrior
 end turn

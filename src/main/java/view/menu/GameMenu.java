@@ -35,7 +35,7 @@ public class GameMenu extends Menu {
 
             //INFO COMMANDS
             else if ((command = getHashMap(input, INFO_RESEARCH)) != null)
-                printMessage(GameMenuController.getInstance().infoResearch(command)); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().infoResearch(command));
             else if ((command = getHashMap(input, INFO_UNITS)) != null)
                 printMessage(GameMenuController.getInstance().infoUnits(command));
             else if ((command = getHashMap(input, INFO_CITIES)) != null)
@@ -109,6 +109,8 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().unitRemoveForest(command));
             else if ((command = getHashMap(input, UNIT_REMOVE_MARSH)) != null)
                 printMessage(GameMenuController.getInstance().unitRemoveMarsh(command));
+            else if ((command = getHashMap(input, UNIT_REMOVE_IMPROVEMENT)) != null)
+                printMessage(GameMenuController.getInstance().unitRemoveImprovement(command));
             else if ((command = getHashMap(input, UNIT_REMOVE_ROUTE)) != null)
                 printMessage(GameMenuController.getInstance().unitRemoveRoute(command));
             else if ((command = getHashMap(input, UNIT_REPAIR)) != null)
@@ -157,12 +159,12 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().increaseGold(command));
 
             else if ((command = getHashMap(input, KILL_SOLDIER)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().killSoldier(command));
             else if ((command = getHashMap(input, KILL_CIVILIAN)) != null)
-                printMessage(""); //TODO... add controller function
+                printMessage(GameMenuController.getInstance().killCivilian(command));
             else if ((command = getHashMap(input, SPAWN_UNIT)) != null)
-                printMessage(""); //TODO... add controller function
-
+                printMessage(GameMenuController.getInstance().spawnUnit(command));
+          
             else if ((command = getHashMap(input, REVEAL_ALL)) != null)
                 printMessage(GameMenuController.getInstance().revealAll(command));
             else if ((command = getHashMap(input, INDUSTRIAL_REVOLUTION)) != null)

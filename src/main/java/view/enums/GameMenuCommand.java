@@ -53,6 +53,7 @@ public enum GameMenuCommand{
     UNIT_REMOVE_JUNGLE("\\s*unit\\s+remove\\s+feature(?<entities>.*)", List.of()),
     UNIT_REMOVE_FOREST("\\s*unit\\s+remove\\s+forest(?<entities>.*)", List.of()),
     UNIT_REMOVE_MARSH("\\s*unit\\s+remove\\s+marsh(?<entities>.*)", List.of()),
+    UNIT_REMOVE_IMPROVEMENT("\\s*unit\\s+remove\\s+improvement(?<entities>.*)", List.of()),
     UNIT_REMOVE_ROUTE("\\s*unit\\s+remove\\s+route(?<entities>.*)", List.of()),
     UNIT_REPAIR("\\s*unit\\s+repair(?<entities>.*)", List.of()),
 
@@ -81,8 +82,8 @@ public enum GameMenuCommand{
 
     KILL_SOLDIER("kill-soldier", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
     KILL_CIVILIAN("\\s*kill-civilian", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
-    SPAWN_UNIT("\\s*spawn(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
-
+    SPAWN_UNIT("\\s*spawn-unit(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
+  
     REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed
     INDUSTRIAL_REVOLUTION("\\s*industrial-revolution(?<entities>.*)", List.of()), //increases base production to 4000
     WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 4000

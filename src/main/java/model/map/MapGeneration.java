@@ -11,14 +11,14 @@ import java.util.Random;
 
 public class MapGeneration {
     //MAP CREATOR FUNCTIONS
-    private static final int TERRAIN_DESERT_PROB = 20;
+    private static final int TERRAIN_DESERT_PROB = 16;
+    private static final int TERRAIN_FIELD_PROB = 18;
     private static final int TERRAIN_GRASS_PROB = 18;
-    private static final int TERRAIN_HILL_PROB = 18;
+    private static final int TERRAIN_HILL_PROB = 16;
     private static final int TERRAIN_MOUNTAIN_PROB = 10;
-    private static final int TERRAIN_OCEAN_PROB = 5;
-    private static final int TERRAIN_FIELD_PROB = 20;
-    private static final int TERRAIN_SNOW_PROB = 5;
-    private static final int TERRAIN_TUNDRA_PROB = 4;
+    private static final int TERRAIN_TUNDRA_PROB = 10;
+    private static final int TERRAIN_OCEAN_PROB = 6;
+    private static final int TERRAIN_SNOW_PROB = 6;
 
     // per 100
     private static final int RIVER_PROB = 20;
@@ -32,11 +32,14 @@ public class MapGeneration {
     private static final int FEATURE_OASIS_PROB = 20;
 
     //per 100
-    private static final int RESOURCE_BANANA_PROB = 5;
-    private static final int RESOURCE_COW_PROB = 5;
-    private static final int RESOURCE_DEER_PROB = 5;
-    private static final int RESOURCE_SHEEP_PROB = 5;
-    private static final int RESOURCE_WHEAT_PROB = 5;
+    //BONUS
+    private static final int RESOURCE_BANANA_PROB = 10;
+    private static final int RESOURCE_COW_PROB = 10;
+    private static final int RESOURCE_DEER_PROB = 10;
+    private static final int RESOURCE_SHEEP_PROB = 10;
+    private static final int RESOURCE_WHEAT_PROB = 10;
+
+    //LUXURY
     private static final int RESOURCE_COTTON_PROB = 5;
     private static final int RESOURCE_DYE_PROB = 5;
     private static final int RESOURCE_FUR_PROB = 5;
@@ -48,9 +51,11 @@ public class MapGeneration {
     private static final int RESOURCE_SILK_PROB = 5;
     private static final int RESOURCE_SILVER_PROB = 5;
     private static final int RESOURCE_SUGAR_PROB = 5;
-    private static final int RESOURCE_COAL_PROB = 5;
-    private static final int RESOURCE_HORSE_PROB = 5;
-    private static final int RESOURCE_IRON_PROB = 5;
+
+    //STRATEGIC
+    private static final int RESOURCE_COAL_PROB = 15;
+    private static final int RESOURCE_HORSE_PROB = 15;
+    private static final int RESOURCE_IRON_PROB = 15;
 
 
     public static void mapCreator() {

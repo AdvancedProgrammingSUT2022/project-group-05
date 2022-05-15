@@ -4,6 +4,7 @@ import model.game.City;
 import model.map.Map;
 import model.tile.Tile;
 import model.unit.Unit;
+import model.unit.civilian.Settler;
 import model.unit.soldier.Soldier;
 
 public class CityController {
@@ -31,6 +32,8 @@ public class CityController {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
         if (newUnit == null)
             return Responses.NO_UNIT_WITH_THIS_NAME.getResponse();
+        if (newUnit instanceof Settler && this.city.getTotalCitizenCount() < 2)
+            return "error: not enough citizen for creating settler";
         newUnit.setStartingCity(this.city);
         Unit unitFromQueue = this.city.getUnitFromQueue(newUnit);
         if (unitFromQueue != null) { // for units that were already in queue
@@ -73,13 +76,14 @@ public class CityController {
 
     public String purchaseUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
+        if (newUnit == null)
+            return "error: there is no unit with this name";
         newUnit.setStartingCity(this.city);
         if (newUnit.getCost() > this.city.getCivilization().getGold()) {
             return Responses.NOT_ENOUGH_GOLD.getResponse();
-        } else {
-            this.city.getCivilization().addUnit(newUnit);
-            return Responses.UNIT_PURCHASED_SUCCESSFULLY.getResponse();
         }
+        this.city.getCivilization().addUnit(newUnit);
+        return Responses.UNIT_PURCHASED_SUCCESSFULLY.getResponse();
     }
 
     public String purchaseBuilding(String buildingName) {
@@ -92,7 +96,7 @@ public class CityController {
             return "error: selected tile is out of city territory";
         if (tile.hasCitizen())
             return "error: selected tile already has a citizen";
-        if (this.city.getJoblessCitizenCount() <= 0)
+        if (!this.city.hasJoblessCitizen())
             return "error: not enough jobless citizens";
 
         this.city.assignCitizenToTile(tile);

@@ -222,10 +222,13 @@ public class UnitController{
     }
 
     public String unitWake() {
-        if (this.unit.getUnitState() != UnitState.ASLEEP) {
+        if (this.unit.getUnitState() == UnitState.AWAKE) {
             return Responses.ALREADY_AWAKE.getResponse();
         }
+        if (this.unit.getUnitState() == UnitState.GARRISONED)
+            this.unit.getTile().getCity().removeGarrisonedUnit();
         this.unit.wake();
+        this.setDefenceBonusInFortifyState(0);
         return Responses.UNIT_AWAKENED.getResponse();
 
     }
@@ -233,6 +236,7 @@ public class UnitController{
     public String unitDelete() {
         this.setDefenceBonusInFortifyState(0);
         this.unit.killWithGold();
+        UnitController.updateInstance(null);
         return Responses.UNIT_DELETED.getResponse();
     }
 
@@ -274,6 +278,9 @@ public class UnitController{
                 city.setHealth(1);
             }
         }
+
+        if (soldier.getHealth() <= 0) soldier.getCivilization().removeUnit(soldier);
+
         //TODO increase xp and ...
         return Responses.ATTACK_COMPLETE.getResponse();
     }
@@ -418,6 +425,7 @@ public class UnitController{
             return Responses.ALREADY_REPAIRED.getResponse();
 
         Worker worker = (Worker) this.unit;
+        worker.repair();
         return Responses.REPAIR_STARTED.getResponse();
     }
     //End of worker stuff
