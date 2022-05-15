@@ -34,7 +34,7 @@ public class ProfileMenu extends Menu {
             if ((command = getHashMap(input, EXIT)) != null)
                 return MenuType.EXIT;
             else if ((command = getHashMap(input, MENU_EXIT)) != null) {
-                printMessage(""); //TODO... add controller function
+                printMessage("exiting profile menu");
                 return MenuType.MAIN;
             }
             else if ((command = getHashMap(input, MENU_SHOW_CURRENT)) != null)

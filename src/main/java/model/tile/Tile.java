@@ -52,11 +52,11 @@ public class Tile{
         this.fromTop = fromTopFinder(xPlace, yPlace, sizeOfMap);
         this.fromLeft = fromLeftFinder(xPlace, yPlace, sizeOfMap);
 
-        this.route = Route.NO_ROUTE;
-        this.terrain = Terrain.NO_TERRAIN;
-        this.feature = Feature.NO_FEATURE;
-        this.resource = Resource.NO_RESOURCE;
-        this.improvement = Improvement.NO_IMPROVEMENT;
+        this.setRoute(Route.NO_ROUTE);
+        this.setTerrain(Terrain.NO_TERRAIN);
+        this.setFeature(Feature.NO_FEATURE);
+        this.setResource(Resource.NO_RESOURCE);
+        this.setImprovement(Improvement.NO_IMPROVEMENT);
 
         this.rivers = new boolean[6];
         Arrays.fill(rivers, false);
@@ -334,6 +334,7 @@ public class Tile{
     }
     public void removeRoute() {
         //TODO... movement point stuff
+
         this.route = Route.NO_ROUTE;
     }
 
