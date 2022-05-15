@@ -548,15 +548,6 @@ public class GameMenuController {
         return Responses.GOLD_INCREASED.getResponse();
     }
 
-
-    public String increaseResearchPoint(HashMap<String, String> command) {
-        int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
-        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
-
-        currentCivilization.setResearchPoint(currentCivilization.getResearchPoint() + amount);
-        return Responses.RESEARCH_INCREASED.getResponse();
-    }
-
     public ArrayList<String> revealAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 

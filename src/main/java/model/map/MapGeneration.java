@@ -21,7 +21,7 @@ public class MapGeneration {
     private static final int TERRAIN_TUNDRA_PROB = 4;
 
     // per 100
-    private static final int RIVER_PROB = 5;
+    private static final int RIVER_PROB = 20;
 
     //per 100
     private static final int FEATURE_PLAIN_PROB = 20;
