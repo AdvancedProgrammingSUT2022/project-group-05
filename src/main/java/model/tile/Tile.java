@@ -233,7 +233,7 @@ public class Tile{
     }
 
     public int getFoodPotential() {
-        return this.gold;
+        return this.food;
     }
 
     public int getGold() {
