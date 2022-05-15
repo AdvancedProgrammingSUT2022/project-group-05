@@ -12,6 +12,7 @@ public class Catapult extends Siege implements NoDefensiveBonus, BonusVsCity, Li
     public Catapult(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 100;
+        this.initialCost = cost;
         this.meleeStrength = 4;
         this.rangedStrength = 14;
         this.maxAttackRange = 2;

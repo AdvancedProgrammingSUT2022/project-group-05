@@ -256,7 +256,7 @@ public class Civilization{
             this.setProduction(this.getProduction() + tile.getProduction());
         }
 
-        return result;
+        return result + this.getProduction();
     }
 
     public int calculateHappiness() {

@@ -12,6 +12,7 @@ public class Trebuchet extends Siege implements NoDefensiveBonus, BonusVsCity, L
     public Trebuchet(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 170;
+        this.initialCost = cost;
         this.meleeStrength = 6;
         this.rangedStrength = 20;
         this.maxAttackRange = 2;

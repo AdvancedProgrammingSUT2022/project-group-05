@@ -12,10 +12,12 @@ import model.unit.addOns.NoDefensiveBonus;
 import model.unit.civilian.Civilian;
 import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
+import model.unit.soldier.ranged.siege.Siege;
 import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
 public abstract class Unit {
     protected Civilization civilization;
+    protected int initialCost;
     protected int cost;
 
     protected City startingCity; // where to spawn when created
@@ -89,15 +91,12 @@ public abstract class Unit {
     }
 
     public void setup() {
-
+        if (this instanceof Siege)
+            this.unitState = UnitState.SET_FOR_SIEGE;
     }
 
     public void pillaging() { // pillage a tile
         this.unitState = UnitState.PILLAGING;
-    }
-
-    public void makingCity() { // only works for settler
-        this.unitState = UnitState.MAKING_CITY;
     }
 
     public void cancel() { //cancels the last order in unit command query?? WTH... check game.pdf page 21
@@ -105,7 +104,7 @@ public abstract class Unit {
     }
 
     public void killWithGold() { // will get coins
-        civilization.setGold(civilization.getGold() + (this.cost * 10) / 100);
+        this.civilization.setGold(this.civilization.getGold() + (this.initialCost * 10) / 100);
         this.kill();
     }
 
@@ -115,12 +114,12 @@ public abstract class Unit {
     }
 
     protected int boost(int initialStrength) { //boosts initial Strength based on current tile stats
-        int combatPercentage;
+        int tileCombatPercentage;
         if (!(this instanceof NoDefensiveBonus))
-            combatPercentage = this.tile.getCombatBoost();
+            tileCombatPercentage = this.tile.getCombatBoost();
         else
-            combatPercentage = 0;
-        return initialStrength + (initialStrength * combatPercentage) / 100 + (initialStrength * this.temporaryDefenceBonusPercentage) / 100;
+            tileCombatPercentage = 0;
+        return initialStrength + (initialStrength * tileCombatPercentage) / 100 + (initialStrength * this.temporaryDefenceBonusPercentage) / 100;
     }
 
     public void initializeRemainingMovement() {
@@ -136,9 +135,7 @@ public abstract class Unit {
     }
 
     public boolean isTileInRange(Tile tile) {
-        if (Map.getInstance().findDistance(this.getTile(), tile) <= this.maxAttackRange)
-            return true;
-        return false;
+        return Map.getInstance().findDistance(this.getTile(), tile) <= this.maxAttackRange;
     }
 
 
@@ -171,6 +168,12 @@ public abstract class Unit {
     }
 
     //GETTERS
+
+
+    public int getTemporaryDefenceBonusPercentage() {
+        return temporaryDefenceBonusPercentage;
+    }
+
     public City getStartingCity() {
         return startingCity;
     }
@@ -192,7 +195,7 @@ public abstract class Unit {
     }
 
     public int getTotalMeleeStrength() {
-        return 0;
+        return boost(this.meleeStrength);
     }
 
     public int getHealth() {
@@ -209,7 +212,16 @@ public abstract class Unit {
     }
 
     public int getHealingBonus() {
-        return healingBonus;
+        if (this.getTile().hasCity()) {
+            if (this.getTile().getCity().getCivilization() == this.getCivilization()) {
+                if (this.getTile().getCity().getCenter() == this.getTile()) {
+                    return 3;
+                }
+                return 2;
+            }
+            return 1;
+        }
+        return 1;
     }
 
     public int getCost() {

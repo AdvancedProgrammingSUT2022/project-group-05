@@ -10,6 +10,7 @@ public class Canon extends Siege implements NoDefensiveBonus, BonusVsCity {
     public Canon(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 250;
+        this.initialCost = cost;
         this.meleeStrength = 10;
         this.rangedStrength = 26;
         this.maxAttackRange = 2;

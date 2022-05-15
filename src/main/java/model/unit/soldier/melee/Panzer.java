@@ -12,6 +12,7 @@ public class Panzer extends Melee implements CanMoveAfterAttacking, Tank, NoDefe
     public Panzer(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 450;
+        this.initialCost = cost;
         this.meleeStrength = 60;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;
