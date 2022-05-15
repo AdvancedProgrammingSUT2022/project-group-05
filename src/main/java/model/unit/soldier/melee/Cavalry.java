@@ -12,6 +12,7 @@ public class Cavalry extends Melee implements Mounted, CanMoveAfterAttacking, No
     public Cavalry(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 260;
+        this.initialCost = cost;
         this.meleeStrength = 25;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

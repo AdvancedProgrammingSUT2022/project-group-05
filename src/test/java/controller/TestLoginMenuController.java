@@ -1,34 +1,45 @@
 package controller;
 
+import model.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 
 import static view.enums.Entity.*;
 
-public class TestLoginMenuController{
+@ExtendWith(MockitoExtension.class)
+public class TestLoginMenuController {
+
+    LoginMenuController loginMenuController;
     HashMap<String, String> command;
+
     @BeforeEach
-    public void setUp() {
+    public void setup() {
+        loginMenuController = new LoginMenuController();
         command = new HashMap<>();
-        command.put(USERNAME.getKey(), "Rogers");
-        command.put(NICKNAME.getKey(), "Rogers");
-        command.put(PASSWORD.getKey(), "Rogers");
+        command.put(USERNAME.getKey(), "u");
+        command.put(PASSWORD.getKey(), "p");
+        command.put(NICKNAME.getKey(), "n");
     }
 
     @Test
-    public void createUserTestFail() {
-        LoginMenuController loginMenuController = new LoginMenuController();
-
-        command.replace(USERNAME.getKey(), "babak");
-        String response = loginMenuController.createUser(command);
+    public void testCreateUser() {
+        loginMenuController.createUser(command);
+        User user = UserDatabaseController.getUserByUsername("u");
+        Assertions.assertNotNull(user);
+        loginMenuController.userDatabaseController.removeUser(user);
     }
 
     @Test
-    public void loginUserTestSuccess() {
-        LoginMenuController loginMenuController = new LoginMenuController();
-
-        String response = loginMenuController.loginUser(command);
+    public void testLoginUser() {
+        loginMenuController.createUser(command);
+        loginMenuController.loginUser(command);
+        User user = UserDatabaseController.getUserByUsername("u");
+        Assertions.assertNotNull(user);
+        loginMenuController.userDatabaseController.removeUser(user);
     }
 }

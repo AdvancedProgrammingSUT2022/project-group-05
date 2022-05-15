@@ -8,6 +8,7 @@ public class Rifleman extends Melee {
     public Rifleman(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 200;
+        this.initialCost = cost;
         this.meleeStrength = 25;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

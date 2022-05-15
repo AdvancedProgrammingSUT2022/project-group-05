@@ -12,6 +12,7 @@ public class Horseman extends Melee implements Mounted, CanMoveAfterAttacking, N
     public Horseman(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 80;
+        this.initialCost = cost;
         this.meleeStrength = 12;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

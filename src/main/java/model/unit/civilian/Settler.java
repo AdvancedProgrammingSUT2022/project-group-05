@@ -10,6 +10,7 @@ public class Settler extends Civilian {
         super(civilization, tile);
 
         this.cost = 89;
+        this.initialCost = cost;
         this.meleeStrength = 0;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

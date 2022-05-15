@@ -9,6 +9,7 @@ public class Pikeman extends Melee implements BonusVsMounted {
     public Pikeman(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 100;
+        this.initialCost = cost;
         this.meleeStrength = 10;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

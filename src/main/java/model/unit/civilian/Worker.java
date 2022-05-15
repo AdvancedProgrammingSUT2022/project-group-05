@@ -12,6 +12,7 @@ public class Worker extends Civilian {
     public Worker(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 70;
+        this.initialCost = cost;
         this.meleeStrength = 0;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

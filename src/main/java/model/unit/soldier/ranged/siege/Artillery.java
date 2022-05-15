@@ -10,6 +10,7 @@ public class Artillery extends Siege implements NoDefensiveBonus, BonusVsCity {
     public Artillery(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 420;
+        this.initialCost = cost;
         this.meleeStrength = 16;
         this.rangedStrength = 32;
         this.maxAttackRange = 3;

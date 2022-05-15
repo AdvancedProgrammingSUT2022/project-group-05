@@ -13,12 +13,6 @@ import java.util.List;
 
 public class UserDatabaseController {
 
-
-    public void initialize() { // for first use
-        ArrayList<HashMap<String, String>> users = new ArrayList<>();
-        this.updateDatabase(users);
-    }
-
     private void updateDatabase(ArrayList<HashMap<String, String>> users) {
         try {
             FileWriter writer = new FileWriter("database/usersDatabase.json");
@@ -42,7 +36,7 @@ public class UserDatabaseController {
         }
     }
 
-    public int getUserIndexByUsername(String username) {
+    private int getUserIndexByUsername(String username) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("username").equals(username)) {
@@ -50,26 +44,6 @@ public class UserDatabaseController {
             }
         }
         return -1;
-    }
-
-    public int getUserIndexByNickname(String nickname) {
-        ArrayList<HashMap<String, String>> users = loadDatabase();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).get("nickname").equals(nickname)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public boolean isPasswordCorrect(int userIndex, String password) {
-        ArrayList<HashMap<String, String>> users = loadDatabase();
-        String p = users.get(userIndex).get("password");
-        if (p.equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public void addUser(User newUser) { // add new user to database
@@ -82,21 +56,28 @@ public class UserDatabaseController {
         this.updateDatabase(users);
     }
 
-    public void changeNickname(int userIndex, String newNickname) {
+    public void removeUser(User user) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
+        HashMap<String, String> oldUser = new HashMap<>();
+        oldUser.put("username", user.getUsername());
+        oldUser.put("password", user.getPassword());
+        oldUser.put("nickname", user.getNickname());
+        users.remove(oldUser);
+        this.updateDatabase(users);
+    }
+
+    public void changeNickname(User user, String newNickname) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = this.getUserIndexByUsername(user.getUsername());
         users.get(userIndex).put("nickname", newNickname);
         this.updateDatabase(users);
     }
 
-    public void changePassword(int userIndex, String newPassword) {
+    public void changePassword(User user, String newPassword) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = this.getUserIndexByUsername(user.getUsername());
         users.get(userIndex).put("password", newPassword);
         this.updateDatabase(users);
-    }
-
-    public String getPasswordByIndex(int userIndex) {
-        ArrayList<HashMap<String, String>> users = loadDatabase();
-        return users.get(userIndex).get("password");
     }
 
     public static User getUserByUsername(String username) {
@@ -108,6 +89,19 @@ public class UserDatabaseController {
                 return user;
             }
         }
+        return null;
+    }
+
+    public static User getUserByNickname(String nickname) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).get("nickname").equals(nickname)) {
+                HashMap<String, String> userData = users.get(i);
+                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"));
+                return user;
+            }
+        }
+
         return null;
     }
 }
