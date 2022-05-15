@@ -152,7 +152,7 @@ public abstract class Unit {
     }
 
     public void setHealth(int amount) {
-        this.setHealth(Math.max(amount, 0));
+        this.health = Math.max(amount, 0);
     }
 
     public void setTemporaryDefenceBonusPercentage(int temporaryDefenceBonusPercentage) {

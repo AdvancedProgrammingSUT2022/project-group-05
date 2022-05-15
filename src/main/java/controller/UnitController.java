@@ -278,6 +278,9 @@ public class UnitController{
                 city.setHealth(1);
             }
         }
+
+        if (soldier.getHealth() <= 0) soldier.getCivilization().removeUnit(soldier);
+
         //TODO increase xp and ...
         return Responses.ATTACK_COMPLETE.getResponse();
     }

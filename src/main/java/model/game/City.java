@@ -79,12 +79,12 @@ public class City {
 
     public void assignCitizenToTile(Tile tile) {
         this.setJoblessCitizenCount(this.getJoblessCitizenCount() - 1);
-        tile.removeCitizen();
+        tile.assignCitizen();
     }
 
     public void removeCitizenFromTile(Tile tile) {
         this.setJoblessCitizenCount(this.getJoblessCitizenCount() + 1);
-        tile.assignCitizen();
+        tile.removeCitizen();
     }
 
     public void addTile(Tile tile) {

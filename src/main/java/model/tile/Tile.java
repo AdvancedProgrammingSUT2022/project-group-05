@@ -70,7 +70,7 @@ public class Tile{
     }
 
     //Citizen stuff
-    public void assignCitizen() { //assigns a citizen from this tile's city to work on this tile
+    public void assignCitizen() {
         this.hasCitizen = true;
     }
 
