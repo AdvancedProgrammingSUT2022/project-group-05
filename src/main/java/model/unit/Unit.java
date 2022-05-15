@@ -10,6 +10,7 @@ import model.tile.Terrain;
 import model.tile.Tile;
 import model.unit.addOns.NoDefensiveBonus;
 import model.unit.civilian.Civilian;
+import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
 import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
@@ -224,10 +225,9 @@ public abstract class Unit {
     }
 
     public boolean hasTask() {
-        if (this.getUnitState() == UnitState.AWAKE) {
-            return true;
-        }
-        return false;
+        if (this instanceof Worker && this.tile.hasProject()) this.unitState = UnitState.WORKING;
+
+        return this.getUnitState() == UnitState.AWAKE;
     }
 
 

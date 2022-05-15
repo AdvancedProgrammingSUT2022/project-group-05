@@ -422,6 +422,7 @@ public class UnitController{
             return Responses.ALREADY_REPAIRED.getResponse();
 
         Worker worker = (Worker) this.unit;
+        worker.repair();
         return Responses.REPAIR_STARTED.getResponse();
     }
     //End of worker stuff

@@ -53,6 +53,7 @@ public enum GameMenuCommand{
     UNIT_REMOVE_JUNGLE("\\s*unit\\s+remove\\s+feature(?<entities>.*)", List.of()),
     UNIT_REMOVE_FOREST("\\s*unit\\s+remove\\s+forest(?<entities>.*)", List.of()),
     UNIT_REMOVE_MARSH("\\s*unit\\s+remove\\s+marsh(?<entities>.*)", List.of()),
+    UNIT_REMOVE_IMPROVEMENT("\\s*unit\\s+remove\\s+improvement(?<entities>.*)", List.of()),
     UNIT_REMOVE_ROUTE("\\s*unit\\s+remove\\s+route(?<entities>.*)", List.of()),
     UNIT_REPAIR("\\s*unit\\s+repair(?<entities>.*)", List.of()),
 

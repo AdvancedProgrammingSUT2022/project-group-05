@@ -109,6 +109,8 @@ public class GameMenu extends Menu {
                 printMessage(GameMenuController.getInstance().unitRemoveForest(command));
             else if ((command = getHashMap(input, UNIT_REMOVE_MARSH)) != null)
                 printMessage(GameMenuController.getInstance().unitRemoveMarsh(command));
+            else if ((command = getHashMap(input, UNIT_REMOVE_IMPROVEMENT)) != null)
+                printMessage(GameMenuController.getInstance().unitRemoveImprovement(command));
             else if ((command = getHashMap(input, UNIT_REMOVE_ROUTE)) != null)
                 printMessage(GameMenuController.getInstance().unitRemoveRoute(command));
             else if ((command = getHashMap(input, UNIT_REPAIR)) != null)

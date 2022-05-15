@@ -397,6 +397,14 @@ public class GameMenuController {
         }
     }
 
+    public String unitRemoveImprovement(HashMap<String, String> command) {
+        if (UnitController.getInstance().getUnit() == null) {
+            return Responses.NO_UNIT_SELECTED.getResponse();
+        } else {
+            return UnitController.getInstance().unitRemoveImprovement();
+        }
+    }
+
     public String unitRemoveRoute(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();

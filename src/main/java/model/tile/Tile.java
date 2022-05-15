@@ -79,6 +79,10 @@ public class Tile{
     }
 
     //Project stuff
+    public boolean hasProject() {
+        return this.projectManager.hasProject();
+    }
+
     public String getProjectStatus() {
         return this.projectManager.getStatus();
     }
