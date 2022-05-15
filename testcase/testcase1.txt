@@ -1,10 +1,12 @@
 user login -p kabab -u babak
 play game --player2 mohammadreza -p1 babak
-end turn
 select unit civilian -x 6 -y 0
 unit move -x 5 -y 1
 unit found city -c Babylon
 select city -c Babylon
-city create unit -un Archer
-city create unit -un Warrior
+increase-gold -a 1000
+city purchase unit -un warrior
+select unit soldier -x 5 -y 1
+unit garrison
+unit wake
 end turn

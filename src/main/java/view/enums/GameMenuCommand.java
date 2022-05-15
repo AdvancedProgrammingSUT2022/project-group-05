@@ -79,7 +79,7 @@ public enum GameMenuCommand{
 
     KILL_SOLDIER("kill-soldier", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
     KILL_CIVILIAN("\\s*kill-civilian", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
-    SPAWN_UNIT("\\s*spawn(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
+    SPAWN_UNIT("\\s*spawn-unit(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
     REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed
     WELCOME_TO_UTOPIA("\\s*welcome-to-utopia(?<entities>.*)", List.of()), //increases base happiness to 4000
 

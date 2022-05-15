@@ -67,6 +67,7 @@ public abstract class Unit {
     }
 
     public void wake() { //sets unit to awake state
+
         this.unitState = UnitState.AWAKE;
     }
 

@@ -4,6 +4,7 @@ import model.game.City;
 import model.map.Map;
 import model.tile.Tile;
 import model.unit.Unit;
+import model.unit.civilian.Settler;
 import model.unit.soldier.Soldier;
 
 public class CityController {
@@ -31,6 +32,8 @@ public class CityController {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
         if (newUnit == null)
             return "error: there is no unit with this name";
+        if (newUnit instanceof Settler && this.city.getTotalCitizenCount() < 2)
+            return "error: not enough citizen for creating settler";
         newUnit.setStartingCity(this.city);
         Unit unitFromQueue = this.city.getUnitFromQueue(newUnit);
         if (unitFromQueue != null) { // for units that were already in queue
@@ -73,13 +76,14 @@ public class CityController {
 
     public String purchaseUnit(String unitName) {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
+        if (newUnit == null)
+            return "error: there is no unit with this name";
         newUnit.setStartingCity(this.city);
         if (newUnit.getCost() > this.city.getCivilization().getGold()) {
             return "error: not enough gold";
-        } else {
-            this.city.getCivilization().addUnit(newUnit);
-            return "unit purchased successfully";
         }
+        this.city.getCivilization().addUnit(newUnit);
+        return "unit purchased successfully";
     }
 
     public String purchaseBuilding(String buildingName) {

@@ -18,84 +18,87 @@ import model.unit.soldier.ranged.siege.Canon;
 import model.unit.soldier.ranged.siege.Catapult;
 import model.unit.soldier.ranged.siege.Trebuchet;
 
+import java.util.Locale;
+
 public class GenerateUnit {
 
     public static Unit StringToUnit(Civilization civilization, Tile tile, String unitName) {
+        unitName = unitName.toLowerCase();
         Unit unit;
         switch (unitName) {
-            case ("Archer"):
+            case ("archer"):
                 unit = new Archer(civilization, tile);
                 break;
-            case ("ChariotArcher"):
+            case ("chariotarcher"):
                 unit = new ChariotArcher(civilization, tile);
                 break;
-            case ("Scout"):
+            case ("scout"):
                 unit = new Scout(civilization, tile);
                 break;
-            case ("Settler"):
+            case ("settler"):
                 unit = new Settler(civilization, tile);
                 break;
-            case ("Spearman"):
+            case ("spearman"):
                 unit = new Spearman(civilization, tile);
                 break;
-            case ("Warrior"):
+            case ("warrior"):
                 unit = new Warrior(civilization, tile);
                 break;
-            case ("Worker"):
+            case ("worker"):
                 unit = new Worker(civilization, tile);
                 break;
-            case ("Catapult"):
+            case ("catapult"):
                 unit = new Catapult(civilization, tile);
                 break;
-            case ("Horseman"):
+            case ("horseman"):
                 unit = new Horseman(civilization, tile);
                 break;
-            case ("Swordsman"):
+            case ("swordsman"):
                 unit = new Swordsman(civilization, tile);
                 break;
-            case ("Crossbowman"):
+            case ("crossbowman"):
                 unit = new Crossbowman(civilization, tile);
                 break;
-            case ("Knight"):
+            case ("knight"):
                 unit = new Knight(civilization, tile);
                 break;
-            case ("Longswordsman"):
+            case ("longswordsman"):
                 unit = new Longswordsman(civilization, tile);
                 break;
-            case ("Pikeman"):
+            case ("pikeman"):
                 unit = new Pikeman(civilization, tile);
                 break;
-            case ("Trebuchet"):
+            case ("trebuchet"):
                 unit = new Trebuchet(civilization, tile);
                 break;
-            case ("Canon"):
+            case ("canon"):
                 unit = new Canon(civilization, tile);
                 break;
-            case ("Cavalry"):
+            case ("cavalry"):
                 unit = new Cavalry(civilization, tile);
                 break;
-            case ("Lancer"):
+            case ("lancer"):
                 unit = new Lancer(civilization, tile);
                 break;
-            case ("Musketman"):
+            case ("musketman"):
                 unit = new Musketman(civilization, tile);
                 break;
-            case ("Rifleman"):
+            case ("rifleman"):
                 unit = new Rifleman(civilization, tile);
                 break;
-            case ("AntiTankGun"):
+            case ("antitankgun"):
                 unit = new AntiTankGun(civilization, tile);
                 break;
-            case ("Artillery"):
+            case ("artillery"):
                 unit = new Artillery(civilization, tile);
                 break;
-            case ("Infantry"):
+            case ("infantry"):
                 unit = new Infantry(civilization, tile);
                 break;
-            case ("Panzer"):
+            case ("panzer"):
                 unit = new Panzer(civilization, tile);
                 break;
-            case ("Tank"):
+            case ("tank"):
                 unit = new Tank(civilization, tile);
                 break;
             default:
