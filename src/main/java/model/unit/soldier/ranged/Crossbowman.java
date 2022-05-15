@@ -8,6 +8,7 @@ public class Crossbowman extends Ranged {
     public Crossbowman(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 120;
+        this.initialCost = cost;
         this.meleeStrength = 6;
         this.rangedStrength = 12;
         this.maxAttackRange = 2;

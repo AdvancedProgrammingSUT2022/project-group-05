@@ -112,7 +112,7 @@ public class UnitController{
     }
 
     public String unitRecover() {
-        if (!this.unit.getUnitState().equals(UnitState.RECOVERING)) {
+        if (this.unit.getUnitState().equals(UnitState.RECOVERING)) {
             return Responses.ALREADY_RECOVERED.getResponse();
         }
         this.setDefenceBonusInFortifyState(0);
@@ -361,7 +361,7 @@ public class UnitController{
             return Responses.NO_JUNGLE_IN_TILE.getResponse();
         if (this.unit.getTile().hasImprovement())
             return Responses.FEATURE_AND_IMPROVEMENT_ERROR.getResponse();
-        if (this.unit.getCivilization().getResearchTree().isResearchDone(Research.BRONZE_WORKING))
+        if (!this.unit.getCivilization().getResearchTree().isResearchDone(Research.BRONZE_WORKING))
             return "error: You need " + Research.BRONZE_WORKING + " to remove jungles";
 
         Worker worker = (Worker) this.unit;
@@ -430,7 +430,7 @@ public class UnitController{
     }
     //End of worker stuff
 
-    public void checkEnemyInAlertedState() { // check neighbor tile for enemies in alerted state
+    private void checkEnemyInAlertedState() { // check neighbor tile for enemies in alerted state
         if (this.unit.getUnitState() == UnitState.ALERTED) {
             Tile here = this.unit.getTile();
             Tile[] neighbors = Map.getInstance().findNeighbors(here);
@@ -455,13 +455,11 @@ public class UnitController{
         }
     }
 
-    public boolean recoverUnitInRecoveringState() {
-        //TODO.. find the location of unit which could be in city or friendly ground or enemy ground
+    private boolean recoverUnitInRecoveringState() {
         if (this.unit.getHealth() == 10) {
             return false;
         } else {
-            int speed = 1;
-            speed += this.unit.getHealingBonus();
+            int speed = this.unit.getHealingBonus();
             this.unit.setHealingSpeed(speed);
             this.unit.heal();
             return true;

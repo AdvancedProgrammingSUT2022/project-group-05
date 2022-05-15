@@ -192,6 +192,10 @@ public class City {
         return hasCivilianUnit;
     }
 
+    public int getFood() {
+        return food;
+    }
+
     //SETTER
 
     public void setUnitInProgress(Unit unitInProgress) {

@@ -9,6 +9,7 @@ public class Tank extends Melee implements CanMoveAfterAttacking, model.unit.add
     public Tank(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 450;
+        this.initialCost = cost;
         this.meleeStrength = 50;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

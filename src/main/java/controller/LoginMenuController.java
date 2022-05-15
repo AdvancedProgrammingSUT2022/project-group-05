@@ -16,30 +16,25 @@ public class LoginMenuController {
         String password = command.get(PASSWORD.getKey());
         String nickname = command.get(NICKNAME.getKey());
         User user  = new User(username, nickname, password);
-        if (userDatabaseController.getUserIndexByUsername(user.getUsername()) != -1) {
+        if (UserDatabaseController.getUserByUsername(user.getUsername()) != null)
             return "user with username " + user.getUsername() + " already exists";
-        } else if (userDatabaseController.getUserIndexByNickname(user.getNickname()) != -1) {
+        if (UserDatabaseController.getUserByNickname(user.getNickname()) != null)
             return "user with nickname " + user.getNickname() + " already exists";
-        } else {
-            userDatabaseController.addUser(user);
-            return "user created successfully!";
-        }
+        userDatabaseController.addUser(user);
+        return "user created successfully!";
     }
 
     public String loginUser(HashMap<String, String> command) {
         String username = command.get(USERNAME.getKey());
         String password = command.get(PASSWORD.getKey());
-        int userIndex = userDatabaseController.getUserIndexByUsername(username);
-        if (userIndex == -1) {
+        User user = UserDatabaseController.getUserByUsername(username);
+        if (user == null) {
             return Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse();
-        } else {
-            if (!userDatabaseController.isPasswordCorrect(userIndex, password)) {
-                return Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse();
-            } else {
-
-                return Responses.USER_LOGGED_IN.getResponse();
-            }
         }
+        if (!user.getPassword().equals(password)) {
+            return Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse();
+        }
+        return Responses.USER_LOGGED_IN.getResponse();
     }
 
 }

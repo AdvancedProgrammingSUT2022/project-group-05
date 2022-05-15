@@ -10,6 +10,7 @@ public class ChariotArcher extends Ranged implements Mounted, NoDefensiveBonus {
     public ChariotArcher(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 60;
+        this.initialCost = cost;
         this.meleeStrength = 3;
         this.rangedStrength = 6;
         this.maxAttackRange = 2;

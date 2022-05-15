@@ -9,6 +9,7 @@ public class Spearman extends Melee implements BonusVsMounted {
     public Spearman(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 50;
+        this.initialCost = cost;
         this.meleeStrength = 7;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;

@@ -12,6 +12,7 @@ public class Lancer extends Melee implements Mounted, CanMoveAfterAttacking, NoD
     public Lancer(Civilization civilization, Tile tile) {
         super(civilization, tile);
         this.cost = 220;
+        this.initialCost = cost;
         this.meleeStrength = 22;
         this.rangedStrength = 0;
         this.maxAttackRange = 0;
