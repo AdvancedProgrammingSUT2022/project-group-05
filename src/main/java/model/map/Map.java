@@ -147,7 +147,12 @@ public class Map{
     }
 
     private Path bestPathFindersBacktrack(Tile start, Tile end, int remainingMP, HashMap<Tile, Path> pathsMap) {
+        if (pathsMap.containsKey(start)) {
+            return pathsMap.get(start);
+        }
+
         if (remainingMP <= 0) return null;
+
         Tile[] neighbors = findNeighbors(start);
         Path[] pathsFound = new Path[6];
         //Finding paths from neighbors to end
@@ -156,14 +161,8 @@ public class Map{
                 pathsFound[i] = null;
                 continue;
             }
-
-            if (pathsMap.containsKey(neighbors[i])) {
-                pathsFound[i] = pathsMap.get(neighbors[i]);
-            } else {
-                int newRemainingMP = remainingMP -  Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
-                pathsFound[i] = bestPathFindersBacktrack(neighbors[i], end, newRemainingMP, pathsMap);
-                pathsMap.put(neighbors[i], pathsFound[i]);
-            }
+            int MPLeft = remainingMP - Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
+            pathsFound[i] = bestPathFindersBacktrack(neighbors[i], end, MPLeft, pathsMap);
         }
 
         //creating paths from start to neighbor and then to end
@@ -182,6 +181,7 @@ public class Map{
             }
         }
         //returning minimum value
+        pathsMap.put(start, pathsFound[minMPIndex]);
         return pathsFound[minMPIndex];
     }
 
