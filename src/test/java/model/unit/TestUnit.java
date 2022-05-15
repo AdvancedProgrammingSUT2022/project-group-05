@@ -1,9 +1,8 @@
+package model.unit;
+
 import model.game.Civilization;
 import model.map.Map;
 import model.tile.Tile;
-import model.unit.Unit;
-import model.unit.UnitState;
-import model.unit.civilian.Worker;
 import model.unit.soldier.melee.Warrior;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,12 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
 @ExtendWith(MockitoExtension.class)
-public class testUnit {
+public class TestUnit{
 
     Unit unit;
 
