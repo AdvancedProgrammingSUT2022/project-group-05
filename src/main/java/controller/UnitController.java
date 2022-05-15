@@ -341,7 +341,7 @@ public class UnitController{
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.FOREST);
-        return Responses.FOREST_DONE.getResponse();
+        return Responses.FOREST_REM_DONE.getResponse();
     }
 
     public String unitRemoveJungle() {
@@ -359,7 +359,7 @@ public class UnitController{
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.JUNGLE);
-        return Responses.JUNGLE_DONE.getResponse();
+        return Responses.JUNGLE_REM_DONE.getResponse();
     }
 
     public String unitRemoveMarsh() {
@@ -369,56 +369,56 @@ public class UnitController{
         if (!this.unit.isInFriendlyTile())
             return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (this.unit.getTile().getFeature() != Feature.MARSH)
-            return "error: No marsh on current tile";
+            return Responses.NO_MARSH_IN_TILE.getResponse();
         if (this.unit.getTile().hasImprovement())
-            return "error: Can't remove feature of a tile with improvement";
+            return Responses.FEATURE_AND_IMPROVEMENT_ERROR.getResponse();
         if (!this.unit.getCivilization().getResearchTree().isResearchDone(Research.MASONRY))
             return "error: You need " + Research.MASONRY + " to removes marshes";
 
         Worker worker = (Worker) this.unit;
         worker.removeFeature(Feature.MARSH);
-        return "Marsh removal started";
+        return Responses.MARSH_REM_DONE.getResponse();
     }
 
     public String unitRemoveRoute() {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (!this.unit.getTile().hasRoute())
-            return "error: No route on current tile";
+            return Responses.NO_ROUTE_IN_TILE.getResponse();
 
         Worker worker = (Worker) this.unit;
         worker.removeRoute();
-        return "Route removal started";
+        return Responses.ROUTE_REM_DONE.getResponse();
     }
 
     public String unitRemoveImprovement() {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (!this.unit.getTile().hasImprovement())
-            return "error: No improvement on current tile";
+            return Responses.NO_IMPROVEMENT_IN_TILE.getResponse();
 
         Worker worker = (Worker) this.unit;
         worker.removeImprovement();
-        return "Improvement removal started";
+        return Responses.IMPROVEMENT_REM_DONE.getResponse();
     }
 
     public String unitRepair() {
         this.unitWake();
         if (!(this.unit instanceof Worker))
-            return "error: Not a worker";
+            return Responses.UNIT_NOT_WORKER.getResponse();
         if (!this.unit.isInFriendlyTile())
-            return "error: Tile not in territory";
+            return Responses.TILE_NOT_IN_TERRITORY.getResponse();
         if (this.unit.getTile().isRepaired())
-            return "error: Tile already repaired";
+            return Responses.ALREADY_REPAIRED.getResponse();
 
         Worker worker = (Worker) this.unit;
-        return "Repair started";
+        return Responses.REPAIR_STARTED.getResponse();
     }
     //End of worker stuff
 
