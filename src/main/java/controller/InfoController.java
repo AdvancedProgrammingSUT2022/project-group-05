@@ -73,6 +73,22 @@ public class InfoController{
         result.append(getCityInfo(city));
         result.append("CenterX: ").append(city.getCenter().getXPlace()).append(" CenterY: ").append(city.getCenter().getYPlace()).append("\n");
         result.append("Jobless population: ").append(city.getJoblessCitizenCount()).append("\n");
+        result.append("Currently producing: ").append(city.getUnitInProgress() != null? city.getUnitInProgress() : "none").append("\n");
+        result.append("Remaining production time: ").append(city.getRemainingProductionTime()).append("\n");
+
+        return result.toString();
+    }
+
+    public static String getCityTilesStats(City city) {
+        StringBuilder result = new StringBuilder();
+
+        if (city == null) return result.toString();
+
+        result.append("City tiles: \n");
+        for (Tile tile : city.getTiles()) {
+            result.append(getTileStats(tile)).append("\n");
+        }
+        result.append("\n");
 
         return result.toString();
     }
@@ -129,7 +145,8 @@ public class InfoController{
     }
 
     public static String getTileStats(Tile tile) {
-        return  "Gold: " + tile.getGold() + "\n" +
+        return  "Location: " + tile.getXPlace() + ", " + tile.getYPlace() + "\n" +
+                "Gold: " + tile.getGold() + "\n" +
                 "Food: " + tile.getFood() + "\n" +
                 "Production: " + tile.getProduction() + "\n" +
                 "CombatBoost: " + tile.getCombatBoost() + "\n" +
@@ -148,6 +165,7 @@ public class InfoController{
 
         result.append("Rivers: ");
         for (NeighbourType neighbourType : NeighbourType.values()) {
+            if (neighbourType.ordinal() == NeighbourType.NEIGHBOUR_COUNT.ordinal()) continue;
             if (rivers[neighbourType.ordinal()]) result.append(neighbourType).append(", ");
         }
 

@@ -29,14 +29,14 @@ public class Civilization{
     private final User player;
     private final int color;
 
-    private int happiness;
-    private int baseHappiness;
-
     private int turn;
     private int gold;
     private int production;
     private int baseProduction;
     private int researchPoint;
+    private int baseResearchPoint;
+    private int happiness;
+    private int baseHappiness;
 
     private final ResourceList resourceList;
     private final ResearchTree researchTree;
@@ -54,14 +54,17 @@ public class Civilization{
 
         this.turn = 0;
         this.gold = 0;
-        this.production = 10;
+
+        //TODO are these the best base values?
         this.baseProduction = 10;
-        this.happiness = 10;
+        this.production = this.baseProduction;
+        this.baseHappiness = 10;
+        this.happiness = this.baseHappiness;
+        this.baseResearchPoint = 0;
+        this.researchPoint = this.baseResearchPoint;
 
         this.resourceList = new ResourceList();
         this.researchTree = new ResearchTree();
-
-        this.researchPoint = 0;
 
         FogOfWar.updateFogOfWar(this);
     }
@@ -92,28 +95,8 @@ public class Civilization{
         this.researchTree.startResearch(research);
     }
 
-    public int calculateHappiness() {
-        int result = this.baseHappiness;
-        for (Resource resource : Resource.values()) {
-            if (resource.getResourceType().equals(ResourceType.LUXURIOUS) &&
-                    this.resourceList.hasEnough(resource, 1))
-                result += 4;
-        }
-        for (City city : this.cities) {
-            result -= 3 + city.getTotalCitizenCount();
-        }
-        return result;
-    }
-
-    public int calculateUnitMaintenance() {
-        int unitCount = this.units.size();
-        int currentTurn = this.turn;
-
-        return ((unitCount + 1) / 2) * ((currentTurn) / 30 + 1);
-    }
 
     //SETTERS
-
     public void setGold(int gold) {
         this.gold = gold;
     }
@@ -142,14 +125,18 @@ public class Civilization{
         this.cities.remove(city);
     }
 
-    //GETTERS
 
+    //GETTERS
     public User getPlayer() {
         return player;
     }
 
     public int getColor() {
         return color;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     public int getGold() {
@@ -160,12 +147,24 @@ public class Civilization{
         return production;
     }
 
+    public int getBaseProduction() {
+        return baseProduction;
+    }
+
     public int getHappiness() {
         return happiness;
     }
 
+    public  int getBaseHappiness() {
+        return baseHappiness;
+    }
+
     public int getResearchPoint() {
         return researchPoint;
+    }
+
+    public int getBaseResearchPoint() {
+        return baseResearchPoint;
     }
 
     public FogOfWarStates[][] getFogOfWar() {
@@ -201,8 +200,7 @@ public class Civilization{
         return result;
     }
 
-    //END OF GETTERS
-
+    //CALCULATIONS
     public void applyNewTurnChanges(int currentYear) {
         this.turn = currentYear;
 
@@ -215,21 +213,14 @@ public class Civilization{
         }
 
         //update research (science is declined if negative gold)
+        this.setResearchPoint(this.calculateResearchPoint());
         this.getResearchTree().continueResearch(this.gold >= 0 ? this.researchPoint : this.gold);
 
         //update production after changes
-        this.production = this.baseProduction;
-        for (Tile tile : this.getTiles()) {
-            this.setProduction(this.getProduction() + tile.getProduction());
-        }
+        this.setProduction(this.calculateProduction());
 
         //update gold and tiles after changes
-        for (Tile tile : this.getTiles()) {
-            this.gold += tile.getGold() - tile.getRouteMaintenanceCost();
-
-            tile.applyNewTurnChanges();
-        }
-        this.gold -= this.calculateUnitMaintenance();
+        this.setGold(this.calculateGold());
 
         //update city status
         for (City city : this.getCities()) {
@@ -240,8 +231,68 @@ public class Civilization{
         this.setHappiness(this.calculateHappiness());
     }
 
+    public int calculateGold() {
+        int result = this.getGold();
+        for (Tile tile : this.getTiles()) {
+            result += tile.getGold() - tile.getRouteMaintenanceCost();
+
+            tile.applyNewTurnChanges();
+        }
+        result -= this.calculateUnitMaintenance();
+
+        return result;
+    }
+
+    public int calculateUnitMaintenance() {
+        int unitCount = this.units.size();
+        int currentTurn = this.turn;
+
+        return ((unitCount + 1) / 2) * ((currentTurn) / 30 + 1);
+    }
+
+    public int calculateProduction() {
+        int result = this.baseProduction;
+        for (Tile tile : this.getTiles()) {
+            this.setProduction(this.getProduction() + tile.getProduction());
+        }
+
+        return result;
+    }
+
+    public int calculateHappiness() {
+        int result = this.getBaseHappiness();
+        for (Resource resource : Resource.values()) {
+            if (resource.getResourceType().equals(ResourceType.LUXURIOUS) &&
+                    this.getResourceList().hasEnough(resource, 1))
+                result += 4;
+        }
+        for (City city : this.getCities()) {
+            result -= 3 + city.getTotalCitizenCount();
+        }
+
+        return result;
+    }
+
+    public int calculateResearchPoint() {
+        int result = this.baseResearchPoint + 3; //3 for capital
+
+        for (City city : this.getCities()) {
+            result += city.getTotalCitizenCount();
+        }
+
+        return result;
+    }
+
     //CHEAT
-    public void setBaseHappiness(int newBaseHappiness) {
-        this.baseHappiness = newBaseHappiness;
+    public void setBaseProduction(int baseProduction) {
+        this.baseProduction = baseProduction;
+    }
+
+    public void setBaseHappiness(int baseHappiness) {
+        this.baseHappiness = baseHappiness;
+    }
+
+    public void setBaseResearchPoint(int baseResearchPoint) {
+        this.baseResearchPoint = baseResearchPoint;
     }
 }

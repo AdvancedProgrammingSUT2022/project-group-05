@@ -71,9 +71,17 @@ public class FogOfWar{
 
             for (int i = 0; i < 6; i++) {
                 if (neighbors[i] == null) continue;
+                //IF MOUNTAIN
                 if (neighbors[i].getTerrain().equals(Terrain.MOUNTAIN)) continue;
 
+                //IF HILL
+                if (!isHill && neighbors[i].getTerrain().equals(Terrain.HILL)) continue;
+
+
+                //IF JUNGLE AND FOREST
                 if (!isHill && neighbors[i].getFeature().equals(Feature.JUNGLE)) continue;
+                if (!isHill && neighbors[i].getFeature().equals(Feature.FOREST)) continue;
+
                 FogOfWar.setNeighborsState(neighbors[i], fogOfWar, FogOfWarStates.VISIBLE);
             }
         }

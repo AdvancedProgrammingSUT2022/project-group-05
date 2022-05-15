@@ -31,13 +31,13 @@ public class LoginMenuController {
         String password = command.get(PASSWORD.getKey());
         int userIndex = userDatabaseController.getUserIndexByUsername(username);
         if (userIndex == -1) {
-            return "Username and password didn't match!";
+            return Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse();
         } else {
             if (!userDatabaseController.isPasswordCorrect(userIndex, password)) {
-                return "Username and password didn't match!";
+                return Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse();
             } else {
 
-                return "user logged in successfully!";
+                return Responses.USER_LOGGED_IN.getResponse();
             }
         }
     }
