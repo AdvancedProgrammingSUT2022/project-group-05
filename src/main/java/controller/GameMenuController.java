@@ -441,6 +441,36 @@ public class GameMenuController {
         }
     }
 
+    public String cityAssignCitizen(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return "error: tile out of bounds";
+        if (CityController.getInstance().getCity() == null) return "error: no city selected";
+
+        return CityController.getInstance().assignCitizen(tile);
+    }
+
+    public String cityRemoveCitizen(HashMap<String, String> command) {
+        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (CityController.getInstance().getCity() == null) return "error: no city selected";
+        if (tile == null) return "error: tile out of bounds";
+
+        return CityController.getInstance().removeCitizen(tile);
+    }
+
+    public String cityShowTilesStats(HashMap<String, String> command) {
+        City city = CityController.getInstance().getCity();
+
+        if (city == null) return "error: no city selected";
+
+        return InfoController.getCityTilesStats(city);
+    }
+
     // MAP COMMAND
     public ArrayList<String> mapShowAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
@@ -518,13 +548,7 @@ public class GameMenuController {
         return "gold increased";
     }
 
-    public String increaseResearchPoint(HashMap<String, String> command) {
-        int amount = Integer.parseInt(command.get(AMOUNT.getKey()));
-        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
-        currentCivilization.setResearchPoint(currentCivilization.getResearchPoint() + amount);
-        return "research point increased";
-    }
 
     public ArrayList<String> revealAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
@@ -535,6 +559,15 @@ public class GameMenuController {
         result.add("now you know where you're going");
 
         return result;
+    }
+
+    public String industrialRevolution(HashMap<String, String> command) {
+        Civilization currentCivilization = this.currentCivilizationController.getCivilization();
+
+        currentCivilization.setBaseProduction(4000);
+        currentCivilization.setProduction(currentCivilization.calculateProduction());
+
+        return "do you feel like taking over the world?";
     }
 
     public String welcomeToUtopia(HashMap<String, String> command) {
@@ -549,6 +582,15 @@ public class GameMenuController {
             case 2: return "here, you dropped this \uD83D\uDC51"; //the character is crown emoji
         }
         return "";
+    }
+
+    public String bigBrain(HashMap<String, String> command) {
+        Civilization currenCivilization = this.currentCivilizationController.getCivilization();
+
+        currenCivilization.setBaseResearchPoint(4000);
+        currenCivilization.setResearchPoint(currenCivilization.calculateResearchPoint());
+
+        return "wait, now this place kinda feels like Sharif university of technology";
     }
 
     //UNIT CHEAT CODES

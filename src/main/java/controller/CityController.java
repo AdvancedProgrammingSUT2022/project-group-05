@@ -87,6 +87,29 @@ public class CityController {
         return "";
     }
 
+    public String assignCitizen(Tile tile) {
+        if (!this.city.isInTerritory(tile))
+            return "error: selected tile is out of city territory";
+        if (tile.hasCitizen())
+            return "error: selected tile already has a citizen";
+        if (this.city.getJoblessCitizenCount() <= 0)
+            return "error: not enough jobless citizens";
+
+        this.city.assignCitizenToTile(tile);
+        return "citizen assigned to tile successfully";
+    }
+
+    public String removeCitizen(Tile tile) {
+        if (!this.city.isInTerritory(tile))
+            return "error: selected tile is out of city territory";
+        if (!tile.hasCitizen())
+            return "error: selected tile has no assigned citizen";
+
+        this.city.removeCitizenFromTile(tile);
+        return "citizen removed from tile successfully";
+    }
+
+    //GETTERS
     public City getCity() {
         return city;
     }
