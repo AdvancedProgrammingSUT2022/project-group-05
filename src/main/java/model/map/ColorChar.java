@@ -106,8 +106,7 @@ public class ColorChar {
                 if (tempState != FogOfWarStates.FOG_OF_WAR)
                 coloringTileBackground(tempTile, input);
 
-                if (tempState == FogOfWarStates.VISIBLE)
-                addingTexts(tempTile, input);
+                addingTexts(tempTile, input, tempState);
             }
         }
     }
@@ -145,30 +144,39 @@ public class ColorChar {
     }
 
     //ADDING TEXT
-    private static void addingTexts (Tile tempTile, ColorChar[][] input) {
+    private static void addingTexts (Tile tempTile, ColorChar[][] input, FogOfWarStates state) {
+        if (state == FogOfWarStates.FOG_OF_WAR) return;
+        boolean isVisible = (state == FogOfWarStates.VISIBLE);
+
         Civilization civilization = tempTile.getCivilization();
         Civilian civilian = tempTile.getCivilian();
         Soldier soldier = tempTile.getSoldier();
         City city = tempTile.getCity();
+        String cityName = "";
+        if (city != null && city.getCenter().equals(tempTile)) cityName = city.getName();
+
 
         int fromL = ColorChar.getFromLeft(tempTile);
         int fromT = ColorChar.getFromTop(tempTile);
+
         addCenteredText("" + tempTile.getXPlace() ,input ,fromT - 3, fromL - 2); //xpos
         addCenteredText("" + tempTile.getYPlace() ,input ,fromT - 3, fromL + 2); //ypos
-        if (civilization != null)
+
+        addCenteredText(cityName, input, fromT - 2, fromL);
+        if (civilization != null && isVisible)
             addCenteredText(tempTile.getCity().getCivilization().getPlayer().getNickname() ,input ,fromT - 1, fromL); //Civilization
-        if (soldier != null) {
+        if (soldier != null && isVisible) {
             addCenteredText(tempTile.getSoldier().toString(), input, fromT + 1, fromL - 5); //Soldier
             addCenteredText(tempTile.getSoldier().getCivilization().getPlayer().getNickname(), input, fromT, fromL - 5);
         }
-        if (civilian != null) {
+        if (civilian != null && isVisible) {
             addCenteredText(tempTile.getCivilian().toString(), input, fromT + 1, fromL + 5); //Civ
             addCenteredText(tempTile.getCivilian().getCivilization().getPlayer().getNickname(), input, fromT, fromL + 5);
         }
 
         addCenteredText(tempTile.getTerrain().toString() ,input ,fromT + 2, fromL); //Terrain
         addCenteredText(tempTile.getFeature().toString() ,input ,fromT + 3, fromL); //Feature
-        addCenteredText(tempTile.getResource().toString() ,input ,fromT + 4, fromL); //Resource
+        if (isVisible) addCenteredText(tempTile.getResource().toString() ,input ,fromT + 4, fromL); //Resource
     }
     private static void addCenteredText (String text, ColorChar[][] input, int fromT, int fromL) {
         int size = text.length();
