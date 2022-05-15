@@ -137,11 +137,13 @@ public class TestGameMenuController{
         gameMenuController.infoTileProject(command);
     }
 
+    //MENU EXIT
     @Test
     public void menuExitTest() {
         gameMenuController.menuExit(command);
     }
 
+    //SELECT
     @Test
     public void selectUnitSoldierTest() {
         gameMenuController.selectUnitSoldier(command);
@@ -153,47 +155,110 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void selectCityPosition() {
+    public void selectCityPositionFail() {
         gameMenuController.selectCityPosition(command);
     }
 
     @Test
-    public void selectCityName() {
+    public void selectCityPosition() {
+        command.put(UNIT_NAME.getKey(), "settler");
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitFoundCity(command);
+        gameMenuController.selectCityPosition(command);
+    }
+
+    @Test
+    public void selectCityNameFail() {
         gameMenuController.selectCityName(command);
     }
 
     @Test
+    public void selectCityName() {
+        command.put(UNIT_NAME.getKey(), "settler");
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitFoundCity(command);
+        gameMenuController.selectCityName(command);
+    }
+
+    //UNIT
+    @Test
+    public void unitMoveTestNotSelected() {
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitMove(command);
+    }
+    @Test
     public void unitMoveTest() {
+        command.put(UNIT_NAME.getKey(), "settler");
+        gameMenuController.spawnUnit(command);
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitMove(command);
     }
 
     @Test
-    public void unitSleepTest() {
+    public void unitSleepTestNotSelected() {
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitSleep(command);
     }
 
     @Test
-    public void unitAlertTest() {
+    public void unitSleepTest() {
+        command.put(UNIT_NAME.getKey(), "settler");
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitSleep(command);
+    }
+
+    @Test
+    public void unitAlertTestNotSelected() {
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitAlert(command);
     }
 
     @Test
-    public void unitFortifyTest() {
+    public void unitAlertTest() {
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitSoldier(command);
+        gameMenuController.unitAlert(command);
+    }
+
+    @Test
+    public void unitFortifyTestNotSelected() {
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitFortify(command);
+    }
+
+    @Test
+    public void unitFortifyTest() {
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitSoldier(command);
+        gameMenuController.unitFortify(command);
+    }
+
+    @Test
+    public void unitRecoverTestNotSelected() {
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitRecover(command);
     }
 
     @Test
     public void unitRecoverTest() {
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitSoldier(command);
+        gameMenuController.unitRecover(command);
+    }
+
+    @Test
+    public void unitGarrisonTestNotSelected() {
         gameMenuController.selectUnitCivilian(command);
-        gameMenuController.unitFortify(command);
+        gameMenuController.unitGarrison(command);
     }
 
     @Test
     public void unitGarrisonTest() {
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitSoldier(command);
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitGarrison(command);
     }
@@ -205,28 +270,71 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitAttack() {
+    public void unitAttackTest() {
         gameMenuController.spawnUnit(command);
         gameMenuController.selectUnitSoldier(command);
         gameMenuController.unitAttack(command);
     }
 
     @Test
-    public void unitCancel() {
+    public void unitCancelTestNotSelected() {
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitCancel(command);
     }
 
     @Test
-    public void unitWake() {
+    public void unitCancelTest() {
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitSoldier(command);
+        gameMenuController.unitCancel(command);
+    }
+
+    @Test
+    public void unitWakeTestNotSelected() {
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitWake(command);
     }
 
     @Test
-    public void unitFoundCity() {
+    public void unitWakeTest() {
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitSoldier(command);
+        gameMenuController.unitWake(command);
+    }
+
+    @Test
+    public void unitDeleteTestNotSelected() {
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitDelete(command);
+    }
+
+    @Test
+    public void unitDeleteTest() {
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitSoldier(command);
+        gameMenuController.unitDelete(command);
+    }
+
+    @Test
+    public void unitFoundCityTestNotSelected() {
         gameMenuController.selectUnitCivilian(command);
         gameMenuController.unitFoundCity(command);
+    }
+
+    @Test
+    public void unitFoundCityTest() {
+        command.put(UNIT_NAME.getKey(), "settler");
+        gameMenuController.spawnUnit(command);
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitFoundCity(command);
+    }
+
+    //WORKER
+    @Test
+    public void unitBuildImprovementTestNotSelected() {
+        gameMenuController.killCivilian(command);
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitBuildImprovement(command);
     }
 
     @Test
@@ -239,7 +347,14 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitBuildRoute() {
+    public void unitBuildRouteTestNotSelected() {
+        gameMenuController.killCivilian(command);
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitBuildRoute(command);
+    }
+
+    @Test
+    public void unitBuildRouteTest() {
         gameMenuController.killCivilian(command);
         command.replace(UNIT_NAME.getKey(), "worker");
         gameMenuController.spawnUnit(command);
@@ -248,7 +363,13 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitRemoveJungle() {
+    public void unitRemoveJungleTestNotSelected() {
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitRemoveJungle(command);
+    }
+
+    @Test
+    public void unitRemoveJungleTest() {
         gameMenuController.killCivilian(command);
         command.replace(UNIT_NAME.getKey(), "worker");
         gameMenuController.spawnUnit(command);
@@ -257,7 +378,13 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitRemoveForest() {
+    public void unitRemoveForestTestNotSelected() {
+        gameMenuController.selectUnitCivilian(command);
+        gameMenuController.unitRemoveForest(command);
+    }
+
+    @Test
+    public void unitRemoveForestTest() {
         gameMenuController.killCivilian(command);
         command.replace(UNIT_NAME.getKey(), "worker");
         gameMenuController.spawnUnit(command);
@@ -266,7 +393,7 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitRemoveMarch() {
+    public void unitRemoveMarchTest() {
         gameMenuController.killCivilian(command);
         command.replace(UNIT_NAME.getKey(), "worker");
         gameMenuController.spawnUnit(command);
@@ -275,7 +402,7 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitRemoveImprovement() {
+    public void unitRemoveImprovementTest() {
         gameMenuController.killCivilian(command);
         command.replace(UNIT_NAME.getKey(), "worker");
         gameMenuController.spawnUnit(command);
@@ -284,7 +411,7 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitRemoveRoute() {
+    public void unitRemoveRouteTest() {
         gameMenuController.killCivilian(command);
         command.replace(UNIT_NAME.getKey(), "worker");
         gameMenuController.spawnUnit(command);
@@ -293,7 +420,7 @@ public class TestGameMenuController{
     }
 
     @Test
-    public void unitRepair() {
+    public void unitRepairTest() {
         gameMenuController.killCivilian(command);
         command.replace(UNIT_NAME.getKey(), "worker");
         gameMenuController.spawnUnit(command);
@@ -301,6 +428,7 @@ public class TestGameMenuController{
         gameMenuController.unitRepair(command);
     }
 
+    //CITY
     @Test
     public void cityCreateUnit() {
         gameMenuController.selectUnitCivilian(command);
