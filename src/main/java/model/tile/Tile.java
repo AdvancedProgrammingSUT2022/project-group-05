@@ -232,12 +232,24 @@ public class Tile{
         return this.hasCitizen ? this.food : 0;
     }
 
+    public int getFoodPotential() {
+        return this.gold;
+    }
+
     public int getGold() {
         return this.hasCitizen ? this.gold : 0;
     }
 
+    public int getGoldPotential() {
+        return this.gold;
+    }
+
     public int getProduction() {
         return this.hasCitizen ? this.production : 0;
+    }
+
+    public int getProductionPotential() {
+        return this.production;
     }
 
     public int getCombatBoost() {
