@@ -26,20 +26,20 @@ public class TestLoginMenuController {
         command.put(NICKNAME.getKey(), "n");
     }
 
-    @Test
-    public void testCreateUser() {
-        loginMenuController.createUser(command);
-        User user = UserDatabaseController.getUserByUsername("u");
-        Assertions.assertNotNull(user);
-        loginMenuController.userDatabaseController.removeUser(user);
-    }
-
-    @Test
-    public void testLoginUser() {
-        loginMenuController.createUser(command);
-        loginMenuController.loginUser(command);
-        User user = UserDatabaseController.getUserByUsername("u");
-        Assertions.assertNotNull(user);
-        loginMenuController.userDatabaseController.removeUser(user);
-    }
+//    @Test
+//    public void testCreateUser() {
+//        loginMenuController.createUser(command);
+//        User user = UserDatabaseController.getUserByUsername("u");
+//        Assertions.assertNotNull(user);
+//        loginMenuController.userDatabaseController.removeUser(user);
+//    }
+//
+//    @Test
+//    public void testLoginUser() {
+//        loginMenuController.createUser(command);
+//        loginMenuController.loginUser(command);
+//        User user = UserDatabaseController.getUserByUsername("u");
+//        Assertions.assertNotNull(user);
+//        loginMenuController.userDatabaseController.removeUser(user);
+//    }
 }

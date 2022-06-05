@@ -54,7 +54,7 @@ public enum Building {
     STOCK_EXCHANGE(650, 0, Research.ELECTRICITY, Resource.NO_RESOURCE, List.of(BANK/*TODO or satrap court*/)),
     ;
 
-    // Main Castle ??
+    // main.Main Castle ??
 
 
     private final int cost;

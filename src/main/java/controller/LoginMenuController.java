@@ -1,6 +1,11 @@
 package controller;
 
+import javafx.scene.layout.Pane;
+import main.Main;
 import model.User;
+import view.menu.ErrorBox;
+import view.menu.MainMenu;
+
 import static view.enums.Entity.*;
 
 import java.util.HashMap;
@@ -11,30 +16,31 @@ public class LoginMenuController {
     UserDatabaseController userDatabaseController = new UserDatabaseController();
 
 
-    public String createUser(HashMap<String, String> command) {
-        String username = command.get(USERNAME.getKey());
-        String password = command.get(PASSWORD.getKey());
-        String nickname = command.get(NICKNAME.getKey());
+    public void createUser(String username, String password, String repeatPassword, String nickname, Pane father) {
         User user  = new User(username, nickname, password);
-        if (UserDatabaseController.getUserByUsername(user.getUsername()) != null)
-            return "user with username " + user.getUsername() + " already exists";
-        if (UserDatabaseController.getUserByNickname(user.getNickname()) != null)
-            return "user with nickname " + user.getNickname() + " already exists";
-        userDatabaseController.addUser(user);
-        return "user created successfully!";
+        if (UserDatabaseController.getUserByUsername(user.getUsername()) != null) {
+            ErrorBox.getErrorBox("user with username " + user.getUsername() + " already exists", father, true);
+        } else if (UserDatabaseController.getUserByNickname(user.getNickname()) != null) {
+            ErrorBox.getErrorBox("user with nickname " + user.getNickname() + " already exists", father, true);
+        } else if (!password.equals(repeatPassword)) {
+            ErrorBox.getErrorBox("repeatedPassword incorrect", father, true);
+        } else {
+            userDatabaseController.addUser(user);
+            MainMenu.username = username;
+            Main.showMenu("mainMenu");
+        }
     }
 
-    public String loginUser(HashMap<String, String> command) {
-        String username = command.get(USERNAME.getKey());
-        String password = command.get(PASSWORD.getKey());
+    public void loginUser(String username, String password, Pane father) {
         User user = UserDatabaseController.getUserByUsername(username);
         if (user == null) {
-            return Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse();
+            ErrorBox.getErrorBox(Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse(), father, true);
+        } else if (!user.getPassword().equals(password)) {
+            ErrorBox.getErrorBox(Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse(), father, true);
+        } else {
+            MainMenu.username = username;
+            Main.showMenu("mainMenu");
         }
-        if (!user.getPassword().equals(password)) {
-            return Responses.USERNAME_PASSWORD_DIDNT_MATCH.getResponse();
-        }
-        return Responses.USER_LOGGED_IN.getResponse();
     }
 
 }
