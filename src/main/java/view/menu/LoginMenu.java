@@ -112,7 +112,7 @@ public class LoginMenu {
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO Exit
+                System.exit(0);
             }
         });
 
@@ -146,7 +146,6 @@ public class LoginMenu {
                 String passwordGot = password.getText();
                 String repeatPasswordGot = repeatPassword.getText();
                 String nicknameGot = nickname.getText();
-                //TODO... handling register and if true getting back to login menu
                 loginMenuController.createUser(usernameGot, passwordGot, repeatPasswordGot, nicknameGot, menu);
             }
         });

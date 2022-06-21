@@ -38,4 +38,16 @@ public class BuildingList {
         return true;
     }
 
+    public boolean hasBuildings(ArrayList<Building> buildings) {
+        for (int i = 0; i < buildings.size(); i++) {
+            if (listOfBuildings.get(buildings.get(i)) == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public HashMap<Building, Integer> getListOfBuildings() {
+        return listOfBuildings;
+    }
 }

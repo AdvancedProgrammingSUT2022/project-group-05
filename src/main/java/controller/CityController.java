@@ -1,5 +1,6 @@
 package controller;
 
+import model.building.Building;
 import model.game.City;
 import model.map.Map;
 import model.tile.Tile;
@@ -37,10 +38,10 @@ public class CityController {
         newUnit.setStartingCity(this.city);
         Unit unitFromQueue = this.city.getUnitFromQueue(newUnit);
         if (unitFromQueue != null) { // for units that were already in queue
-            this.city.removeUnitFromQueue(unitFromQueue);
-            if (this.city.getUnitInProgress() != null)
-                this.city.addUnitToQueue(this.city.getUnitInProgress());
-            this.city.setUnitInProgress(unitFromQueue);
+            this.city.removeProductionFromQueue(unitFromQueue);
+            if (this.city.getProductionInProgress() != null)
+                this.city.addProductionToQueue(this.city.getProductionInProgress());
+            this.city.setProductionInProgress(unitFromQueue);
         } else {
             if (newUnit.equals(this.city.getUnitInProgress())) { // building same unit that is being built
                 return Responses.UNIT_IS_ALREADY_BEING_BUILT.getResponse();
@@ -49,17 +50,46 @@ public class CityController {
                 return Responses.REQUIRED_RESEARCH_NOT_FOUND.getResponse();
             } else if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1)) {
                 return Responses.NOT_ENOUGH_RESOURCE.getResponse();
-            } else { // moving previous unit to queue and set new unit
-                if (this.city.getUnitInProgress() != null)
-                    this.city.addUnitToQueue(this.city.getUnitInProgress());
-                this.city.setUnitInProgress(newUnit);
+            } else { // moving previous production to queue and set new unit
+                if (this.city.getProductionInProgress() != null)
+                    this.city.addProductionToQueue(this.city.getProductionInProgress());
+                this.city.setProductionInProgress(newUnit);
             }
         }
         return Responses.CREATING_UNIT_STARTED.getResponse();
     }
 
     public String cityCreateBuilding(String buildingName) {
-        //TODO find building and check conditions and add newBuilding to queue
+        Building newBuilding = Building.find(buildingName);
+        if (newBuilding == null) {
+            return Responses.NO_BUILDING_WITH_THIS_NAME.getResponse();
+        }
+        if (this.city.getBuildingList().hasBuilding(newBuilding)) {
+            return "error: already have this building in city";
+        }
+        Building buildingFromQueue = this.city.getBuildingFromQueue(newBuilding);
+        if (buildingFromQueue != null) { // for building that were already in queue
+            this.city.removeProductionFromQueue(buildingFromQueue);
+            if (this.city.getProductionInProgress() != null) {
+                this.city.addProductionToQueue(this.city.getProductionInProgress());
+            }
+            this.city.setProductionInProgress(buildingFromQueue);
+        } else {
+            if (newBuilding.equals(this.city.getBuildingInProgress())) { // building same building that is being built woooow so many bI :)
+                return Responses.BUILDING_IS_ALREADY_BEING_BUILT.getResponse();
+            }
+            if (!this.city.getCivilization().getResearchTree().isResearchDone(newBuilding.getResearchRequired())) { // check research
+                return Responses.REQUIRED_RESEARCH_NOT_FOUND.getResponse();
+            } else if (!this.city.getCivilization().getResourceList().hasEnough(newBuilding.getResourceNeeded(), 1)) {
+                return Responses.NOT_ENOUGH_RESOURCE.getResponse();
+            } else if (!this.city.getBuildingList().hasBuildings(newBuilding.getBuildingsNeeded())) {
+                return Responses.REQUIRED_BUILDINGS_NOT_FOUND.getResponse();
+            } else { // moving previous production to queue and set new building
+                if (this.city.getProductionInProgress() != null)
+                    this.city.addProductionToQueue(this.city.getProductionInProgress());
+                this.city.setProductionInProgress(newBuilding);
+            }
+        }
         return Responses.CREATING_BUILDING_STARTED.getResponse();
     }
 
@@ -87,7 +117,17 @@ public class CityController {
     }
 
     public String purchaseBuilding(String buildingName) {
-        //TODO find building and check conditions and add building to city
+        Building newBuilding = Building.find(buildingName);
+        if (newBuilding == null) {
+            return "error: there is no building with this name";
+        }
+        if (this.city.getBuildingList().hasBuilding(newBuilding)) {
+            return "error: already have this building in city";
+        }
+        if (newBuilding.getCost() > this.city.getCivilization().getGold()) {
+            return Responses.NOT_ENOUGH_GOLD.getResponse();
+        }
+        this.city.getBuildingList().addBuilding(newBuilding);
         return Responses.BUILDING_PURCHASED_SUCCESSFULLY.getResponse();
     }
 
