@@ -1,5 +1,11 @@
 package model.building;
 
+import com.google.gson.Gson;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,4 +56,35 @@ public class BuildingList {
     public HashMap<Building, Integer> getListOfBuildings() {
         return listOfBuildings;
     }
+
+    public String convertToJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    public static BuildingList convertFromJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, BuildingList.class);
+    }
+
+    public void save() {
+        try {
+            FileWriter fileWriter = new FileWriter("database/BuildingList.json");
+            fileWriter.write(this.convertToJson());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static BuildingList load() {
+        try {
+            String json = new String(Files.readAllBytes(Paths.get("database/BuildingList.json")));
+            return convertFromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

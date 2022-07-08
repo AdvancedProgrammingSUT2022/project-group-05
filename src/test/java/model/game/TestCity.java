@@ -45,12 +45,12 @@ public class TestCity {
         city = new City("Tehran", tile, civilization);
     }
 
-    @Test
-    public void testAddUnitToQueue() {
-        city.addUnitToQueue(unit);
-        Unit result = city.getUnitFromQueue(unit);
-        Assertions.assertEquals(unit, result);
-    }
+//    @Test
+//    public void testAddUnitToQueue() {
+//        city.addUnitToQueue(unit);
+//        Unit result = city.getUnitFromQueue(unit);
+//        Assertions.assertEquals(unit, result);
+//    }
 
     @Test
     public void testHasJoblessCitizen() {
@@ -126,21 +126,21 @@ public class TestCity {
         Assertions.assertEquals(6, health);
     }
 
-    @Test
-    public void testGetUnitInProgress() {
-        city.setUnitInProgress(unit);
-        Unit result = city.getUnitInProgress();
-        Assertions.assertEquals(unit, result);
-    }
+//    @Test
+//    public void testGetUnitInProgress() {
+//        city.setUnitInProgress(unit);
+//        Unit result = city.getUnitInProgress();
+//        Assertions.assertEquals(unit, result);
+//    }
 
-    @Test
-    public void testGetRemainingProductionTime() {
-        city.setUnitInProgress(unit);
-        Mockito.when(unit.getCost()).thenReturn(10);
-        Mockito.when(civilization.getProduction()).thenReturn(5);
-        int result = city.getRemainingProductionTime();
-        Assertions.assertEquals(2, result);
-    }
+//    @Test
+//    public void testGetRemainingProductionTime() {
+//        city.setUnitInProgress(unit);
+//        Mockito.when(unit.getCost()).thenReturn(10);
+//        Mockito.when(civilization.getProduction()).thenReturn(5);
+//        int result = city.getRemainingProductionTime();
+//        Assertions.assertEquals(2, result);
+//    }
 
     @Test
     public void testGetTotalCitizenCount() {
@@ -214,13 +214,13 @@ public class TestCity {
 //        //Mockito.verify(unit).setCost(6);
 //    }
 
-    @Test
-    public void testRemoveUnitFromQueue() {
-        city.addUnitToQueue(unit);
-        city.removeUnitFromQueue(unit);
-        boolean result = city.getUnitFromQueue(unit) == null;
-        Assertions.assertTrue(result);
-    }
+//    @Test
+//    public void testRemoveUnitFromQueue() {
+//        city.addUnitToQueue(unit);
+//        city.removeUnitFromQueue(unit);
+//        boolean result = city.getUnitFromQueue(unit) == null;
+//        Assertions.assertTrue(result);
+//    }
 
 
 }
