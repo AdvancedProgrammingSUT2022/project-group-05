@@ -35,10 +35,6 @@ public class MainMenu {
                 960, 900, 100, 50, menu);
 
         Pane temp = new Pane();
-        new TileFX(temp, 0, 0);
-        new TileFX(temp, 0, 1);
-        new TileFX(temp, 1, 0);
-        new TileFX(temp, 1, 1);
         menu.getChildren().add(temp);
 
         menu.setOnKeyPressed(new EventHandler<KeyEvent>() {

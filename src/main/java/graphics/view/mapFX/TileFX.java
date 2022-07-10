@@ -3,23 +3,35 @@ import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import model.tile.Tile;
 
 public class TileFX extends Group {
     private Pane pane;
-    private Polygon background;
+    private Polygon terrain;
+    private Polygon feature;
     private Polygon front;
 
-    public TileFX(Pane pane, int xPlace, int yPlace) {
+    public TileFX(Pane pane, Tile tile) {
+        int xPlace = tile.getXPlace();
+        int yPlace = tile.getYPlace();
         pane.getChildren().add(this);
         this.pane = pane;
 
         this.setLayoutX((xPlace + yPlace) * 300);
         this.setLayoutY((yPlace - xPlace) * 100);
 
-        background = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
-        background.setLayoutX(-200);
-        background.setLayoutY(-100);
-        this.getChildren().add(background);
+        terrain = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
+        terrain.setLayoutX(-200);
+        terrain.setLayoutY(-100);
+        terrain.setFill(tile.getTerrain().getTexture());
+        this.getChildren().add(terrain);
+
+        feature = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
+        feature.setLayoutX(-200);
+        feature.setLayoutY(-100);
+        feature.setFill(tile.getFeature().getTexture());
+        this.getChildren().add(feature);
+
 
         front = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         front.setLayoutX(-200);
@@ -27,6 +39,5 @@ public class TileFX extends Group {
         this.getChildren().add(front);
         front.setFill(new Color(0, 0, 0, 0));
 
-        background.setFill(Color.RED);
     }
 }
