@@ -15,7 +15,9 @@ import model.unit.soldier.Soldier;
 import model.unit.soldier.ranged.siege.Siege;
 import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
-public abstract class Unit {
+import java.io.Serializable;
+
+public abstract class Unit implements Serializable {
     protected Civilization civilization;
     protected int initialCost;
     protected int cost;

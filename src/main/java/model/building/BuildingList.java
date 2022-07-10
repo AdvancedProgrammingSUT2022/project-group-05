@@ -5,12 +5,13 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BuildingList {
+public class BuildingList implements Serializable {
     private HashMap<Building, Integer> listOfBuildings; // Integer could be 0 or 1
 
     public BuildingList() {
@@ -58,20 +59,12 @@ public class BuildingList {
         return listOfBuildings;
     }
 
-    public String convertToJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
-
-    public static BuildingList convertFromJson(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, BuildingList.class);
-    }
-
     public void save() {
         try {
-            FileWriter fileWriter = new FileWriter("database/BuildingList.json");
-            fileWriter.write(this.convertToJson());
+            FileWriter fileWriter = new FileWriter("saves/BuildingList.json");
+            Gson gson = new Gson();
+            String data = gson.toJson(this);
+            fileWriter.write(data);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,8 +75,9 @@ public class BuildingList {
 
     public static BuildingList load() {
         try {
-            String json = new String(Files.readAllBytes(Paths.get("database/BuildingList.json")));
-            return convertFromJson(json);
+            String json = new String(Files.readAllBytes(Paths.get("saves/BuildingList.json")));
+            Gson gson = new Gson();
+            return gson.fromJson(json, BuildingList.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

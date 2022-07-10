@@ -10,9 +10,10 @@ import model.unit.civilian.Civilian;
 import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Tile{
+public class Tile implements Serializable {
     private final int xPlace;
     private final int yPlace;
     private final int zPlace;

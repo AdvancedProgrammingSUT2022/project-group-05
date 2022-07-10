@@ -1,7 +1,9 @@
 package model.game;
 
+import com.google.gson.Gson;
 import controller.UnitController;
 import model.User;
+import model.building.BuildingList;
 import model.map.FogOfWar;
 import model.map.FogOfWarStates;
 import model.map.Map;
@@ -16,10 +18,14 @@ import model.unit.civilian.Civilian;
 import model.unit.civilian.Settler;
 import model.unit.soldier.Soldier;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
-public class Civilization{
+public class Civilization implements Serializable {
     private City capital;
     private ArrayList<City> cities;
     private ArrayList<City> annexedCities;
@@ -294,5 +300,55 @@ public class Civilization{
 
     public void setBaseResearchPoint(int baseResearchPoint) {
         this.baseResearchPoint = baseResearchPoint;
+    }
+
+
+    public void save() {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("saves/Civilization.txt"));
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    public static Civilization load() {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("saves/Civilization.txt"));
+            return (Civilization) objectInputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Civilization{" +
+                "capital=" + capital +
+                ", cities=" + cities +
+                ", annexedCities=" + annexedCities +
+                ", units=" + units +
+                ", player=" + player +
+                ", color=" + color +
+                ", turn=" + turn +
+                ", gold=" + gold +
+                ", production=" + production +
+                ", baseProduction=" + baseProduction +
+                ", researchPoint=" + researchPoint +
+                ", baseResearchPoint=" + baseResearchPoint +
+                ", happiness=" + happiness +
+                ", baseHappiness=" + baseHappiness +
+                ", resourceList=" + resourceList +
+                ", researchTree=" + researchTree +
+                ", fogOfWar=" + Arrays.toString(fogOfWar) +
+                '}';
     }
 }

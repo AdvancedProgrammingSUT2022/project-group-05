@@ -236,4 +236,9 @@ public class TestCivilization {
         int result = civilization.calculateResearchPoint();
         Assertions.assertEquals(5, result);
     }
+
+    @Test
+    public void testSave() {
+        civilization.save();
+    }
 }

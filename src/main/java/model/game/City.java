@@ -9,9 +9,10 @@ import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class City {
+public class City implements Serializable {
 
 
     private ArrayList<Object> productionInQueue = new ArrayList<>();

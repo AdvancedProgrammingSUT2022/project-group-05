@@ -1,9 +1,10 @@
 package model.resource;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 //A class for keeping control over the resources of a civilization
-public class ResourceList{
+public class ResourceList implements Serializable {
     private final HashMap<Resource, Integer> resourcesCount;
 
     public ResourceList() {
