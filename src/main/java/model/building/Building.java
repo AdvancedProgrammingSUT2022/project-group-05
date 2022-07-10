@@ -54,10 +54,11 @@ public enum Building {
     STOCK_EXCHANGE(650, 0, Research.ELECTRICITY, Resource.NO_RESOURCE, List.of(BANK/*TODO or satrap court*/)),
     ;
 
-    // Main Castle ??
+    // main.Main Castle ??
 
 
     private final int cost;
+    private int costForSpending;
     private final int maintenance;
     private final Research researchRequired;
     private final Resource resourceNeeded;
@@ -70,6 +71,7 @@ public enum Building {
         this.resourceNeeded = resourceNeeded;
 
         this.buildingsNeeded = new ArrayList<>(buildingsNeeded);
+        this.costForSpending = cost;
 
     }
 
@@ -94,5 +96,27 @@ public enum Building {
 
     public ArrayList<Building> getBuildingsNeeded() {
         return buildingsNeeded;
+    }
+
+    public int getCostForSpending() {
+        return costForSpending;
+    }
+
+    //SETTERS
+
+
+    public void setCostForSpending(int costForSpending) {
+        this.costForSpending = costForSpending;
+    }
+
+
+    public static Building find(String buildingName) {
+        for (Building building : values()) {
+            if (building.name().equals(buildingName)) {
+                building.setCostForSpending(building.cost);
+                return building;
+            }
+        }
+        return null;
     }
 }

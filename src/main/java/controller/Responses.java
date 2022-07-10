@@ -35,8 +35,11 @@ public enum Responses{
         //ERRORS
     NO_CITY_SELECTED("error: no city selected"),
     NO_UNIT_WITH_THIS_NAME("error: there is no unit with this name"),
+    NO_BUILDING_WITH_THIS_NAME("error: there is no building with this name"),
     UNIT_IS_ALREADY_BEING_BUILT("error: this unit is already being built"),
+    BUILDING_IS_ALREADY_BEING_BUILT("error: this building is already being built"),
     REQUIRED_RESEARCH_NOT_FOUND("error: required research not found"),
+    REQUIRED_BUILDINGS_NOT_FOUND("error: required buildings not found"),
     NOT_ENOUGH_RESOURCE("error: not enough resource"),
     CANT_ADD_TILE_TO_CITY("error: can't add tile to city"),
     NOT_ENOUGH_GOLD("error: not enough gold"),
@@ -123,8 +126,7 @@ public enum Responses{
     HEALING_UNIT("unit healed completely"),
 
 
-    INVALID_COMMAND("error: invalid command")
-    ;
+    INVALID_COMMAND("error: invalid command");
 
     private final String response;
 

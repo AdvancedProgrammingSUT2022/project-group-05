@@ -104,4 +104,13 @@ public class UserDatabaseController {
 
         return null;
     }
+
+    public static String[] getNicknames() {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        String[] nicknames = new String[users.size()];
+        for (int i = 0; i < users.size(); i++) {
+            nicknames[i] = users.get(i).get("nickname");
+        }
+        return nicknames;
+    }
 }

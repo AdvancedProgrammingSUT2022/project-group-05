@@ -31,24 +31,24 @@ public class TestProfileMenuController {
         username = "u";
     }
 
-    @Test
-    public void testChangeNickname() {
-        profileMenuController.userDatabaseController.addUser(user);
-        profileMenuController.changeNickname(command, username);
-        User foundedUser = UserDatabaseController.getUserByUsername("u");
-        String result = foundedUser.getNickname();
-        Assertions.assertEquals("ni", result);
-        profileMenuController.userDatabaseController.removeUser(foundedUser);
-    }
+//    @Test
+//    public void testChangeNickname() {
+//        profileMenuController.userDatabaseController.addUser(user);
+//        profileMenuController.changeNickname(command, username);
+//        User foundedUser = UserDatabaseController.getUserByUsername("u");
+//        String result = foundedUser.getNickname();
+//        Assertions.assertEquals("ni", result);
+//        profileMenuController.userDatabaseController.removeUser(foundedUser);
+//    }
 
-    @Test
-    public void testChangePassword() {
-        profileMenuController.userDatabaseController.addUser(user);
-        profileMenuController.changePassword(command, username);
-        User foundedUser = UserDatabaseController.getUserByUsername("u");
-        String result = foundedUser.getPassword();
-        Assertions.assertEquals("pp", result);
-        profileMenuController.userDatabaseController.removeUser(user);
-    }
+//    @Test
+//    public void testChangePassword() {
+//        profileMenuController.userDatabaseController.addUser(user);
+//        profileMenuController.changePassword(command, username);
+//        User foundedUser = UserDatabaseController.getUserByUsername("u");
+//        String result = foundedUser.getPassword();
+//        Assertions.assertEquals("pp", result);
+//        profileMenuController.userDatabaseController.removeUser(user);
+//    }
 
 }

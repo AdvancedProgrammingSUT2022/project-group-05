@@ -1,5 +1,12 @@
 package model.building;
 
+import com.google.gson.Gson;
+import javafx.scene.layout.BorderPane;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -36,6 +43,51 @@ public class BuildingList {
             return false;
         }
         return true;
+    }
+
+    public boolean hasBuildings(ArrayList<Building> buildings) {
+        for (int i = 0; i < buildings.size(); i++) {
+            if (listOfBuildings.get(buildings.get(i)) == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public HashMap<Building, Integer> getListOfBuildings() {
+        return listOfBuildings;
+    }
+
+    public String convertToJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    public static BuildingList convertFromJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, BuildingList.class);
+    }
+
+    public void save() {
+        try {
+            FileWriter fileWriter = new FileWriter("database/BuildingList.json");
+            fileWriter.write(this.convertToJson());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static BuildingList load() {
+        try {
+            String json = new String(Files.readAllBytes(Paths.get("database/BuildingList.json")));
+            return convertFromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

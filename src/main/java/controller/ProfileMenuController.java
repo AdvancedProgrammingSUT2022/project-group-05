@@ -1,6 +1,9 @@
 package controller;
 
+import javafx.scene.layout.Pane;
 import model.User;
+import view.menu.ErrorBox;
+import view.menu.MainMenu;
 
 import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
@@ -12,28 +15,27 @@ public class ProfileMenuController {
 
     public UserDatabaseController userDatabaseController = new UserDatabaseController();
 
-    public String changeNickname(HashMap<String, String> command, String username) {
-        String newNickname = command.get(NICKNAME.getKey());
-        User user = UserDatabaseController.getUserByUsername(username);
+    public void changeNickname(String newNickname, Pane father) {
+        User user = UserDatabaseController.getUserByUsername(MainMenu.username);
         if (UserDatabaseController.getUserByNickname(newNickname) != null) {
-            return "user with nickname " + newNickname + " already exists";
+            ErrorBox.getErrorBox("user with nickname " + newNickname + " already exists", father, true);
         } else {
             userDatabaseController.changeNickname(user, newNickname);
-            return Responses.NICKNAME_CHANGED.getResponse();
+            ErrorBox.getErrorBox("nickname changed successfully", father, false);
         }
     }
 
-    public String changePassword(HashMap<String, String> command, String username) {
-        String oldPassword = command.get(OLD_PASSWORD.getKey());
-        String newPassword = command.get(NEW_PASSWORD.getKey());
-        User user = UserDatabaseController.getUserByUsername(username);
+    public void changePassword(String oldPassword, String newPassword, String repeatPassword, Pane father) {
+        User user = UserDatabaseController.getUserByUsername(MainMenu.username);
         if (!user.getPassword().equals(oldPassword)) {
-            return Responses.INVALID_CURRENT_PASSWORD.getResponse();
+            ErrorBox.getErrorBox(Responses.INVALID_CURRENT_PASSWORD.getResponse(), father, true);
         } else if (oldPassword.equals(newPassword)) {
-            return Responses.DUPLICATED_PASSWORD.getResponse();
+            ErrorBox.getErrorBox(Responses.DUPLICATED_PASSWORD.getResponse(), father, true);
+        } else if (!newPassword.equals(repeatPassword)) {
+            ErrorBox.getErrorBox("repeated password incorrect", father, true);
         } else {
             userDatabaseController.changePassword(user, newPassword);
-            return Responses.PASSWORD_CHANGED.getResponse();
+            ErrorBox.getErrorBox(Responses.PASSWORD_CHANGED.getResponse(), father, false);
         }
     }
 }

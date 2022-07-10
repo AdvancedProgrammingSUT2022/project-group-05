@@ -1,5 +1,7 @@
 package model.game;
 
+
+import model.building.Building;
 import model.building.BuildingList;
 import model.map.Map;
 import model.tile.Tile;
@@ -11,8 +13,10 @@ import java.util.ArrayList;
 
 public class City {
 
-    private ArrayList<Unit> unitsInQueue = new ArrayList<>();
-    private Unit unitInProgress;
+
+    private ArrayList<Object> productionInQueue = new ArrayList<>();
+    private Object productionInProgress;
+
 
     private final String name;
     private final Tile center;
@@ -56,14 +60,29 @@ public class City {
         }
     }
 
-    public void addUnitToQueue(Unit unit) {
-        this.unitsInQueue.add(unit);
+    public void addProductionToQueue(Object production) {
+        this.productionInQueue.add(production);
     }
 
     public Unit getUnitFromQueue(Unit unit) {
-        for (Unit value : this.unitsInQueue) {
-            if (value.equals(unit)) {
-                return value;
+        for (Object value : this.productionInQueue) {
+            if (value.getClass() == unit.getClass()) {
+                Unit foundedUnit = (Unit) value;
+                if (foundedUnit.equals(unit)) {
+                    return foundedUnit;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Building getBuildingFromQueue(Building building) {
+        for (Object value : this.productionInQueue) {
+            if (value.getClass() == building.getClass()) {
+                Building foundedBuilding = (Building) value;
+                if (foundedBuilding.equals(building)) {
+                    return foundedBuilding;
+                }
             }
         }
         return null;
@@ -120,7 +139,10 @@ public class City {
     public void applyNewTurnChanges() {
 
         //spend production for unitInProgress
-        this.spendProductionForUnitInProgress();
+        this.spendProductionForProductionInProgress();
+
+        //spend gold for maintenance of buildings in city
+        this.spendGoldForMaintenanceOfBuildings();
 
         //calculate foodSurplus
         int foodSurplus = 0;
@@ -144,12 +166,32 @@ public class City {
     //GETTERS
 
     public Unit getUnitInProgress() {
-        return unitInProgress;
+        if (productionInProgress.getClass() == Unit.class)
+            return (Unit) productionInProgress;
+        return null;
+    }
+
+    public Building getBuildingInProgress() {
+        if (productionInProgress.getClass() == Building.class)
+            return (Building) productionInProgress;
+        return null;
+    }
+
+    public Object getProductionInProgress() {
+        return productionInProgress;
     }
 
     public int getRemainingProductionTime() {
-        if (unitInProgress == null) return 0;
-        return unitInProgress.getCost() / this.getCivilization().getProduction();
+        if (productionInProgress == null) return 0;
+        if (productionInProgress.getClass() == Unit.class) {
+            Unit unit = (Unit) productionInProgress;
+            return unit.getCost() / this.getCivilization().getProduction();
+        } else if (productionInProgress.getClass() == Building.class) {
+            Building building = (Building) productionInProgress;
+            return building.getCost() / this.getCivilization().getProduction();
+        } else {
+            return 0;
+        }
     }
 
     public int getHealth() {
@@ -196,10 +238,14 @@ public class City {
         return food;
     }
 
+    public BuildingList getBuildingList() {
+        return buildingList;
+    }
+
     //SETTER
 
-    public void setUnitInProgress(Unit unitInProgress) {
-        this.unitInProgress = unitInProgress;
+    public void setProductionInProgress(Object productionInProgress) {
+        this.productionInProgress = productionInProgress;
     }
 
     public void addCitizen() {
@@ -254,17 +300,35 @@ public class City {
     }
 
 
-    public void spendProductionForUnitInProgress() {
-        if (this.unitInProgress == null) return ;
-        this.unitInProgress.setCost(this.unitInProgress.getCost() - this.getCivilization().getProduction());
-        if (this.unitInProgress.getCost() <= 0) {
-            this.unitInProgress.setTile(unitInProgress.getStartingCity().getCenter());
-            this.getCivilization().addUnit(this.unitInProgress);
-            this.unitInProgress = null;
+    public void spendProductionForProductionInProgress() {
+        if (this.productionInProgress == null) return ;
+        if (this.productionInProgress.getClass() == Unit.class) {
+            Unit unit = (Unit) productionInProgress;
+            unit.setCost(unit.getCost() - this.getCivilization().getProduction());
+            if (unit.getCost() <= 0) {
+                unit.setTile(unit.getStartingCity().getCenter());
+                this.getCivilization().addUnit(unit);
+                this.productionInProgress = null;
+            }
+        } else if (this.productionInProgress.getClass() == Building.class){
+            Building building = (Building) productionInProgress;
+            building.setCostForSpending(building.getCostForSpending() - this.getCivilization().getProduction());
+            if (building.getCostForSpending() <= 0) {
+                this.buildingList.addBuilding(building);
+                this.productionInProgress = null;
+            }
         }
     }
 
-    public void removeUnitFromQueue(Unit unitFromQueue) {
-        this.unitsInQueue.remove(unitFromQueue);
+    public void spendGoldForMaintenanceOfBuildings() {
+        for (java.util.Map.Entry<Building, Integer> set : this.buildingList.getListOfBuildings().entrySet()) {
+            if (set.getValue() == 1) {
+                this.getCivilization().setGold(this.getCivilization().getGold() - set.getKey().getMaintenance());
+            }
+        }
+    }
+
+    public void removeProductionFromQueue(Object productionFromQueue) {
+        this.productionInQueue.remove(productionFromQueue);
     }
 }
