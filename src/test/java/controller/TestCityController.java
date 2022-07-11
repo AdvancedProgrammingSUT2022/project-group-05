@@ -25,7 +25,7 @@ public class TestCityController{
     public void setUp() {
         Map.updateInstance(4);
 
-        civilization = new Civilization(new User("a", "a", "a"), 0);
+        civilization = new Civilization(new User("a", "a", "a", null), 0);
         tile = new Tile(0, 0, 4);
         city = new City("a", tile, civilization);
 

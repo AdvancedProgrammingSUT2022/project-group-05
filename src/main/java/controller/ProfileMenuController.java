@@ -38,4 +38,9 @@ public class ProfileMenuController {
             ErrorBox.getErrorBox(Responses.PASSWORD_CHANGED.getResponse(), father, false);
         }
     }
+
+    public void changeProfileImage(String newImageAddress, Pane father) {
+        User user = UserDatabaseController.getUserByUsername(MainMenu.username);
+        userDatabaseController.changeImage(user, newImageAddress);
+    }
 }

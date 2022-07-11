@@ -16,7 +16,7 @@ public class TestUser {
 
     @BeforeEach
     public void setup() {
-        user = new User("mohammadreza", "smkh", "1234");
+        user = new User("mohammadreza", "smkh", "1234", null);
     }
 
     @Test

@@ -62,10 +62,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import main.Main;
 import model.graphicObjects.ButtonOne;
 import model.graphicObjects.TextFieldOne;
 import statics.StaticFonts;
+
+import java.io.File;
 
 public class ProfileMenu {
 
@@ -118,10 +121,14 @@ public class ProfileMenu {
                 profileMenuController.changeNickname(newNick, menu);
             }
         });
+        FileChooser fileChooser = new FileChooser();
         changePicture.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... nothing yet
+                File selectedFile = fileChooser.showOpenDialog(Main.mainStage);
+                String newImageAddress = selectedFile.getPath();
+                System.out.println(newImageAddress);
+                profileMenuController.changeProfileImage(newImageAddress, menu);
             }
         });
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
