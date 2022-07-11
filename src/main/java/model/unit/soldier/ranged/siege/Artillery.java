@@ -16,6 +16,8 @@ public class Artillery extends Siege implements NoDefensiveBonus, BonusVsCity {
         this.maxAttackRange = 3;
         this.maxMovement = 2;
         this.requiredResearch = Research.DYNAMITE;
+
+        this.textureAddress = "file:src/main/resources/images/units/siege/Artillery/";
     }
 
     @Override

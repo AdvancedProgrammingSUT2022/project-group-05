@@ -14,6 +14,8 @@ public class Musketman extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
         this.requiredResearch = Research.GUNPOWDER;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Musketman/";
     }
 
     @Override

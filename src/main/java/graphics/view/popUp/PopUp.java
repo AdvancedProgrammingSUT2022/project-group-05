@@ -1,11 +1,13 @@
 package graphics.view.popUp;
 
 import graphics.statics.StaticColors;
+import javafx.animation.ScaleTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class PopUp extends Pane{
     private Pane father;
@@ -35,6 +37,16 @@ public class PopUp extends Pane{
     }
 
     private void exit() {
-        this.father.getChildren().remove(this);
+        ScaleTransition toZero = new ScaleTransition(new Duration(500), this);
+        toZero.setToX(0);
+        toZero.setToY(0);
+        Pane temp = this;
+        toZero.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                father.getChildren().remove(temp);
+            }
+        });
+        toZero.play();
     }
 }

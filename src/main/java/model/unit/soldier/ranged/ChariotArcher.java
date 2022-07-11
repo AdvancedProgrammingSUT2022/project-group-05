@@ -16,6 +16,8 @@ public class ChariotArcher extends Ranged implements Mounted, NoDefensiveBonus {
         this.maxAttackRange = 2;
         this.maxMovement = 4;
         this.requiredResearch = Research.THE_WHEEL;
+
+        this.textureAddress = "file:src/main/resources/images/units/ranged/ChariotArcher/";
     }
 
     @Override

@@ -19,6 +19,8 @@ public class Cavalry extends Melee implements Mounted, CanMoveAfterAttacking, No
         this.maxMovement = 3;
         this.requiredResource = Resource.HORSE;
         this.requiredResearch = Research.MILITARY_SCIENCE;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Cavalry/";
     }
 
     @Override

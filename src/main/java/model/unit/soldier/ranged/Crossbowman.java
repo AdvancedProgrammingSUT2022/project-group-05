@@ -14,6 +14,8 @@ public class Crossbowman extends Ranged {
         this.maxAttackRange = 2;
         this.maxMovement = 2;
         this.requiredResearch = Research.MACHINERY;
+
+        this.textureAddress = "file:src/main/resources/images/units/ranged/Crossbowman/";
     }
 
     @Override

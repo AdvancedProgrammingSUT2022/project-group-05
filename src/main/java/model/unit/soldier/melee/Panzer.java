@@ -18,6 +18,8 @@ public class Panzer extends Melee implements CanMoveAfterAttacking, Tank, NoDefe
         this.maxAttackRange = 0;
         this.maxMovement = 5;
         this.requiredResearch = Research.COMBUSTION;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Panzer/";
     }
 
     @Override

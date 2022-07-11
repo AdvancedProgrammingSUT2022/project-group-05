@@ -19,6 +19,8 @@ public class Horseman extends Melee implements Mounted, CanMoveAfterAttacking, N
         this.maxMovement = 4;
         this.requiredResource = Resource.HORSE;
         this.requiredResearch = Research.HORSEBACK_RIDING;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Horseman/";
     }
 
     @Override

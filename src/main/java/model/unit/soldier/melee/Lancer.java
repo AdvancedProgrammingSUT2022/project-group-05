@@ -19,6 +19,8 @@ public class Lancer extends Melee implements Mounted, CanMoveAfterAttacking, NoD
         this.maxMovement = 4;
         this.requiredResource = Resource.HORSE;
         this.requiredResearch = Research.METALLURGY;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Lancer/";
     }
 
     @Override

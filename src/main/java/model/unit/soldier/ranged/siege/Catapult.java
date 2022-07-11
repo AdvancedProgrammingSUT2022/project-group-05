@@ -19,6 +19,8 @@ public class Catapult extends Siege implements NoDefensiveBonus, BonusVsCity, Li
         this.maxMovement = 2;
         this.requiredResource = Resource.IRON;
         this.requiredResearch = Research.MATHEMATICS;
+
+        this.textureAddress = "file:src/main/resources/images/units/siege/Catapult/";
     }
 
     @Override

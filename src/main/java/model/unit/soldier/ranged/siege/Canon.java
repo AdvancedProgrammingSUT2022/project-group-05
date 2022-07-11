@@ -16,6 +16,8 @@ public class Canon extends Siege implements NoDefensiveBonus, BonusVsCity {
         this.maxAttackRange = 2;
         this.maxMovement = 2;
         this.requiredResearch = Research.CHEMISTRY;
+
+        this.textureAddress = "file:src/main/resources/images/units/siege/Canon/";
     }
 
     @Override

@@ -15,6 +15,8 @@ public class Pikeman extends Melee implements BonusVsMounted {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
         this.requiredResearch = Research.CIVIL_SERVICE;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Pikeman/";
     }
 
     @Override

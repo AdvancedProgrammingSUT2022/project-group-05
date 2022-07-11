@@ -15,6 +15,8 @@ public class Spearman extends Melee implements BonusVsMounted {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
         this.requiredResearch = Research.BRONZE_WORKING;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Spearman/";
     }
 
     @Override
