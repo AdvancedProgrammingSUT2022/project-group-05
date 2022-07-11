@@ -1,5 +1,8 @@
 package graphics.view.mapFX;
+import graphics.view.popUp.PopUp;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -32,12 +35,24 @@ public class TileFX extends Group {
         feature.setFill(tile.getFeature().getTexture());
         this.getChildren().add(feature);
 
-
         front = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         front.setLayoutX(-200);
         front.setLayoutY(-100);
         this.getChildren().add(front);
         front.setFill(new Color(0, 0, 0, 0));
 
+        //TILES EFFECTS
+        front.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                front.setFill(new Color(0.2, 0, 0, 0.2));
+            }
+        });
+        front.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                front.setFill(new Color(0, 0, 0, 0));
+            }
+        });
     }
 }
