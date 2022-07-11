@@ -65,4 +65,15 @@ public class TestMap {
         int which = map.whichNeighbor(map.getTileFromMap(1, 1), map.getTileFromMap(0, 1));
         Assertions.assertEquals(4, which);
     }
+
+    @Test
+    public void testSave() {
+        Map.getInstance().save();
+    }
+
+    @Test
+    public void testLoad() {
+        Map.load();
+        System.out.println(Map.getInstance().getSizeOfMap());
+    }
 }

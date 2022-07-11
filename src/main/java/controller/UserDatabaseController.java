@@ -52,6 +52,8 @@ public class UserDatabaseController {
         userNew.put("username", newUser.getUsername());
         userNew.put("password", newUser.getPassword());
         userNew.put("nickname", newUser.getNickname());
+        userNew.put("score", "" + newUser.getScore());
+        userNew.put("image", newUser.getImageAddress());
         users.add(userNew);
         this.updateDatabase(users);
     }
@@ -62,6 +64,8 @@ public class UserDatabaseController {
         oldUser.put("username", user.getUsername());
         oldUser.put("password", user.getPassword());
         oldUser.put("nickname", user.getNickname());
+        oldUser.put("score", "" + user.getScore());
+        oldUser.put("image", user.getImageAddress());
         users.remove(oldUser);
         this.updateDatabase(users);
     }
@@ -85,7 +89,7 @@ public class UserDatabaseController {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("username").equals(username)) {
                 HashMap<String, String> userData = users.get(i);
-                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"));
+                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"));
                 return user;
             }
         }
@@ -97,7 +101,7 @@ public class UserDatabaseController {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("nickname").equals(nickname)) {
                 HashMap<String, String> userData = users.get(i);
-                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"));
+                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"));
                 return user;
             }
         }
@@ -113,4 +117,12 @@ public class UserDatabaseController {
         }
         return nicknames;
     }
+
+    public void changeImage(User user, String newImageAddress) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = this.getUserIndexByUsername(user.getUsername());
+        users.get(userIndex).put("image", newImageAddress);
+        this.updateDatabase(users);
+    }
+
 }

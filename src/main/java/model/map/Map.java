@@ -9,10 +9,11 @@ import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 import utility.RandomGenerator;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Map{
+public class Map implements Serializable {
     private final int sizeOfMap;
     private Tile[][] gameMap;
 
@@ -305,4 +306,27 @@ public class Map{
         FogOfWar.updateFogOfWar(civilization);
         return this.printMap(civilization);
     }
+
+    public void save() {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("saves/Map.txt"));
+            objectOutputStream.writeObject(Map.getInstance());
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    public static void load() {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("saves/Map.txt"));
+            Map.updateInstance((Map) objectInputStream.readObject());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

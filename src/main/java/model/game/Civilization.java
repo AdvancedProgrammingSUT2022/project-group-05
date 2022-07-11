@@ -320,35 +320,9 @@ public class Civilization implements Serializable {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("saves/Civilization.txt"));
             return (Civilization) objectInputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Civilization{" +
-                "capital=" + capital +
-                ", cities=" + cities +
-                ", annexedCities=" + annexedCities +
-                ", units=" + units +
-                ", player=" + player +
-                ", color=" + color +
-                ", turn=" + turn +
-                ", gold=" + gold +
-                ", production=" + production +
-                ", baseProduction=" + baseProduction +
-                ", researchPoint=" + researchPoint +
-                ", baseResearchPoint=" + baseResearchPoint +
-                ", happiness=" + happiness +
-                ", baseHappiness=" + baseHappiness +
-                ", resourceList=" + resourceList +
-                ", researchTree=" + researchTree +
-                ", fogOfWar=" + Arrays.toString(fogOfWar) +
-                '}';
     }
 }
