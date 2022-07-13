@@ -2,14 +2,9 @@ package controller;
 
 import model.game.City;
 import model.game.Civilization;
-import model.tile.Tile;
 import model.unit.Unit;
-import model.unit.civilian.Settler;
-import model.unit.civilian.Worker;
-import utility.RandomGenerator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CivilizationController {
     private Civilization civilization;
@@ -56,20 +51,14 @@ public class CivilizationController {
     }
 
     public String showDemographic() {
-        StringBuilder result = new StringBuilder();
 
-        result.append("Demographic:\n");
-
-        result.append("Soldier count: ").append(InfoController.getSoldierCount(civilization)).append("\n");
-        result.append("Civilian count: ").append(InfoController.getCivilianCount(civilization)).append("\n");
-        result.append("Total area: ").append(InfoController.getTileCount(civilization)).append(" square km\n");
-
-        result.append("Total gold: ").append(civilization.getGold()).append("\n");
-        result.append("Total happiness: ").append(civilization.getHappiness()).append("\n");
-
-        result.append("Luxury resource count: ").append(InfoController.getLuxuryResourceCount(civilization)).append("\n");
-
-        return result.toString();
+        return "Demographic:\n" +
+                "Soldier count: " + InfoController.getSoldierCount(civilization) + "\n" +
+                "Civilian count: " + InfoController.getCivilianCount(civilization) + "\n" +
+                "Total area: " + InfoController.getTileCount(civilization) + " square km\n" +
+                "Total gold: " + civilization.getGold() + "\n" +
+                "Total happiness: " + civilization.getHappiness() + "\n" +
+                "Luxury resource count: " + InfoController.getLuxuryResourceCount(civilization) + "\n";
     }
 
     public String showNotificationHistory() {

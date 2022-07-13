@@ -17,8 +17,10 @@ import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
 import model.unit.soldier.melee.AntiTankGun;
 import model.unit.soldier.melee.Melee;
+import model.unit.soldier.ranged.Ranged;
 import model.unit.soldier.ranged.siege.Siege;
 import org.w3c.dom.ranges.Range;
+import utility.RandomGenerator;
 
 public class UnitController{
     private final Unit unit;
@@ -185,19 +187,40 @@ public class UnitController{
         return Responses.UNIT_ATTACKED.getResponse();
     }
 
+    private int calculateDamage(Soldier attacker, Unit defender) {
+        int attackerStrength = attacker.getAttackStrength();
+        int defenderStrength = defender.getTotalMeleeStrength();
+
+        double exponent = 0.04 * (attackerStrength - defenderStrength);
+        double randomRatio = (RandomGenerator.nextInt(40) + 80) / 100.0;
+
+        return (int) Math.floor(3 * Math.pow(Math.E, exponent) * randomRatio);
+    }
+
+    private int calculateDamage(Soldier attacker, City defender) {
+        return 4;
+    }
+
+    private int calculateDamage(City attacker, Soldier defender) {
+        return 2;
+    }
+
     private void attack(Soldier soldier, Soldier enemySoldier) {
-        //TODO.. MP ???
-        int totalStrengthOfSoldier = soldier.getTotalMeleeStrength();
-        int totalStrengthOfEnemy = enemySoldier.getTotalMeleeStrength();
+        int damageToEnemy = calculateDamage(soldier, enemySoldier);
+        int damageToSoldier = calculateDamage(enemySoldier, soldier);
+
+        if ((soldier instanceof Ranged) && !(enemySoldier instanceof Ranged)) damageToSoldier = 0;
+
         soldier.setRemainingMovement(0);
         enemySoldier.setRemainingMovement(0);
-        soldier.setHealth(soldier.getHealth() - totalStrengthOfEnemy);
-        enemySoldier.setHealth(enemySoldier.getHealth() - totalStrengthOfSoldier);
+
+        soldier.setHealth(soldier.getHealth() - damageToSoldier);
+        enemySoldier.setHealth(enemySoldier.getHealth() - damageToEnemy);
 
         if (enemySoldier instanceof Mounted && soldier instanceof BonusVsMounted)
-            enemySoldier.setHealth(enemySoldier.getHealth() - totalStrengthOfSoldier);
+            enemySoldier.setHealth(enemySoldier.getHealth() - damageToEnemy);
         if (soldier instanceof Mounted && enemySoldier instanceof  BonusVsMounted)
-            soldier.setHealth(enemySoldier.getHealth() - totalStrengthOfEnemy);
+            soldier.setHealth(enemySoldier.getHealth() - damageToSoldier);
 
         if (soldier instanceof AntiTankGun && enemySoldier instanceof Tank)
             enemySoldier.setHealth(enemySoldier.getHealth() - 10);
@@ -218,55 +241,17 @@ public class UnitController{
         }
     }
 
-    public String unitCancel() {
-        //TODO.. cancel multiple-turn-moves and ...
-        return "";
-    }
-
-    public String unitWake() {
-        if (this.unit.getUnitState() == UnitState.AWAKE) {
-            return Responses.ALREADY_AWAKE.getResponse();
-        }
-        if (this.unit.getUnitState() == UnitState.GARRISONED)
-            this.unit.getTile().getCity().removeGarrisonedUnit();
-        this.unit.wake();
-        this.setDefenceBonusInFortifyState(0);
-        return Responses.UNIT_AWAKENED.getResponse();
-
-    }
-
-    public String unitDelete() {
-        this.setDefenceBonusInFortifyState(0);
-        this.unit.killWithGold();
-        UnitController.updateInstance(null);
-        return Responses.UNIT_DELETED.getResponse();
-    }
-
-    public String unitFoundCity(String cityName) {
-        if (!(this.unit instanceof Settler))
-            return Responses.UNIT_NOT_SETTLER.getResponse();
-
-        Settler settler = (Settler) this.unit;
-        settler.foundCity(cityName);
-        unit.getCivilization().removeUnit(this.unit);
-
-        return Responses.CITY_FOUNDED.getResponse();
-    }
-
     public String attackCity(City city, Soldier soldier) {
         if (city.getCivilization() == soldier.getCivilization())
             return Responses.CANT_ATTACK_OUR_CITY.getResponse();
 
-
-        //TODO calculate health after attack...??????
         if (soldier instanceof BonusVsCity)
-            city.setHealth(city.getHealth() - soldier.getAttackStrength() - 10);
+            city.setHealth(city.getHealth() - 3 * calculateDamage(soldier, city));
         else
-            city.setHealth(city.getHealth() - soldier.getAttackStrength());
-
+            city.setHealth(city.getHealth() - calculateDamage(soldier, city));
 
         if (Map.getInstance().findDistance(soldier.getTile(), city.getCenter()) <= 2)
-            soldier.setHealth(soldier.getHealth() - city.getDefenceStrength());
+            soldier.setHealth(soldier.getHealth() - calculateDamage(city, soldier));
 
         if (! (soldier instanceof CanMoveAfterAttacking))
             soldier.setRemainingMovement(0);
@@ -298,6 +283,39 @@ public class UnitController{
         return Responses.CITY_CONQUERED.getResponse();
     }
 
+
+    public String unitCancel() {
+        return "canceled";
+    }
+
+    public String unitWake() {
+        if (this.unit.getUnitState() == UnitState.AWAKE) {
+            return Responses.ALREADY_AWAKE.getResponse();
+        }
+        if (this.unit.getUnitState() == UnitState.GARRISONED)
+            this.unit.getTile().getCity().removeGarrisonedUnit();
+        this.unit.wake();
+        this.setDefenceBonusInFortifyState(0);
+        return Responses.UNIT_AWAKENED.getResponse();
+    }
+
+    public String unitDelete() {
+        this.setDefenceBonusInFortifyState(0);
+        this.unit.killWithGold();
+        UnitController.updateInstance(null);
+        return Responses.UNIT_DELETED.getResponse();
+    }
+
+    public String unitFoundCity(String cityName) {
+        if (!(this.unit instanceof Settler))
+            return Responses.UNIT_NOT_SETTLER.getResponse();
+
+        Settler settler = (Settler) this.unit;
+        settler.foundCity(cityName);
+        unit.getCivilization().removeUnit(this.unit);
+
+        return Responses.CITY_FOUNDED.getResponse();
+    }
 
     //Worker stuff
     public String unitBuildImprovement(Improvement improvement) {
