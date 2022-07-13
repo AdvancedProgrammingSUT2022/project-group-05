@@ -21,18 +21,6 @@ public class CivilizationController {
         this.civilization = civilization;
     }
 
-    public void combat(HashMap<String, String> command) {
-        //TODO...
-    }
-
-    public void move(HashMap<String, String> command) {
-        //TODO...
-    }
-
-    public void research(HashMap<String, String> command) {
-        //TODO...
-    }
-
     public String showResearch() {
         return civilization.getResearchTree().toString();
     }
@@ -132,8 +120,9 @@ public class CivilizationController {
     }
 
     public void searchForRequiredActions() {
-        //TODO find problems such as stacked unit , units without orders, no research chosen, ... and add their comments in required actions
-        // requiredActions.add(" comment ");...
+        //find problems such as stacked unit , units without orders, no research chosen, ... and add their comments in required actions
+        //requiredActions.add(" comment ");...
+
         this.requiredActions = new ArrayList<>();
         for (int i = 0; i < this.civilization.getUnits().size(); i++) {
             if (this.civilization.getUnits().get(i).hasTask()) {
@@ -141,19 +130,14 @@ public class CivilizationController {
             }
         }
         for (City city : this.civilization.getCities()) {
-            if (city.getUnitInProgress() == null) {
-                requiredActions.add("Choose production"); //TODO add building later...
+            if (city.getUnitInProgress() == null && city.getBuildingInProgress() == null) {
+                requiredActions.add("Choose production");
             }
         }
 
         if (!this.civilization.getResearchTree().hasResearch())
             requiredActions.add("Choose a research");
 
-
-        if (requiredActions.size() == 0) {
-            this.hasRequiredAction = false;
-        } else {
-            this.hasRequiredAction = true;
-        }
+        this.hasRequiredAction = requiredActions.size() != 0;
     }
 }
