@@ -9,35 +9,30 @@ import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 
-public class ProfileMenu {
+public class ProfileMenu extends Pane{
     public ProfileMenu () {
-
-    }
-
-
-    public Pane profileMenu () {
         Pane menu = new Pane();
 
         //OBJECTS
         TextFieldOne oldPassword = new TextFieldOne("old password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                960, 300, 400, 30, menu);
+                960, 300, 400, 30, this);
         TextFieldOne newPassword = new TextFieldOne("new password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                960, 350, 400, 30, menu);
+                960, 350, 400, 30, this);
         TextFieldOne repeatPassword = new TextFieldOne("repeat password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                960, 400, 400, 30, menu);
+                960, 400, 400, 30, this);
         ButtonOne changePassword = new ButtonOne("CHANGE PASSWORD", StaticFonts.SeqoeLoad(30), Pos.CENTER,
-                960, 450, 400, 50, menu);
+                960, 450, 400, 50, this);
 
         TextFieldOne newNickname = new TextFieldOne("new nickname", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                960, 550, 400, 30, menu);
+                960, 550, 400, 30, this);
         ButtonOne changeNickname = new ButtonOne("CHANGE NICKNAME", StaticFonts.SeqoeLoad(30), Pos.CENTER,
-                960, 600, 400, 50, menu);
+                960, 600, 400, 50, this);
 
         ButtonOne changePicture = new ButtonOne("CHANGE PICTURE", StaticFonts.SeqoeLoad(30), Pos.CENTER,
-                960, 700, 400, 50, menu);
+                960, 700, 400, 50, this);
 
         ButtonOne back = new ButtonOne("back", StaticFonts.SeqoeLoad(15), Pos.CENTER,
-                100, 1000, 100, 50, menu);
+                100, 1000, 100, 50, this);
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -70,8 +65,5 @@ public class ProfileMenu {
                 //TODO... opening main menu
             }
         });
-
-
-        return menu;
     }
 }

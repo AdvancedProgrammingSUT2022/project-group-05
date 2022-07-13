@@ -8,38 +8,32 @@ import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 
-public class ChatMenu {
+public class ChatMenu extends Pane {
     public ChatMenu () {
-
-    }
-
-    public Pane chatMenu () {
-        Pane menu = new Pane();
-
         //OBJECTS
         TextFieldOne privateText = new TextFieldOne("private", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                300, 900, 400, 40, menu);
+                300, 900, 400, 40, this);
         ButtonOne privateSend = new ButtonOne("Send", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                600, 900, 100, 40, menu);
+                600, 900, 100, 40, this);
         TextFieldOne privateTexts = new TextFieldOne("messages", StaticFonts.SeqoeLoad(20), Pos.TOP_LEFT,
-                375, 450, 550, 800, menu);
+                375, 450, 550, 800, this);
 
         TextFieldOne publicText = new TextFieldOne("public", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                900, 900, 400, 40, menu);
+                900, 900, 400, 40, this);
         ButtonOne publicSend = new ButtonOne("Send", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                1200, 900, 100, 40, menu);
+                1200, 900, 100, 40, this);
         TextFieldOne publicTexts = new TextFieldOne("messages", StaticFonts.SeqoeLoad(20), Pos.TOP_LEFT,
-                975, 450, 550, 800, menu);
+                975, 450, 550, 800, this);
 
         TextFieldOne partyText = new TextFieldOne("party", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                1500, 900, 400, 40, menu);
+                1500, 900, 400, 40, this);
         ButtonOne partySend = new ButtonOne("Send", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                1800, 900, 100, 40, menu);
+                1800, 900, 100, 40, this);
         TextFieldOne partyTexts = new TextFieldOne("messages", StaticFonts.SeqoeLoad(20), Pos.TOP_LEFT,
-                1575, 450, 550, 800, menu);
+                1575, 450, 550, 800, this);
 
         ButtonOne back = new ButtonOne("back", StaticFonts.SeqoeLoad(15), Pos.CENTER,
-                100, 1000, 100, 50, menu);
+                100, 1000, 100, 50, this);
 
 
         //FUNCTIONS
@@ -67,7 +61,5 @@ public class ChatMenu {
                 //TODO... Back to main menu
             }
         });
-
-        return menu;
     }
 }

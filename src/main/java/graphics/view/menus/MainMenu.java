@@ -11,36 +11,20 @@ import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 
-public class MainMenu {
+public class MainMenu extends Pane{
     public MainMenu () {
-
-    }
-
-
-    public Pane mainMenu () {
-        Pane menu = new Pane();
-
         //OBJECTS
         ButtonOne startGame = new ButtonOne("NEW GAME", StaticFonts.SeqoeLoad(60), Pos.CENTER,
-                960, 200, 600, 80, menu);
+                960, 200, 600, 80, this);
         ButtonOne scoreBoard = new ButtonOne("SCOREBOARD", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                960, 650, 200, 50, menu);
+                960, 650, 200, 50, this);
         ButtonOne profile = new ButtonOne("PROFILE", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                960, 710, 200, 50, menu);
+                960, 710, 200, 50, this);
         ButtonOne chat = new ButtonOne("CHAT", StaticFonts.SeqoeLoad(20), Pos.CENTER,
-                960, 770, 200, 50, menu);
+                960, 770, 200, 50, this);
         ButtonOne logout = new ButtonOne("LOGOUT", StaticFonts.SeqoeLoad(15), Pos.CENTER,
-                960, 900, 100, 50, menu);
+                960, 900, 100, 50, this);
 
-        Pane temp = new Pane();
-        menu.getChildren().add(temp);
-
-        menu.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.println("Asdgadg");
-            }
-        });
 
         FadeTransition transition = new FadeTransition();
         transition.setDuration(new Duration(2000));
@@ -80,43 +64,5 @@ public class MainMenu {
                 //TODO... logout and opening login menu
             }
         });
-
-
-        return menu;
-    }
-
-
-    public Pane score () {
-        Pane menu = new Pane();
-
-        String[] nicknames = new String[10]; //TODO... get from database
-        for (int i = 0; i < 10; i++) nicknames[i] = "i" + "mamamm";
-        int[] scores = new int[10]; //TODO... get from database
-        //OBJECTS
-        ButtonOne back = new ButtonOne("back", StaticFonts.SeqoeLoad(15), Pos.CENTER,
-                100, 1000, 100, 50, menu);
-
-        LabelOne[] ranks = new LabelOne[10];
-        LabelOne[] nicknameLabels = new LabelOne[10];
-        LabelOne[] scoreLabels = new LabelOne[10];
-
-        for (int i = 0; i < 10; i++) {
-            ranks[i] = new LabelOne(i+1 + " :", StaticFonts.SeqoeLoad(15), Pos.CENTER_LEFT,
-                    400, 50 * i + 400, 200, 30, menu);
-            nicknameLabels[i] = new LabelOne(nicknames[i], StaticFonts.SeqoeLoad(15), Pos.CENTER_LEFT,
-                    450, 50 * i + 400, 200, 30, menu);
-            scoreLabels[i] = new LabelOne(scores[i] + "", StaticFonts.SeqoeLoad(15), Pos.CENTER_RIGHT,
-                    1520, 50 * i + 400, 200, 30, menu);
-        }
-
-        //FUNCTIONS
-        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //TODO... opening main menu
-            }
-        });
-
-        return menu;
     }
 }
