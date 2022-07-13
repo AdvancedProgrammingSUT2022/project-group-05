@@ -1,11 +1,11 @@
-package graphics.view.mapFX;
-import graphics.view.popUp.PopUp;
+package graphics.view.gameContents;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import model.tile.Tile;
 
 public class TileFX extends Group {
@@ -13,6 +13,8 @@ public class TileFX extends Group {
     private Polygon terrain;
     private Polygon feature;
     private Polygon front;
+    private Rectangle soldure;
+    private Rectangle civilian;
 
     public TileFX(Pane pane, Tile tile) {
         int xPlace = tile.getXPlace();
@@ -34,6 +36,14 @@ public class TileFX extends Group {
         feature.setLayoutY(-100);
         feature.setFill(tile.getFeature().getTexture());
         this.getChildren().add(feature);
+
+        soldure = new Rectangle(-100, -50, 75, 100);
+        soldure.setFill(Color.BLUE);
+        this.getChildren().add(soldure);
+
+        civilian = new Rectangle(25, -50, 75, 100);
+        civilian.setFill(Color.RED);
+        this.getChildren().add(civilian);
 
         front = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         front.setLayoutX(-200);

@@ -1,5 +1,5 @@
-import graphics.view.mapFX.MapFX;
-import graphics.view.mapFX.TileFX;
+import graphics.view.gameContents.MapFX;
+import graphics.view.gameContents.TileMenu;
 import graphics.view.menus.ChatMenu;
 import graphics.view.menus.LoginMenu;
 import graphics.view.menus.MainMenu;
@@ -38,6 +38,7 @@ public class MainFX extends Application {
         paneTemp.setPrefWidth(300);
         paneTemp.setPrefHeight(400);
         paneTemp.getChildren().add(rectangle);
+        pane.getChildren().add(TileMenu.getInstance(null));
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -47,6 +48,7 @@ public class MainFX extends Application {
         });
 
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
