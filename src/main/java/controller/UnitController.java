@@ -58,14 +58,12 @@ public class UnitController{
 
 
     public String unitMove(int xPlace, int yPlace) {
-
         this.unitWake();
 
         this.setDefenceBonusInFortifyState(0);
 
         Tile here = this.unit.getTile();
         Tile destination = Map.getInstance().getTileFromMap(xPlace, yPlace);
-
 
         if (!this.unit.canMoveTo(destination)) {
             return Responses.UNREACHABLE_DESTINATION.getResponse();
@@ -84,7 +82,10 @@ public class UnitController{
         } else if (this.unit instanceof Civilian) {
             Map.getInstance().moveCivilian((Civilian) this.unit, bestPath);
         }
-        return Responses.UNIT_MOVED.getResponse();
+
+        if (destination.isRuin()) return Responses.UNIT_MOVED.getResponse() + "\n" +
+                                         this.unit.getCivilization().getRandomRuinEffect(destination);
+        else return Responses.UNIT_MOVED.getResponse();
     }
 
     public String unitSleep() {

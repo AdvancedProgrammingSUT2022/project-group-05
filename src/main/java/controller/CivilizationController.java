@@ -2,7 +2,11 @@ package controller;
 
 import model.game.City;
 import model.game.Civilization;
+import model.tile.Tile;
 import model.unit.Unit;
+import model.unit.civilian.Settler;
+import model.unit.civilian.Worker;
+import utility.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +33,6 @@ public class CivilizationController {
         //TODO...
     }
 
-    //TODO... Complete this functions, info about them can be found on game.pdf page 7 or civManual page 25
     public String showResearch() {
         return civilization.getResearchTree().toString();
     }
@@ -116,8 +119,6 @@ public class CivilizationController {
     }
 
     //GETTERS
-
-
     public Civilization getCivilization() {
         return civilization;
     }

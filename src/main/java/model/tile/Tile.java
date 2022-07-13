@@ -184,6 +184,10 @@ public class Tile{
         return ID;
     }
 
+    public boolean isRuin()
+    {
+        return this.isRuin;
+    }
 
     public City getCity() {
         return this.city;
@@ -324,6 +328,10 @@ public class Tile{
     }
 
     //SETTERS
+    public void setIsRuin(boolean isRuin) {
+        this.isRuin = isRuin;
+    }
+
     public void setCity(City city) {
         this.city = city;
     }
