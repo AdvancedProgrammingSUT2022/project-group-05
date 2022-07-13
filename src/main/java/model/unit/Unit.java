@@ -144,6 +144,10 @@ public abstract class Unit {
         this.tile = tile;
     }
 
+    public void setCivilization(Civilization civilization) {
+        this.civilization = civilization;
+    }
+
     public void setRemainingMovement(int MP) {
         this.remainingMovement = MP;
     }
@@ -168,8 +172,6 @@ public abstract class Unit {
     }
 
     //GETTERS
-
-
     public int getTemporaryDefenceBonusPercentage() {
         return temporaryDefenceBonusPercentage;
     }

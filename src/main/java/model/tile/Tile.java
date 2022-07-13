@@ -21,6 +21,8 @@ public class Tile{
 
     private final int ID;
 
+    private boolean isRuin;
+
     private Route route;
     private Terrain terrain;
     private Feature feature;

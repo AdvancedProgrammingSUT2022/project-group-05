@@ -22,7 +22,6 @@ import java.util.Collections;
 public class Civilization{
     private City capital;
     private ArrayList<City> cities;
-    private ArrayList<City> annexedCities;
     private ArrayList<Unit> units;
 
 
@@ -268,6 +267,7 @@ public class Civilization{
         }
         for (City city : this.getCities()) {
             result -= 3 + city.getTotalCitizenCount();
+            if (city.isAnnexed()) result -= 3;
         }
 
         return result;

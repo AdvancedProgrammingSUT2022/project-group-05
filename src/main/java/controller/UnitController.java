@@ -206,8 +206,9 @@ public class UnitController{
         if (enemySoldier.getHealth() == 0) {
             enemySoldier.kill();
             if (soldier.getHealth() != 0) {
-                Map.getInstance().moveSoldierWithoutMP(soldier, enemySoldier.getTile());
-                //TODO handle hostage civilian
+                Tile targetTile = enemySoldier.getTile();
+                Map.getInstance().moveSoldierWithoutMP(soldier, targetTile);
+                if (targetTile.getCivilian() != null) targetTile.getCivilian().setCivilization(soldier.getCivilization());
             }
         }
 
@@ -281,22 +282,23 @@ public class UnitController{
 
         if (soldier.getHealth() <= 0) soldier.getCivilization().removeUnit(soldier);
 
-        //TODO increase xp and ...
         return Responses.ATTACK_COMPLETE.getResponse();
     }
 
     public String conquerCity(City city, Soldier soldier) {
         city.getCivilization().removeCity(city);
+
         city.setCivilization(soldier.getCivilization());
         city.setHealth(20);
         soldier.getCivilization().addCity(city);
+        city.annex();
+
         Map.getInstance().moveSoldierWithoutMP(soldier, city.getCenter());
         return Responses.CITY_CONQUERED.getResponse();
     }
 
 
     //Worker stuff
-
     public String unitBuildImprovement(Improvement improvement) {
         this.unitWake();
         if (!(this.unit instanceof Worker))

@@ -12,14 +12,13 @@ import model.unit.soldier.Soldier;
 import java.util.ArrayList;
 
 public class City {
-
-
     private ArrayList<Object> productionInQueue = new ArrayList<>();
     private Object productionInProgress;
 
-
     private final String name;
     private final Tile center;
+
+    private int annexTime;
 
     private int food;
     //When food reached its threshold, population increases and Threshold doubles.
@@ -49,6 +48,7 @@ public class City {
         this.hasGarrisonedUnit = false;
 
         this.food = 0;
+        this.annexTime = 0;
 
         this.totalCitizenCount = 1;
         this.joblessCitizenCount = 1;
@@ -161,9 +161,19 @@ public class City {
 
         //increase city health
         if (this.health < 20) this.setHealth(this.getHealth() + 1);
+
+        //decrease annexation
+        if (this.isAnnexed()) this.annexTime -= 1;
     }
 
     //GETTERS
+    public boolean isAnnexed() {
+        return this.annexTime > 0;
+    }
+
+    public int getAnnexTime() {
+        return this.annexTime;
+    }
 
     public Unit getUnitInProgress() {
         if (productionInProgress.getClass() == Unit.class)
@@ -243,6 +253,13 @@ public class City {
     }
 
     //SETTER
+    public void annex() {
+        this.annexTime = 4;
+    }
+
+    public void setAnnexTime(int annexTime) {
+        this.annexTime = annexTime;
+    }
 
     public void setProductionInProgress(Object productionInProgress) {
         this.productionInProgress = productionInProgress;
