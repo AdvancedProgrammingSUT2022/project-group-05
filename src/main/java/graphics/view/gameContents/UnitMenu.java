@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.unit.Unit;
 
+//TODO add functions and closing system of this menu
+
 public class UnitMenu extends Pane{
     private static UnitMenu instance = null;
     private static int bSize = 60;

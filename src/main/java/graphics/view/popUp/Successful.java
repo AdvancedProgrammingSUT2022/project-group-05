@@ -8,12 +8,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Error extends Pane {
-    public Error (String message) {
-        this.getChildren().add(new Rectangle(600, 300, Color.RED));
+public class Successful extends Pane {
+    public Successful (String message) {
+        this.getChildren().add(new Rectangle(600, 300, Color.GREEN));
         this.setPrefHeight(300);
         this.setPrefWidth(600);
-        new LabelOne("ERROR", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        new LabelOne("SUCCESS", StaticFonts.SeqoeLoad(30), Pos.CENTER,
                 300, 75, 200, 60, this);
         new LabelOne(message, StaticFonts.SeqoeLoad(20), Pos.CENTER,
                 300, 200, 400, 50, this);

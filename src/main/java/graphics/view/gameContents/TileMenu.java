@@ -9,6 +9,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+//TODO add functions and closing system of this menu
+
 public class TileMenu extends Pane {
     private static TileMenu instance = null;
     private static int bSize = 60;
