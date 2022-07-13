@@ -6,6 +6,7 @@ import graphics.view.menus.LoginMenu;
 import graphics.view.menus.MainMenu;
 import graphics.view.menus.ProfileMenu;
 import graphics.view.popUp.PopUp;
+import graphics.view.popUp.Setting;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -48,6 +49,7 @@ public class MainFX extends Application {
                     new PopUp(pane, paneTemp);
             }
         });
+        new PopUp(pane, new Setting());
 
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
