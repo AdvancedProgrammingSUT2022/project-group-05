@@ -1,5 +1,6 @@
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.TileMenu;
+import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.ChatMenu;
 import graphics.view.menus.LoginMenu;
 import graphics.view.menus.MainMenu;
@@ -15,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.map.Map;
+import model.unit.Unit;
 
 
 public class MainFX extends Application {
@@ -38,7 +40,7 @@ public class MainFX extends Application {
         paneTemp.setPrefWidth(300);
         paneTemp.setPrefHeight(400);
         paneTemp.getChildren().add(rectangle);
-        pane.getChildren().add(TileMenu.getInstance(null));
+        pane.getChildren().add(new UnitMenu());
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
