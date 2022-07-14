@@ -3,6 +3,7 @@ package graphics.view.menus;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.ClientManager;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -11,8 +12,10 @@ import javafx.scene.layout.Pane;
 public class ScoreboardMenu extends Pane{
     public ScoreboardMenu () {
         String[] nicknames = new String[10]; //TODO... get from database
-        for (int i = 0; i < 10; i++) nicknames[i] = "i" + "mamamm";
         int[] scores = new int[10]; //TODO... get from database
+
+
+
         //OBJECTS
         ButtonOne back = new ButtonOne("back", StaticFonts.SeqoeLoad(15), Pos.CENTER,
                 100, 1000, 100, 50, this);
@@ -34,7 +37,7 @@ public class ScoreboardMenu extends Pane{
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... opening main menu
+                ClientManager.getInstance().setPane(new MainMenu());
             }
         });
     }

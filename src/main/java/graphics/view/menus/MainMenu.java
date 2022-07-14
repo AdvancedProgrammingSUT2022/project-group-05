@@ -1,14 +1,13 @@
 package graphics.view.menus;
 
+import graphics.view.ClientManager;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import graphics.objects.buttons.ButtonOne;
-import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 
 public class MainMenu extends Pane{
@@ -37,31 +36,32 @@ public class MainMenu extends Pane{
         startGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... opening new game menu
+                ClientManager.getInstance().setPane(new LocalGame());
             }
         });
         scoreBoard.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... opening scoreboard menu
+                ClientManager.getInstance().setPane(new ScoreboardMenu());
             }
         });
         profile.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... opening profile menu
+                ClientManager.getInstance().setPane(new ProfileMenu());
             }
         });
         chat.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... opening chat menu
+                ClientManager.getInstance().setPane(new ChatMenu());
             }
         });
         logout.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... logout and opening login menu
+                ClientManager.getInstance().setMainUser(null);
+                ClientManager.getInstance().setPane(new LoginMenu());
             }
         });
     }

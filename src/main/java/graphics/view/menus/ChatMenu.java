@@ -1,5 +1,6 @@
 package graphics.view.menus;
 
+import graphics.view.ClientManager;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -58,7 +59,7 @@ public class ChatMenu extends Pane {
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... Back to main menu
+                ClientManager.getInstance().setPane(new MainMenu());
             }
         });
     }

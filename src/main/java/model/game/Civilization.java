@@ -312,10 +312,7 @@ public class Civilization implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 
     public static Civilization load() {
         try {
@@ -326,6 +323,7 @@ public class Civilization implements Serializable {
             return null;
         }
     }
+
     //RUIN
     public String getRandomRuinEffect(Tile ruin) {//returned string shows description of the ruin effect
         ruin.setIsRuin(false);
