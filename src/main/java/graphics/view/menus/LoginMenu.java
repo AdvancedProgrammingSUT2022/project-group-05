@@ -1,7 +1,7 @@
 package graphics.view.menus;
 
 import controller.UserDatabaseController;
-import graphics.view.PaneChanger;
+import graphics.view.ClientManager;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import javafx.event.EventHandler;
@@ -48,15 +48,17 @@ public class LoginMenu extends Pane{
                 if (!user.getPassword().equals(passwordText))
                 {
                     new PopUp(temp, new Error("username and password don't match"));
+                    return;
                 }
 
-                PaneChanger.getInstance().setPane(new MainMenu());
+                ClientManager.getInstance().setMainUser(user);
+                ClientManager.getInstance().setPane(new MainMenu());
             }
         });
         signUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                PaneChanger.getInstance().setPane(new RegisterMenu());
+                ClientManager.getInstance().setPane(new RegisterMenu());
             }
         });
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {

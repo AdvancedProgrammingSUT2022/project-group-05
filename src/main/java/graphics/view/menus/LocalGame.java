@@ -3,14 +3,13 @@ package graphics.view.menus;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
-import graphics.objects.labels.LabelTwo;
 import graphics.statics.StaticFonts;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
 
 //TODO add functions
 
-public class NewLocalGame extends Pane {
+public class LocalGame extends Pane {
     int size = 2;
     int players = 2;
 
@@ -27,7 +26,7 @@ public class NewLocalGame extends Pane {
     ButtonOne createGame;
     ButtonOne back;
 
-    public NewLocalGame () {
+    public LocalGame() {
         title = new LabelOne("NEW LOCAL GAME", StaticFonts.SeqoeLoad(50), Pos.CENTER,
                 960, 200, 600, 70, this);
 

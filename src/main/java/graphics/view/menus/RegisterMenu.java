@@ -4,7 +4,7 @@ import controller.UserDatabaseController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
-import graphics.view.PaneChanger;
+import graphics.view.ClientManager;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import javafx.event.EventHandler;
@@ -42,11 +42,18 @@ public class RegisterMenu extends Pane{
                 String repeatPasswordText = repeatPassword.getText();
                 String nicknameText = nickname.getText();
 
-                User previousUser = UserDatabaseController.getUserByUsername(usernameText);
+                User previousUsernameHolder = UserDatabaseController.getUserByUsername(usernameText);
+                User previousNicknameHolder = UserDatabaseController.getUserByNickname(nicknameText);
 
-                if (previousUser != null)
+                if (previousUsernameHolder != null)
                 {
                     new PopUp(temp, new Error("username already taken"));
+                    return;
+                }
+
+                if (previousNicknameHolder != null)
+                {
+                    new PopUp(temp, new Error("nickname already taken"));
                     return;
                 }
 
@@ -56,7 +63,7 @@ public class RegisterMenu extends Pane{
                     return;
                 }
 
-                if (passwordText.length() <= 8)
+                if (passwordText.length() < 8)
                 {
                     new PopUp(temp, new Error("password must be at least 8 characters"));
                     return;
@@ -64,12 +71,15 @@ public class RegisterMenu extends Pane{
 
                 User user = new User(usernameText, nicknameText, passwordText, ""); //TODO image address
                 UserDatabaseController.addUser(user);
+
+                ClientManager.getInstance().setMainUser(user);
+                ClientManager.getInstance().setPane(new MainMenu());
             }
         });
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                PaneChanger.getInstance().setPane(new LoginMenu());
+                ClientManager.getInstance().setPane(new LoginMenu());
             }
         });
     }
