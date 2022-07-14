@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.unit.Unit;
+import model.unit.soldier.Soldier;
 
 //TODO add functions and closing system of this menu
 
@@ -175,19 +176,19 @@ public class UnitMenu extends Pane{
             }
         });
 
-//        attack.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                unitController.unitAttack();
-//            }
-//        });
+        attack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitAttack((int) MapFX.getInstance().getSecondSelectedTile().getLayoutX(), (int) MapFX.getInstance().getSecondSelectedTile().getLayoutY());
+            }
+        });
 
-//        conquerCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                unitController.conquerCity();
-//            }
-//        });
+        conquerCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.conquerCity(MapFX.getInstance().getSecondSelectedTile().getTile().getCity(), (Soldier) unitController.getUnit());
+            }
+        });
 
 //        buildImprovement.setOnMouseClicked(new EventHandler<MouseEvent>() {
 //            @Override
@@ -203,14 +204,21 @@ public class UnitMenu extends Pane{
 //            }
 //        });
 
-//
 
-//        remove.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//
-//            }
-//        });
+
+        remove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                switch (unitController.getUnit().getTile().getFeature()) {
+                    case FOREST:
+                        unitController.unitRemoveForest();
+                    case MARSH:
+                        unitController.unitRemoveMarsh();
+                    case JUNGLE:
+                        unitController.unitRemoveJungle();
+                }
+            }
+        });
 
         repair.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

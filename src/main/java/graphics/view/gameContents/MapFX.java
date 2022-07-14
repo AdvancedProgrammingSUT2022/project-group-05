@@ -65,19 +65,19 @@ public class MapFX extends Pane {
         return instance;
     }
 
-    public static void setFirstSelectedTile(TileFX firstSelectedTile) {
+    public void setFirstSelectedTile(TileFX firstSelectedTile) {
         MapFX.firstSelectedTile = firstSelectedTile;
     }
 
-    public static void setSecondSelectedTile(TileFX secondSelectedTile) {
+    public void setSecondSelectedTile(TileFX secondSelectedTile) {
         MapFX.secondSelectedTile = secondSelectedTile;
     }
 
-    public static TileFX getFirstSelectedTile() {
+    public TileFX getFirstSelectedTile() {
         return firstSelectedTile;
     }
 
-    public static TileFX getSecondSelectedTile() {
+    public TileFX getSecondSelectedTile() {
         return secondSelectedTile;
     }
 

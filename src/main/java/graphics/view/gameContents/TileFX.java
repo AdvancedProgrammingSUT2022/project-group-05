@@ -88,39 +88,39 @@ public class TileFX extends Group {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    if (MapFX.getSecondSelectedTile() == TileFX.this) {
-                        MapFX.getSecondSelectedTile().setSelectedDisable();
-                        MapFX.setSecondSelectedTile(null);
+                    if (MapFX.getInstance().getSecondSelectedTile() == TileFX.this) {
+                        MapFX.getInstance().getSecondSelectedTile().setSelectedDisable();
+                        MapFX.getInstance().setSecondSelectedTile(null);
                     }
-                    if (MapFX.getFirstSelectedTile() != null) {
-                        MapFX.getFirstSelectedTile().setSelectedDisable();
+                    if (MapFX.getInstance().getFirstSelectedTile() != null) {
+                        MapFX.getInstance().getFirstSelectedTile().setSelectedDisable();
                     }
-                    if (MapFX.getFirstSelectedTile() != TileFX.this) {
-                        MapFX.setFirstSelectedTile(TileFX.this);
-                        MapFX.getFirstSelectedTile().setSelectedFirst();
+                    if (MapFX.getInstance().getFirstSelectedTile() != TileFX.this) {
+                        MapFX.getInstance().setFirstSelectedTile(TileFX.this);
+                        MapFX.getInstance().getFirstSelectedTile().setSelectedFirst();
                     }
                     else {
-                        MapFX.setFirstSelectedTile(null);
+                        MapFX.getInstance().setFirstSelectedTile(null);
                     }
 
                 }
                 else if (event.getButton().equals(MouseButton.SECONDARY)) {
-                    if (MapFX.getFirstSelectedTile() == TileFX.this) {
-                        MapFX.setFirstSelectedTile(null);
+                    if (MapFX.getInstance().getFirstSelectedTile() == TileFX.this) {
+                        MapFX.getInstance().setFirstSelectedTile(null);
                     }
-                    if (MapFX.getSecondSelectedTile() != null) {
-                        MapFX.getSecondSelectedTile().setSelectedDisable();
+                    if (MapFX.getInstance().getSecondSelectedTile() != null) {
+                        MapFX.getInstance().getSecondSelectedTile().setSelectedDisable();
                     }
-                    if (MapFX.getSecondSelectedTile() != TileFX.this) {
-                        MapFX.setSecondSelectedTile(TileFX.this);
-                        MapFX.getSecondSelectedTile().setSelectedSecond();
+                    if (MapFX.getInstance().getSecondSelectedTile() != TileFX.this) {
+                        MapFX.getInstance().setSecondSelectedTile(TileFX.this);
+                        MapFX.getInstance().getSecondSelectedTile().setSelectedSecond();
                     }
                     else {
-                        MapFX.setSecondSelectedTile(null);
+                        MapFX.getInstance().setSecondSelectedTile(null);
                     }
                 }
 
-                if (MapFX.getFirstSelectedTile() == null) TileMenu.getInstance().setVisible(false);
+                if (MapFX.getInstance().getFirstSelectedTile() == null) TileMenu.getInstance().setVisible(false);
                 else TileMenu.getInstance().setVisible(true);
             }
         });

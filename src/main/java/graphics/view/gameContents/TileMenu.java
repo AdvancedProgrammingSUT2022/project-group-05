@@ -69,8 +69,8 @@ public class TileMenu extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 setVisible(false);
-                MapFX.getFirstSelectedTile().setSelectedDisable();
-                MapFX.setFirstSelectedTile(null);
+                MapFX.getInstance().getFirstSelectedTile().setSelectedDisable();
+                MapFX.getInstance().setFirstSelectedTile(null);
                 //can add animation here
             }
         });
@@ -78,7 +78,7 @@ public class TileMenu extends Pane {
         tileInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                new PopUp((Pane)TileMenu.this.getParent(), new TileInfo(MapFX.getFirstSelectedTile().getTile()));
+                new PopUp((Pane)TileMenu.this.getParent(), new TileInfo(MapFX.getInstance().getFirstSelectedTile().getTile()));
             }
         });
         //TODO other functions
