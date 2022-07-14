@@ -7,6 +7,7 @@ import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import graphics.view.ClientManager;
+import graphics.view.gameContents.MapFX;
 import graphics.view.popUp.CivilizationInfo;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -71,6 +72,8 @@ public class LocalGame extends Pane {
                 civilizations.add(civilization2);
                 GameMenuController.updateInstance(2, civilizations);
                 ClientManager.getInstance().setPane(new Game(civilization1));
+                GameMenuController.getInstance().nextCivilization();
+                MapFX.getInstance().updateMapTextures();
             }
         });
 

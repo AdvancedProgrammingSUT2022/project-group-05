@@ -713,4 +713,8 @@ public class GameMenuController {
         return "unit spawned successfully";
 
     }
+
+    public CivilizationController getCurrentCivilizationController () {
+        return currentCivilizationController;
+    }
 }
