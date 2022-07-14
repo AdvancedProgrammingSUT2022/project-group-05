@@ -89,7 +89,7 @@ public class UnitMenu extends Pane{
                 bSize/2 + bSize*3, bSize/2 + bSize, bSize, bSize, this);
         buildImprovement = new ButtonTwo("BuildImp", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*4, bSize/2 + bSize, bSize, bSize, this);
-        buildRout = new ButtonTwo("BuildRoute", StaticFonts.segoeLoad(10), Pos.CENTER,
+        buildRoute = new ButtonTwo("BuildRoute", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*5, bSize/2 + bSize, bSize, bSize, this);
         removeFeature = new ButtonTwo("RemFeature", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*6, bSize/2 + bSize, bSize, bSize, this);

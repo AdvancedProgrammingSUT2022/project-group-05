@@ -14,7 +14,7 @@ public class CivilizationInfo extends Pane {
     public CivilizationInfo (Civilization civilization) {
         this.civilization = civilization;
 
-        new LabelOne(GameMenuController.getInstance().infoDemographics(), StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        new LabelOne(GameMenuController.getInstance().infoDemographics(), StaticFonts.segoeLoad(30), Pos.CENTER,
                 300, 75, 200, 60, this);
     }
 }

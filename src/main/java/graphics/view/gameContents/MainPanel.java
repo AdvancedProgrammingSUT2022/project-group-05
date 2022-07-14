@@ -28,12 +28,12 @@ public class MainPanel extends Pane {
         background.setFill(Color.WHITE);
         this.getChildren().add(background);
 
-        gold = new LabelTwo("GOLD : " + civilization.getGold(), StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        gold = new LabelTwo("GOLD : " + civilization.getGold() + "(" + (civilization.calculateGold() - civilization.getGold()) + ")", StaticFonts.segoeLoad(10), Pos.CENTER,
                 50, 15, 100, 30, this);
-        happiness = new LabelTwo("HAPPINESS : " + civilization.getHappiness(), StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        happiness = new LabelTwo("HAPPINESS : " + civilization.getHappiness(), StaticFonts.segoeLoad(10), Pos.CENTER,
                 150, 15, 100, 30, this);
         research = new LabelTwo("RESEARCH : " + civilization.getResearchTree().getCurrentResearch() + " "
-                + civilization.getResearchTree().getResearchProgressPercentage() + "%", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+                + civilization.getResearchTree().getResearchProgressPercentage() + "%", StaticFonts.segoeLoad(10), Pos.CENTER,
                 250, 15, 100, 30, this);
 
         researchPanel = new ButtonOne("RESEARCH", StaticFonts.segoeLoad(20), Pos.CENTER,
