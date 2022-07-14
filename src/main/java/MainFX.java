@@ -33,7 +33,6 @@ public class MainFX extends Application {
         paneTemp.setPrefHeight(400);
         paneTemp.getChildren().add(rectangle);
         new PopUp(pane, new CheatCode());
-
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
         primaryStage.show();
