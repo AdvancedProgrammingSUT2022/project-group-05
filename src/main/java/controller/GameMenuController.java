@@ -1,6 +1,7 @@
 package controller;
 
 import model.game.City;
+import model.game.CityName;
 import model.game.Civilization;
 import model.improvement.Improvement;
 import model.map.FogOfWar;
@@ -13,6 +14,8 @@ import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import static view.enums.Entity.*;
@@ -24,6 +27,7 @@ public class GameMenuController {
     private int currentTurn;
     private int currentYear;
     private CivilizationController currentCivilizationController;
+    private ArrayList<String> cityNames;
 
 
     //singleton
@@ -31,6 +35,7 @@ public class GameMenuController {
 
     private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
         this.civilizationCount = civilizationCount;
+        this.cityNames = CityName.getCityNames();
 
         this.currentTurn = -1;
         this.currentYear = -1;
@@ -52,6 +57,13 @@ public class GameMenuController {
         instance = null;
     }
     // end of singleton design pattern
+
+    public String getRandomCityName() {
+        Collections.shuffle(this.cityNames);
+        String cityName = this.cityNames.get(0);
+        this.cityNames.remove(0);
+        return cityName;
+    }
 
     public String nextCivilization() {
         if (currentTurn > -1)
@@ -339,7 +351,7 @@ public class GameMenuController {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
         }
-        return UnitController.getInstance().unitFoundCity(cityName);
+        return UnitController.getInstance().unitFoundCity();
     }
 
 

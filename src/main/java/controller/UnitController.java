@@ -22,6 +22,8 @@ import model.unit.soldier.ranged.siege.Siege;
 import org.w3c.dom.ranges.Range;
 import utility.RandomGenerator;
 
+import java.util.ArrayList;
+
 public class UnitController{
     private final Unit unit;
 
@@ -306,12 +308,12 @@ public class UnitController{
         return Responses.UNIT_DELETED.getResponse();
     }
 
-    public String unitFoundCity(String cityName) {
+    public String unitFoundCity() {
         if (!(this.unit instanceof Settler))
             return Responses.UNIT_NOT_SETTLER.getResponse();
 
         Settler settler = (Settler) this.unit;
-        settler.foundCity(cityName);
+        settler.foundCity(GameMenuController.getInstance().getRandomCityName());
         unit.getCivilization().removeUnit(this.unit);
 
         return Responses.CITY_FOUNDED.getResponse();
