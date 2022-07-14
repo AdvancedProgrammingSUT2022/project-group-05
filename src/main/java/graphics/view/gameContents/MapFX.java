@@ -1,11 +1,13 @@
 package graphics.view.gameContents;
 
+import controller.GameMenuController;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
+import model.map.FogOfWar;
 import model.map.Map;
 
 public class MapFX extends Pane {
@@ -13,13 +15,15 @@ public class MapFX extends Pane {
     private static double xDragged;
     private static double yDragged;
 
+    public static TileFX[][] tileFXES = new TileFX[100][100];
+
     public static MapFX getInstance () {
         if (instance == null) {
             instance = new MapFX();
             int mapSize = Map.getInstance().getSizeOfMap();
             for (int i = 0; i < mapSize; i++) {
                 for (int j = 0; j < mapSize; j++) {
-                    new TileFX(instance, Map.getInstance().getTileFromMap(i, j));
+                   tileFXES[i][j] =  new TileFX(instance, Map.getInstance().getTileFromMap(i, j));
                 }
             }
             instance.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -56,5 +60,15 @@ public class MapFX extends Pane {
             });
         }
         return instance;
+    }
+
+    public void updateMapTextures () {
+        FogOfWar.updateFogOfWar(GameMenuController.getInstance().getCurrentCivilizationController().getCivilization());
+        int mapSize = Map.getInstance().getSizeOfMap();
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize; j++) {
+                tileFXES[i][j].updateTexture();
+            }
+        }
     }
 }
