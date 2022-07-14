@@ -1,5 +1,9 @@
 package graphics.view.menus;
 
+import controller.UserDatabaseController;
+import graphics.view.ClientManager;
+import graphics.view.popUp.Error;
+import graphics.view.popUp.PopUp;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -7,9 +11,11 @@ import javafx.scene.layout.Pane;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
+import model.User;
 
 public class LoginMenu extends Pane{
     public LoginMenu () {
+        Pane temp = this;
 
         //OBJECTS
         TextFieldOne username = new TextFieldOne("username", StaticFonts.SeqoeLoad(20), Pos.CENTER,
@@ -29,21 +35,36 @@ public class LoginMenu extends Pane{
         login.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String usernameGot = username.getText();
-                String passwordGot = password.getText();
-                //TODO... if correct open main menu with logged in user
+                String usernameText = username.getText();
+                String passwordText = password.getText();
+
+                User user = UserDatabaseController.getUserByUsername(usernameText);
+                if (user == null)
+                {
+                    new PopUp(temp, new Error("username doesn't exist"));
+                    return;
+                }
+
+                if (!user.getPassword().equals(passwordText))
+                {
+                    new PopUp(temp, new Error("username and password don't match"));
+                    return;
+                }
+
+                ClientManager.getInstance().setMainUser(user);
+                ClientManager.getInstance().setPane(new MainMenu());
             }
         });
         signUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... open register menu
+                ClientManager.getInstance().setPane(new RegisterMenu());
             }
         });
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO Exit
+                System.exit(0);
             }
         });
     }

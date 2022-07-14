@@ -1,6 +1,12 @@
 package graphics.view.menus;
 
+import controller.Responses;
+import controller.UserDatabaseController;
+import graphics.view.ClientManager;
 import graphics.view.ErrorBox;
+import graphics.view.popUp.Error;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.Successful;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -8,10 +14,12 @@ import javafx.scene.layout.Pane;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
+import main.Main;
+import model.User;
 
 public class ProfileMenu extends Pane{
     public ProfileMenu () {
-        Pane menu = new Pane();
+        Pane temp = this;
 
         //OBJECTS
         TextFieldOne oldPassword = new TextFieldOne("old password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
@@ -38,31 +46,75 @@ public class ProfileMenu extends Pane{
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String oldPass = oldPassword.getText();
-                String newPass = newPassword.getText();
-                String repeatPass = repeatPassword.getText();
-                //TODO... changing password
+                String oldPasswordText = oldPassword.getText();
+                String newPasswordText = newPassword.getText();
+                String repeatNewPasswordText = repeatPassword.getText();
+
+                if (!ClientManager.getInstance().getMainUser().getPassword().equals(oldPasswordText))
+                {
+                    new PopUp(temp, new Error("current password is incorrect"));
+                    return;
+                }
+
+                if (!newPasswordText.equals(repeatNewPasswordText))
+                {
+                    new PopUp(temp, new Error("new password and repeat don't match"));
+                    return;
+                }
+
+                if (newPasswordText.length() < 8)
+                {
+                    new PopUp(temp, new Error("password must be at least 8 characters"));
+                    return;
+                }
+
+                if (oldPasswordText.equals(newPasswordText))
+                {
+                    new PopUp(temp, new Error("new password can't be the same as old password"));
+                    return;
+                }
+
+                UserDatabaseController.changePassword(ClientManager.getInstance().getMainUser(), newPasswordText);
+                ClientManager.getInstance().updateMainUser();
+
+                new PopUp(temp, new Successful(Responses.PASSWORD_CHANGED.getResponse()));
             }
         });
         changeNickname.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String newNick = newNickname.getText();
-                //TODO... changing nickname
+                String newNicknameText = newNickname.getText();
+
+                User previousUsernameHolder = UserDatabaseController.getUserByNickname(newNicknameText);
+
+                if (ClientManager.getInstance().getMainUser().getNickname().equals(newNicknameText))
+                {
+                    new PopUp(temp, new Error("old and new nickname can't be the same"));
+                    return;
+                }
+
+                if (previousUsernameHolder != null)
+                {
+                    new PopUp(temp, new Error("nickname already taken"));
+                    return;
+                }
+
+                UserDatabaseController.changeNickname(ClientManager.getInstance().getMainUser(), newNicknameText);
+                ClientManager.getInstance().updateMainUser();
+
+                new PopUp(temp, new Successful(Responses.NICKNAME_CHANGED.getResponse()));
             }
         });
         changePicture.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... nothing yet
+                new PopUp(temp, new Error("not implemented yet :("));
             }
         });
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //nemoone error box (TExt erroe va oon menu i ke gharae toosh bashe ro voroodi migitre)
-                ErrorBox.getErrorBox("ERROR: aghab nadarim", menu);
-                //TODO... opening main menu
+                ClientManager.getInstance().setPane(new MainMenu());
             }
         });
     }
