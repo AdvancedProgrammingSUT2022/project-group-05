@@ -1,16 +1,23 @@
 package graphics.view.menus;
 
+import controller.UserDatabaseController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
+import graphics.view.PaneChanger;
+import graphics.view.popUp.Error;
+import graphics.view.popUp.PopUp;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.User;
 
 public class RegisterMenu extends Pane{
     public RegisterMenu () {
-        //OBJECTs
+        Pane temp = this;
+
+        //OBJECTS
         TextFieldOne username = new TextFieldOne("username", StaticFonts.SeqoeLoad(20), Pos.CENTER,
                 960, 400, 400, 30, this);
         TextFieldOne password = new TextFieldOne("password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
@@ -30,17 +37,39 @@ public class RegisterMenu extends Pane{
         signUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String usernameGot = username.getText();
-                String passwordGot = password.getText();
-                String repeatPasswordGot = repeatPassword.getText();
-                String nicknameGot = nickname.getText();
-                //TODO... handling register and if true getting back to login menu
+                String usernameText = username.getText();
+                String passwordText = password.getText();
+                String repeatPasswordText = repeatPassword.getText();
+                String nicknameText = nickname.getText();
+
+                User previousUser = UserDatabaseController.getUserByUsername(usernameText);
+
+                if (previousUser != null)
+                {
+                    new PopUp(temp, new Error("username already taken"));
+                    return;
+                }
+
+                if (!passwordText.equals(repeatPasswordText))
+                {
+                    new PopUp(temp, new Error("password and repeat don't match"));
+                    return;
+                }
+
+                if (passwordText.length() <= 8)
+                {
+                    new PopUp(temp, new Error("password must be at least 8 characters"));
+                    return;
+                }
+
+                User user = new User(usernameText, nicknameText, passwordText, ""); //TODO image address
+                UserDatabaseController.addUser(user);
             }
         });
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //TODO... opening login menu
+                PaneChanger.getInstance().setPane(new LoginMenu());
             }
         });
     }

@@ -15,6 +15,7 @@ public class Main extends Application {
 
     public static HashMap<String, Pane> panes = new HashMap<>();
     public static Stage mainStage;
+    public static Scene mainScene;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -32,13 +33,14 @@ public class Main extends Application {
         stage.setHeight(1080);
         stage.setFullScreen(true);
         mainStage = stage;
+        mainScene = new Scene(panes.get("loginMenuLogin"));
         showMenu("loginMenuLogin");
     }
 
     public static void showMenu(String menuName) {
         Pane thisPane = panes.get(menuName);
-        Scene thisScene = new Scene(thisPane);
-        mainStage.setScene(thisScene);
+        mainScene.setRoot(thisPane);
+        mainStage.setScene(mainScene);
         mainStage.show();
     }
 

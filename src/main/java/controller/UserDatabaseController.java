@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UserDatabaseController {
 
-    private void updateDatabase(ArrayList<HashMap<String, String>> users) {
+    private static void updateDatabase(ArrayList<HashMap<String, String>> users) {
         try {
             FileWriter writer = new FileWriter("database/usersDatabase.json");
             writer.write(new Gson().toJson(users));
@@ -36,7 +36,7 @@ public class UserDatabaseController {
         }
     }
 
-    private int getUserIndexByUsername(String username) {
+    private static int getUserIndexByUsername(String username) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("username").equals(username)) {
@@ -46,7 +46,7 @@ public class UserDatabaseController {
         return -1;
     }
 
-    public void addUser(User newUser) { // add new user to database
+    public static void addUser(User newUser) { // add new user to database
         ArrayList<HashMap<String, String>> users = loadDatabase();
         HashMap<String, String> userNew = new HashMap<>();
         userNew.put("username", newUser.getUsername());
@@ -55,10 +55,10 @@ public class UserDatabaseController {
         userNew.put("score", "" + newUser.getScore());
         userNew.put("image", newUser.getImageAddress());
         users.add(userNew);
-        this.updateDatabase(users);
+        updateDatabase(users);
     }
 
-    public void removeUser(User user) {
+    public static void removeUser(User user) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
         HashMap<String, String> oldUser = new HashMap<>();
         oldUser.put("username", user.getUsername());
@@ -67,21 +67,21 @@ public class UserDatabaseController {
         oldUser.put("score", "" + user.getScore());
         oldUser.put("image", user.getImageAddress());
         users.remove(oldUser);
-        this.updateDatabase(users);
+        updateDatabase(users);
     }
 
-    public void changeNickname(User user, String newNickname) {
+    public static void changeNickname(User user, String newNickname) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
-        int userIndex = this.getUserIndexByUsername(user.getUsername());
+        int userIndex = getUserIndexByUsername(user.getUsername());
         users.get(userIndex).put("nickname", newNickname);
-        this.updateDatabase(users);
+        updateDatabase(users);
     }
 
-    public void changePassword(User user, String newPassword) {
+    public static void changePassword(User user, String newPassword) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
-        int userIndex = this.getUserIndexByUsername(user.getUsername());
+        int userIndex = getUserIndexByUsername(user.getUsername());
         users.get(userIndex).put("password", newPassword);
-        this.updateDatabase(users);
+        updateDatabase(users);
     }
 
     public static User getUserByUsername(String username) {
@@ -118,11 +118,11 @@ public class UserDatabaseController {
         return nicknames;
     }
 
-    public void changeImage(User user, String newImageAddress) {
+    public static void changeImage(User user, String newImageAddress) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
-        int userIndex = this.getUserIndexByUsername(user.getUsername());
+        int userIndex = getUserIndexByUsername(user.getUsername());
         users.get(userIndex).put("image", newImageAddress);
-        this.updateDatabase(users);
+        updateDatabase(users);
     }
 
 }
