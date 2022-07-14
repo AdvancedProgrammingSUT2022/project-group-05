@@ -2,6 +2,8 @@ package graphics.view.gameContents;
 
 import graphics.objects.buttons.ButtonTwo;
 import graphics.statics.StaticFonts;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.TileInfo;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -73,6 +75,12 @@ public class TileMenu extends Pane {
             }
         });
 
+        tileInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                new PopUp((Pane)TileMenu.this.getParent(), new TileInfo(MapFX.getFirstSelectedTile().getTile()));
+            }
+        });
         //TODO other functions
 
         this.setLayoutX(960 - 4*bSize);
