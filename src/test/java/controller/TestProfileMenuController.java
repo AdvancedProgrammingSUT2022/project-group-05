@@ -22,7 +22,7 @@ public class TestProfileMenuController {
 
     @BeforeEach
     public void setup() {
-        user = new User("u","n", "p");
+        user = new User("u","n", "p", null);
         profileMenuController = new ProfileMenuController();
         command = new HashMap<>();
         command.put(NICKNAME.getKey(), "ni");

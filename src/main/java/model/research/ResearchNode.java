@@ -1,11 +1,12 @@
 package model.research;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static model.research.ResearchStatus.*;
 
 //This class represents a node in the ResearchTree
-public class ResearchNode{
+public class ResearchNode implements Serializable {
     private ResearchStatus status;
 
     private final Research research;

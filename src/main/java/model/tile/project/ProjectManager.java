@@ -4,7 +4,10 @@ import model.improvement.Improvement;
 import model.tile.Feature;
 import model.tile.Route;
 
-public class ProjectManager{
+import javax.sql.rowset.serial.SerialArray;
+import java.io.Serializable;
+
+public class ProjectManager implements Serializable {
     private int delay;
 
     private Improvement improvementProject;

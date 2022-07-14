@@ -10,10 +10,12 @@ import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 import utility.RandomGenerator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class City {
+
+public class City implements Serializable {
     private ArrayList<Object> productionInQueue = new ArrayList<>();
     private Object productionInProgress;
 

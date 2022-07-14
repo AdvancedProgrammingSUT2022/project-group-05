@@ -1,8 +1,10 @@
 package model.research;
 
+import java.io.Serializable;
+
 import static model.research.ResearchStatus.*;
 
-public class ResearchTree{
+public class ResearchTree implements Serializable {
     private final ResearchNode root;
     private Research currentResearch;
     private int researchPoints;

@@ -1,15 +1,19 @@
 package model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String username;
     private String nickname;
     private String password;
+    private String imageAddress;
     private int score;
 
-    public User(String username, String nickname, String password) {
+    public User(String username, String nickname, String password, String imageAddress) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
+        this.imageAddress = null; //TODO set a default image for registration
         this.score = 0;
     }
 
@@ -30,6 +34,10 @@ public class User {
         this.score = score;
     }
 
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
+    }
+
     //GETTERS
     public String getUsername() {
         return this.username;
@@ -45,5 +53,9 @@ public class User {
 
     public int getScore() {
         return this.score;
+    }
+
+    public String getImageAddress() {
+        return imageAddress;
     }
 }
