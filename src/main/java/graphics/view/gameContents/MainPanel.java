@@ -25,18 +25,18 @@ public class MainPanel extends Pane {
         background.setFill(Color.WHITE);
         this.getChildren().add(background);
 
-        gold = new LabelTwo("GOLD : ", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        gold = new LabelTwo("GOLD : ", StaticFonts.segoeLoad(10), Pos.CENTER,
                 50, 15, 100, 30, this);
-        happiness = new LabelTwo("HAPP : ", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        happiness = new LabelTwo("HAPP : ", StaticFonts.segoeLoad(10), Pos.CENTER,
                 150, 15, 100, 30, this);
-        research = new LabelTwo("RESEARCH : ", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        research = new LabelTwo("RESEARCH : ", StaticFonts.segoeLoad(10), Pos.CENTER,
                 250, 15, 100, 30, this);
 
-        researchPanel = new ButtonOne("RESEARCH", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        researchPanel = new ButtonOne("RESEARCH", StaticFonts.segoeLoad(20), Pos.CENTER,
                 75, 50, 150, 40, this);
-        setting = new ButtonOne("SETTING", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        setting = new ButtonOne("SETTING", StaticFonts.segoeLoad(20), Pos.CENTER,
                 225, 50, 150, 40, this);
-        endTurn = new ButtonOne("END TURN", StaticFonts.SeqoeLoad(24), Pos.CENTER,
+        endTurn = new ButtonOne("END TURN", StaticFonts.segoeLoad(24), Pos.CENTER,
                 150, 90, 300, 40, this);
 
         this.setLayoutX(960 - background.getWidth()/2);

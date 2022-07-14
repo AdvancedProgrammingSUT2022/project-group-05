@@ -18,17 +18,17 @@ public class LoginMenu extends Pane{
         Pane temp = this;
 
         //OBJECTS
-        TextFieldOne username = new TextFieldOne("username", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne username = new TextFieldOne("username", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 450, 400, 30, this);
-        TextFieldOne password = new TextFieldOne("password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne password = new TextFieldOne("password", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 500, 400, 30, this);
-        ButtonOne login = new ButtonOne("LOGIN", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        ButtonOne login = new ButtonOne("LOGIN", StaticFonts.segoeLoad(30), Pos.CENTER,
                 960, 600, 300, 50, this);
 
-        ButtonOne signUp = new ButtonOne("SIGN UP", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        ButtonOne signUp = new ButtonOne("SIGN UP", StaticFonts.segoeLoad(30), Pos.CENTER,
                 960, 700, 300, 50, this);
 
-        ButtonOne exit = new ButtonOne("EXIT", StaticFonts.SeqoeLoad(15), Pos.CENTER,
+        ButtonOne exit = new ButtonOne("EXIT", StaticFonts.segoeLoad(15), Pos.CENTER,
                 960, 900, 100, 50, this);
 
         //FUNCTIONS

@@ -13,15 +13,15 @@ import graphics.statics.StaticFonts;
 public class MainMenu extends Pane{
     public MainMenu () {
         //OBJECTS
-        ButtonOne startGame = new ButtonOne("NEW GAME", StaticFonts.SeqoeLoad(60), Pos.CENTER,
+        ButtonOne startGame = new ButtonOne("NEW GAME", StaticFonts.segoeLoad(60), Pos.CENTER,
                 960, 200, 600, 80, this);
-        ButtonOne scoreBoard = new ButtonOne("SCOREBOARD", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        ButtonOne scoreBoard = new ButtonOne("SCOREBOARD", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 650, 200, 50, this);
-        ButtonOne profile = new ButtonOne("PROFILE", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        ButtonOne profile = new ButtonOne("PROFILE", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 710, 200, 50, this);
-        ButtonOne chat = new ButtonOne("CHAT", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        ButtonOne chat = new ButtonOne("CHAT", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 770, 200, 50, this);
-        ButtonOne logout = new ButtonOne("LOGOUT", StaticFonts.SeqoeLoad(15), Pos.CENTER,
+        ButtonOne logout = new ButtonOne("LOGOUT", StaticFonts.segoeLoad(15), Pos.CENTER,
                 960, 900, 100, 50, this);
 
 
