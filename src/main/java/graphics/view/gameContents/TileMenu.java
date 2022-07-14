@@ -38,22 +38,31 @@ public class TileMenu extends Pane {
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
         this.getChildren().add(background);
 
-        civilizationInfo = new ButtonTwo("CivInf", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        civilizationInfo = new ButtonTwo("CivInf", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2, bSize/2, bSize, bSize, this);
-        cityInfo = new ButtonTwo("CitInf", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        cityInfo = new ButtonTwo("CitInf", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize, bSize/2, bSize, bSize, this);
-        tileInfo = new ButtonTwo("TilInf", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        tileInfo = new ButtonTwo("TilInf", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize * 2, bSize/2, bSize, bSize, this);
-        civInfo = new ButtonTwo("CivInf", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        civInfo = new ButtonTwo("CivInf", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize * 3, bSize/2, bSize, bSize, this);
-        solInfo = new ButtonTwo("SolInf", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        solInfo = new ButtonTwo("SolInf", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize * 4, bSize/2, bSize, bSize, this);
-        selCiv = new ButtonTwo("SelCiv", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        selCiv = new ButtonTwo("SelCiv", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize * 5, bSize/2, bSize, bSize, this);
-        selSol = new ButtonTwo("SelSol", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        selSol = new ButtonTwo("SelSol", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize * 6, bSize/2, bSize, bSize, this);
-        exit = new ButtonTwo("EXIT", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        exit = new ButtonTwo("EXIT", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize * 7, bSize/2, bSize, bSize, this);
+
+        //Functions
+
+        civilizationInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
 
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

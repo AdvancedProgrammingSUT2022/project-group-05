@@ -1,6 +1,7 @@
 package controller;
 
 import model.game.City;
+import model.game.CityName;
 import model.game.Civilization;
 import model.improvement.Improvement;
 import model.map.FogOfWar;
@@ -13,6 +14,8 @@ import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import static view.enums.Entity.*;
@@ -24,6 +27,7 @@ public class GameMenuController {
     private int currentTurn;
     private int currentYear;
     private CivilizationController currentCivilizationController;
+    private ArrayList<String> cityNames;
 
 
     //singleton
@@ -31,6 +35,7 @@ public class GameMenuController {
 
     private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
         this.civilizationCount = civilizationCount;
+        this.cityNames = CityName.getCityNames();
 
         this.currentTurn = -1;
         this.currentYear = -1;
@@ -52,6 +57,13 @@ public class GameMenuController {
         instance = null;
     }
     // end of singleton design pattern
+
+    public String getRandomCityName() {
+        Collections.shuffle(this.cityNames);
+        String cityName = this.cityNames.get(0);
+        this.cityNames.remove(0);
+        return cityName;
+    }
 
     public String nextCivilization() {
         if (currentTurn > -1)
@@ -77,91 +89,91 @@ public class GameMenuController {
     }
 
     //INFO COMMANDS
-    public String infoResearch(HashMap<String, String> command) {
+    public String infoResearch() {
         return currentCivilizationController.showResearch();
     }
 
-    public String infoUnits(HashMap<String, String> command) {
+    public String infoUnits() {
         return currentCivilizationController.showUnitsPanel();
     }
 
-    public String infoCities(HashMap<String, String> command) {
+    public String infoCities() {
         return currentCivilizationController.showCitiesPanel();
     }
 
-    public String infoDiplomacy(HashMap<String, String> command) {
+    public String infoDiplomacy() {
         return currentCivilizationController.showDiplomacyPanel();
     }
 
-    public String infoVictory(HashMap<String, String> command) {
+    public String infoVictory() {
         return currentCivilizationController.showVictoryProgress();
     }
 
-    public String infoDemographics(HashMap<String, String> command) {
+    public String infoDemographics() {
         return currentCivilizationController.showDemographic();
     }
 
-    public String infoNotification(HashMap<String, String> command) {
+    public String infoNotification() {
         return currentCivilizationController.showNotificationHistory();
     }
 
-    public String infoMilitary(HashMap<String, String> command) {
+    public String infoMilitary() {
         return currentCivilizationController.showMilitaryOverview();
     }
 
-    public String infoEconomic(HashMap<String, String> command) {
+    public String infoEconomic() {
         return currentCivilizationController.showEconomicOverview();
     }
 
-    public String infoDiplomatic(HashMap<String, String> command) {
+    public String infoDiplomatic() {
         return currentCivilizationController.showDiplomaticOverview();
     }
 
-    public String infoDeals(HashMap<String, String> command) {
+    public String infoDeals() {
         return currentCivilizationController.showTradeHistory();
     }
 
-    public String infoTile(HashMap<String, String> command) {
-        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
-        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
-
-        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
-            return "error: out of bound";
-
-        Tile tile = Map.getInstance().getTileFromMap(x, y);
-
-        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
-
-        return InfoController.getTileInfo(tile);
-    }
-
-    public String infoTileStats(HashMap<String, String> command) {
-        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
-        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
-
-        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
-            return "error: out of bound";
-
-        Tile tile = Map.getInstance().getTileFromMap(x, y);
-
-        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
-
-        return InfoController.getTileStats(tile);
-    }
-
-    public String infoTileProject(HashMap<String, String> command) {
-        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
-        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
-
-        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
-            return "error: out of bound";
-
-        Tile tile = Map.getInstance().getTileFromMap(x, y);
-
-        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
-
-        return InfoController.getTileProjectInfo(tile);
-    }
+//    public String infoTile(HashMap<String, String> command) {
+//        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+//        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+//
+//        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+//            return "error: out of bound";
+//
+//        Tile tile = Map.getInstance().getTileFromMap(x, y);
+//
+//        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
+//
+//        return InfoController.getTileInfo(tile);
+//    }
+//
+//    public String infoTileStats(HashMap<String, String> command) {
+//        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+//        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+//
+//        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+//            return "error: out of bound";
+//
+//        Tile tile = Map.getInstance().getTileFromMap(x, y);
+//
+//        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
+//
+//        return InfoController.getTileStats(tile);
+//    }
+//
+//    public String infoTileProject(HashMap<String, String> command) {
+//        int x = Integer.parseInt(command.get(X_POSITION.getKey()));
+//        int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
+//
+//        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+//            return "error: out of bound";
+//
+//        Tile tile = Map.getInstance().getTileFromMap(x, y);
+//
+//        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
+//
+//        return InfoController.getTileProjectInfo(tile);
+//    }
 
     //SELECT COMMANDS
     public String menuExit(HashMap<String, String> command) {
@@ -339,7 +351,7 @@ public class GameMenuController {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
         }
-        return UnitController.getInstance().unitFoundCity(cityName);
+        return UnitController.getInstance().unitFoundCity();
     }
 
 

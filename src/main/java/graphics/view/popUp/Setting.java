@@ -20,7 +20,7 @@ public class Setting extends Pane {
         background.setFill(Color.WHITE);
         this.getChildren().add(background);
 
-        ExitGame = new ButtonOne("EXIT FROM GAME", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        ExitGame = new ButtonOne("EXIT FROM GAME", StaticFonts.segoeLoad(30), Pos.CENTER,
                 background.getWidth()/2, 100, 300, 50, this);
     }
 }

@@ -1,13 +1,19 @@
 package graphics.view.popUp;
 
+import graphics.objects.buttons.ButtonOne;
+import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticColors;
+import graphics.statics.StaticFonts;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import model.graphicObjects.TextFieldOne;
 
 public class PopUp extends Pane{
     private Pane father;
@@ -49,4 +55,5 @@ public class PopUp extends Pane{
         });
         toZero.play();
     }
+
 }

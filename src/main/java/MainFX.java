@@ -1,35 +1,24 @@
 
-import graphics.view.gameContents.MapFX;
+import graphics.view.ClientManager;
 import graphics.view.menus.*;
-import graphics.view.popUp.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import model.map.Map;
 
 
 public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        MainMenu mainMenu = new MainMenu();
-        ProfileMenu profileMenu = new ProfileMenu();
-        LoginMenu loginMenu = new LoginMenu();
-        ChatMenu chatMenu = new ChatMenu();
-        Pane pane = new Pane();
         primaryStage.setWidth(1920);
         primaryStage.setHeight(1080);
-        Map.updateInstance(5);
-        pane.getChildren().add(MapFX.getInstance());
-        MapFX.getInstance().setLayoutY(300);
-        MapFX.getInstance().setLayoutX(0);
-        Scene scene = new Scene(pane);
-        //new PopUp(pane, new CheatCode());
-
-        primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
+
+        Scene primaryScene = new Scene(new Pane());
+
+        ClientManager.updateInstance(primaryStage, primaryScene);
+        ClientManager.getInstance().setPane(new LoginMenu());
+
         primaryStage.show();
     }
 

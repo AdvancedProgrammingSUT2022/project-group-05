@@ -21,9 +21,9 @@ public class ErrorBox {
         Rectangle background = new Rectangle(0, 0, 600, 150);
         error.getChildren().add(background);
         background.setFill(Color.RED);
-        LabelOne text = new LabelOne(errorText, StaticFonts.SeqoeLoad(25), Pos.CENTER,
+        LabelOne text = new LabelOne(errorText, StaticFonts.segoeLoad(25), Pos.CENTER,
                 300, 40, 400, 50, error);
-        ButtonOne ok = new ButtonOne("OK", StaticFonts.SeqoeLoad(40), Pos.CENTER,
+        ButtonOne ok = new ButtonOne("OK", StaticFonts.segoeLoad(40), Pos.CENTER,
                 300, 120, 80, 50, error);
 
         error.setLayoutX(960 - 300);

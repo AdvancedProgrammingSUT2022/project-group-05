@@ -16,11 +16,11 @@ public class CheatCode extends Pane {
         this.getChildren().add(new Rectangle(600, 300, Color.WHITE));
         this.setPrefHeight(300);
         this.setPrefWidth(600);
-        new LabelOne("CHEAT CODE PANEL", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        new LabelOne("CHEAT CODE PANEL", StaticFonts.segoeLoad(20), Pos.CENTER,
                 300, 75, 200, 60, this);
-        new TextFieldOne("TYPE CODE", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        new TextFieldOne("TYPE CODE", StaticFonts.segoeLoad(30), Pos.CENTER,
                 300, 150, 400, 50, this);
-        new ButtonOne("ACCEPT", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        new ButtonOne("ACCEPT", StaticFonts.segoeLoad(20), Pos.CENTER,
                 300, 225, 200, 40, this);
     }
 }

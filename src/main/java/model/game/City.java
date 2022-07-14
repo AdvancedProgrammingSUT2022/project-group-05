@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 
 public class City implements Serializable {
+
     private ArrayList<Object> productionInQueue = new ArrayList<>();
     private Object productionInProgress;
 
