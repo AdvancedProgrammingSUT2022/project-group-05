@@ -1,5 +1,6 @@
 package graphics.view.gameContents;
 
+import controller.UnitController;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.statics.StaticFonts;
 import javafx.event.EventHandler;
@@ -19,11 +20,11 @@ public class UnitMenu extends Pane{
         if (instance == null) {
             instance = new UnitMenu();
         }
-        instance.selectedUnit = unit;
+        UnitController.updateInstance(unit);
         return instance;
     }
 
-    private Unit selectedUnit = null;
+    private UnitController unitController = UnitController.getInstance();
 
     private Rectangle background;
 
@@ -45,7 +46,7 @@ public class UnitMenu extends Pane{
     private ButtonTwo conquerCity;
 
     private ButtonTwo buildImprovement;
-    private ButtonTwo buildRout;
+    private ButtonTwo buildRoute;
     private ButtonTwo removeFeature;
     private ButtonTwo remove;
     private ButtonTwo repair;
@@ -99,6 +100,134 @@ public class UnitMenu extends Pane{
 
         exit = new ButtonTwo("EXIT", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*9, bSize/2 + bSize, bSize, bSize, this);
+
+        //Functions
+
+        move.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+
+        sleep.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitSleep();
+            }
+        });
+
+        alert.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitAlert();
+            }
+        });
+
+        fortify.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitFortify();
+            }
+        });
+
+        recover.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitRecover();
+            }
+        });
+
+        garrison.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitGarrison();
+            }
+        });
+
+        wake.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitWake();
+            }
+        });
+
+
+
+        cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitCancel();
+            }
+        });
+
+        foundCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitFoundCity();
+            }
+        });
+
+        setupRanged.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitSetupRanged();
+            }
+        });
+
+//        attack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                unitController.unitAttack();
+//            }
+//        });
+
+//        conquerCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                unitController.conquerCity();
+//            }
+//        });
+
+//        buildImprovement.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                unitController.unitBuildImprovement();
+//            }
+//        });
+
+//        buildRoute.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                unitController.unitBuildRoute();
+//            }
+//        });
+
+//
+
+//        remove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//            }
+//        });
+
+        repair.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitRepair();
+            }
+        });
+
+        delete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                unitController.unitDelete();
+            }
+        });
+
+
+
 
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
