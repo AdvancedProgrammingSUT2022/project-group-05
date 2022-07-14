@@ -1,11 +1,21 @@
 package graphics.view.menus;
 
+import controller.GameMenuController;
+import controller.UserDatabaseController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.ClientManager;
+import graphics.view.popUp.CivilizationInfo;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.game.Civilization;
+import model.map.Map;
+
+import java.util.ArrayList;
 
 //TODO add functions
 
@@ -48,5 +58,22 @@ public class LocalGame extends Pane {
                 960, 800, 600, 70, this);
         back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 960, 1000, 100, 50, this);
+
+        createGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //Debugging purposes
+                Map.updateInstance(10);
+                Civilization civilization1 = new Civilization(ClientManager.getInstance().getMainUser(), 0);
+                Civilization civilization2 = new Civilization(UserDatabaseController.getUserByUsername("sam"), 1);
+                ArrayList<Civilization> civilizations = new ArrayList<>();
+                civilizations.add(civilization1);
+                civilizations.add(civilization2);
+                GameMenuController.updateInstance(2, civilizations);
+                ClientManager.getInstance().setPane(new Game(civilization1));
+            }
+        });
+
+
     }
 }

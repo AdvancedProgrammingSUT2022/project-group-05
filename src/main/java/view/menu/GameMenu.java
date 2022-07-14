@@ -35,33 +35,33 @@ public class GameMenu extends Menu {
 
             //INFO COMMANDS
             else if ((command = getHashMap(input, INFO_RESEARCH)) != null)
-                printMessage(GameMenuController.getInstance().infoResearch(command));
+                printMessage(GameMenuController.getInstance().infoResearch());
             else if ((command = getHashMap(input, INFO_UNITS)) != null)
-                printMessage(GameMenuController.getInstance().infoUnits(command));
+                printMessage(GameMenuController.getInstance().infoUnits());
             else if ((command = getHashMap(input, INFO_CITIES)) != null)
-                printMessage(GameMenuController.getInstance().infoCities(command));
+                printMessage(GameMenuController.getInstance().infoCities());
             else if ((command = getHashMap(input, INFO_DIPLOMACY)) != null)
-                printMessage(GameMenuController.getInstance().infoDiplomacy(command));
+                printMessage(GameMenuController.getInstance().infoDiplomacy());
             else if ((command = getHashMap(input, INFO_VICTORY)) != null)
-                printMessage(GameMenuController.getInstance().infoVictory(command));
+                printMessage(GameMenuController.getInstance().infoVictory());
             else if ((command = getHashMap(input, INFO_DEMOGRAPHICS)) != null)
-                printMessage(GameMenuController.getInstance().infoDemographics(command));
+                printMessage(GameMenuController.getInstance().infoDemographics());
             else if ((command = getHashMap(input, INFO_NOTIFICATIONS)) != null)
-                printMessage(GameMenuController.getInstance().infoNotification(command));
+                printMessage(GameMenuController.getInstance().infoNotification());
             else if ((command = getHashMap(input, INFO_MILITARY)) != null)
-                printMessage(GameMenuController.getInstance().infoMilitary(command));
+                printMessage(GameMenuController.getInstance().infoMilitary());
             else if ((command = getHashMap(input, INFO_ECONOMIC)) != null)
-                printMessage(GameMenuController.getInstance().infoEconomic(command));
+                printMessage(GameMenuController.getInstance().infoEconomic());
             else if ((command = getHashMap(input, INFO_DIPLOMATIC)) != null)
-                printMessage(GameMenuController.getInstance().infoDiplomatic(command));
+                printMessage(GameMenuController.getInstance().infoDiplomatic());
             else if ((command = getHashMap(input, INFO_DEALS)) != null)
-                printMessage(GameMenuController.getInstance().infoDeals(command));
-            else if ((command = getHashMap(input, INFO_TILE)) != null)
-                printMessage(GameMenuController.getInstance().infoTile(command));
-            else if ((command = getHashMap(input, INFO_TILE_STATS)) != null)
-                printMessage(GameMenuController.getInstance().infoTileStats(command));
-            else if ((command = getHashMap(input, INFO_TILE_PROJECT)) != null)
-                printMessage(GameMenuController.getInstance().infoTileProject(command));
+                printMessage(GameMenuController.getInstance().infoDeals());
+//            else if ((command = getHashMap(input, INFO_TILE)) != null)
+//                printMessage(GameMenuController.getInstance().infoTile());
+//            else if ((command = getHashMap(input, INFO_TILE_STATS)) != null)
+//                printMessage(GameMenuController.getInstance().infoTileStats());
+//            else if ((command = getHashMap(input, INFO_TILE_PROJECT)) != null)
+//                printMessage(GameMenuController.getInstance().infoTileProject());
 
             //SELECT COMMANDS
             else if ((command = getHashMap(input, SELECT_UNIT_SOLDIER)) != null)

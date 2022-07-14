@@ -31,4 +31,9 @@ public class LabelTwo extends Pane {
         label.setFont(font);
         this.getChildren().add(label);
     }
+
+    public void changeText(String text) {
+        Label label = (Label) this.getChildren().get(1);
+        label.setText(text);
+    }
 }
