@@ -14,6 +14,8 @@ public class Archer extends Ranged {
         this.maxAttackRange = 2;
         this.maxMovement = 2;
         this.requiredResearch = Research.ARCHERY;
+
+        this.textureAddress = "file:src/main/resources/images/units/ranged/Archer/";
     }
 
     @Override

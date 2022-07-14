@@ -1,5 +1,8 @@
 package model.unit;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import model.game.City;
 import model.game.Civilization;
 import model.map.Map;
@@ -45,6 +48,8 @@ public abstract class Unit implements Serializable {
     protected Research requiredResearch;
 
     protected UnitState unitState;
+
+    protected String textureAddress;
 
     public Unit(Civilization civilization, Tile tile) {
         this.civilization = civilization;
@@ -258,5 +263,10 @@ public abstract class Unit implements Serializable {
     }
     public void setRangedStrength(int rangedStrength) {
         this.rangedStrength = rangedStrength;
+    }
+
+    //texture
+    public ImagePattern getTexture () {
+        return new ImagePattern(new Image(textureAddress + "main.png"));
     }
 }

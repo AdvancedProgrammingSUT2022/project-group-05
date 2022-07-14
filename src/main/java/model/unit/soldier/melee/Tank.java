@@ -15,6 +15,8 @@ public class Tank extends Melee implements CanMoveAfterAttacking, model.unit.add
         this.maxAttackRange = 0;
         this.maxMovement = 4;
         this.requiredResearch = Research.COMBUSTION;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Tank/";
     }
 
     @Override

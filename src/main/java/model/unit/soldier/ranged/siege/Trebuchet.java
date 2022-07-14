@@ -19,6 +19,8 @@ public class Trebuchet extends Siege implements NoDefensiveBonus, BonusVsCity, L
         this.maxMovement = 2;
         this.requiredResource = Resource.IRON;
         this.requiredResearch = Research.PHYSICS;
+
+        this.textureAddress = "file:src/main/resources/images/units/siege/Trebuchet/";
     }
 
     @Override

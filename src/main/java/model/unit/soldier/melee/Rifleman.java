@@ -14,6 +14,8 @@ public class Rifleman extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
         this.requiredResearch = Research.RIFLING;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Rifleman/";
     }
 
     @Override

@@ -14,6 +14,8 @@ public class Infantry extends Melee {
         this.maxAttackRange = 0;
         this.maxMovement = 2;
         this.requiredResearch = Research.REPLACEABLE_PARTS;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Infantry/";
     }
 
     @Override

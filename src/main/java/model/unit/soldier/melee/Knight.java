@@ -19,6 +19,8 @@ public class Knight extends Melee implements Mounted, CanMoveAfterAttacking, NoD
         this.maxMovement = 3;
         this.requiredResource = Resource.HORSE;
         this.requiredResearch = Research.CHIVALRY;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Knight/";
     }
 
     @Override

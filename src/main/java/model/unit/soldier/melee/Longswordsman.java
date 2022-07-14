@@ -16,6 +16,8 @@ public class Longswordsman extends Melee {
         this.maxMovement = 3;
         this.requiredResource = Resource.IRON;
         this.requiredResearch = Research.STEEL;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Longswordsman/";
     }
 
     @Override

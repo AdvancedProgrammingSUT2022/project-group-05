@@ -16,6 +16,8 @@ public class Swordsman extends Melee {
         this.maxMovement = 2;
         this.requiredResource = Resource.IRON;
         this.requiredResearch = Research.IRON_WORKING;
+
+        this.textureAddress = "file:src/main/resources/images/units/melee/Swordsman/";
     }
 
     @Override
