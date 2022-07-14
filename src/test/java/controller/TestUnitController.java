@@ -250,12 +250,12 @@ public class TestUnitController {
     //SAM(MAASMAALI)TODO... clean this madfoo'e up
     @Test
     public void attackCityTest() {
-        Civilization civilization1 = new Civilization(new User("a", "a", "a", null), 0);
+        Civilization civilization1 = new Civilization(new User("a", "a", "a", null, 0), 0);
         Tile tile1 = new Tile(0, 0, 6);
         City city1 = new City("Babylon", tile1, civilization1);
         Soldier soldier1 = new Warrior(civilization1, tile1);
 
-        Civilization civilization2 = new Civilization(new User("b", "b", "b", null), 1);
+        Civilization civilization2 = new Civilization(new User("b", "b", "b", null, 0), 1);
         Tile tile2 = new Tile(0, 3, 6);
         Tile tile22 = new Tile(0, 1, 6);
         City city2 = new City("Tehran", tile2, civilization2);

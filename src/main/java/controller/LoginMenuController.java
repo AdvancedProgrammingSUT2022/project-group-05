@@ -17,7 +17,7 @@ public class LoginMenuController {
 
 
     public void createUser(String username, String password, String repeatPassword, String nickname, Pane father) {
-        User user  = new User(username, nickname, password, null);
+        User user  = new User(username, nickname, password, "images/defaultImage.png", 0);
         if (UserDatabaseController.getUserByUsername(user.getUsername()) != null) {
             ErrorBox.getErrorBox("user with username " + user.getUsername() + " already exists", father, true);
         } else if (UserDatabaseController.getUserByNickname(user.getNickname()) != null) {

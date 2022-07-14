@@ -50,7 +50,6 @@ public class LoginMenu extends Pane{
                     new PopUp(temp, new Error("username and password don't match"));
                     return;
                 }
-
                 ClientManager.getInstance().setMainUser(user);
                 ClientManager.getInstance().setPane(new MainMenu());
             }
