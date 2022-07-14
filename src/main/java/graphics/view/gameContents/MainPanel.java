@@ -36,11 +36,11 @@ public class MainPanel extends Pane {
                 + civilization.getResearchTree().getResearchProgressPercentage() + "%", StaticFonts.SeqoeLoad(10), Pos.CENTER,
                 250, 15, 100, 30, this);
 
-        researchPanel = new ButtonOne("RESEARCH", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        researchPanel = new ButtonOne("RESEARCH", StaticFonts.segoeLoad(20), Pos.CENTER,
                 75, 50, 150, 40, this);
-        setting = new ButtonOne("SETTING", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        setting = new ButtonOne("SETTING", StaticFonts.segoeLoad(20), Pos.CENTER,
                 225, 50, 150, 40, this);
-        endTurn = new ButtonOne("END TURN", StaticFonts.SeqoeLoad(24), Pos.CENTER,
+        endTurn = new ButtonOne("END TURN", StaticFonts.segoeLoad(24), Pos.CENTER,
                 150, 90, 300, 40, this);
 
         endTurn.setOnMouseClicked(new EventHandler<MouseEvent>() {
