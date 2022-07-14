@@ -14,15 +14,13 @@ import javafx.scene.shape.Rectangle;
 public class TileMenu extends Pane {
     private static TileMenu instance = null;
     private static int bSize = 60;
-    public static TileMenu getInstance(TileFX tileFX) {
+    public static TileMenu getInstance() {
         if (instance == null) {
             instance = new TileMenu();
         }
-        instance.selectedTile = tileFX;
         return instance;
     }
 
-    private TileFX selectedTile = null;
     private Rectangle background;
     private ButtonTwo civilizationInfo;
     private ButtonTwo cityInfo;
@@ -34,6 +32,7 @@ public class TileMenu extends Pane {
     private ButtonTwo exit;
 
     private TileMenu () {
+        this.setVisible(false);
         background = new Rectangle(bSize*8, bSize);
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
         this.getChildren().add(background);
@@ -68,6 +67,8 @@ public class TileMenu extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 setVisible(false);
+                MapFX.getFirstSelectedTile().setSelectedDisable();
+                MapFX.setFirstSelectedTile(null);
                 //can add animation here
             }
         });

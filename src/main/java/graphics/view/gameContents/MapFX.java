@@ -17,6 +17,9 @@ public class MapFX extends Pane {
 
     public static TileFX[][] tileFXES = new TileFX[100][100];
 
+    private static TileFX firstSelectedTile = null;
+    private static TileFX secondSelectedTile = null;
+
     public static MapFX getInstance () {
         if (instance == null) {
             instance = new MapFX();
@@ -51,7 +54,7 @@ public class MapFX extends Pane {
                         }
                     }
                     else {
-                        if (instance.getScaleX() > 0.75) {
+                        if (instance.getScaleX() > 0.3) {
                             instance.setScaleX(instance.getScaleX() / 1.03);
                             instance.setScaleY(instance.getScaleY() / 1.03);
                         }
@@ -60,6 +63,22 @@ public class MapFX extends Pane {
             });
         }
         return instance;
+    }
+
+    public static void setFirstSelectedTile(TileFX firstSelectedTile) {
+        MapFX.firstSelectedTile = firstSelectedTile;
+    }
+
+    public static void setSecondSelectedTile(TileFX secondSelectedTile) {
+        MapFX.secondSelectedTile = secondSelectedTile;
+    }
+
+    public static TileFX getFirstSelectedTile() {
+        return firstSelectedTile;
+    }
+
+    public static TileFX getSecondSelectedTile() {
+        return secondSelectedTile;
     }
 
     public void updateMapTextures () {
