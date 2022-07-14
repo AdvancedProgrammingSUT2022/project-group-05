@@ -3,7 +3,6 @@ package graphics.view.menus;
 import controller.Responses;
 import controller.UserDatabaseController;
 import graphics.view.ClientManager;
-import graphics.view.ErrorBox;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
@@ -14,7 +13,6 @@ import javafx.scene.layout.Pane;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
-import main.Main;
 import model.User;
 
 public class ProfileMenu extends Pane{
@@ -22,24 +20,24 @@ public class ProfileMenu extends Pane{
         Pane temp = this;
 
         //OBJECTS
-        TextFieldOne oldPassword = new TextFieldOne("old password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne oldPassword = new TextFieldOne("old password", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 300, 400, 30, this);
-        TextFieldOne newPassword = new TextFieldOne("new password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne newPassword = new TextFieldOne("new password", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 350, 400, 30, this);
-        TextFieldOne repeatPassword = new TextFieldOne("repeat password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne repeatPassword = new TextFieldOne("repeat password", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 400, 400, 30, this);
-        ButtonOne changePassword = new ButtonOne("CHANGE PASSWORD", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        ButtonOne changePassword = new ButtonOne("CHANGE PASSWORD", StaticFonts.segoeLoad(30), Pos.CENTER,
                 960, 450, 400, 50, this);
 
-        TextFieldOne newNickname = new TextFieldOne("new nickname", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne newNickname = new TextFieldOne("new nickname", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 550, 400, 30, this);
-        ButtonOne changeNickname = new ButtonOne("CHANGE NICKNAME", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        ButtonOne changeNickname = new ButtonOne("CHANGE NICKNAME", StaticFonts.segoeLoad(30), Pos.CENTER,
                 960, 600, 400, 50, this);
 
-        ButtonOne changePicture = new ButtonOne("CHANGE PICTURE", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        ButtonOne changePicture = new ButtonOne("CHANGE PICTURE", StaticFonts.segoeLoad(30), Pos.CENTER,
                 960, 700, 400, 50, this);
 
-        ButtonOne back = new ButtonOne("back", StaticFonts.SeqoeLoad(15), Pos.CENTER,
+        ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 100, 1000, 100, 50, this);
 
         //FUNCTIONS

@@ -18,19 +18,19 @@ public class RegisterMenu extends Pane{
         Pane temp = this;
 
         //OBJECTS
-        TextFieldOne username = new TextFieldOne("username", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne username = new TextFieldOne("username", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 400, 400, 30, this);
-        TextFieldOne password = new TextFieldOne("password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne password = new TextFieldOne("password", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 450, 400, 30, this);
-        TextFieldOne repeatPassword = new TextFieldOne("repeat password", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne repeatPassword = new TextFieldOne("repeat password", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 500, 400, 30, this);
-        TextFieldOne nickname = new TextFieldOne("nickname", StaticFonts.SeqoeLoad(20), Pos.CENTER,
+        TextFieldOne nickname = new TextFieldOne("nickname", StaticFonts.segoeLoad(20), Pos.CENTER,
                 960, 550, 400, 30, this);
 
-        ButtonOne signUp = new ButtonOne("SIGN UP", StaticFonts.SeqoeLoad(30), Pos.CENTER,
+        ButtonOne signUp = new ButtonOne("SIGN UP", StaticFonts.segoeLoad(30), Pos.CENTER,
                 960, 650, 300, 50, this);
 
-        ButtonOne back = new ButtonOne("back", StaticFonts.SeqoeLoad(15), Pos.CENTER,
+        ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 100, 1000, 100, 50, this);
 
         //FUNCTIONS

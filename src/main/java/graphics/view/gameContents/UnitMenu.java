@@ -57,47 +57,47 @@ public class UnitMenu extends Pane{
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
         this.getChildren().add(background);
 
-        move = new ButtonTwo("Move", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        move = new ButtonTwo("Move", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2, bSize/2, bSize, bSize, this);
-        sleep = new ButtonTwo("Sleep", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        sleep = new ButtonTwo("Sleep", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize, bSize/2, bSize, bSize, this);
-        alert = new ButtonTwo("Alert", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        alert = new ButtonTwo("Alert", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*2, bSize/2, bSize, bSize, this);
-        fortify = new ButtonTwo("Fortify", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        fortify = new ButtonTwo("Fortify", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*3, bSize/2, bSize, bSize, this);
-        recover = new ButtonTwo("Recover", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        recover = new ButtonTwo("Recover", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*4, bSize/2, bSize, bSize, this);
-        garrison = new ButtonTwo("Garrison", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        garrison = new ButtonTwo("Garrison", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*5, bSize/2, bSize, bSize, this);
-        wake = new ButtonTwo("Wake", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        wake = new ButtonTwo("Wake", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*6, bSize/2, bSize, bSize, this);
-        cancel = new ButtonTwo("Cancel", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        cancel = new ButtonTwo("Cancel", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*7, bSize/2, bSize, bSize, this);
-        delete = new ButtonTwo("Delete", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        delete = new ButtonTwo("Delete", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*8, bSize/2, bSize, bSize, this);
-        foundCity = new ButtonTwo("FoundCity", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        foundCity = new ButtonTwo("FoundCity", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*9, bSize/2, bSize, bSize, this);
 
-        setupRanged = new ButtonTwo("SetRanged", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        setupRanged = new ButtonTwo("SetRanged", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2, bSize/2 + bSize, bSize, bSize, this);
-        attack = new ButtonTwo("Attack", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        attack = new ButtonTwo("Attack", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize, bSize/2 + bSize, bSize, bSize, this);
-        attackCity = new ButtonTwo("AttCity", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        attackCity = new ButtonTwo("AttCity", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*2, bSize/2 + bSize, bSize, bSize, this);
-        conquerCity = new ButtonTwo("Conquer", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        conquerCity = new ButtonTwo("Conquer", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*3, bSize/2 + bSize, bSize, bSize, this);
-        buildImprovement = new ButtonTwo("BuildImp", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        buildImprovement = new ButtonTwo("BuildImp", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*4, bSize/2 + bSize, bSize, bSize, this);
-        buildRout = new ButtonTwo("BuildRoute", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        buildRout = new ButtonTwo("BuildRoute", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*5, bSize/2 + bSize, bSize, bSize, this);
-        removeFeature = new ButtonTwo("RemFeature", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        removeFeature = new ButtonTwo("RemFeature", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*6, bSize/2 + bSize, bSize, bSize, this);
-        remove = new ButtonTwo("Remove", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        remove = new ButtonTwo("Remove", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*7, bSize/2 + bSize, bSize, bSize, this);
-        repair = new ButtonTwo("Repair", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        repair = new ButtonTwo("Repair", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*8, bSize/2 + bSize, bSize, bSize, this);
 
-        exit = new ButtonTwo("EXIT", StaticFonts.SeqoeLoad(10), Pos.CENTER,
+        exit = new ButtonTwo("EXIT", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize*9, bSize/2 + bSize, bSize, bSize, this);
 
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
