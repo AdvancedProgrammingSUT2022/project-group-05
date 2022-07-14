@@ -31,20 +31,18 @@ public class ClientManager{
         mainStage.setScene(mainScene);
     }
 
-    public void setMainUser(User mainUser)
-    {
+    public void setMainUser(User mainUser) {
         this.mainUser =  mainUser;
     }
 
-    public void updateMainUser()
-    {
+    public void updateMainUser() {
         if (mainUser == null) return;
         this.mainUser = UserDatabaseController.getUserByUsername(mainUser.getUsername());
     }
 
     //GETTER
-    public User getMainUser()
-    {
+    public User getMainUser() {
+        this.updateMainUser();
         return this.mainUser;
     }
 

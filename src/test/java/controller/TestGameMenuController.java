@@ -42,11 +42,11 @@ public class TestGameMenuController{
 
         Map.updateInstance(6);
 
-        civilization1 = new Civilization(new User("a", "a", "a", null), 0);
+        civilization1 = new Civilization(new User("a", "a", "a", null, 0), 0);
         tile1 = new Tile(0, 0, 6);
         city1 = new City("Babylon", tile1, civilization1);
 
-        civilization2 = new Civilization(new User("b", "b", "b", null), 1);
+        civilization2 = new Civilization(new User("b", "b", "b", null, 0), 1);
         tile2 = new Tile(5, 5, 6);
         city2 = new City("London", tile2, civilization2);
 

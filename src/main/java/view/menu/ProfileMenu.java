@@ -127,7 +127,6 @@ public class ProfileMenu {
             public void handle(MouseEvent event) {
                 File selectedFile = fileChooser.showOpenDialog(Main.mainStage);
                 String newImageAddress = selectedFile.getPath();
-                System.out.println(newImageAddress);
                 profileMenuController.changeProfileImage(newImageAddress, menu);
             }
         });

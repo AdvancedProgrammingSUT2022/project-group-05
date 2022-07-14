@@ -13,7 +13,10 @@ import javafx.scene.layout.Pane;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
+import javafx.stage.FileChooser;
 import model.User;
+
+import java.io.File;
 
 public class ProfileMenu extends Pane{
     public ProfileMenu () {
@@ -38,7 +41,7 @@ public class ProfileMenu extends Pane{
                 960, 700, 400, 50, this);
 
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
-                100, 1000, 100, 50, this);
+                960, 750, 100, 50, this);
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -106,7 +109,10 @@ public class ProfileMenu extends Pane{
         changePicture.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                new PopUp(temp, new Error("not implemented yet :("));
+                FileChooser fileChooser = new FileChooser();
+                File selectedFile = fileChooser.showOpenDialog(ClientManager.getInstance().getMainStage());
+                String newImageAddress = selectedFile.getPath();
+                UserDatabaseController.changeImage(ClientManager.getInstance().getMainUser(), newImageAddress);
             }
         });
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {

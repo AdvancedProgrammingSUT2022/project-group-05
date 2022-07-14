@@ -12,7 +12,7 @@ public class MainFX extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setWidth(1920);
         primaryStage.setHeight(1080);
-        primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreen(true);
 
         Scene primaryScene = new Scene(new Pane());
 

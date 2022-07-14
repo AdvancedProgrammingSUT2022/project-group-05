@@ -23,7 +23,7 @@ public class UserDatabaseController {
         }
     }
 
-    private static ArrayList<HashMap<String, String>> loadDatabase() {
+    public static ArrayList<HashMap<String, String>> loadDatabase() {
         try {
             String json = new String(Files.readAllBytes(Paths.get("database/usersDatabase.json")));
             ArrayList<HashMap<String, String>> users;
@@ -52,7 +52,7 @@ public class UserDatabaseController {
         userNew.put("username", newUser.getUsername());
         userNew.put("password", newUser.getPassword());
         userNew.put("nickname", newUser.getNickname());
-        userNew.put("score", "" + newUser.getScore());
+        userNew.put("score", String.valueOf(newUser.getScore()));
         userNew.put("image", newUser.getImageAddress());
         users.add(userNew);
         updateDatabase(users);
@@ -64,7 +64,7 @@ public class UserDatabaseController {
         oldUser.put("username", user.getUsername());
         oldUser.put("password", user.getPassword());
         oldUser.put("nickname", user.getNickname());
-        oldUser.put("score", "" + user.getScore());
+        oldUser.put("score", String.valueOf(user.getScore()));
         oldUser.put("image", user.getImageAddress());
         users.remove(oldUser);
         updateDatabase(users);
@@ -89,7 +89,7 @@ public class UserDatabaseController {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("username").equals(username)) {
                 HashMap<String, String> userData = users.get(i);
-                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"));
+                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"), Integer.parseInt(userData.get("score")));
                 return user;
             }
         }
@@ -101,7 +101,7 @@ public class UserDatabaseController {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("nickname").equals(nickname)) {
                 HashMap<String, String> userData = users.get(i);
-                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"));
+                User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"), Integer.parseInt(userData.get("score")));
                 return user;
             }
         }

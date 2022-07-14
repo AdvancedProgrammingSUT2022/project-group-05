@@ -9,12 +9,12 @@ public class User implements Serializable {
     private String imageAddress;
     private int score;
 
-    public User(String username, String nickname, String password, String imageAddress) {
+    public User(String username, String nickname, String password, String imageAddress, int score) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
-        this.imageAddress = null; //TODO set a default image for registration
-        this.score = 0;
+        this.imageAddress = imageAddress;
+        this.score = score;
     }
 
     //SETTERS
