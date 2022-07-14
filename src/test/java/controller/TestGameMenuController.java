@@ -69,73 +69,73 @@ public class TestGameMenuController{
 
     @Test
     public void infoResearchTest() {
-        gameMenuController.infoResearch(command);
+        gameMenuController.infoResearch();
     }
 
     @Test
     public void infoUnitsTest() {
-        gameMenuController.infoUnits(command);
+        gameMenuController.infoUnits();
     }
 
     @Test
     public void infoCitiesTest() {
-        gameMenuController.infoCities(command);
+        gameMenuController.infoCities();
     }
 
     @Test
     public void infoDiplomacyTest() {
-        gameMenuController.infoDiplomacy(command);
+        gameMenuController.infoDiplomacy();
     }
 
     @Test
     public void infoVictoryTest() {
-        gameMenuController.infoVictory(command);
+        gameMenuController.infoVictory();
     }
 
     @Test
     public void infoDemographicsTest() {
-        gameMenuController.infoDemographics(command);
+        gameMenuController.infoDemographics();
     }
 
     @Test
     public void infoNotificationTest() {
-        gameMenuController.infoNotification(command);
+        gameMenuController.infoNotification();
     }
 
     @Test
     public void infoMilitaryTest() {
-        gameMenuController.infoMilitary(command);
+        gameMenuController.infoMilitary();
     }
 
     @Test
     public void infoEconomicTest() {
-        gameMenuController.infoEconomic(command);
+        gameMenuController.infoEconomic();
     }
 
     @Test
     public void infoDiplomaticTest() {
-        gameMenuController.infoDiplomatic(command);
+        gameMenuController.infoDiplomatic();
     }
 
     @Test
     public void infoDealsTest() {
-        gameMenuController.infoDeals(command);
+        gameMenuController.infoDeals();
     }
 
-    @Test
-    public void infoTileTest() {
-        gameMenuController.infoTile(command);
-    }
-
-    @Test
-    public void infoTileStatsTest() {
-        gameMenuController.infoTileStats(command);
-    }
-
-    @Test
-    public void infoTileProjectTest() {
-        gameMenuController.infoTileProject(command);
-    }
+//    @Test
+//    public void infoTileTest() {
+//        gameMenuController.infoTile();
+//    }
+//
+//    @Test
+//    public void infoTileStatsTest() {
+//        gameMenuController.infoTileStats();
+//    }
+//
+//    @Test
+//    public void infoTileProjectTest() {
+//        gameMenuController.infoTileProject();
+//    }
 
     //MENU EXIT
     @Test

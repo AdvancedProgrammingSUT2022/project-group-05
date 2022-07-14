@@ -55,6 +55,15 @@ public class TileMenu extends Pane {
         exit = new ButtonTwo("EXIT", StaticFonts.SeqoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize * 7, bSize/2, bSize, bSize, this);
 
+        //Functions
+
+        civilizationInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
