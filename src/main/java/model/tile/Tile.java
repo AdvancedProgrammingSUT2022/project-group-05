@@ -22,6 +22,8 @@ public class Tile implements Serializable {
 
     private final int ID;
 
+    private boolean isRuin;
+
     private Route route;
     private Terrain terrain;
     private Feature feature;
@@ -183,6 +185,10 @@ public class Tile implements Serializable {
         return ID;
     }
 
+    public boolean isRuin()
+    {
+        return this.isRuin;
+    }
 
     public City getCity() {
         return this.city;
@@ -323,6 +329,10 @@ public class Tile implements Serializable {
     }
 
     //SETTERS
+    public void setIsRuin(boolean isRuin) {
+        this.isRuin = isRuin;
+    }
+
     public void setCity(City city) {
         this.city = city;
     }

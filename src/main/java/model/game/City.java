@@ -8,19 +8,21 @@ import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
+import utility.RandomGenerator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class City implements Serializable {
-
-
     private ArrayList<Object> productionInQueue = new ArrayList<>();
     private Object productionInProgress;
 
-
     private final String name;
     private final Tile center;
+
+    private int annexTime;
 
     private int food;
     //When food reached its threshold, population increases and Threshold doubles.
@@ -29,7 +31,7 @@ public class City implements Serializable {
     private int defenceStrength;
     private int defenceBonusPercentage; // because of garrisoned unit and center tile
 
-    private ArrayList<Tile> tiles;
+    private final ArrayList<Tile> tiles;
     private BuildingList buildingList;
     private Civilization civilization;
 
@@ -50,6 +52,7 @@ public class City implements Serializable {
         this.hasGarrisonedUnit = false;
 
         this.food = 0;
+        this.annexTime = 0;
 
         this.totalCitizenCount = 1;
         this.joblessCitizenCount = 1;
@@ -162,9 +165,19 @@ public class City implements Serializable {
 
         //increase city health
         if (this.health < 20) this.setHealth(this.getHealth() + 1);
+
+        //decrease annexation
+        if (this.isAnnexed()) this.annexTime -= 1;
     }
 
     //GETTERS
+    public boolean isAnnexed() {
+        return this.annexTime > 0;
+    }
+
+    public int getAnnexTime() {
+        return this.annexTime;
+    }
 
     public Unit getUnitInProgress() {
         if (productionInProgress.getClass() == Unit.class)
@@ -244,6 +257,27 @@ public class City implements Serializable {
     }
 
     //SETTER
+    public void annex() {
+        this.annexTime = 4;
+
+        HashMap<Building, Integer> list = buildingList.getListOfBuildings();
+        for (Building building : list.keySet())
+        {
+            if (building.equals(Building.BARRACKS) || building.equals(Building.ARMORY) ||
+                building.equals(Building.ARSENAL) || building.equals(Building.MILITARY_BASE) ||
+                building.equals(Building.MILITARY_ACADEMY))
+            {
+                buildingList.removeBuilding(building);
+                continue;
+            }
+
+            if (RandomGenerator.nextInt(3) == 0) buildingList.removeBuilding(building);
+        }
+    }
+
+    public void setAnnexTime(int annexTime) {
+        this.annexTime = annexTime;
+    }
 
     public void setProductionInProgress(Object productionInProgress) {
         this.productionInProgress = productionInProgress;

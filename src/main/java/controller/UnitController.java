@@ -17,8 +17,10 @@ import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
 import model.unit.soldier.melee.AntiTankGun;
 import model.unit.soldier.melee.Melee;
+import model.unit.soldier.ranged.Ranged;
 import model.unit.soldier.ranged.siege.Siege;
 import org.w3c.dom.ranges.Range;
+import utility.RandomGenerator;
 
 public class UnitController{
     private final Unit unit;
@@ -58,14 +60,12 @@ public class UnitController{
 
 
     public String unitMove(int xPlace, int yPlace) {
-
         this.unitWake();
 
         this.setDefenceBonusInFortifyState(0);
 
         Tile here = this.unit.getTile();
         Tile destination = Map.getInstance().getTileFromMap(xPlace, yPlace);
-
 
         if (!this.unit.canMoveTo(destination)) {
             return Responses.UNREACHABLE_DESTINATION.getResponse();
@@ -84,7 +84,10 @@ public class UnitController{
         } else if (this.unit instanceof Civilian) {
             Map.getInstance().moveCivilian((Civilian) this.unit, bestPath);
         }
-        return Responses.UNIT_MOVED.getResponse();
+
+        if (destination.isRuin()) return Responses.UNIT_MOVED.getResponse() + "\n" +
+                                         this.unit.getCivilization().getRandomRuinEffect(destination);
+        else return Responses.UNIT_MOVED.getResponse();
     }
 
     public String unitSleep() {
@@ -184,19 +187,40 @@ public class UnitController{
         return Responses.UNIT_ATTACKED.getResponse();
     }
 
+    private int calculateDamage(Soldier attacker, Unit defender) {
+        int attackerStrength = attacker.getAttackStrength();
+        int defenderStrength = defender.getTotalMeleeStrength();
+
+        double exponent = 0.04 * (attackerStrength - defenderStrength);
+        double randomRatio = (RandomGenerator.nextInt(40) + 80) / 100.0;
+
+        return (int) Math.floor(3 * Math.pow(Math.E, exponent) * randomRatio);
+    }
+
+    private int calculateDamage(Soldier attacker, City defender) {
+        return 4;
+    }
+
+    private int calculateDamage(City attacker, Soldier defender) {
+        return 2;
+    }
+
     private void attack(Soldier soldier, Soldier enemySoldier) {
-        //TODO.. MP ???
-        int totalStrengthOfSoldier = soldier.getTotalMeleeStrength();
-        int totalStrengthOfEnemy = enemySoldier.getTotalMeleeStrength();
+        int damageToEnemy = calculateDamage(soldier, enemySoldier);
+        int damageToSoldier = calculateDamage(enemySoldier, soldier);
+
+        if ((soldier instanceof Ranged) && !(enemySoldier instanceof Ranged)) damageToSoldier = 0;
+
         soldier.setRemainingMovement(0);
         enemySoldier.setRemainingMovement(0);
-        soldier.setHealth(soldier.getHealth() - totalStrengthOfEnemy);
-        enemySoldier.setHealth(enemySoldier.getHealth() - totalStrengthOfSoldier);
+
+        soldier.setHealth(soldier.getHealth() - damageToSoldier);
+        enemySoldier.setHealth(enemySoldier.getHealth() - damageToEnemy);
 
         if (enemySoldier instanceof Mounted && soldier instanceof BonusVsMounted)
-            enemySoldier.setHealth(enemySoldier.getHealth() - totalStrengthOfSoldier);
+            enemySoldier.setHealth(enemySoldier.getHealth() - damageToEnemy);
         if (soldier instanceof Mounted && enemySoldier instanceof  BonusVsMounted)
-            soldier.setHealth(enemySoldier.getHealth() - totalStrengthOfEnemy);
+            soldier.setHealth(enemySoldier.getHealth() - damageToSoldier);
 
         if (soldier instanceof AntiTankGun && enemySoldier instanceof Tank)
             enemySoldier.setHealth(enemySoldier.getHealth() - 10);
@@ -206,8 +230,9 @@ public class UnitController{
         if (enemySoldier.getHealth() == 0) {
             enemySoldier.kill();
             if (soldier.getHealth() != 0) {
-                Map.getInstance().moveSoldierWithoutMP(soldier, enemySoldier.getTile());
-                //TODO handle hostage civilian
+                Tile targetTile = enemySoldier.getTile();
+                Map.getInstance().moveSoldierWithoutMP(soldier, targetTile);
+                if (targetTile.getCivilian() != null) targetTile.getCivilian().setCivilization(soldier.getCivilization());
             }
         }
 
@@ -216,9 +241,51 @@ public class UnitController{
         }
     }
 
+    public String attackCity(City city, Soldier soldier) {
+        if (city.getCivilization() == soldier.getCivilization())
+            return Responses.CANT_ATTACK_OUR_CITY.getResponse();
+
+        if (soldier instanceof BonusVsCity)
+            city.setHealth(city.getHealth() - 3 * calculateDamage(soldier, city));
+        else
+            city.setHealth(city.getHealth() - calculateDamage(soldier, city));
+
+        if (Map.getInstance().findDistance(soldier.getTile(), city.getCenter()) <= 2)
+            soldier.setHealth(soldier.getHealth() - calculateDamage(city, soldier));
+
+        if (! (soldier instanceof CanMoveAfterAttacking))
+            soldier.setRemainingMovement(0);
+
+        if (soldier instanceof Melee) {
+            if (city.getHealth() <= 0) {
+                return this.conquerCity(city, soldier);
+            }
+        } else if (soldier instanceof Range) {
+            if (city.getHealth() <= 0) {
+                city.setHealth(1);
+            }
+        }
+
+        if (soldier.getHealth() <= 0) soldier.getCivilization().removeUnit(soldier);
+
+        return Responses.ATTACK_COMPLETE.getResponse();
+    }
+
+    public String conquerCity(City city, Soldier soldier) {
+        city.getCivilization().removeCity(city);
+
+        city.setCivilization(soldier.getCivilization());
+        city.setHealth(20);
+        soldier.getCivilization().addCity(city);
+        city.annex();
+
+        Map.getInstance().moveSoldierWithoutMP(soldier, city.getCenter());
+        return Responses.CITY_CONQUERED.getResponse();
+    }
+
+
     public String unitCancel() {
-        //TODO.. cancel multiple-turn-moves and ...
-        return "";
+        return "canceled";
     }
 
     public String unitWake() {
@@ -230,7 +297,6 @@ public class UnitController{
         this.unit.wake();
         this.setDefenceBonusInFortifyState(0);
         return Responses.UNIT_AWAKENED.getResponse();
-
     }
 
     public String unitDelete() {
@@ -251,52 +317,7 @@ public class UnitController{
         return Responses.CITY_FOUNDED.getResponse();
     }
 
-    public String attackCity(City city, Soldier soldier) {
-        if (city.getCivilization() == soldier.getCivilization())
-            return Responses.CANT_ATTACK_OUR_CITY.getResponse();
-
-
-        //TODO calculate health after attack...??????
-        if (soldier instanceof BonusVsCity)
-            city.setHealth(city.getHealth() - soldier.getAttackStrength() - 10);
-        else
-            city.setHealth(city.getHealth() - soldier.getAttackStrength());
-
-
-        if (Map.getInstance().findDistance(soldier.getTile(), city.getCenter()) <= 2)
-            soldier.setHealth(soldier.getHealth() - city.getDefenceStrength());
-
-        if (! (soldier instanceof CanMoveAfterAttacking))
-            soldier.setRemainingMovement(0);
-
-        if (soldier instanceof Melee) {
-            if (city.getHealth() <= 0) {
-                return this.conquerCity(city, soldier);
-            }
-        } else if (soldier instanceof Range) {
-            if (city.getHealth() <= 0) {
-                city.setHealth(1);
-            }
-        }
-
-        if (soldier.getHealth() <= 0) soldier.getCivilization().removeUnit(soldier);
-
-        //TODO increase xp and ...
-        return Responses.ATTACK_COMPLETE.getResponse();
-    }
-
-    public String conquerCity(City city, Soldier soldier) {
-        city.getCivilization().removeCity(city);
-        city.setCivilization(soldier.getCivilization());
-        city.setHealth(20);
-        soldier.getCivilization().addCity(city);
-        Map.getInstance().moveSoldierWithoutMP(soldier, city.getCenter());
-        return Responses.CITY_CONQUERED.getResponse();
-    }
-
-
     //Worker stuff
-
     public String unitBuildImprovement(Improvement improvement) {
         this.unitWake();
         if (!(this.unit instanceof Worker))

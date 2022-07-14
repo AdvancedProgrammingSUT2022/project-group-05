@@ -16,7 +16,9 @@ import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.civilian.Settler;
+import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
+import utility.RandomGenerator;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -28,7 +30,6 @@ import java.util.Collections;
 public class Civilization implements Serializable {
     private City capital;
     private ArrayList<City> cities;
-    private ArrayList<City> annexedCities;
     private ArrayList<Unit> units;
 
 
@@ -274,6 +275,7 @@ public class Civilization implements Serializable {
         }
         for (City city : this.getCities()) {
             result -= 3 + city.getTotalCitizenCount();
+            if (city.isAnnexed()) result -= 3;
         }
 
         return result;
@@ -302,7 +304,6 @@ public class Civilization implements Serializable {
         this.baseResearchPoint = baseResearchPoint;
     }
 
-
     public void save() {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("saves/Civilization.txt"));
@@ -324,5 +325,59 @@ public class Civilization implements Serializable {
             e.printStackTrace();
             return null;
         }
+    }
+    //RUIN
+    public String getRandomRuinEffect(Tile ruin) {//returned string shows description of the ruin effect
+        ruin.setIsRuin(false);
+
+        if (ruin.hasCivilian()) {
+            switch (RandomGenerator.nextInt(2) % 2) {
+                case 0:
+                    return getRuinEffectOne(ruin);
+                case 1:
+                    return getRuinEffectThree(ruin);
+                default:
+                    break;
+            }
+        } else {
+            switch (RandomGenerator.nextInt(4) % 4) {
+                case 0:
+                    return getRuinEffectOne(ruin);
+                case 1:
+                    return getRuinEffectTwo(ruin);
+                case 2:
+                    return getRuinEffectThree(ruin);
+                case 3:
+                    return getRuinEffectFour(ruin);
+                default:
+                    break;
+            }
+        }
+
+        return "Booyah!";
+    }
+
+    private String getRuinEffectOne(Tile ruin)
+    {
+        this.setGold(this.getGold() + 150);
+        return "150 gold found!";
+    }
+
+    private String getRuinEffectTwo(Tile ruin)
+    {
+        this.addUnit(new Settler(this, ruin));
+        return "A settler appears!";
+    }
+
+    private String getRuinEffectThree(Tile ruin)
+    {
+        this.setResearchPoint(this.getResearchPoint() + 500);
+        return "500 research point found!";
+    }
+
+    private String getRuinEffectFour(Tile ruin)
+    {
+        this.addUnit(new Worker(this, ruin));
+        return "A worker appears";
     }
 }

@@ -146,6 +146,10 @@ public abstract class Unit implements Serializable {
         this.tile = tile;
     }
 
+    public void setCivilization(Civilization civilization) {
+        this.civilization = civilization;
+    }
+
     public void setRemainingMovement(int MP) {
         this.remainingMovement = MP;
     }
@@ -170,8 +174,6 @@ public abstract class Unit implements Serializable {
     }
 
     //GETTERS
-
-
     public int getTemporaryDefenceBonusPercentage() {
         return temporaryDefenceBonusPercentage;
     }
