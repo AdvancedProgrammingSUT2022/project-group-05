@@ -1,13 +1,17 @@
 package graphics.view.gameContents;
 
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import model.map.Map;
 
 public class MapFX extends Pane {
     private static MapFX instance = null;
-
+    private static double xDragged;
+    private static double yDragged;
 
     public static MapFX getInstance () {
         if (instance == null) {
@@ -18,6 +22,20 @@ public class MapFX extends Pane {
                     new TileFX(instance, Map.getInstance().getTileFromMap(i, j));
                 }
             }
+            instance.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    xDragged = instance.getLayoutX() - event.getSceneX();
+                    yDragged = instance.getLayoutY() - event.getSceneY();
+                }
+            });
+            instance.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    instance.setLayoutX(xDragged + event.getSceneX());
+                    instance.setLayoutY(yDragged + event.getSceneY());
+                }
+            });
             instance.setOnScroll(new EventHandler<ScrollEvent>() {
                 @Override
                 public void handle(ScrollEvent event) {

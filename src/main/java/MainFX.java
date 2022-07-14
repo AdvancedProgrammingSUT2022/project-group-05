@@ -26,13 +26,7 @@ public class MainFX extends Application {
         MapFX.getInstance().setLayoutY(300);
         MapFX.getInstance().setLayoutX(0);
         Scene scene = new Scene(pane);
-        Pane paneTemp = new Pane();
-        Rectangle rectangle = new Rectangle(300, 400);
-        rectangle.setFill(Color.RED);
-        paneTemp.setPrefWidth(300);
-        paneTemp.setPrefHeight(400);
-        paneTemp.getChildren().add(rectangle);
-        new PopUp(pane, new CheatCode());
+        //new PopUp(pane, new CheatCode());
 
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
