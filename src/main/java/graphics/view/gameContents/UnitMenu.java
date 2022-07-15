@@ -200,6 +200,8 @@ public class UnitMenu extends Pane{
             }
         });
 
+        Pane temp = this;
+
         buildImprovement.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -261,6 +263,7 @@ public class UnitMenu extends Pane{
                         unitController.unitBuildImprovement(Improvement.TRADING_POST);
                     }
                 });
+                new PopUp(temp, improvementPanel);
             }
         });
 
@@ -286,6 +289,7 @@ public class UnitMenu extends Pane{
                         unitController.unitBuildRoute(Route.RAIL);
                     }
                 });
+                new PopUp(temp, routePanel);
             }
         });
 

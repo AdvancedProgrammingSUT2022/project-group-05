@@ -23,6 +23,7 @@ public class ImprovementPanel extends Pane {
     public ButtonOne trading_post;
 
     public ImprovementPanel(ArrayList<Improvement> improvements) {
+        //TODO.. configure fromLeft and fromTop of nodes!!!
         new LabelOne("IMPROVEMENT PANEL", StaticFonts.segoeLoad(20), Pos.CENTER,
                 300, 75, 200, 60, this);
         this.camp = new ButtonOne("CAMP", StaticFonts.segoeLoad(20), Pos.CENTER,
