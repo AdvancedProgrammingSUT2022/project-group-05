@@ -107,7 +107,7 @@ public class UnitMenu extends Pane{
         move.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                unitController.unitMove(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
             }
         });
 
@@ -179,7 +179,7 @@ public class UnitMenu extends Pane{
         attack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitAttack((int) MapFX.getInstance().getSecondSelectedTile().getLayoutX(), (int) MapFX.getInstance().getSecondSelectedTile().getLayoutY());
+                unitController.unitAttack(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
             }
         });
 

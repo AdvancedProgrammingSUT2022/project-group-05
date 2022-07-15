@@ -2,6 +2,8 @@ package model.building;
 
 import com.google.gson.Gson;
 import javafx.scene.layout.BorderPane;
+import model.game.City;
+import model.game.Civilization;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -53,6 +55,23 @@ public class BuildingList implements Serializable {
             }
         }
         return true;
+    }
+
+    public boolean canBuild(Building building, City city) {
+        Civilization civilization = city.getCivilization();
+        if (!civilization.getResearchTree().isResearchDone(building.getResearchRequired())) {
+            return false;
+        } else if (!civilization.getResourceList().hasEnough(building.getResourceNeeded(), 1)) {
+            return false;
+        } else {
+            ArrayList<Building> buildings = building.getBuildingsNeeded();
+            for (int i = 0; i < buildings.size(); i++) {
+                if (!city.getBuildingList().hasBuilding(buildings.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     public HashMap<Building, Integer> getListOfBuildings() {
