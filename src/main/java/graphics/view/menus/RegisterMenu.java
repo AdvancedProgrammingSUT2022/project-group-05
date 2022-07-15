@@ -17,21 +17,24 @@ public class RegisterMenu extends Pane{
     public RegisterMenu () {
         Pane temp = this;
 
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+        int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2 - 100;
+
         //OBJECTS
         TextFieldOne username = new TextFieldOne("username", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 400, 400, 30, this);
+                fromLeft, fromTop, 400, 30, this);
         TextFieldOne password = new TextFieldOne("password", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 450, 400, 30, this);
+                fromLeft, fromTop + 50, 400, 30, this);
         TextFieldOne repeatPassword = new TextFieldOne("repeat password", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 500, 400, 30, this);
+                fromLeft, fromTop + 100, 400, 30, this);
         TextFieldOne nickname = new TextFieldOne("nickname", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 550, 400, 30, this);
+                fromLeft, fromTop + 150, 400, 30, this);
 
         ButtonOne signUp = new ButtonOne("SIGN UP", StaticFonts.segoeLoad(30), Pos.CENTER,
-                960, 650, 300, 50, this);
+                fromLeft, fromTop + 250, 300, 50, this);
 
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
-                100, 1000, 100, 50, this);
+                fromLeft, fromTop + 400, 100, 50, this);
 
         //FUNCTIONS
         signUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
