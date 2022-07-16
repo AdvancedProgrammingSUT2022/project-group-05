@@ -19,20 +19,6 @@ import java.util.*;
 
 public class ScoreboardMenu extends Pane{
 
-    private ArrayList<HashMap<String, String>> sort(ArrayList<HashMap<String, String>> users) {
-        for (int i = 1; i < users.size(); i++) {
-            if (Integer.parseInt(users.get(i).get("score")) < Integer.parseInt(users.get(i - 1).get("score"))) {
-                HashMap<String, String> user = users.get(i);
-                users.set(i, users.get(i - 1));
-                users.set(i - 1, user);
-                if (i >= 2) {
-                    i--;
-                }
-            }
-        }
-        return users;
-    }
-
     public ScoreboardMenu () throws FileNotFoundException {
         ArrayList<HashMap<String, String>> users = UserDatabaseController.loadDatabase();
         System.out.println(users.get(0).get("score"));
@@ -49,10 +35,12 @@ public class ScoreboardMenu extends Pane{
             scores[i] = Integer.parseInt(users.get(i).get("score"));
         }
 
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2 - 560;
+        int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2;
 
         //OBJECTS
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
-                1000, 1000, 100, 50, this);
+                fromLeft + 560, fromTop + 300, 100, 50, this);
 
         LabelOne[] ranks = new LabelOne[users.size()];
         LabelOne[] nicknameLabels = new LabelOne[users.size()];
@@ -63,16 +51,16 @@ public class ScoreboardMenu extends Pane{
             FileInputStream fileInputStream = new FileInputStream(users.get(i).get("image"));
             ImagePattern imagePattern = new ImagePattern(new Image(fileInputStream));
             circle.setFill(imagePattern);
-            circle.setCenterX(380);
-            circle.setCenterY(50 * i + 400);
+            circle.setCenterX(fromLeft - 30);
+            circle.setCenterY(50 * i + 100);
             circle.setRadius(25);
             this.getChildren().add(circle);
             ranks[i] = new LabelOne(i+1 + " :", StaticFonts.segoeLoad(15), Pos.CENTER_LEFT,
-                    400, 50 * i + 400, 200, 30, this);
+                    fromLeft, 50 * i + 100, 200, 30, this);
             nicknameLabels[i] = new LabelOne(nicknames[i], StaticFonts.segoeLoad(15), Pos.CENTER_LEFT,
-                    510, 50 * i + 400, 200, 30, this);
+                    fromLeft + 110, 50 * i + 100, 200, 30, this);
             scoreLabels[i] = new LabelOne(scores[i] + "", StaticFonts.segoeLoad(15), Pos.CENTER_RIGHT,
-                    1520, 50 * i + 400, 200, 30, this);
+                    fromLeft + 1120, 50 * i + 100, 200, 30, this);
         }
 
         //FUNCTIONS

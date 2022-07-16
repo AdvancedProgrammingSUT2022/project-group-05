@@ -17,19 +17,21 @@ public class LoginMenu extends Pane{
     public LoginMenu () {
         Pane temp = this;
 
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+        int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2 - 100;
         //OBJECTS
         TextFieldOne username = new TextFieldOne("username", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 450, 400, 30, this);
+                fromLeft, fromTop, 400, 30, this);
         TextFieldOne password = new TextFieldOne("password", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 500, 400, 30, this);
+                fromLeft, fromTop + 50, 400, 30, this);
         ButtonOne login = new ButtonOne("LOGIN", StaticFonts.segoeLoad(30), Pos.CENTER,
-                960, 600, 300, 50, this);
+                fromLeft, fromTop + 150, 300, 50, this);
 
         ButtonOne signUp = new ButtonOne("SIGN UP", StaticFonts.segoeLoad(30), Pos.CENTER,
-                960, 700, 300, 50, this);
+                fromLeft, fromTop + 250, 300, 50, this);
 
         ButtonOne exit = new ButtonOne("EXIT", StaticFonts.segoeLoad(15), Pos.CENTER,
-                960, 900, 100, 50, this);
+                fromLeft, fromTop + 450, 100, 50, this);
 
         //FUNCTIONS
         login.setOnMouseClicked(new EventHandler<MouseEvent>() {

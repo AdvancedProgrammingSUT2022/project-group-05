@@ -14,12 +14,12 @@ public class TestBuildingList {
     BuildingList buildingList;
 
 
-    @BeforeEach
-    public void setup() {
-        buildingList = new BuildingList();
-        buildingList.addBuilding(Building.ARMORY);
-        buildingList.addBuilding(Building.BANK);
-    }
+//    @BeforeEach
+//    public void setup() {
+//        buildingList = new BuildingList();
+//        buildingList.addBuilding(Building.ARMORY, );
+//        buildingList.addBuilding(Building.BANK);
+//    }
 
 
     @Test

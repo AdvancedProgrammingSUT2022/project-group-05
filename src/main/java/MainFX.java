@@ -6,13 +6,17 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 
 public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setWidth(1920);
-        primaryStage.setHeight(1080);
-        //primaryStage.setFullScreen(true);
+        // find size of screen
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        primaryStage.setWidth(size.width);
+        primaryStage.setHeight(size.height);
+        primaryStage.setFullScreen(true);
 
         Scene primaryScene = new Scene(new Pane());
 

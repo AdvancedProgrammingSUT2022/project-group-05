@@ -258,6 +258,12 @@ public class City implements Serializable {
     }
 
     //SETTER
+
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
     public void annex() {
         this.annexTime = 4;
 
@@ -268,11 +274,11 @@ public class City implements Serializable {
                 building.equals(Building.ARSENAL) || building.equals(Building.MILITARY_BASE) ||
                 building.equals(Building.MILITARY_ACADEMY))
             {
-                buildingList.removeBuilding(building);
+                buildingList.removeBuilding(building, this);
                 continue;
             }
 
-            if (RandomGenerator.nextInt(3) == 0) buildingList.removeBuilding(building);
+            if (RandomGenerator.nextInt(3) == 0) buildingList.removeBuilding(building, this);
         }
     }
 
@@ -350,7 +356,7 @@ public class City implements Serializable {
             Building building = (Building) productionInProgress;
             building.setCostForSpending(building.getCostForSpending() - this.getCivilization().getProduction());
             if (building.getCostForSpending() <= 0) {
-                this.buildingList.addBuilding(building);
+                this.buildingList.addBuilding(building, this);
                 this.productionInProgress = null;
             }
         }

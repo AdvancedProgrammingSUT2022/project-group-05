@@ -2,15 +2,25 @@ package graphics.view.gameContents;
 
 import controller.UnitController;
 import graphics.objects.buttons.ButtonTwo;
+import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.popUp.ImprovementPanel;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.RoutePanel;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import model.game.Civilization;
+import model.improvement.Improvement;
+import model.tile.Route;
+import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.soldier.Soldier;
+
+import java.util.ArrayList;
 
 //TODO add functions and closing system of this menu
 
@@ -55,6 +65,7 @@ public class UnitMenu extends Pane{
     private ButtonTwo exit;
 
     public UnitMenu () {
+        //TODO add mp
         background = new javafx.scene.shape.Rectangle(bSize*10, bSize*2);
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
         this.getChildren().add(background);
@@ -107,7 +118,7 @@ public class UnitMenu extends Pane{
         move.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                unitController.unitMove(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
             }
         });
 
@@ -179,7 +190,7 @@ public class UnitMenu extends Pane{
         attack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitAttack((int) MapFX.getInstance().getSecondSelectedTile().getLayoutX(), (int) MapFX.getInstance().getSecondSelectedTile().getLayoutY());
+                unitController.unitAttack(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
             }
         });
 
@@ -190,19 +201,98 @@ public class UnitMenu extends Pane{
             }
         });
 
-//        buildImprovement.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                unitController.unitBuildImprovement();
-//            }
-//        });
+        Pane temp = this;
 
-//        buildRoute.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                unitController.unitBuildRoute();
-//            }
-//        });
+        buildImprovement.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ArrayList<Improvement> improvements = new ArrayList<>();
+                Tile tile = unitController.getUnit().getTile();
+                Civilization civilization = unitController.getUnit().getCivilization();
+                for (Improvement improvement : Improvement.values()) {
+                    if (civilization.getResearchTree().isResearchDone(improvement.getNeededResearch()) &&
+                        improvement.matchesFeature(tile.getFeature()) && improvement.matchesTerrain(tile.getTerrain())) {
+                        improvements.add(improvement);
+                    }
+                }
+                ImprovementPanel improvementPanel = new ImprovementPanel(improvements);
+                improvementPanel.camp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.CAMP);
+                    }
+                });
+                improvementPanel.farm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.FARM);
+                    }
+                });
+                improvementPanel.lumber_mill.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.LUMBER_MILL);
+                    }
+                });
+                improvementPanel.mine.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.MINE);
+                    }
+                });
+                improvementPanel.pasture.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.PASTURE);
+                    }
+                });
+                improvementPanel.plantation.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.PLANTATION);
+                    }
+                });
+                improvementPanel.quarry.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.QUARRY);
+                    }
+                });
+                improvementPanel.trading_post.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildImprovement(Improvement.TRADING_POST);
+                    }
+                });
+                new PopUp(temp, improvementPanel);
+            }
+        });
+
+        buildRoute.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                boolean canRoad = false ;
+                boolean canRail = false;
+                if (unitController.getUnit().getCivilization().getResearchTree().isResearchDone(Route.ROAD.getNeededResearch()))
+                    canRoad = true;
+                if (unitController.getUnit().getCivilization().getResearchTree().isResearchDone(Route.RAIL.getNeededResearch()))
+                    canRail = true;
+                RoutePanel routePanel = new RoutePanel(canRoad, canRail);
+                routePanel.road.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildRoute(Route.ROAD);
+                    }
+                });
+                routePanel.rail.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        unitController.unitBuildRoute(Route.RAIL);
+                    }
+                });
+                new PopUp(temp, routePanel);
+            }
+        });
 
 
 

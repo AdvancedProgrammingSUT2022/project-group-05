@@ -19,6 +19,10 @@ import java.io.FileNotFoundException;
 
 public class MainMenu extends Pane{
     public MainMenu () {
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+        int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2 - 300;
+
         //OBJECTS
 
         Circle circle = new Circle();
@@ -28,23 +32,23 @@ public class MainMenu extends Pane{
             ImagePattern imagePattern = new ImagePattern(new Image(image));
             circle.setFill(imagePattern);
             circle.setRadius(100);
-            circle.setCenterX(400);
-            circle.setCenterY(200);
+            circle.setCenterX(100);
+            circle.setCenterY(100);
             this.getChildren().add(circle);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         ButtonOne startGame = new ButtonOne("NEW GAME", StaticFonts.segoeLoad(60), Pos.CENTER,
-                960, 200, 600, 80, this);
+                fromLeft, fromTop, 600, 80, this);
         ButtonOne scoreBoard = new ButtonOne("SCOREBOARD", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 650, 200, 50, this);
+                fromLeft, fromTop + 350, 200, 50, this);
         ButtonOne profile = new ButtonOne("PROFILE", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 710, 200, 50, this);
+                fromLeft, fromTop + 410, 200, 50, this);
         ButtonOne chat = new ButtonOne("CHAT", StaticFonts.segoeLoad(20), Pos.CENTER,
-                960, 770, 200, 50, this);
+                fromLeft, fromTop + 470, 200, 50, this);
         ButtonOne logout = new ButtonOne("LOGOUT", StaticFonts.segoeLoad(15), Pos.CENTER,
-                960, 900, 100, 50, this);
+                fromLeft, fromTop + 600, 100, 50, this);
 
 
         FadeTransition transition = new FadeTransition();

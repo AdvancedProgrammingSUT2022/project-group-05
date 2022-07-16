@@ -28,6 +28,7 @@ public class GameMenuController {
     private int currentYear;
     private CivilizationController currentCivilizationController;
     private ArrayList<String> cityNames;
+    private boolean autoSave;
 
 
     //singleton
@@ -36,6 +37,8 @@ public class GameMenuController {
     private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
         this.civilizationCount = civilizationCount;
         this.cityNames = CityName.getCityNames();
+
+        this.autoSave = true; //TODO add autoSave option in settings
 
         this.currentTurn = -1;
         this.currentYear = -1;
@@ -75,11 +78,18 @@ public class GameMenuController {
         this.currentTurn %= this.civilizationCount;
         if (this.currentTurn == 0) this.currentYear++;
 
+        //autoSaving
+        if (autoSave) {
+            Map.getInstance().save();
+            this.currentCivilizationController.getCivilization().save();
+        }
+
         this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
         this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
 
         CityController.updateInstance(null); // deselect city in new turn
         UnitController.updateInstance(null); // deselect unit in new turn
+
 
         return this.whoseTurnIsIt();
     }
