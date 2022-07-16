@@ -12,8 +12,8 @@ import java.awt.*;
 public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // find size of screen
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        System.out.println(size);
         primaryStage.setWidth(size.width);
         primaryStage.setHeight(size.height);
         primaryStage.setFullScreen(true);

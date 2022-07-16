@@ -127,7 +127,7 @@ public class CityController {
         if (newBuilding.getCost() > this.city.getCivilization().getGold()) {
             return Responses.NOT_ENOUGH_GOLD.getResponse();
         }
-        this.city.getBuildingList().addBuilding(newBuilding);
+        this.city.getBuildingList().addBuilding(newBuilding, this.city);
         return Responses.BUILDING_PURCHASED_SUCCESSFULLY.getResponse();
     }
 

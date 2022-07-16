@@ -44,7 +44,7 @@ public class RegisterMenu extends Pane{
                 String passwordText = password.getText();
                 String repeatPasswordText = repeatPassword.getText();
                 String nicknameText = nickname.getText();
-                String imageAddress = "C:\\Users\\mohammad reza\\Desktop\\defaultImage.png";
+                String imageAddress = "src/main/resources/images/defaultImage.png";
 
                 User previousUsernameHolder = UserDatabaseController.getUserByUsername(usernameText);
                 User previousNicknameHolder = UserDatabaseController.getUserByNickname(nicknameText);
@@ -73,7 +73,7 @@ public class RegisterMenu extends Pane{
                     return;
                 }
 
-                User user = new User(usernameText, nicknameText, passwordText, null, 0);//TODO...
+                User user = new User(usernameText, nicknameText, passwordText, imageAddress, 0);//TODO...
                 UserDatabaseController.addUser(user);
 
                 ClientManager.getInstance().setMainUser(user);
