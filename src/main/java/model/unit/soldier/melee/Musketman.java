@@ -20,8 +20,6 @@ public class Musketman extends Melee {
 
     @Override
     public String toString () {
-        //return "Musketman";
-        //TODO we can edit after map printing beacause its too long to print
-        return "Musket";
+        return "Musketman";
     }
 }

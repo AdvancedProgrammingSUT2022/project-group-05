@@ -3,6 +3,8 @@ package graphics.view.gameContents;
 import controller.GameMenuController;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.statics.StaticFonts;
+import graphics.view.ClientManager;
+import graphics.view.popUp.city.CityPanel;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.TileInfo;
@@ -13,10 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import model.map.FogOfWar;
+import model.game.City;
+import model.game.Civilization;
 import model.map.FogOfWarStates;
 import model.tile.Tile;
-import model.unit.civilian.Settler;
 
 //TODO add functions and closing system of this menu
 
@@ -124,7 +126,20 @@ public class TileMenu extends Pane {
                 else new PopUp((Pane) TileMenu.this.getParent(), new Error("THIS TILE IS NOT VISIBLE"));
             }
         });
-        //TODO other functions
+
+        cityInfo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                //City city = MapFX.getInstance().getFirstSelectedTile().getTile().getCity();
+                //deb purposes
+                City city = new City("rajabad", MapFX.getInstance().getFirstSelectedTile().getTile(), new Civilization(ClientManager.getInstance().getMainUser(), 0));
+                if (city == null) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error("selected tile doesn't belong to a city"));
+                    return;
+                }
+                new PopUp((Pane) TileMenu.this.getParent(), new CityPanel(city));
+            }
+        });
 
         this.setLayoutX(960 - 4*bSize);
         this.setLayoutY(1040 - bSize);

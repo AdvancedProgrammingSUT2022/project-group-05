@@ -22,8 +22,6 @@ public class Artillery extends Siege implements NoDefensiveBonus, BonusVsCity {
 
     @Override
     public String toString () {
-        //return "Artillery";
-        //TODO we can edit after map printing beacause its too long to print
-        return "Artiler";
+        return "Artillery";
     }
 }
