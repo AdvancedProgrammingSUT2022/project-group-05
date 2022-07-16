@@ -20,6 +20,7 @@ public class TileFX extends Group {
     private Polygon fogOfWar;
     private Polygon selected;
     private Polygon front;
+    private Rectangle ruin;
     private Rectangle soldure;
     private Rectangle civilian;
 
@@ -45,12 +46,18 @@ public class TileFX extends Group {
         feature.setFill(tile.getFeature().getTexture());
         this.getChildren().add(feature);
 
+        ruin = new Rectangle(30, -30, 60, 60);
+        this.getChildren().add(ruin);
+        ruin.setFill(StaticImages.Ruin);
+        ruin.setVisible(tile.isRuin());
+
         soldure = new Rectangle(-100, -50, 75, 100);
         this.getChildren().add(soldure);
         soldure.setFill(new Color(0, 0, 0, 0));
         civilian = new Rectangle(25, -50, 75, 100);
         this.getChildren().add(civilian);
         civilian.setFill(new Color(0, 0, 0 , 0));
+
 
         fogOfWar = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         fogOfWar.setLayoutX(-200);
@@ -138,6 +145,8 @@ public class TileFX extends Group {
             if (tile.hasSoldier())
                 soldure.setFill(tile.getSoldier().getTexture());
             else soldure.setFill(new Color(0, 0, 0, 0));
+
+            ruin.setVisible(this.getTile().isRuin());
         }
         if(fogOfWarStates.equals(FogOfWarStates.FOG_OF_WAR)) fogOfWar.setFill(StaticImages.FogOfWar);
         else fogOfWar.setFill(new Color(0, 0, 0, 0));
