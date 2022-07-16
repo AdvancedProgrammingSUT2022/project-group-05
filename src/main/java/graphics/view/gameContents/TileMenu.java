@@ -1,15 +1,22 @@
 package graphics.view.gameContents;
 
+import controller.GameMenuController;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.statics.StaticFonts;
+import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.TileInfo;
+import graphics.view.popUp.UnitInfo;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import model.map.FogOfWar;
+import model.map.FogOfWarStates;
+import model.tile.Tile;
+import model.unit.civilian.Settler;
 
 //TODO add functions and closing system of this menu
 
@@ -78,7 +85,43 @@ public class TileMenu extends Pane {
         tileInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                new PopUp((Pane)TileMenu.this.getParent(), new TileInfo(MapFX.getInstance().getFirstSelectedTile().getTile()));
+                Tile temp = MapFX.getInstance().getFirstSelectedTile().getTile();
+                FogOfWarStates fogOfWarStates = GameMenuController.getInstance().getCurrentCivilizationController().
+                        getCivilization().getFogOfWar()[temp.getXPlace()][temp.getYPlace()];
+                if (fogOfWarStates.equals(FogOfWarStates.VISIBLE)) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new TileInfo(MapFX.getInstance().getFirstSelectedTile().getTile()));
+                }
+                else new PopUp((Pane) TileMenu.this.getParent(), new Error("THIS TILE IS NOT VISIBLE"));
+            }
+        });
+        solInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Tile temp = MapFX.getInstance().getFirstSelectedTile().getTile();
+                FogOfWarStates fogOfWarStates = GameMenuController.getInstance().getCurrentCivilizationController().
+                        getCivilization().getFogOfWar()[temp.getXPlace()][temp.getYPlace()];
+                if (fogOfWarStates.equals(FogOfWarStates.VISIBLE)) {
+                    if (temp.hasSoldier()) {
+                        new PopUp((Pane) TileMenu.this.getParent(), new UnitInfo(temp.getSoldier()));
+                    }
+                    else new PopUp((Pane) TileMenu.this.getParent(), new Error("NO SOLDIER FOUND"));
+                }
+                else new PopUp((Pane) TileMenu.this.getParent(), new Error("THIS TILE IS NOT VISIBLE"));
+            }
+        });
+        civInfo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Tile temp = MapFX.getInstance().getFirstSelectedTile().getTile();
+                FogOfWarStates fogOfWarStates = GameMenuController.getInstance().getCurrentCivilizationController().
+                        getCivilization().getFogOfWar()[temp.getXPlace()][temp.getYPlace()];
+                if (fogOfWarStates.equals(FogOfWarStates.VISIBLE)) {
+                    if (temp.hasCivilian()) {
+                        new PopUp((Pane) TileMenu.this.getParent(), new UnitInfo(temp.getCivilian()));
+                    }
+                    else new PopUp((Pane) TileMenu.this.getParent(), new Error("NO CIVILIAN FOUND"));
+                }
+                else new PopUp((Pane) TileMenu.this.getParent(), new Error("THIS TILE IS NOT VISIBLE"));
             }
         });
         //TODO other functions

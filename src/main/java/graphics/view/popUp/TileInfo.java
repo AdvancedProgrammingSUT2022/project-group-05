@@ -1,10 +1,8 @@
 package graphics.view.popUp;
 
-import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -63,8 +61,19 @@ public class TileInfo extends Pane {
         if (tile.getSoldier() != null) solName = tile.getSoldier().toString();
         if (tile.getCivilian() != null) civilName = tile.getCivilian().toString();
         soldier = new LabelOne(solName, StaticFonts.segoeLoad(20), Pos.CENTER,
-                200, 600, 200, 60, this);
+                200, 650, 200, 60, this);
         civilian = new LabelOne(civilName, StaticFonts.segoeLoad(20), Pos.CENTER,
-                1000, 600, 200, 60, this);
+                1000, 650, 200, 60, this);
+
+        civilianImage = new Rectangle(50, 200,300, 400);
+        soldierImage = new Rectangle(850, 200,300, 400);
+        if (tile.hasCivilian())
+            civilianImage.setFill(tile.getCivilian().getTexture());
+        else civilianImage.setFill(new Color(0, 0, 0, 0));
+        if (tile.hasSoldier())
+            soldierImage.setFill(tile.getSoldier().getTexture());
+        else soldierImage.setFill(new Color(0, 0, 0, 0));
+        this.getChildren().add(civilianImage);
+        this.getChildren().add(soldierImage);
     }
 }
