@@ -28,6 +28,8 @@ public class TileInfo extends Pane {
 
     LabelOne improvement;
 
+    //TODO add gold per turn and project status info
+
     public TileInfo(Tile tile) {
         this.tile = tile;
 
