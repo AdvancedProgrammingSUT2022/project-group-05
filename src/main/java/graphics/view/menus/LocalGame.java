@@ -77,6 +77,12 @@ public class LocalGame extends Pane {
             }
         });
 
+        back.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                ClientManager.getInstance().setPane(new MainMenu());
+            }
+        });
 
     }
 }

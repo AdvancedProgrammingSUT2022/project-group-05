@@ -32,12 +32,12 @@ public class ProductionPane extends Pane{
         this.setPrefWidth(480);
         this.setPrefHeight(75);
 
-        setName();
-        setType();
-        setCost();
+        this.setName();
+        this.setType();
+        this.setCost();
 
-        setBuyButton();
-        setProduceButton();
+        this.setBuyButton();
+        this.setProduceButton();
     }
 
     private void setName() {
@@ -56,12 +56,12 @@ public class ProductionPane extends Pane{
     }
 
     private void setBuyButton() {
-        buyButton = new ButtonOne("buy", StaticFonts.segoeLoad(15), Pos.CENTER,
+        this.buyButton = new ButtonOne("buy", StaticFonts.segoeLoad(15), Pos.CENTER,
                 360, 20, 200, 30, this);
     }
 
     private void setProduceButton() {
-        produceButton = new ButtonOne("produce", StaticFonts.segoeLoad(15), Pos.CENTER,
+        this.produceButton = new ButtonOne("produce", StaticFonts.segoeLoad(15), Pos.CENTER,
                 360, 55, 200, 30, this);
     }
 
