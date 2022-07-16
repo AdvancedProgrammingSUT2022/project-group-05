@@ -22,8 +22,6 @@ public class ChariotArcher extends Ranged implements Mounted, NoDefensiveBonus {
 
     @Override
     public String toString () {
-        //return "ChariotArcher";
-        //TODO we can edit after map printing beacause its too long to print
-        return "ChArcher";
+        return "ChariotArcher";
     }
 }

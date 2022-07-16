@@ -21,8 +21,6 @@ public class AntiTankGun extends Melee {
 
     @Override
     public String toString () {
-        //return "AntiTankGun";
-        //TODO we can edit after map printing beacause its too long to print
-        return "AntTank";
+        return "AntiTankGun";
     }
 }

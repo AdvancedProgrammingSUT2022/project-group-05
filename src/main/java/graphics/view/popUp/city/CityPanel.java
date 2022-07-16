@@ -1,19 +1,38 @@
 package graphics.view.popUp.city;
 
+import controller.CityController;
+import controller.GameMenuController;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.ClientManager;
+import graphics.view.popUp.Error;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.Successful;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.game.City;
+import model.game.Civilization;
+import model.tile.Tile;
+import model.unit.civilian.Settler;
+import model.unit.civilian.Worker;
+import model.unit.soldier.ranged.Archer;
+
+import java.util.ArrayList;
 
 public class CityPanel extends Pane{
     private final City city;
 
     public CityPanel(City city) {
         this.city = city;
+        CityController.updateInstance(city);
 
         this.setBackground();
         this.setName();
@@ -42,52 +61,52 @@ public class CityPanel extends Pane{
     }
 
     private void setName() {
-        LabelOne name = new LabelOne(city.getName(), StaticFonts.segoeLoad(60), Pos.CENTER_LEFT,
+        new LabelOne(city.getName(), StaticFonts.segoeLoad(60), Pos.CENTER_LEFT,
                 900, 50, 500, 100, this);
     }
 
     private void setPopulation() {
         String populationInfo = "population<jobless>: " + this.city.getTotalCitizenCount() + "<" + this.city.getJoblessCitizenCount() + ">";
-        LabelOne population = new LabelOne(populationInfo, StaticFonts.segoeLoad(30), Pos.CENTER_LEFT,
+        new LabelOne(populationInfo, StaticFonts.segoeLoad(30), Pos.CENTER_LEFT,
                 900, 125, 500, 50, this);
     }
 
     private void setCurrentProduction() {
-        LabelOne currentProduction = new LabelOne("current production: ", StaticFonts.segoeLoad(30), Pos.CENTER_LEFT,
+        new LabelOne("current production: ", StaticFonts.segoeLoad(30), Pos.CENTER_LEFT,
                 300, 25, 500, 50, this);
     }
 
     private void setCurrentProductionInfo() {
         Object production = city.getProductionInProgress();
-        String info = (production != null)? production.toString() : "nothing";
+        String info = (production != null) ? production.toString() : "nothing";
 
-        LabelOne currentProductionInfo = new LabelOne(info, StaticFonts.segoeLoad(30), Pos.CENTER_RIGHT,
+        new LabelOne(info, StaticFonts.segoeLoad(30), Pos.CENTER_RIGHT,
                 300, 75, 500, 50, this);
     }
 
     private void setTimeRemaining() {
-        LabelOne timeRemaining = new LabelOne("time remaining: ", StaticFonts.segoeLoad(30), Pos.CENTER_LEFT,
+        new LabelOne("time remaining: ", StaticFonts.segoeLoad(30), Pos.CENTER_LEFT,
                 300, 125, 500, 50, this);
     }
 
     private void setTimeRemainingInfo() {
         String info = String.valueOf(city.getRemainingProductionTime());
-        LabelOne timeRemainingInfo = new LabelOne(info, StaticFonts.segoeLoad(30), Pos.CENTER_RIGHT,
+        new LabelOne(info, StaticFonts.segoeLoad(30), Pos.CENTER_RIGHT,
                 300, 175, 500, 50, this);
     }
 
     private void setTileControlTitle() {
-        LabelOne tileControlTitle = new LabelOne("Tile control", StaticFonts.segoeLoad(30), Pos.CENTER,
+        new LabelOne("Tile control", StaticFonts.segoeLoad(30), Pos.CENTER,
                 900, 225, 500, 50, this);
     }
 
     private void setProductionControlTitle() {
-        LabelOne productionControlTitle = new LabelOne("Production control", StaticFonts.segoeLoad(30), Pos.CENTER,
+        new LabelOne("Production control", StaticFonts.segoeLoad(30), Pos.CENTER,
                 300, 225, 500, 50, this);
     }
 
     private void setTileControl() {
-        ScrollPane tileControl = new ScrollPane();
+        ListView<TilePane> tileControl = new ListView<>();
 
         tileControl.setPrefWidth(500);
         tileControl.setPrefHeight(500);
@@ -99,7 +118,7 @@ public class CityPanel extends Pane{
     }
 
     private void setProductionControl() {
-        ScrollPane productionControl = new ScrollPane();
+        ListView<ProductionPane> productionControl = new ListView<>();
 
         productionControl.setPrefWidth(500);
         productionControl.setPrefHeight(500);
@@ -107,6 +126,41 @@ public class CityPanel extends Pane{
         productionControl.setLayoutX(50);
         productionControl.setLayoutY(250);
 
+        ArrayList<ProductionPane> productionPanes = ProductionPane.getAllButtons();
+        for (ProductionPane productionPane : productionPanes)
+        {
+            productionPane.getBuyButton().setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent event) {
+                    String response;
+                    if (productionPane.getProductionType().equals("unit"))
+                        response = CityController.getInstance().purchaseUnit(productionPane.getProductionName());
+                    else
+                        response = CityController.getInstance().purchaseBuilding(productionPane.getProductionName());
+
+                    if (response.startsWith("error")) new PopUp((Pane) CityPanel.this.getParent(), new Error(response));
+                    else new PopUp((Pane) CityPanel.this.getParent(), new Successful(response));
+                }
+            });
+            productionPane.getProduceButton().setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent event) {
+                    String response;
+                    if (productionPane.getProductionType().equals("unit"))
+                        response = CityController.getInstance().cityCreateUnit(productionPane.getProductionName());
+                    else
+                        response = CityController.getInstance().cityCreateBuilding(productionPane.getProductionName());
+
+                    CityPanel.this.setCurrentProductionInfo();
+                    CityPanel.this.setTimeRemainingInfo();
+
+                    if (response.startsWith("error")) new PopUp((Pane) CityPanel.this.getParent(), new Error(response));
+                    else new PopUp((Pane) CityPanel.this.getParent(), new Successful(response));
+                }
+            });
+        }
+
+        productionControl.setItems(FXCollections.observableArrayList(productionPanes));
         this.getChildren().add(productionControl);
     }
 }
