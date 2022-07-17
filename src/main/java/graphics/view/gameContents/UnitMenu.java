@@ -27,15 +27,16 @@ import java.util.ArrayList;
 public class UnitMenu extends Pane{
     private static UnitMenu instance = null;
     private static int bSize = 60;
-    public static UnitMenu getInstance(Unit unit) {
+
+    public static UnitMenu getInstance() {
         if (instance == null) {
             instance = new UnitMenu();
         }
-        UnitController.updateInstance(unit);
+
         return instance;
     }
 
-    private UnitController unitController = UnitController.getInstance();
+    private UnitController unitController;
 
     private Rectangle background;
 
@@ -64,8 +65,9 @@ public class UnitMenu extends Pane{
 
     private ButtonTwo exit;
 
-    public UnitMenu () {
-        //TODO add mp
+    private UnitMenu () {
+        this.unitController = UnitController.getInstance();
+
         background = new javafx.scene.shape.Rectangle(bSize*10, bSize*2);
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
         this.getChildren().add(background);

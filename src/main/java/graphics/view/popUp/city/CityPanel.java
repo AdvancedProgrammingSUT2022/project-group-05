@@ -41,9 +41,8 @@ public class CityPanel extends Pane{
 
     private ButtonOne buyTileButton;
 
-    public CityPanel(City city) {
-        this.city = city;
-        CityController.updateInstance(city);
+    public CityPanel() {
+        this.city = CityController.getInstance().getCity();
 
         this.setBackground();
         this.setName();

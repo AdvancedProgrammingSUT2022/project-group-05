@@ -18,7 +18,9 @@ import javafx.scene.shape.Rectangle;
 import model.game.City;
 import model.game.Civilization;
 import model.map.FogOfWarStates;
+import model.map.Map;
 import model.tile.Tile;
+import model.unit.civilian.Civilian;
 
 //TODO add functions and closing system of this menu
 
@@ -127,17 +129,56 @@ public class TileMenu extends Pane {
             }
         });
 
+        selSol.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Tile tile = MapFX.getInstance().getFirstSelectedTile().getTile();
+
+                String response = GameMenuController.getInstance().selectUnitSoldier(tile.getXPlace(), tile.getYPlace());
+
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error(response));
+                    return;
+                }
+
+                ((Pane) TileMenu.this.getParent()).getChildren().add(UnitMenu.getInstance());
+            }
+        });
+        selCiv.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Tile tile = MapFX.getInstance().getFirstSelectedTile().getTile();
+
+                String response = GameMenuController.getInstance().selectUnitCivilian(tile.getXPlace(), tile.getYPlace());
+
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error(response));
+                    return;
+                }
+
+                //TODO city panel tor
+                new PopUp((Pane) TileMenu.this.getParent(), UnitMenu.getInstance());
+            }
+        });
+
         cityInfo.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                //City city = MapFX.getInstance().getFirstSelectedTile().getTile().getCity();
-                //deb purposes
-                City city = new City("rajabad", MapFX.getInstance().getFirstSelectedTile().getTile(), new Civilization(ClientManager.getInstance().getMainUser(), 0));
+                City city = MapFX.getInstance().getFirstSelectedTile().getTile().getCity();
+
                 if (city == null) {
-                    new PopUp((Pane) TileMenu.this.getParent(), new Error("selected tile doesn't belong to a city"));
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error("error: tile doesn't belong to a city."));
                     return;
                 }
-                new PopUp((Pane) TileMenu.this.getParent(), new CityPanel(city));
+
+                String response = GameMenuController.getInstance().selectCityPosition(city.getCenter().getXPlace(), city.getCenter().getYPlace());
+
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error(response));
+                    return;
+                }
+
+                new PopUp((Pane) TileMenu.this.getParent(), new CityPanel());
             }
         });
 
