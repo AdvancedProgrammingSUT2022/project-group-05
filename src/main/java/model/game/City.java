@@ -58,6 +58,8 @@ public class City implements Serializable {
         this.totalCitizenCount = 1;
         this.joblessCitizenCount = 1;
 
+        this.buildingList = new BuildingList();
+
         this.tiles = new ArrayList<>();
         this.addTile(center);
         for (Tile tile : Map.getInstance().findNeighbors(center)) {
@@ -181,12 +183,14 @@ public class City implements Serializable {
     }
 
     public Unit getUnitInProgress() {
+        if (productionInProgress == null) return null;
         if (productionInProgress.getClass() == Unit.class)
             return (Unit) productionInProgress;
         return null;
     }
 
     public Building getBuildingInProgress() {
+        if (productionInProgress == null) return null;
         if (productionInProgress.getClass() == Building.class)
             return (Building) productionInProgress;
         return null;

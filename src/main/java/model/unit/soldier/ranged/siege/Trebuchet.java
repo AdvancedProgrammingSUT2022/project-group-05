@@ -25,8 +25,6 @@ public class Trebuchet extends Siege implements NoDefensiveBonus, BonusVsCity, L
 
     @Override
     public String toString () {
-        //return "Trebuchet";
-        //TODO we can edit after map printing beacause its too long to print
-        return "Trebuch";
+        return "Trebuchet";
     }
 }

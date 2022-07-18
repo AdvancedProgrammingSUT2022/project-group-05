@@ -3,6 +3,8 @@ package graphics.view.gameContents;
 import controller.GameMenuController;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.statics.StaticFonts;
+import graphics.view.ClientManager;
+import graphics.view.popUp.city.CityPanel;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.TileInfo;
@@ -13,10 +15,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import model.map.FogOfWar;
+import model.game.City;
+import model.game.Civilization;
 import model.map.FogOfWarStates;
+import model.map.Map;
 import model.tile.Tile;
-import model.unit.civilian.Settler;
+import model.unit.civilian.Civilian;
 
 //TODO add functions and closing system of this menu
 
@@ -124,7 +128,59 @@ public class TileMenu extends Pane {
                 else new PopUp((Pane) TileMenu.this.getParent(), new Error("THIS TILE IS NOT VISIBLE"));
             }
         });
-        //TODO other functions
+
+        selSol.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Tile tile = MapFX.getInstance().getFirstSelectedTile().getTile();
+
+                String response = GameMenuController.getInstance().selectUnitSoldier(tile.getXPlace(), tile.getYPlace());
+
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error(response));
+                    return;
+                }
+
+                ((Pane) TileMenu.this.getParent()).getChildren().add(UnitMenu.getInstance());
+            }
+        });
+        selCiv.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Tile tile = MapFX.getInstance().getFirstSelectedTile().getTile();
+
+                String response = GameMenuController.getInstance().selectUnitCivilian(tile.getXPlace(), tile.getYPlace());
+
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error(response));
+                    return;
+                }
+
+                //TODO city panel tor
+                new PopUp((Pane) TileMenu.this.getParent(), UnitMenu.getInstance());
+            }
+        });
+
+        cityInfo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                City city = MapFX.getInstance().getFirstSelectedTile().getTile().getCity();
+
+                if (city == null) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error("error: tile doesn't belong to a city."));
+                    return;
+                }
+
+                String response = GameMenuController.getInstance().selectCityPosition(city.getCenter().getXPlace(), city.getCenter().getYPlace());
+
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) TileMenu.this.getParent(), new Error(response));
+                    return;
+                }
+
+                new PopUp((Pane) TileMenu.this.getParent(), new CityPanel());
+            }
+        });
 
         this.setLayoutX(960 - 4*bSize);
         this.setLayoutY(1040 - bSize);

@@ -78,18 +78,17 @@ public class GameMenuController {
         this.currentTurn %= this.civilizationCount;
         if (this.currentTurn == 0) this.currentYear++;
 
-        //autoSaving
-        if (autoSave) {
-            Map.getInstance().save();
-            this.currentCivilizationController.getCivilization().save();
-        }
-
         this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
         this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
 
         CityController.updateInstance(null); // deselect city in new turn
         UnitController.updateInstance(null); // deselect unit in new turn
 
+        //autoSaving
+        if (autoSave) {
+            Map.getInstance().save();
+            this.currentCivilizationController.getCivilization().save();
+        }
 
         return this.whoseTurnIsIt();
     }
@@ -209,6 +208,21 @@ public class GameMenuController {
         }
     }
 
+    public String selectUnitSoldier(int x, int y) {
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        Soldier soldier = Map.getInstance().getTileFromMap(x, y).getSoldier();
+        if (soldier == null)
+            return Responses.NO_SOLDIER_ON_TILE.getResponse();
+        if (soldier.getCivilization() != currentCivilizationController.getCivilization()) {
+            return Responses.UNIT_NOT_FROM_CIVILIZATION.getResponse();
+        } else {
+            UnitController.updateInstance(soldier);
+            return Responses.SOLDIER_SELECTED_SUCCESSFULLY.getResponse();
+        }
+    }
+
     public String selectUnitCivilian(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
@@ -228,10 +242,44 @@ public class GameMenuController {
         }
     }
 
+    public String selectUnitCivilian(int x, int y) {
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        Civilian civilian = Map.getInstance().getTileFromMap(x, y).getCivilian();
+
+        if (civilian == null)
+            return Responses.NO_CIVILIAN_IN_TILE.getResponse();
+        if (civilian.getCivilization() != currentCivilizationController.getCivilization()) {
+            return Responses.UNIT_NOT_FROM_CIVILIZATION.getResponse();
+        } else {
+            UnitController.updateInstance(civilian);
+            return Responses.CIVILIAN_SELECTED_SUCCESSFULLY.getResponse();
+        }
+    }
+
     public String selectCityPosition(HashMap<String, String> command) {
         int x = Integer.parseInt(command.get(X_POSITION.getKey()));
         int y = Integer.parseInt(command.get(Y_POSITION.getKey()));
 
+        if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
+            return "error: out of bound";
+
+        Tile tile = Map.getInstance().getTileFromMap(x, y);
+
+        if (tile == null) return Responses.TILE_OUT_OF_BOUND.getResponse();
+        if (!tile.isCityCenter()) return Responses.NOT_CITY_CENTER.getResponse();
+
+        City city = tile.getCity();
+        if (city.getCivilization() != currentCivilizationController.getCivilization()) {
+            return Responses.CITY_NOT_FROM_CIVILIZATION.getResponse();
+        } else {
+            CityController.updateInstance(city);
+            return Responses.CITY_SELECTED_SUCCESSFULLY.getResponse();
+        }
+    }
+
+    public String selectCityPosition(int x, int y) {
         if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
             return "error: out of bound";
 

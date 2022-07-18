@@ -20,8 +20,6 @@ public class Crossbowman extends Ranged {
 
     @Override
     public String toString () {
-        //return "Crossbowman";
-        //TODO we can edit after map printing beacause its too long to print
-        return "Crossbow";
+        return "Crossbowman";
     }
 }
