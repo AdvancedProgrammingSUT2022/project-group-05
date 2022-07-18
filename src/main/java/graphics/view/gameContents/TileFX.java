@@ -17,6 +17,8 @@ public class TileFX extends Group {
     private Tile tile;
     private Polygon terrain;
     private Polygon feature;
+    private Polygon[] rivers;
+
     private Polygon fogOfWar;
     private Polygon selected;
     private Polygon front;
@@ -45,6 +47,20 @@ public class TileFX extends Group {
         feature.setLayoutY(-100);
         feature.setFill(tile.getFeature().getTexture());
         this.getChildren().add(feature);
+
+        rivers = new Polygon[6];
+        rivers[0] = new Polygon(100, 0, 300, 0, 297, 3, 103, 3);
+        rivers[1] = new Polygon(300, 0, 400, 100, 394, 100, 297, 3);
+        rivers[2] = new Polygon(400, 100, 300, 200, 297, 197, 394, 100);
+        rivers[3] = new Polygon(100, 200, 300, 200, 297, 197, 103, 197);
+        rivers[4] = new Polygon(0, 100, 100, 200, 103, 197, 6, 100);
+        rivers[5] = new Polygon(100, 0, 0, 100, 6, 100, 103, 3);
+        for (int i = 0; i < 6; i++) {
+            rivers[i].setLayoutX(-200);
+            rivers[i].setLayoutY(-100);
+            rivers[i].setFill(Color.BLUE);
+            this.getChildren().add(rivers[i]);
+        }
 
         ruin = new Rectangle(30, -30, 60, 60);
         this.getChildren().add(ruin);
@@ -149,7 +165,12 @@ public class TileFX extends Group {
             ruin.setVisible(this.getTile().isRuin());
         }
         if(fogOfWarStates.equals(FogOfWarStates.FOG_OF_WAR)) fogOfWar.setFill(StaticImages.FogOfWar);
-        else fogOfWar.setFill(new Color(0, 0, 0, 0));
+        else {
+            fogOfWar.setFill(new Color(0, 0, 0, 0));
+            for (int i = 0; i < 6; i++) {
+                rivers[i].setVisible(tile.hasRiver(i));
+            }
+        }
     }
 
     public void setSelectedDisable () {
