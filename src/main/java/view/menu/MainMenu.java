@@ -60,13 +60,13 @@
 package view.menu;
 
 import controller.UserDatabaseController;
+import graphics.objects.buttons.ButtonOne;
+import graphics.objects.labels.LabelOne;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import main.Main;
-import model.graphicObjects.ButtonOne;
-import model.graphicObjects.LabelOne;
 import statics.StaticFonts;
 
 public class MainMenu {

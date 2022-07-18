@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import model.graphicObjects.TextFieldOne;
 
 public class PopUp extends Pane{
     private Pane father;

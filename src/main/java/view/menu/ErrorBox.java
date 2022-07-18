@@ -1,13 +1,13 @@
 package view.menu;
 
+import graphics.objects.buttons.ButtonOne;
+import graphics.objects.labels.LabelOne;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import model.graphicObjects.ButtonOne;
-import model.graphicObjects.LabelOne;
 import statics.StaticFonts;
 
 

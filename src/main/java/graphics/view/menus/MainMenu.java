@@ -39,8 +39,10 @@ public class MainMenu extends Pane{
             e.printStackTrace();
         }
 
-        ButtonOne startGame = new ButtonOne("NEW GAME", StaticFonts.segoeLoad(60), Pos.CENTER,
-                fromLeft, fromTop, 600, 80, this);
+        ButtonOne startGame = new ButtonOne("NEW LOCAL GAME", StaticFonts.segoeLoad(40), Pos.CENTER,
+                fromLeft, fromTop - 50, 600, 80, this);
+        ButtonOne startMultiplayerGame = new ButtonOne("NEW MULTIPLAYER GAME", StaticFonts.segoeLoad(40), Pos.CENTER,
+                fromLeft, fromTop + 50, 600, 80, this);
         ButtonOne scoreBoard = new ButtonOne("SCOREBOARD", StaticFonts.segoeLoad(20), Pos.CENTER,
                 fromLeft, fromTop + 350, 200, 50, this);
         ButtonOne profile = new ButtonOne("PROFILE", StaticFonts.segoeLoad(20), Pos.CENTER,
@@ -63,6 +65,12 @@ public class MainMenu extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 ClientManager.getInstance().setPane(new LocalGame());
+            }
+        });
+        startMultiplayerGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ClientManager.getInstance().setPane(new MultiplayerGame());
             }
         });
         scoreBoard.setOnMouseClicked(new EventHandler<MouseEvent>() {
