@@ -1,5 +1,6 @@
 package graphics.view.popUp;
 
+import client.ClientManager;
 import controller.GameMenuController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
@@ -19,6 +20,8 @@ public class CivilizationInfo extends Pane {
     ButtonOne economic;
     public CivilizationInfo (Civilization civilization) {
         this.civilization = civilization;
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
 
         this.getChildren().add(new Rectangle(600, 800, Color.WHITE));
         this.setPrefWidth(600);

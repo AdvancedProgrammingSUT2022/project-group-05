@@ -1,6 +1,8 @@
 package graphics.view.gameContents;
 
+import client.ClientManager;
 import controller.GameMenuController;
+import controller.UnitController;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.statics.StaticFonts;
 import graphics.view.popUp.*;
@@ -39,6 +41,9 @@ public class TileMenu extends Pane {
     private ButtonTwo exit;
 
     private TileMenu () {
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+        int fromTop= (int) ClientManager.getInstance().getMainStage().getHeight();
         this.setVisible(false);
         background = new Rectangle(bSize*8, bSize);
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
@@ -136,7 +141,9 @@ public class TileMenu extends Pane {
                     return;
                 }
 
-                ((Pane) TileMenu.this.getParent()).getChildren().add(UnitMenu.getInstance());
+//                ((Pane) TileMenu.this.getParent()).getChildren().add(UnitMenu.getInstance());
+                UnitMenu.getInstance().setName(UnitController.getInstance().getUnit().toString());
+                UnitMenu.getInstance().setVisible(true);
             }
         });
         selCiv.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -152,7 +159,9 @@ public class TileMenu extends Pane {
                 }
 
                 //TODO city panel tor
-                new PopUp((Pane) TileMenu.this.getParent(), UnitMenu.getInstance());
+//                new PopUp((Pane) TileMenu.this.getParent(), UnitMenu.getInstance());
+                UnitMenu.getInstance().setName(UnitController.getInstance().getUnit().toString());
+                UnitMenu.getInstance().setVisible(true);
             }
         });
 
@@ -177,7 +186,7 @@ public class TileMenu extends Pane {
             }
         });
 
-        this.setLayoutX(960 - 4*bSize);
-        this.setLayoutY(1040 - bSize);
+        this.setLayoutX(fromLeft - 4*bSize);
+        this.setLayoutY(fromTop - 40 - bSize);
     }
 }

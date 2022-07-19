@@ -1,7 +1,9 @@
 package client;
 
 import com.google.gson.Gson;
+import controller.UnitController;
 import graphics.view.gameContents.MapFX;
+import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.Game;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -53,6 +55,9 @@ public class ClientManager{
 
     public static void update() {
         MapFX.getInstance().updateMapTextures();
+        if (UnitController.getInstance() != null) {
+            UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
+        }
     }
 
     //GETTER

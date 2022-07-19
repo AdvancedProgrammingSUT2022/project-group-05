@@ -734,6 +734,7 @@ public class GameMenuController {
         Tile tile = Map.getInstance().getTileFromMap(x, y);
         if (!tile.hasSoldier())
             return "error: no soldier in tile";
+        UnitController.updateInstance(null);
         tile.getSoldier().getCivilization().removeUnit(tile.getSoldier());
         return "unit killed successfully";
     }
@@ -748,6 +749,7 @@ public class GameMenuController {
         Tile tile = Map.getInstance().getTileFromMap(x, y);
         if (!tile.hasCivilian())
             return "error: no civilian in tile";
+        UnitController.updateInstance(null);
         tile.getCivilian().getCivilization().removeUnit(tile.getCivilian());
         return "unit killed successfully";
     }
