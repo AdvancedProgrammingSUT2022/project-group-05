@@ -1,7 +1,6 @@
 package client;
 
 import com.google.gson.Gson;
-import graphics.view.gameContents.MainPanel;
 import graphics.view.gameContents.MapFX;
 import graphics.view.menus.Game;
 import javafx.event.EventHandler;
