@@ -16,33 +16,36 @@ public class DisableButtonOne extends Pane{
 
     private Pane pane;
     private Label label;
+
     private Rectangle paneRect;
     private Rectangle animationRect;
 
     public DisableButtonOne(String text, Font font, Pos pos,
                      double fromLeft, double fromTop, double width, double height, Pane pane) {
         this.pane = pane;
-        isEnable = true;
-        pane.getChildren().add(this);
+        this.isEnable = true;
+
+
+        this.pane.getChildren().add(this);
         this.setLayoutX(fromLeft - width/2);
         this.setLayoutY(fromTop - height/2);
 
         //OBJECTS
-        animationRect = new Rectangle(width/2 - width/20, height - 5, width/10, 5);
-        animationRect.setFill(Color.BLUE);
+        this.animationRect = new Rectangle(width/2 - width/20, height - 5, width/10, 5);
+        this.animationRect.setFill(Color.BLUE);
         this.getChildren().add(animationRect);
 
-        label = new Label(text);
-        label.setAlignment(pos);
-        label.setLayoutX(0);
-        label.setLayoutY(5);
-        label.setPrefWidth(width);
-        label.setPrefHeight(height - 10);
-        label.setFont(font);
+        this.label = new Label(text);
+        this.label.setAlignment(pos);
+        this.label.setLayoutX(0);
+        this.label.setLayoutY(5);
+        this.label.setPrefWidth(width);
+        this.label.setPrefHeight(height - 10);
+        this.label.setFont(font);
         this.getChildren().add(label);
 
-        paneRect = new Rectangle(0, 0, width, height);
-        paneRect.setFill(new Color(0,0,0,0));
+        this.paneRect = new Rectangle(0, 0, width, height);
+        this.paneRect.setFill(new Color(0,0,0,0));
         this.getChildren().add(paneRect);
 
         //TRANSITIONS
@@ -91,7 +94,6 @@ public class DisableButtonOne extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 //widthIncrease.play();
-                if (!isEnable) return;
                 hoverFalse.stop();
                 hoverTrue.play();
             }
@@ -100,7 +102,7 @@ public class DisableButtonOne extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 //widthDecrease.play();
-                if (!isEnable) return;
+
                 hoverTrue.stop();
                 hoverFalse.play();
             }
@@ -115,9 +117,12 @@ public class DisableButtonOne extends Pane{
         paneRect.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (!isEnable) return;
             }
         });
+    }
+
+    public void setColor(Color color) {
+        this.animationRect.setFill(color);
     }
 
     public boolean isEnable () {

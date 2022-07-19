@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
-import graphics.view.ClientManager;
+import client.ClientManager;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;

@@ -1,35 +1,83 @@
 package graphics.view.popUp.research;
 
+import controller.CivilizationController;
+import controller.GameMenuController;
 import graphics.objects.buttons.DisableButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.Successful;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import model.game.Civilization;
 import model.research.Research;
+import model.research.ResearchNode;
+import model.research.ResearchStatus;
 
 public class TechnologyFX extends Pane {
-    Pane pane;
+    TechnologyTreeMap technologyTreeMap;
     DisableButtonOne buttonOne;
-    Research research;
+
+    ResearchNode researchNode;
 
 
-    public TechnologyFX (Research research, int X, int Y, boolean isEnable, Pane pane) {
-        this.pane = pane;
-        pane.getChildren().add(this);
-        this.research = research;
+    public TechnologyFX (ResearchNode researchNode, int X, int Y, TechnologyTreeMap technologyTreeMap) {
+        this.technologyTreeMap = technologyTreeMap;
+        this.technologyTreeMap.getChildren().add(this);
 
         this.setLayoutX(250*X - 250);
         this.setLayoutY(200*Y - 100);
-        buttonOne = new DisableButtonOne(research.toString(), StaticFonts.segoeLoad(15), Pos.CENTER,
+
+        this.researchNode = researchNode;
+        this.buttonOne = new DisableButtonOne(researchNode.getResearch().toString(), StaticFonts.segoeLoad(15), Pos.CENTER,
                 100, 50, 200, 40, this);
+
+        this.setEnable();
+        this.setColor();
+
+        this.setFunction();
 
     }
 
-    public boolean isEnable () {
+    public boolean isEnable() {
         return buttonOne.isEnable();
     }
 
-    public void setEnable (boolean isEnable) {
-        buttonOne.setEnable(isEnable);
+    private void setColor() {
+        switch (researchNode.getStatus()) {
+            case LOCKED:
+                this.buttonOne.setColor(Color.GRAY);
+                break;
+            case UNLOCKED:
+                this.buttonOne.setColor(Color.GREEN);
+                break;
+            case DONE:
+                this.buttonOne.setColor(Color.GOLD);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setEnable () {
+        buttonOne.setEnable(this.researchNode.getStatus().equals(ResearchStatus.UNLOCKED));
+    }
+
+    private void setFunction() {
+        this.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                if (!TechnologyFX.this.isEnable()) return;
+
+                Research research = TechnologyFX.this.researchNode.getResearch();
+                Civilization civilization = TechnologyFX.this.technologyTreeMap.getCivilization();
+
+                civilization.getResearchTree().setCurrentResearch(research);
+                new PopUp((Pane) TechnologyFX.this.getParent().getParent().getParent().getParent().getParent().getParent(), new Successful("started doing " + research.toString()));
+            }
+        });
     }
 }

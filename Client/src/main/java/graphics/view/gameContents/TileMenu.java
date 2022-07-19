@@ -3,7 +3,6 @@ package graphics.view.gameContents;
 import controller.GameMenuController;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.statics.StaticFonts;
-import graphics.view.ClientManager;
 import graphics.view.popUp.*;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.city.CityPanel;
@@ -14,11 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.game.City;
-import model.game.Civilization;
 import model.map.FogOfWarStates;
-import model.map.Map;
 import model.tile.Tile;
-import model.unit.civilian.Civilian;
 
 //TODO add functions and closing system of this menu
 

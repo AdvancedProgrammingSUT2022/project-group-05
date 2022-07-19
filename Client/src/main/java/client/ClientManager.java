@@ -1,13 +1,14 @@
-package graphics.view;
+package client;
 
-//import controller.UserDatabaseController;
 import com.google.gson.Gson;
+import graphics.view.gameContents.MainPanel;
+import graphics.view.gameContents.MapFX;
+import graphics.view.menus.Game;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import client.Client;
-import client.ClientAdapter;
-import client.Response;
 import model.User;
 
 import java.util.HashMap;
@@ -41,13 +42,18 @@ public class ClientManager{
 
     public void updateMainUser() {
         if (mainUser == null) return;
-        this.mainUser = this.getUserByUsername(mainUser.getUsername());
+        this.mainUser = getUserByUsername(mainUser.getUsername());
     }
+
     public static User getUserByUsername(String username) {
         Response getUserResponse = Client.send(ClientAdapter.getUser(username));
         String userJson = getUserResponse.getMessage();
         Gson gson = new Gson();
         return gson.fromJson(userJson, User.class);
+    }
+
+    public static void update() {
+        MapFX.getInstance().updateMapTextures();
     }
 
     //GETTER
@@ -76,6 +82,13 @@ public class ClientManager{
 
         this.mainStage = mainStage;
         this.mainScene = mainScene;
+
+        mainScene.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                if (mainScene.getRoot() instanceof Game) update();
+            }
+        });
     }
     public static ClientManager getInstance()
     {

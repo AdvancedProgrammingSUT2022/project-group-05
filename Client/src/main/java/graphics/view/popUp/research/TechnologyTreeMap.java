@@ -1,128 +1,137 @@
 package graphics.view.popUp.research;
 
-import graphics.objects.buttons.DisableButtonOne;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Arc;
 import model.game.Civilization;
-import model.research.Research;
+
+import static model.research.Research.*;
 
 public class TechnologyTreeMap extends Pane {
-    TechnologyFX agriculture;
+    private final Civilization civilization;
 
-    TechnologyFX pottery;
-    TechnologyFX animalHusbandry;
-    TechnologyFX archery;
-    TechnologyFX mining;
+    private final TechnologyFX agriculture;
 
-    TechnologyFX calendar;
-    TechnologyFX writing;
-    TechnologyFX trapping;
-    TechnologyFX theWheel;
-    TechnologyFX masonry;
-    TechnologyFX bronzeWorking;
+    private final TechnologyFX pottery;
+    private final TechnologyFX animalHusbandry;
+    private final TechnologyFX archery;
+    private final TechnologyFX mining;
 
-    TechnologyFX philosophy;
-    TechnologyFX horsebackRiding;
-    TechnologyFX mathematics;
-    TechnologyFX construction;
-    TechnologyFX ironWorking;
+    private final TechnologyFX calendar;
+    private final TechnologyFX writing;
+    private final TechnologyFX trapping;
+    private final TechnologyFX theWheel;
+    private final TechnologyFX masonry;
+    private final TechnologyFX bronzeWorking;
 
-    TechnologyFX theology;
-    TechnologyFX civilService;
-    TechnologyFX currency;
-    TechnologyFX engineering;
-    TechnologyFX metalCasting;
+    private final TechnologyFX philosophy;
+    private final TechnologyFX horsebackRiding;
+    private final TechnologyFX mathematics;
+    private final TechnologyFX construction;
+    private final TechnologyFX ironWorking;
 
-    TechnologyFX education;
-    TechnologyFX chivalry;
-    TechnologyFX machinery;
-    TechnologyFX physics;
-    TechnologyFX steel;
+    private final TechnologyFX theology;
+    private final TechnologyFX civilService;
+    private final TechnologyFX currency;
+    private final TechnologyFX engineering;
+    private final TechnologyFX metalCasting;
 
-    TechnologyFX acoustics;
-    TechnologyFX banking;
-    TechnologyFX printingPress;
-    TechnologyFX gunpowder;
+    private final TechnologyFX education;
+    private final TechnologyFX chivalry;
+    private final TechnologyFX machinery;
+    private final TechnologyFX physics;
+    private final TechnologyFX steel;
 
-    TechnologyFX economics;
-    TechnologyFX chemistry;
-    TechnologyFX metallurgy;
+    private final TechnologyFX acoustics;
+    private final TechnologyFX banking;
+    private final TechnologyFX printingPress;
+    private final TechnologyFX gunpowder;
 
-    TechnologyFX archaeology;
-    TechnologyFX scientificTheory;
-    TechnologyFX militaryScience;
-    TechnologyFX fertilizer;
-    TechnologyFX rifling;
+    private final TechnologyFX economics;
+    private final TechnologyFX chemistry;
+    private final TechnologyFX metallurgy;
 
-    TechnologyFX biology;
-    TechnologyFX steamPower;
+    private final TechnologyFX archaeology;
+    private final TechnologyFX scientificTheory;
+    private final TechnologyFX militaryScience;
+    private final TechnologyFX fertilizer;
+    private final TechnologyFX rifling;
 
-    TechnologyFX electricity;
-    TechnologyFX replaceableParts;
-    TechnologyFX railroad;
-    TechnologyFX dynamite;
+    private final TechnologyFX biology;
+    private final TechnologyFX steamPower;
 
-    TechnologyFX telegraph;
-    TechnologyFX radio;
-    TechnologyFX combustion;
+    private final TechnologyFX electricity;
+    private final TechnologyFX replaceableParts;
+    private final TechnologyFX railroad;
+    private final TechnologyFX dynamite;
+
+    private final TechnologyFX telegraph;
+    private final TechnologyFX radio;
+    private final TechnologyFX combustion;
 
     public TechnologyTreeMap (Civilization civilization) {
-        agriculture = new TechnologyFX(Research.AGRICULTURE, 4, 1, true, this);
+        this.civilization = civilization;
+        
+        agriculture = new TechnologyFX(civilization.getResearchTree().getResearch(AGRICULTURE), 4, 1, this);
 
-        pottery = new TechnologyFX(Research.POTTERY, 1, 2, false, this);
-        animalHusbandry = new TechnologyFX(Research.ANIMAL_HUSBANDRY, 3, 2, true, this);
-        archery = new TechnologyFX(Research.ARCHERY, 5, 2, false, this);
-        mining = new TechnologyFX(Research.MINING, 7, 2, false, this);
+        pottery = new TechnologyFX(civilization.getResearchTree().getResearch(POTTERY), 1, 2, this);
+        animalHusbandry = new TechnologyFX(civilization.getResearchTree().getResearch(ANIMAL_HUSBANDRY), 3, 2, this);
+        archery = new TechnologyFX(civilization.getResearchTree().getResearch(ARCHERY), 5, 2, this);
+        mining = new TechnologyFX(civilization.getResearchTree().getResearch(MINING), 7, 2, this);
 
-        calendar = new TechnologyFX(Research.CALENDAR, 1, 3, false, this);
-        writing = new TechnologyFX(Research.WRITING, 2, 3, false, this);
-        trapping = new TechnologyFX(Research.WRITING, 3, 3, false, this);
-        theWheel = new TechnologyFX(Research.TRAPPING, 4, 3, false, this);
-        masonry = new TechnologyFX(Research.MASONRY, 6, 3, false, this);
-        bronzeWorking = new TechnologyFX(Research.BRONZE_WORKING, 7, 3, false, this);
+        calendar = new TechnologyFX(civilization.getResearchTree().getResearch(CALENDAR), 1, 3, this);
+        writing = new TechnologyFX(civilization.getResearchTree().getResearch(WRITING), 2, 3, this);
+        trapping = new TechnologyFX(civilization.getResearchTree().getResearch(TRAPPING), 3, 3, this);
+        theWheel = new TechnologyFX(civilization.getResearchTree().getResearch(THE_WHEEL), 4, 3, this);
+        masonry = new TechnologyFX(civilization.getResearchTree().getResearch(MASONRY), 6, 3, this);
+        bronzeWorking = new TechnologyFX(civilization.getResearchTree().getResearch(BRONZE_WORKING), 7, 3, this);
 
-        philosophy = new TechnologyFX(Research.PHILOSOPHY, 2, 4, false, this);
-        horsebackRiding = new TechnologyFX(Research.HORSEBACK_RIDING, 4, 4, false, this);
-        mathematics = new TechnologyFX(Research.MATHEMATICS, 5, 4, false, this);
-        construction = new TechnologyFX(Research.CONSTRUCTION, 6, 4, false, this);
-        ironWorking = new TechnologyFX(Research.IRON_WORKING, 7, 4, false, this);
+        philosophy = new TechnologyFX(civilization.getResearchTree().getResearch(PHILOSOPHY), 2, 4, this);
+        horsebackRiding = new TechnologyFX(civilization.getResearchTree().getResearch(HORSEBACK_RIDING), 4, 4, this);
+        mathematics = new TechnologyFX(civilization.getResearchTree().getResearch(MATHEMATICS), 5, 4, this);
+        construction = new TechnologyFX(civilization.getResearchTree().getResearch(CONSTRUCTION), 6, 4, this);
+        ironWorking = new TechnologyFX(civilization.getResearchTree().getResearch(IRON_WORKING), 7, 4, this);
 
-        theology = new TechnologyFX(Research.THEOLOGY, 1, 5, false, this);
-        civilService = new TechnologyFX(Research.CIVIL_SERVICE, 3, 5, false, this);
-        currency = new TechnologyFX(Research.CURRENCY, 5, 5, false, this);
-        engineering = new TechnologyFX(Research.ENGINEERING, 6, 5, false, this);
-        metalCasting = new TechnologyFX(Research.METAL_CASTING, 7, 5, false, this);
+        theology = new TechnologyFX(civilization.getResearchTree().getResearch(THEOLOGY), 1, 5, this);
+        civilService = new TechnologyFX(civilization.getResearchTree().getResearch(CIVIL_SERVICE), 3, 5, this);
+        currency = new TechnologyFX(civilization.getResearchTree().getResearch(CURRENCY), 5, 5, this);
+        engineering = new TechnologyFX(civilization.getResearchTree().getResearch(ENGINEERING), 6, 5, this);
+        metalCasting = new TechnologyFX(civilization.getResearchTree().getResearch(METAL_CASTING), 7, 5, this);
 
-        education = new TechnologyFX(Research.EDUCATION, 1, 6, false, this);
-        chivalry = new TechnologyFX(Research.CHIVALRY, 4, 6, false, this);
-        machinery = new TechnologyFX(Research.MACHINERY, 5, 6, false, this);
-        physics = new TechnologyFX(Research.PHYSICS, 6, 6, false, this);
-        steel = new TechnologyFX(Research.STEEL, 7, 6, false, this);
+        education = new TechnologyFX(civilization.getResearchTree().getResearch(EDUCATION), 1, 6, this);
+        chivalry = new TechnologyFX(civilization.getResearchTree().getResearch(CHIVALRY), 4, 6, this);
+        machinery = new TechnologyFX(civilization.getResearchTree().getResearch(MACHINERY), 5, 6, this);
+        physics = new TechnologyFX(civilization.getResearchTree().getResearch(PHYSICS), 6, 6, this);
+        steel = new TechnologyFX(civilization.getResearchTree().getResearch(STEEL), 7, 6, this);
 
-        acoustics = new TechnologyFX(Research.ACOUSTICS, 1, 7, false, this);
-        banking = new TechnologyFX(Research.BANKING, 4, 7, false, this);
-        printingPress = new TechnologyFX(Research.PRINTING_PRESS, 5, 7, false, this);
-        gunpowder = new TechnologyFX(Research.GUNPOWDER, 7, 7, false, this);
+        acoustics = new TechnologyFX(civilization.getResearchTree().getResearch(ACOUSTICS), 1, 7, this);
+        banking = new TechnologyFX(civilization.getResearchTree().getResearch(BANKING), 4, 7, this);
+        printingPress = new TechnologyFX(civilization.getResearchTree().getResearch(PRINTING_PRESS), 5, 7, this);
+        gunpowder = new TechnologyFX(civilization.getResearchTree().getResearch(GUNPOWDER), 7, 7, this);
 
-        economics = new TechnologyFX(Research.ECONOMICS, 4, 8, false, this);
-        chemistry = new TechnologyFX(Research.CHEMISTRY, 6, 8, false, this);
-        metallurgy = new TechnologyFX(Research.METALLURGY, 7, 8, false, this);
+        economics = new TechnologyFX(civilization.getResearchTree().getResearch(ECONOMICS), 4, 8, this);
+        chemistry = new TechnologyFX(civilization.getResearchTree().getResearch(CHEMISTRY), 6, 8, this);
+        metallurgy = new TechnologyFX(civilization.getResearchTree().getResearch(METALLURGY), 7, 8, this);
 
-        archaeology = new TechnologyFX(Research.ARCHAEOLOGY, 1, 9, false, this);
-        scientificTheory = new TechnologyFX(Research.SCIENTIFIC_THEORY, 3, 9, false, this);
-        militaryScience = new TechnologyFX(Research.MILITARY_SCIENCE, 4, 9, false, this);
-        fertilizer = new TechnologyFX(Research.FERTILIZER, 6, 9, false, this);
-        rifling = new TechnologyFX(Research.RIFLING, 7, 9, false, this);
+        archaeology = new TechnologyFX(civilization.getResearchTree().getResearch(ARCHAEOLOGY), 1, 9, this);
+        scientificTheory = new TechnologyFX(civilization.getResearchTree().getResearch(SCIENTIFIC_THEORY), 3, 9, this);
+        militaryScience = new TechnologyFX(civilization.getResearchTree().getResearch(MILITARY_SCIENCE), 4, 9, this);
+        fertilizer = new TechnologyFX(civilization.getResearchTree().getResearch(FERTILIZER), 6, 9, this);
+        rifling = new TechnologyFX(civilization.getResearchTree().getResearch(RIFLING), 7, 9, this);
 
-        biology = new TechnologyFX(Research.BIOLOGY, 1, 10, false, this);
-        steamPower = new TechnologyFX(Research.STEAM_POWER, 3, 10, false, this);
+        biology = new TechnologyFX(civilization.getResearchTree().getResearch(BIOLOGY), 1, 10, this);
+        steamPower = new TechnologyFX(civilization.getResearchTree().getResearch(STEAM_POWER), 3, 10, this);
 
-        electricity = new TechnologyFX(Research.ELECTRICITY, 1, 11, false, this);
-        replaceableParts = new TechnologyFX(Research.REPLACEABLE_PARTS, 3, 11, false, this);
-        railroad = new TechnologyFX(Research.RAILROAD, 6, 11, false, this);
-        dynamite = new TechnologyFX(Research.DYNAMITE, 7, 11, false, this);
+        electricity = new TechnologyFX(civilization.getResearchTree().getResearch(ELECTRICITY), 1, 11, this);
+        replaceableParts = new TechnologyFX(civilization.getResearchTree().getResearch(REPLACEABLE_PARTS), 3, 11, this);
+        railroad = new TechnologyFX(civilization.getResearchTree().getResearch(RAILROAD), 6, 11, this);
+        dynamite = new TechnologyFX(civilization.getResearchTree().getResearch(DYNAMITE), 7, 11, this);
 
-        telegraph = new TechnologyFX(Research.TELEGRAPH, 1, 12, false, this);
-        radio = new TechnologyFX(Research.RADIO, 2, 12, false, this);
-        combustion = new TechnologyFX(Research.COMBUSTION, 6, 12, false, this);
+        telegraph = new TechnologyFX(civilization.getResearchTree().getResearch(TELEGRAPH), 1, 12, this);
+        radio = new TechnologyFX(civilization.getResearchTree().getResearch(RADIO), 2, 12, this);
+        combustion = new TechnologyFX(civilization.getResearchTree().getResearch(COMBUSTION), 6, 12, this);
+    }
+
+    public Civilization getCivilization() {
+        return this.civilization;
     }
 }

@@ -12,6 +12,8 @@ import javafx.scene.shape.Rectangle;
 //ADD FUNCTIONS
 
 public class CheatCode extends Pane {
+    private ButtonOne accept;
+
     public CheatCode () {
         this.getChildren().add(new Rectangle(600, 300, Color.WHITE));
         this.setPrefHeight(300);
@@ -20,7 +22,9 @@ public class CheatCode extends Pane {
                 300, 75, 200, 60, this);
         new TextFieldOne("TYPE CODE", StaticFonts.segoeLoad(30), Pos.CENTER,
                 300, 150, 400, 50, this);
-        new ButtonOne("ACCEPT", StaticFonts.segoeLoad(20), Pos.CENTER,
+        this.accept = new ButtonOne("ACCEPT", StaticFonts.segoeLoad(20), Pos.CENTER,
                 300, 225, 200, 40, this);
     }
+
+
 }
