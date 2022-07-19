@@ -2,14 +2,18 @@ package graphics.view.menus;
 
 //import controller.UserDatabaseController;
 import graphics.objects.buttons.ButtonOne;
+import graphics.objects.labels.LabelOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.popUp.Error;
+import graphics.view.popUp.FriendsPane;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -17,9 +21,13 @@ import client.Client;
 import client.ClientAdapter;
 import client.Response;
 
-        import java.io.File;
+import java.io.File;
+import java.util.ArrayList;
 
 public class ProfileMenu extends Pane{
+
+    private ListView<FriendsPane> friendsPanes;
+
     public ProfileMenu () {
         Pane temp = this;
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
@@ -45,6 +53,19 @@ public class ProfileMenu extends Pane{
 
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft, fromTop + 450, 100, 50, this);
+
+        new LabelOne("Friends", StaticFonts.segoeLoad(50), Pos.CENTER,
+                100, 20, 300, 70, this);
+
+        this.friendsPanes = new ListView<>();
+        this.friendsPanes.setPrefWidth(300);
+        this.friendsPanes.setPrefHeight(200);
+        this.friendsPanes.setLayoutX(50);
+        this.friendsPanes.setLayoutY(100);
+
+        friendsPanes.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
+
+        this.getChildren().add(friendsPanes);
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
