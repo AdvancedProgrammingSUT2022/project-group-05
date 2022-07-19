@@ -11,7 +11,7 @@ public class ResearchPanel extends Pane {
     public ResearchPanel(Civilization civilization) {
         this.setPrefWidth(1800);
         this.setPrefHeight(800);
-        scrollPane = new ScrollPane(new TechnologyTreeMap(null));
+        scrollPane = new ScrollPane(new TechnologyTreeMap(civilization));
         this.getChildren().add(scrollPane);
         scrollPane.setPrefHeight(800);
         scrollPane.setPrefWidth(1800);
