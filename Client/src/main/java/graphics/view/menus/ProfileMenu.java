@@ -1,6 +1,5 @@
 package graphics.view.menus;
 
-import controller.Responses;
 //import controller.UserDatabaseController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
@@ -14,12 +13,11 @@ import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import main.Client;
-import main.ClientAdapter;
-import main.Response;
-import model.User;
+import client.Client;
+import client.ClientAdapter;
+import client.Response;
 
-import java.io.File;
+        import java.io.File;
 
 public class ProfileMenu extends Pane{
     public ProfileMenu () {
