@@ -171,6 +171,10 @@ public class TileFX extends Group {
                 rivers[i].setVisible(tile.hasRiver(i));
             }
         }
+        if (fogOfWarStates.equals(FogOfWarStates.REVEALED)) {
+            civilian.setFill(Color.TRANSPARENT);
+            soldure.setFill(Color.TRANSPARENT);
+        }
     }
 
     public void setSelectedDisable () {
