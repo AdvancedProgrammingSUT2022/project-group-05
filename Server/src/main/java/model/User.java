@@ -1,6 +1,9 @@
 package model;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     private String username;
@@ -8,6 +11,8 @@ public class User implements Serializable {
     private String password;
     private String imageAddress;
     private int score;
+    private ArrayList<String> friends;
+    private ArrayList<String> invitingFriends; //players who have invited this user
 
     public User(String username, String nickname, String password, String imageAddress, int score) {
         this.username = username;
@@ -15,6 +20,26 @@ public class User implements Serializable {
         this.password = password;
         this.imageAddress = imageAddress;
         this.score = score;
+        this.friends = new ArrayList<>();
+        this.invitingFriends = new ArrayList<>();
+    }
+
+    public void addFriend(String friendUsername) {
+        friends.add(friendUsername);
+    }
+
+    public void addInvitingFriend(String invitingFriendUsername) {
+        invitingFriends.add(invitingFriendUsername);
+    }
+
+    public String getFriendsJson() {
+        Gson gson = new Gson();
+        return gson.toJson(friends);
+    }
+
+    public String getInvitingFriendsJson() {
+        Gson gson = new Gson();
+        return gson.toJson(invitingFriends);
     }
 
     //SETTERS
@@ -57,5 +82,13 @@ public class User implements Serializable {
 
     public String getImageAddress() {
         return imageAddress;
+    }
+
+    public ArrayList<String> getFriends() {
+        return friends;
+    }
+
+    public ArrayList<String> getInvitingFriends() {
+        return invitingFriends;
     }
 }

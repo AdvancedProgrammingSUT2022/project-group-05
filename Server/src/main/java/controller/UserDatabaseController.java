@@ -54,6 +54,8 @@ public class UserDatabaseController {
         userNew.put("nickname", newUser.getNickname());
         userNew.put("score", String.valueOf(newUser.getScore()));
         userNew.put("image", newUser.getImageAddress());
+        userNew.put("friends", newUser.getFriendsJson());
+        userNew.put("invitingFriends", newUser.getInvitingFriendsJson());
         users.add(userNew);
         updateDatabase(users);
     }
@@ -66,6 +68,8 @@ public class UserDatabaseController {
         oldUser.put("nickname", user.getNickname());
         oldUser.put("score", String.valueOf(user.getScore()));
         oldUser.put("image", user.getImageAddress());
+        oldUser.put("friends", user.getFriendsJson());
+        oldUser.put("invitingFriends", user.getInvitingFriendsJson());
         users.remove(oldUser);
         updateDatabase(users);
     }
@@ -122,6 +126,20 @@ public class UserDatabaseController {
         ArrayList<HashMap<String, String>> users = loadDatabase();
         int userIndex = getUserIndexByUsername(user.getUsername());
         users.get(userIndex).put("image", newImageAddress);
+        updateDatabase(users);
+    }
+
+    public static void addFriend(User user, String friendUsername) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = getUserIndexByUsername(friendUsername);
+        user.addFriend(users.get(userIndex).get("username"));
+        updateDatabase(users);
+    }
+
+    public static void addInvitingFriend(User user, String friendUsername) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = getUserIndexByUsername(friendUsername);
+        user.addInvitingFriend(users.get(userIndex).get("username"));
         updateDatabase(users);
     }
 
