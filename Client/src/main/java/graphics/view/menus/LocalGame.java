@@ -6,7 +6,7 @@ import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
-import graphics.view.ClientManager;
+import client.ClientManager;
 import graphics.view.gameContents.MapFX;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

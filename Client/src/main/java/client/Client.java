@@ -1,6 +1,5 @@
 package client;
 
-import graphics.view.ClientManager;
 import graphics.view.menus.LoginMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;

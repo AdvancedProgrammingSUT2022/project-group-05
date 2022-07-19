@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
-import graphics.view.ClientManager;
+import client.ClientManager;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import javafx.event.EventHandler;

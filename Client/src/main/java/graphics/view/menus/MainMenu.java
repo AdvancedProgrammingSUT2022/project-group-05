@@ -2,7 +2,7 @@ package graphics.view.menus;
 
 import graphics.objects.buttons.ButtonOne;
 import graphics.statics.StaticFonts;
-import graphics.view.ClientManager;
+import client.ClientManager;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
