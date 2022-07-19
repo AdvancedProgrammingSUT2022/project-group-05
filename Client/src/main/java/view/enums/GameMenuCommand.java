@@ -80,8 +80,8 @@ public enum GameMenuCommand{
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
 
-    KILL_SOLDIER("kill-soldier", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
-    KILL_CIVILIAN("\\s*kill-civilian", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
+    KILL_SOLDIER("\\s*kill-soldier(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
+    KILL_CIVILIAN("\\s*kill-civilian(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     SPAWN_UNIT("\\s*spawn-unit(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
   
     REVEAL_ALL("\\s*reveal-all(?<entities>.*)", List.of()), //sets all tiles fog of war status to revealed

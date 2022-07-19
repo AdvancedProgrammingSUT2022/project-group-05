@@ -31,4 +31,8 @@ public class LabelOne extends Pane {
         label.setFont(font);
         this.getChildren().add(label);
     }
+
+    public void setText(String name) {
+        this.label.setText(name);
+    }
 }
