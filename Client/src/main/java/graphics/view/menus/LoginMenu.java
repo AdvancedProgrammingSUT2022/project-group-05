@@ -7,14 +7,13 @@ import graphics.statics.StaticFonts;
 import graphics.view.ClientManager;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
-import graphics.view.popUp.Successful;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import main.Client;
-import main.ClientAdapter;
-import main.Response;
+import client.Client;
+import client.ClientAdapter;
+import client.Response;
 import model.User;
 
 public class LoginMenu extends Pane{

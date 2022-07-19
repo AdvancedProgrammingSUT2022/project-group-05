@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import main.Client;
-import main.ClientAdapter;
-import main.Response;
+import client.Client;
+import client.ClientAdapter;
+import client.Response;
 import model.User;
 
 import java.util.HashMap;

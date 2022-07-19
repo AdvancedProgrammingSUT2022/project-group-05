@@ -1,9 +1,5 @@
-package main;
+package client;
 
-
-import com.google.gson.Gson;
-import graphics.objects.textFields.TextFieldOne;
-import model.User;
 
 public class ClientAdapter {
 

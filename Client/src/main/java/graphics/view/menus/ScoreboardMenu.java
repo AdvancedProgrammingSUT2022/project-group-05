@@ -13,9 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import main.Client;
-import main.ClientAdapter;
-import main.Response;
+import client.Client;
+import client.ClientAdapter;
+import client.Response;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -6,7 +6,9 @@ Phase2.pdf
 Phase3.pdf
 project-group-05.iml
 
-Client/target
-Server/target
+/target
+/Client/target
+/Server/target
+
 /.idea
 /khosro.txt
