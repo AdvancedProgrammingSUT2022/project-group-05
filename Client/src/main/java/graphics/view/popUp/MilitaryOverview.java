@@ -1,4 +1,6 @@
 package graphics.view.popUp;
 
-public class MilitaryOverview{
+import javafx.scene.layout.Pane;
+
+public class MilitaryOverview extends Pane {
 }
