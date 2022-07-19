@@ -2,7 +2,6 @@ package model.unit;
 
 import model.game.City;
 import model.game.Civilization;
-import model.map.Map;
 import model.research.Research;
 import model.resource.Resource;
 import model.tile.Tile;

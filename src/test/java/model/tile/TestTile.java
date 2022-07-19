@@ -6,12 +6,9 @@ import model.resource.Resource;
 import model.tile.project.ProjectManager;
 import model.unit.civilian.Worker;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import static org.mockito.Mockito.when;
 
 public class TestTile{
     Tile tile = new Tile(0, 0, 0);

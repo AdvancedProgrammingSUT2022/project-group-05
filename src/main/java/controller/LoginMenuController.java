@@ -6,10 +6,6 @@ import model.User;
 import view.menu.ErrorBox;
 import view.menu.MainMenu;
 
-import static view.enums.Entity.*;
-
-import java.util.HashMap;
-
 
 public class LoginMenuController {
 

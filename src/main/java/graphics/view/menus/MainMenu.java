@@ -13,7 +13,6 @@ import javafx.util.Duration;
 import graphics.objects.buttons.ButtonOne;
 import graphics.statics.StaticFonts;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 

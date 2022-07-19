@@ -5,12 +5,6 @@ import model.User;
 import view.menu.ErrorBox;
 import view.menu.MainMenu;
 
-import javax.xml.stream.events.EntityReference;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static view.enums.Entity.*;
-
 public class ProfileMenuController {
 
     public UserDatabaseController userDatabaseController = new UserDatabaseController();

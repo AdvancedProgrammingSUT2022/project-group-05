@@ -2,8 +2,6 @@ package model.game;
 
 
 import model.User;
-import model.map.FogOfWar;
-import model.map.FogOfWarStates;
 import model.map.Map;
 import model.research.Research;
 import model.tile.Tile;
@@ -18,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.nio.channels.AsynchronousServerSocketChannel;
 import java.util.ArrayList;
 
 @ExtendWith(MockitoExtension.class)

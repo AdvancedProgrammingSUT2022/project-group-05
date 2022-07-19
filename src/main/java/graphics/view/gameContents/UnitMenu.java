@@ -2,7 +2,6 @@ package graphics.view.gameContents;
 
 import controller.UnitController;
 import graphics.objects.buttons.ButtonTwo;
-import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import graphics.view.popUp.ImprovementPanel;
 import graphics.view.popUp.PopUp;
@@ -17,7 +16,6 @@ import model.game.Civilization;
 import model.improvement.Improvement;
 import model.tile.Route;
 import model.tile.Tile;
-import model.unit.Unit;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;

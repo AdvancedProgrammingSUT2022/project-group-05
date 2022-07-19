@@ -1,16 +1,11 @@
 package model.map;
 
 import model.game.Civilization;
-import model.resource.Resource;
-import model.tile.Feature;
-import model.tile.Terrain;
 import model.tile.Tile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 public class TestMap {
     @Mock

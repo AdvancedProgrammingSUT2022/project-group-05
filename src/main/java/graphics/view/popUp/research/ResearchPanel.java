@@ -3,7 +3,6 @@ package graphics.view.popUp;
 import graphics.objects.buttons.DisableButtonOne;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.game.Civilization;
 

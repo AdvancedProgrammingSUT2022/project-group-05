@@ -14,7 +14,6 @@ import model.tile.Terrain;
 import model.tile.Tile;
 import model.unit.Unit;
 import model.unit.UnitState;
-import model.unit.civilian.Settler;
 import model.unit.civilian.Worker;
 import model.unit.soldier.Soldier;
 import model.unit.soldier.melee.Warrior;

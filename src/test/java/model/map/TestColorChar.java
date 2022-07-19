@@ -1,6 +1,5 @@
 package model.map;
 
-import com.sun.source.tree.ModuleTree;
 import model.game.Civilization;
 import model.resource.Resource;
 import model.tile.Feature;

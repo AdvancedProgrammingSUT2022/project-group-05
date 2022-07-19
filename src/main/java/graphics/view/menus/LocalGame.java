@@ -8,7 +8,6 @@ import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import graphics.view.ClientManager;
 import graphics.view.gameContents.MapFX;
-import graphics.view.popUp.CivilizationInfo;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
