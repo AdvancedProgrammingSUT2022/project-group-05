@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import main.ClientThread;
+import main.Response;
 
 import java.awt.*;
 import java.io.DataInputStream;

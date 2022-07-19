@@ -1,4 +1,0 @@
-//phase 1
-user login -p kabab -u babak
-play game --player2 mohammadreza -p1 babak
-select unit civilian -x 6 -y 0
