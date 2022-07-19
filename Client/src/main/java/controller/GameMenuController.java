@@ -656,15 +656,14 @@ public class GameMenuController {
 
 
 
-    public ArrayList<String> revealAll(HashMap<String, String> command) {
+    public String revealAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         FogOfWar.fogOfWarRevealAll(currentCivilization);
 
         ArrayList<String> result = Map.getInstance().printMap(currentCivilization);
-        result.add(Responses.REVEAL_MAP.getResponse());
 
-        return result;
+        return Responses.REVEAL_MAP.getResponse();
     }
 
     public String industrialRevolution(HashMap<String, String> command) {
