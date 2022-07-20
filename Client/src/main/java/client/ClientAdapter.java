@@ -1,6 +1,8 @@
 package client;
 
 
+import java.net.SocketException;
+
 public class ClientAdapter {
 
     public static String login(String username, String password) {
