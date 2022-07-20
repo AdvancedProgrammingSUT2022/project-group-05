@@ -24,6 +24,7 @@ public class Client extends Application {
         try {
             socket = new Socket(HOST, SERVER_PORT);
             listerForUpdates(HOST, SERVER_PORT);
+
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 

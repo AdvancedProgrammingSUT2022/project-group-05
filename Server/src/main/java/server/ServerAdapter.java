@@ -123,4 +123,36 @@ public class ServerAdapter {
 
         return gson.toJson(lobby);
     }
+
+    public static String inviteFriend(Request request) {
+        String friendUsername = (String) request.getParams().get("friendUsername");
+        String username = (String) request.getParams().get("username");
+        User friendUser = UserDatabaseController.getUserByUsername(friendUsername);
+        if (friendUser == null)
+            return "error: friend with this username not found";
+        if (friendUser.getFriends().contains(username))
+            return "error: you are already friend with this user";
+        UserDatabaseController.addInvitingFriend(friendUser, username);
+        return "friend invited successfully";
+    }
+
+    public static String update(Request request) { // find lobby from request and change it and send it to all clients and host related to this lobby
+        Gson gson = new Gson();
+        Lobby updatedLobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
+        for (int i = 0; i < LobbyController.getLobbies().size(); i++) {
+            if (LobbyController.getLobbies().get(i).getId().equals(updatedLobby.getId())) {
+                LobbyController.getLobbies().set(i, updatedLobby);
+            }
+        }
+        //now send updated lobby to related clients and host
+        for (String playerUsername : updatedLobby.getPlayerUsernames()) {
+            Request updateRequest = new Request("updateLobby");
+            updateRequest.addParams("lobby", gson.toJson(updatedLobby));
+            ServerManager.getInstance().getUserServerThread(playerUsername).send(updateRequest.convertToJson());
+        }
+        Request updateRequest = new Request("updateLobby");
+        updateRequest.addParams("lobby", gson.toJson(updateRequest));
+        ServerManager.getInstance().getUserServerThread(updatedLobby.getHostUsername()).send(updateRequest.convertToJson());
+        return "update successful";
+    }
 }

@@ -58,9 +58,15 @@ public class ProfileMenu extends Pane{
 
         //Friends
         this.setFriendsControl();
-
+        //invitingFriends
         this.setInvitingFriendsControl();
 
+        //invite a friend
+
+        TextFieldOne friendUsername = new TextFieldOne("friend username", StaticFonts.segoeLoad(20), Pos.CENTER,
+                150, fromTop + 400, 200, 30, this);
+        ButtonOne invite = new ButtonOne("invite", StaticFonts.segoeLoad(15), Pos.CENTER,
+                150, fromTop + 450, 100, 50, this);
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -106,6 +112,20 @@ public class ProfileMenu extends Pane{
                 new PopUp(temp, new Successful(changeImageResponse.getMessage()));
             }
         });
+
+        invite.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String friendUsernameText = friendUsername.getText();
+                Response response = Client.send(ClientAdapter.inviteFriend(friendUsernameText, ClientManager.getInstance().getMainUser().getUsername()));
+                if (response.getMessage().startsWith("error")) {
+                    new PopUp(temp, new Error(response.getMessage()));
+                    return;
+                }
+                new PopUp(temp, new Successful(response.getMessage()));
+            }
+        });
+
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

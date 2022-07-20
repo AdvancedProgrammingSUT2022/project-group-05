@@ -187,5 +187,4 @@ public class UserDatabaseController {
         users.get(userIndex).put("invitingFriends",invitingJson);
         updateDatabase(users);
     }
-
 }

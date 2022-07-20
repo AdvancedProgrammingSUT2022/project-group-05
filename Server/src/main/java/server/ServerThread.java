@@ -77,6 +77,13 @@ public class ServerThread extends Thread {
         }
         if (request.getAction().equals("host")) {
             message = ServerAdapter.createLobby(request);
+        }
+        if (request.getAction().equals("inviteFriend")) {
+            message = ServerAdapter.inviteFriend(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("update")) { // update changes in lobby from client
+            message = ServerAdapter.update(request);
             response.setMessage(message);
         }
 
