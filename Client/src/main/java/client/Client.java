@@ -23,7 +23,7 @@ public class Client extends Application {
     public static boolean connect(int SERVER_PORT) {
         try {
             socket = new Socket("172.27.50.120", SERVER_PORT);
-//            listerForUpdates();
+            listerForUpdates();
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
@@ -35,7 +35,7 @@ public class Client extends Application {
     }
 
     public static void listerForUpdates() throws IOException { // always listen for incoming messages from server
-        listener = new Socket("localhost", 8000);
+        listener = new Socket("172.27.50.120", 8000);
         DataInputStream dataInputStream = new DataInputStream(listener.getInputStream());
         DataOutputStream dataOutputStream = new DataOutputStream(listener.getOutputStream());
         ClientThread clientThread = new ClientThread(dataInputStream, dataOutputStream);

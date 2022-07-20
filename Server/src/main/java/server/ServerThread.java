@@ -89,4 +89,7 @@ public class ServerThread extends Thread {
         }
     }
 
+    public String getUsername() {
+        return username;
+    }
 }
