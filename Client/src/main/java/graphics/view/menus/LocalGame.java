@@ -68,7 +68,7 @@ public class LocalGame extends Pane {
                 //Debugging purposes
                 Map.updateInstance(10);
                 Civilization civilization1 = new Civilization(ClientManager.getInstance().getMainUser(), 0);
-                Civilization civilization2 = new Civilization(ClientManager.getUserByUsername("sam"), 1);
+                Civilization civilization2 = new Civilization(ClientManager.getInstance().getUserByUsername("sam"), 1);
                 ArrayList<Civilization> civilizations = new ArrayList<>();
                 civilizations.add(civilization1);
                 civilizations.add(civilization2);

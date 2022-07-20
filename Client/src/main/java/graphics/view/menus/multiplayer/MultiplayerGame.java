@@ -1,14 +1,14 @@
 package graphics.view.menus.multiplayer;
 
-import client.Client;
-import client.ClientManager;
-import client.Request;
-import client.Response;
+import client.*;
 import com.google.gson.Gson;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import graphics.view.menus.MainMenu;
+import graphics.view.popUp.Error;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.Successful;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -58,14 +58,6 @@ public class MultiplayerGame extends Pane{
             invitationPanes.add(new LobbyInvitationPane(lobby));
         }
 
-        //debugging purposes
-        invitationPanes.add(new LobbyInvitationPane(new Lobby("1", "sam")));
-        invitationPanes.add(new LobbyInvitationPane(new Lobby("2", "rogers")));
-        invitationPanes.add(new LobbyInvitationPane(new Lobby("3", "mohammadreza")));
-        for (LobbyInvitationPane pane : invitationPanes) {
-            this.setInvitationButton(pane);
-        }
-
         this.invitations.setItems(FXCollections.observableList(invitationPanes));
         this.getChildren().add(this.invitations);
     }
@@ -76,13 +68,8 @@ public class MultiplayerGame extends Pane{
         this.hostLobbyButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                Request request = new Request("host");
-
-                request.addParams("hostUsername", ClientManager.getInstance().getMainUser().getUsername());
-                request.addParams("id", String.valueOf(ClientManager.getInstance().getMainUser().getUsername().hashCode()));
-
-                String hostRequest = request.convertToJson();
-                Response response = Client.send(hostRequest);
+                Response response = Client.send(ClientAdapter.createLobby(ClientManager.getInstance().getMainUser().getUsername(),
+                        String.valueOf(ClientManager.getInstance().getMainUser().getUsername().hashCode())));
 
                 Gson gson = new Gson();
                 Lobby lobby = gson.fromJson(response.getMessage(), Lobby.class);
@@ -110,11 +97,19 @@ public class MultiplayerGame extends Pane{
         lobbyInvitationPane.getJoinButton().setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
+                Response response = Client.send(ClientAdapter.joinLobby(lobbyInvitationPane.getLobby(), ClientManager.getInstance().getMainUser().getUsername()));
+                if (response.getMessage().startsWith("error")) {
+                    new PopUp(MultiplayerGame.this, new Error(response.getMessage()));
+                    return;
+                }
+
                 ClientManager.getInstance().setPane(new LobbyGuest(lobbyInvitationPane.getLobby()));
 
-                //TODO remove from server too?
+                new PopUp(MultiplayerGame.this, new Successful(response.getMessage()));
                 Lobby.getInvitedLobbies().remove(lobbyInvitationPane.getLobby());
                 MultiplayerGame.this.setInvitations();
+
+                ClientManager.getInstance().sendUpdatedLobbyToServer(lobbyInvitationPane.getLobby());
             }
         });
 

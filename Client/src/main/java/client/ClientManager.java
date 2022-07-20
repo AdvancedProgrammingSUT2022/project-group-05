@@ -5,6 +5,9 @@ import controller.UnitController;
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.Game;
+import graphics.view.menus.multiplayer.LobbyGuest;
+import graphics.view.menus.multiplayer.LobbyHost;
+import graphics.view.menus.multiplayer.MultiplayerGame;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -13,9 +16,12 @@ import javafx.stage.Stage;
 import model.Lobby;
 import model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClientManager{
+    private final ArrayList<Lobby> invitedLobbies;
+
     private final HashMap<String, Pane> panes;
     private final Stage mainStage;
     private final Scene mainScene;
@@ -43,22 +49,40 @@ public class ClientManager{
     }
 
     public void updateMainUser() {
-        if (mainUser == null) return;
+        if (mainUser == null) {
+            return;
+        }
+
         this.mainUser = getUserByUsername(mainUser.getUsername());
     }
 
-    public static User getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
         Response getUserResponse = Client.send(ClientAdapter.getUser(username));
+        System.out.println(getUserResponse.getMessage() + " received response");
         String userJson = getUserResponse.getMessage();
         Gson gson = new Gson();
         return gson.fromJson(userJson, User.class);
     }
 
 
-    public static void update() {
+    public void update() {
         MapFX.getInstance().updateMapTextures();
         if (UnitController.getInstance() != null) {
             UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
+        }
+    }
+
+    public void updateLobby(Lobby lobby) {
+        if (this.getMainScene().getRoot() instanceof LobbyHost) {
+            ((LobbyHost) this.getMainScene().getRoot()).updateLobby(lobby);
+        } else if (this.getMainScene().getRoot() instanceof LobbyGuest) {
+            ((LobbyGuest) this.getMainScene().getRoot()).updateLobby(lobby);
+        }
+    }
+
+    public void updateLobbyInvites() {
+        if (this.getMainScene().getRoot() instanceof MultiplayerGame) {
+            this.setPane(new MultiplayerGame());
         }
     }
 
@@ -78,12 +102,17 @@ public class ClientManager{
         return this.mainStage;
     }
 
+    public ArrayList<Lobby> getInvitedLobbies() {
+        return this.invitedLobbies;
+    }
+
     //SINGLETON
     private static ClientManager instance;
     private ClientManager(Stage mainStage, Scene mainScene)
     {
         this.mainUser = null;
 
+        this.invitedLobbies = new ArrayList<>();
         this.panes = new HashMap<>();
 
         this.mainStage = mainStage;
@@ -105,11 +134,10 @@ public class ClientManager{
         instance = new ClientManager(mainStage, mainScene);
     }
 
-    public static void sendUpdatedLobbyToServer(Lobby lobby) { //use this after making change in lobby
+    public void sendUpdatedLobbyToServer(Lobby lobby) { //use this after making change in lobby
         Request request = new Request("update");
-        Gson gson = new Gson();
-        String lobbyJson = gson.toJson(lobby);
-        request.addParams("lobby", lobby);
+        request.addParams("lobby", new Gson().toJson(lobby));
+
         Client.send(request.convertToJson());
     }
 }

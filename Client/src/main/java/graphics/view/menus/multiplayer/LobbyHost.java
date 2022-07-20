@@ -1,12 +1,18 @@
 package graphics.view.menus.multiplayer;
 
 //import controller.UserDatabaseController;
+import client.Client;
+import client.ClientAdapter;
+import client.Response;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
+import graphics.view.popUp.Error;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.Successful;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -123,7 +129,21 @@ public class LobbyHost extends Pane {
         this.inviteButton = new ButtonOne("INVITE", StaticFonts.segoeLoad(30), Pos.CENTER,
                 960, 600, 200, 60, this);
 
-        //TODO add function
+        this.inviteButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                String friendUsername = inviteText.getText();
+
+                Response response = Client.send(ClientAdapter.inviteToLobby(LobbyHost.this.lobby, friendUsername));
+
+                if(response.getMessage().startsWith("error")) {
+                    new PopUp(LobbyHost.this, new Error(response.getMessage()));
+                    return;
+                }
+
+                new PopUp(LobbyHost.this, new Successful(response.getMessage()));
+            }
+        });
     }
 
     private void setPlayerLabels() {
@@ -182,7 +202,7 @@ public class LobbyHost extends Pane {
                 break;
         }
 
-        //TODO update server
+        ClientManager.getInstance().sendUpdatedLobbyToServer(this.getLobby());
     }
 
     private void setPlayers(ArrayList<String> usernames) {
