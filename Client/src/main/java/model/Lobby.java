@@ -15,6 +15,9 @@ public class Lobby{
     public Lobby(String id, String hostUsername) {
         this.setId(id);
         this.setHostUsername(hostUsername);
+
+        this.playerUsernames = new ArrayList<>();
+        this.playerUsernames.add(hostUsername);
     }
 
     //SETTERS
@@ -28,10 +31,6 @@ public class Lobby{
 
     public void setHostUsername(String hostUsername) {
         this.hostUsername = hostUsername;
-    }
-
-    public void setPlayerUsernames(ArrayList<String> playerUsernames) {
-        this.playerUsernames = playerUsernames;
     }
 
     //GETTER
@@ -56,6 +55,10 @@ public class Lobby{
     }
 
     //METHOD
+    public void addUser(String username) {
+        this.playerUsernames.add(username);
+    }
+
     public void removeUser(String username) {
         this.playerUsernames.remove(username);
     }

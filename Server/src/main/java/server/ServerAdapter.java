@@ -1,7 +1,9 @@
 package server;
 
 import com.google.gson.Gson;
+import controller.LobbyController;
 import controller.UserDatabaseController;
+import model.Lobby;
 import model.User;
 
 import java.util.ArrayList;
@@ -109,5 +111,16 @@ public class ServerAdapter {
         UserDatabaseController.addFriend(user, friendUsername);
         UserDatabaseController.removeInvitingFriend(user, friendUsername);
         return "friend added successfully";
+    }
+
+    public static String createLobby(Request request) {
+        String hostUsername = (String) request.getParams().get("hostUsername");
+        String id = (String) request.getParams().get("id");
+
+        Lobby lobby = LobbyController.hostLobby(hostUsername, id, 10);
+
+        Gson gson = new Gson();
+
+        return gson.toJson(lobby);
     }
 }

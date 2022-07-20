@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 
 public class Lobby{
+
+    private static ArrayList<Lobby> invitedLobbies = new ArrayList<>();
+
     private int size;
     private String id;
 
@@ -12,6 +15,9 @@ public class Lobby{
     public Lobby(String id, String hostUsername) {
         this.setId(id);
         this.setHostUsername(hostUsername);
+
+        this.playerUsernames = new ArrayList<>();
+        this.playerUsernames.add(hostUsername);
     }
 
     //SETTERS
@@ -25,10 +31,6 @@ public class Lobby{
 
     public void setHostUsername(String hostUsername) {
         this.hostUsername = hostUsername;
-    }
-
-    public void setPlayerUsernames(ArrayList<String> playerUsernames) {
-        this.playerUsernames = playerUsernames;
     }
 
     //GETTER
@@ -48,10 +50,16 @@ public class Lobby{
         return this.playerUsernames;
     }
 
+    public static ArrayList<Lobby> getInvitedLobbies() {
+        return invitedLobbies;
+    }
+
     //METHOD
+    public void addUser(String username) {
+        this.playerUsernames.add(username);
+    }
+
     public void removeUser(String username) {
         this.playerUsernames.remove(username);
     }
-
-    public void addUser(String username) {this.playerUsernames.add(username);}
 }

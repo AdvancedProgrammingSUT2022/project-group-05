@@ -20,10 +20,10 @@ public class Client extends Application {
     private static DataOutputStream dataOutputStream;
     private static Socket listener;
 
-    public static boolean connect(int SERVER_PORT) {
+    public static boolean connect(String HOST, int SERVER_PORT) {
         try {
-            socket = new Socket("172.27.50.120", SERVER_PORT);
-            listerForUpdates();
+            socket = new Socket(HOST, SERVER_PORT);
+            listerForUpdates(HOST, SERVER_PORT);
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
@@ -34,8 +34,8 @@ public class Client extends Application {
         return true;
     }
 
-    public static void listerForUpdates() throws IOException { // always listen for incoming messages from server
-        listener = new Socket("172.27.50.120", 8000);
+    public static void listerForUpdates(String HOST, int SERVER_PORT) throws IOException { // always listen for incoming messages from server
+        listener = new Socket(HOST, SERVER_PORT);
         DataInputStream dataInputStream = new DataInputStream(listener.getInputStream());
         DataOutputStream dataOutputStream = new DataOutputStream(listener.getOutputStream());
         ClientThread clientThread = new ClientThread(dataInputStream, dataOutputStream);
@@ -74,9 +74,10 @@ public class Client extends Application {
     }
 
     public static void main(String[] args){
+        String HOST = "localhost";
         int SERVER_PORT = 8000;
 
-        if (connect(SERVER_PORT)) {
+        if (connect(HOST, SERVER_PORT)) {
             launch();
         } else {
             System.out.println("can't connect to server");
