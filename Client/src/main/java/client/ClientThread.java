@@ -28,10 +28,15 @@ public class ClientThread extends Thread { // This class is used for receiving d
     }
 
     public void handleRequest(Request request) {
-        if (request.getAction().equals("invite")) {
+        if (request.getAction().equals("invite")) { //when server wants to add invitation to client
             Gson gson = new Gson();
             Lobby lobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
             Lobby.getInvitedLobbies().add(lobby);
+        }
+        if (request.getAction().equals("updateLobby")) { //when server send update to client to refresh lobby
+            Gson gson = new Gson();
+            Lobby lobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
+            //TODO use this updated lobby and update graphically
         }
     }
 }
