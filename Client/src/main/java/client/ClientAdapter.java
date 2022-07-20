@@ -54,4 +54,11 @@ public class ClientAdapter {
         Request request = new Request("getUsers");
         return request.convertToJson();
     }
+
+    public static String addFriend(String friendUsername, String username) {
+        Request request = new Request("addFriend");
+        request.addParams("friendUsername", friendUsername);
+        request.addParams("username", username);
+        return request.convertToJson();
+    }
 }

@@ -10,6 +10,7 @@ import graphics.view.popUp.Error;
 import graphics.view.popUp.FriendsPane;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
+import graphics.view.popUp.research.InvitingFriendsPane;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -26,7 +27,8 @@ import java.util.ArrayList;
 
 public class ProfileMenu extends Pane{
 
-    private ListView<FriendsPane> friendsPanes;
+    private ListView<FriendsPane> friendsControl;
+    private ListView<InvitingFriendsPane> invitingFriendsControl;
 
     public ProfileMenu () {
         Pane temp = this;
@@ -54,18 +56,11 @@ public class ProfileMenu extends Pane{
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft, fromTop + 450, 100, 50, this);
 
-        new LabelOne("Friends", StaticFonts.segoeLoad(50), Pos.CENTER,
-                100, 20, 300, 70, this);
+        //Friends
+        this.setFriendsControl();
 
-        this.friendsPanes = new ListView<>();
-        this.friendsPanes.setPrefWidth(300);
-        this.friendsPanes.setPrefHeight(200);
-        this.friendsPanes.setLayoutX(50);
-        this.friendsPanes.setLayoutY(100);
+        this.setInvitingFriendsControl();
 
-        friendsPanes.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
-
-        this.getChildren().add(friendsPanes);
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -117,5 +112,65 @@ public class ProfileMenu extends Pane{
                 ClientManager.getInstance().setPane(new MainMenu());
             }
         });
+    }
+
+    public void setFriendsControl() {
+        this.getChildren().remove(this.friendsControl);
+
+        this.friendsControl = new ListView<>();
+
+        new LabelOne("Friends", StaticFonts.segoeLoad(50), Pos.CENTER,
+                100, 30, 300, 70, this);
+
+        this.friendsControl = new ListView<>();
+        this.friendsControl.setPrefWidth(300);
+        this.friendsControl.setPrefHeight(200);
+        this.friendsControl.setLayoutX(50);
+        this.friendsControl.setLayoutY(100);
+
+        friendsControl.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
+
+        this.getChildren().add(friendsControl);
+
+    }
+
+    public void setInvitingFriendsControl() {
+        this.getChildren().remove(this.invitingFriendsControl);
+
+        this.invitingFriendsControl = new ListView<>();
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+
+        new LabelOne("InvitingFriends", StaticFonts.segoeLoad(50), Pos.CENTER,
+                fromLeft * 2 - 300, 30, 500, 70, this);
+
+        this.invitingFriendsControl = new ListView<>();
+        this.invitingFriendsControl.setPrefWidth(300);
+        this.invitingFriendsControl.setPrefHeight(200);
+        this.invitingFriendsControl.setLayoutX(fromLeft * 2 - 400);
+        this.invitingFriendsControl.setLayoutY(100);
+
+        ArrayList<InvitingFriendsPane> invitingFriendsPanes = InvitingFriendsPane.getInvitingFriendsPane();
+
+        for (InvitingFriendsPane invitingFriendsPane : invitingFriendsPanes) {
+            invitingFriendsPane.getAcceptButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Client.send(ClientAdapter.addFriend(invitingFriendsPane.getInvitingFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
+                    ProfileMenu.this.setInvitingFriendsControl();
+                    ProfileMenu.this.setFriendsControl();
+                }
+            });
+            invitingFriendsPane.getRejectButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    ProfileMenu.this.setInvitingFriendsControl();
+                }
+            });
+        }
+
+        invitingFriendsControl.setItems(FXCollections.observableArrayList(invitingFriendsPanes));
+
+        this.getChildren().add(invitingFriendsControl);
     }
 }

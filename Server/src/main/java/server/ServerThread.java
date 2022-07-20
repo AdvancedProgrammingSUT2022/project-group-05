@@ -64,6 +64,10 @@ public class ServerThread extends Thread {
             message = ServerAdapter.getUsers(request);
             response.setMessage(message);
         }
+        if (request.getAction().equals("addFriend")) {
+            message = ServerAdapter.addFriend(request);
+            response.setMessage(message);
+        }
 
         return response;
     }

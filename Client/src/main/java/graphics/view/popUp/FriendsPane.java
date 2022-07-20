@@ -27,9 +27,6 @@ public class FriendsPane extends Pane {
 
     public static ArrayList<FriendsPane> getFriendsPane() {
         User user = ClientManager.getInstance().getMainUser();
-        user.addFriend("babak");
-        user.addFriend("bibak");
-        user.addFriend("mamad");
         ArrayList<String> friends = user.getFriends();
         ArrayList<FriendsPane> result = new ArrayList<>();
         for (int i = 0; i < friends.size(); i++) {
