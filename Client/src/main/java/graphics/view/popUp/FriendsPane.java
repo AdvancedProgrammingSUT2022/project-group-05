@@ -1,5 +1,7 @@
 package graphics.view.popUp;
 
+import client.Client;
+import client.ClientManager;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import javafx.geometry.Pos;
@@ -15,15 +17,16 @@ public class FriendsPane extends Pane {
     public FriendsPane(String friendUsername) {
         this.friendUsername = friendUsername;
 
-        this.setPrefHeight(480);
-        this.setPrefWidth(75);
+        this.setPrefHeight(25);
+        this.setPrefWidth(200);
 
         new LabelOne("name: " + friendUsername, StaticFonts.segoeLoad(15), Pos.CENTER_LEFT,
                 120, 12, 200, 25, this);
 
     }
 
-    public static ArrayList<FriendsPane> getFriendsPane(User user) {
+    public static ArrayList<FriendsPane> getFriendsPane() {
+        User user = ClientManager.getInstance().getMainUser();
         ArrayList<String> friends = user.getFriends();
         ArrayList<FriendsPane> result = new ArrayList<>();
         for (int i = 0; i < friends.size(); i++) {

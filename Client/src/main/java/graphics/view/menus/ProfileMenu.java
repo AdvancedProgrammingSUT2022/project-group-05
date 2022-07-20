@@ -2,14 +2,19 @@ package graphics.view.menus;
 
 //import controller.UserDatabaseController;
 import graphics.objects.buttons.ButtonOne;
+import graphics.objects.labels.LabelOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.popUp.Error;
+import graphics.view.popUp.FriendsPane;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
+import graphics.view.popUp.research.InvitingFriendsPane;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -17,9 +22,14 @@ import client.Client;
 import client.ClientAdapter;
 import client.Response;
 
-        import java.io.File;
+import java.io.File;
+import java.util.ArrayList;
 
 public class ProfileMenu extends Pane{
+
+    private ListView<FriendsPane> friendsControl;
+    private ListView<InvitingFriendsPane> invitingFriendsControl;
+
     public ProfileMenu () {
         Pane temp = this;
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
@@ -45,6 +55,12 @@ public class ProfileMenu extends Pane{
 
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft, fromTop + 450, 100, 50, this);
+
+        //Friends
+        this.setFriendsControl();
+
+        this.setInvitingFriendsControl();
+
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -96,5 +112,65 @@ public class ProfileMenu extends Pane{
                 ClientManager.getInstance().setPane(new MainMenu());
             }
         });
+    }
+
+    public void setFriendsControl() {
+        this.getChildren().remove(this.friendsControl);
+
+        this.friendsControl = new ListView<>();
+
+        new LabelOne("Friends", StaticFonts.segoeLoad(50), Pos.CENTER,
+                100, 30, 300, 70, this);
+
+        this.friendsControl = new ListView<>();
+        this.friendsControl.setPrefWidth(300);
+        this.friendsControl.setPrefHeight(200);
+        this.friendsControl.setLayoutX(50);
+        this.friendsControl.setLayoutY(100);
+
+        friendsControl.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
+
+        this.getChildren().add(friendsControl);
+
+    }
+
+    public void setInvitingFriendsControl() {
+        this.getChildren().remove(this.invitingFriendsControl);
+
+        this.invitingFriendsControl = new ListView<>();
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+
+        new LabelOne("InvitingFriends", StaticFonts.segoeLoad(50), Pos.CENTER,
+                fromLeft * 2 - 300, 30, 500, 70, this);
+
+        this.invitingFriendsControl = new ListView<>();
+        this.invitingFriendsControl.setPrefWidth(300);
+        this.invitingFriendsControl.setPrefHeight(200);
+        this.invitingFriendsControl.setLayoutX(fromLeft * 2 - 400);
+        this.invitingFriendsControl.setLayoutY(100);
+
+        ArrayList<InvitingFriendsPane> invitingFriendsPanes = InvitingFriendsPane.getInvitingFriendsPane();
+
+        for (InvitingFriendsPane invitingFriendsPane : invitingFriendsPanes) {
+            invitingFriendsPane.getAcceptButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Client.send(ClientAdapter.addFriend(invitingFriendsPane.getInvitingFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
+                    ProfileMenu.this.setInvitingFriendsControl();
+                    ProfileMenu.this.setFriendsControl();
+                }
+            });
+            invitingFriendsPane.getRejectButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    ProfileMenu.this.setInvitingFriendsControl();
+                }
+            });
+        }
+
+        invitingFriendsControl.setItems(FXCollections.observableArrayList(invitingFriendsPanes));
+
+        this.getChildren().add(invitingFriendsControl);
     }
 }

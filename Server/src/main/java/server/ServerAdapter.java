@@ -98,4 +98,15 @@ public class ServerAdapter {
         Gson gson = new Gson();
         return gson.toJson(users);
     }
+
+    public static String addFriend(Request request) {
+        String friendUsername = (String) request.getParams().get("friendUsername");
+        String username = (String) request.getParams().get("username");
+        User friendUser = UserDatabaseController.getUserByUsername(friendUsername);
+        User user = UserDatabaseController.getUserByUsername(username);
+        UserDatabaseController.addFriend(friendUser, username);
+        UserDatabaseController.addFriend(user, friendUsername);
+        UserDatabaseController.removeInvitingFriend(user, friendUsername);
+        return "friend added successfully";
+    }
 }

@@ -53,6 +53,7 @@ public class ClientManager{
         return gson.fromJson(userJson, User.class);
     }
 
+
     public static void update() {
         MapFX.getInstance().updateMapTextures();
         if (UnitController.getInstance() != null) {
