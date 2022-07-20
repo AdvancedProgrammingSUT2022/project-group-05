@@ -1,5 +1,8 @@
 package server;
 
+import controller.UserDatabaseController;
+import model.User;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,6 +13,7 @@ public class ServerThread extends Thread {
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private String username;
 
     public ServerThread(Socket socket) throws IOException {
         this.socket = socket;
@@ -24,12 +28,15 @@ public class ServerThread extends Thread {
                 String input = dataInputStream.readUTF();
                 Request request = Request.convertFromJson(input);
                 Response response = handleRequest(request);
+                if (request.getAction().equals("login") && response.getMessage().equals("login successful")) {
+                    this.username = UserDatabaseController.getUserByUsername((String) request.getParams().get("username")).getUsername();
+                }
                 String responseJson = response.convertToJson();
-
                 this.send(responseJson);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("client with username " + username + " disconnected");
+            this.username = null;
         }
     }
 
@@ -77,6 +84,7 @@ public class ServerThread extends Thread {
             this.dataOutputStream.writeUTF(message);
             this.dataOutputStream.flush();
         } catch (IOException e) {
+            this.username = null;
             e.printStackTrace();
         }
     }
