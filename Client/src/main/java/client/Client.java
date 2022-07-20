@@ -22,7 +22,7 @@ public class Client extends Application {
 
     public static boolean connect(int SERVER_PORT) {
         try {
-            socket = new Socket("localhost", SERVER_PORT);
+            socket = new Socket("192.168.32.249", SERVER_PORT);
 //            listerForUpdates();
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
