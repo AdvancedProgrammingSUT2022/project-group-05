@@ -579,7 +579,6 @@ public class GameMenuController {
 
     public String mapShowCity(HashMap<String, String> command) {
         String cityName = command.get(CITY_NAME.getKey());
-        //TODO find city by cityName in Map (city must have been discovered before) and print Map
         return "";
     }
 
@@ -590,13 +589,11 @@ public class GameMenuController {
         if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
             return "error: out of bound";
 
-        //TODO check validity of x and y and print Map
         return "";
     }
 
     public String mapMove(HashMap<String, String> command) {
         String direction = command.get(DIRECTION.getKey());
-        //TODO move Map to desired direction and print Map
         return "";
     }
 
