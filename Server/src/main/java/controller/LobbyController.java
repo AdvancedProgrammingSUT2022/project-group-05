@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class LobbyController {
     private static ArrayList<Lobby> lobbies = new ArrayList<>();
 
-    public static String hostLobby(String username, String id, int size) {
+    public static Lobby hostLobby(String username, String id, int size) {
         Lobby lobby = new Lobby(id, username);
         lobby.setSize(size);
         lobbies.add(lobby);
-        return "lobby created successfully";
+        return lobby;
     }
 
     public static String joinLobby(String username, String id) {

@@ -113,6 +113,17 @@ public class ServerAdapter {
         return "friend added successfully";
     }
 
+    public static String createLobby(Request request) {
+        String hostUsername = (String) request.getParams().get("hostUsername");
+        String id = (String) request.getParams().get("id");
+
+        Lobby lobby = LobbyController.hostLobby(hostUsername, id, 10);
+
+        Gson gson = new Gson();
+
+        return gson.toJson(lobby);
+    }
+
     public static String inviteFriend(Request request) {
         String friendUsername = (String) request.getParams().get("friendUsername");
         String username = (String) request.getParams().get("username");
@@ -144,5 +155,4 @@ public class ServerAdapter {
         ServerManager.getInstance().getUserServerThread(updatedLobby.getHostUsername()).send(updateRequest.convertToJson());
         return "update successful";
     }
-
 }
