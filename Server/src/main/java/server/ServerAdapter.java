@@ -55,12 +55,13 @@ public class ServerAdapter {
         HashMap<String, Object> params = request.getParams();
         String oldPassword = (String) params.get("oldPassword");
         String newPassword = (String) params.get("newPassword");
-        String newPasswordRepeat = (String) params.get("newPasswordRepeat");
+        String repeatNewPassword = (String) params.get("repeatNewPassword");
         String username = (String) params.get("username");
         User user = UserDatabaseController.getUserByUsername(username);
+
         if (!user.getPassword().equals(oldPassword))
             return "error: current password is incorrect";
-        if (!newPassword.equals(newPasswordRepeat))
+        if (!newPassword.equals(repeatNewPassword))
             return "error: new password and repeat don't match";
         if (newPassword.length() < 8)
             return "error: password must be at least 8 characters";
@@ -76,7 +77,7 @@ public class ServerAdapter {
         String username = (String) params.get("username");
         User user = UserDatabaseController.getUserByUsername(username);
         User previousNicknameHolder = UserDatabaseController.getUserByNickname(newNickname);
-        if (user.getUsername().equals(newNickname))
+        if (user.getNickname().equals(newNickname))
             return "error: old and new nickname can't be the same";
         if (previousNicknameHolder != null)
             return "error: nickname already taken";
