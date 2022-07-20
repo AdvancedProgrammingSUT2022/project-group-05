@@ -113,6 +113,18 @@ public class ServerAdapter {
         return "friend added successfully";
     }
 
+    public static String inviteFriend(Request request) {
+        String friendUsername = (String) request.getParams().get("friendUsername");
+        String username = (String) request.getParams().get("username");
+        User friendUser = UserDatabaseController.getUserByUsername(friendUsername);
+        if (friendUser == null)
+            return "error: friend with this username not found";
+        if (friendUser.getFriends().contains(username))
+            return "error: you are already friend with this user";
+        UserDatabaseController.addInvitingFriend(friendUser, username);
+        return "friend invited successfully";
+    }
+
     public static String update(Request request) { // find lobby from request and change it and send it to all clients and host related to this lobby
         Gson gson = new Gson();
         Lobby updatedLobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
@@ -132,4 +144,5 @@ public class ServerAdapter {
         ServerManager.getInstance().getUserServerThread(updatedLobby.getHostUsername()).send(updateRequest.convertToJson());
         return "update successful";
     }
+
 }
