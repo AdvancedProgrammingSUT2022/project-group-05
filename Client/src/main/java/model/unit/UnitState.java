@@ -17,5 +17,4 @@ public enum UnitState {
     WORKING,
 
     PILLAGING
-    //TODO mrb used equals method in this enum maybe we need to overwrite this method in this enum
 }

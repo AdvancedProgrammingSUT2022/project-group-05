@@ -97,7 +97,6 @@
 //        startGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
 //            @Override
 //            public void handle(MouseEvent event) {
-//                //TODO... opening new game menu
 //                ErrorBox.getErrorBox("under construction", menu, true);
 //            }
 //        });
@@ -137,7 +136,7 @@
 //
 //
 //        String[] nicknames = UserDatabaseController.getNicknames();
-//        int[] scores = new int[nicknames.length]; //TODO... get from database
+//        int[] scores = new int[nicknames.length];
 //        //OBJECTS
 //        ButtonOne back = new ButtonOne("back", StaticFonts.SeqoeLoad(15), Pos.CENTER,
 //                100, 1000, 100, 50, menu);

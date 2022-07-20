@@ -1,4 +1,4 @@
-package graphics.view.menus;
+package graphics.view.menus.multiplayer;
 
 import controller.GameMenuController;
 //import controller.UserDatabaseController;
@@ -9,6 +9,8 @@ import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.gameContents.MapFX;
+import graphics.view.menus.Game;
+import graphics.view.menus.MainMenu;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;

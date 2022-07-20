@@ -80,7 +80,7 @@ public enum GameMenuCommand{
     INCREASE_TURN("\\s*increase-turn(?<entities>.*)", List.of(AMOUNT.getKey())),
     INCREASE_GOLD("\\s*increase-gold(?<entities>.*)", List.of(AMOUNT.getKey())),
 
-    KILL_SOLDIER("\\s*kill-soldier(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())), //TODO
+    KILL_SOLDIER("\\s*kill-soldier(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     KILL_CIVILIAN("\\s*kill-civilian(?<entities>.*)", List.of(X_POSITION.getKey(), Y_POSITION.getKey())),
     SPAWN_UNIT("\\s*spawn-unit(?<entities>.*)",List.of(UNIT_NAME.getKey(), X_POSITION.getKey(), Y_POSITION.getKey())),
   
