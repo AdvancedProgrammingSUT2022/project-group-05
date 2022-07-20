@@ -48,4 +48,7 @@ public class LobbyController {
         return "error: no lobby with this id exists";
     }
 
+    public static ArrayList<Lobby> getLobbies() {
+        return lobbies;
+    }
 }

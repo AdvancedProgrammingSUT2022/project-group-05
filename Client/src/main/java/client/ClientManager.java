@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Lobby;
 import model.User;
 
 import java.util.HashMap;
@@ -102,5 +103,13 @@ public class ClientManager{
     public static void updateInstance(Stage mainStage, Scene mainScene)
     {
         instance = new ClientManager(mainStage, mainScene);
+    }
+
+    public static void sendUpdatedLobbyToServer(Lobby lobby) { //use this after making change in lobby
+        Request request = new Request("update");
+        Gson gson = new Gson();
+        String lobbyJson = gson.toJson(lobby);
+        request.addParams("lobby", lobby);
+        Client.send(request.convertToJson());
     }
 }

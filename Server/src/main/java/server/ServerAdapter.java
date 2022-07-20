@@ -1,7 +1,9 @@
 package server;
 
 import com.google.gson.Gson;
+import controller.LobbyController;
 import controller.UserDatabaseController;
+import model.Lobby;
 import model.User;
 
 import java.util.ArrayList;
@@ -109,5 +111,25 @@ public class ServerAdapter {
         UserDatabaseController.addFriend(user, friendUsername);
         UserDatabaseController.removeInvitingFriend(user, friendUsername);
         return "friend added successfully";
+    }
+
+    public static String update(Request request) { // find lobby from request and change it and send it to all clients and host related to this lobby
+        Gson gson = new Gson();
+        Lobby updatedLobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
+        for (int i = 0; i < LobbyController.getLobbies().size(); i++) {
+            if (LobbyController.getLobbies().get(i).getId().equals(updatedLobby.getId())) {
+                LobbyController.getLobbies().set(i, updatedLobby);
+            }
+        }
+        //now send updated lobby to related clients and host
+        for (String playerUsername : updatedLobby.getPlayerUsernames()) {
+            Request updateRequest = new Request("updateLobby");
+            updateRequest.addParams("lobby", gson.toJson(updatedLobby));
+            ServerManager.getInstance().getUserServerThread(playerUsername).send(updateRequest.convertToJson());
+        }
+        Request updateRequest = new Request("updateLobby");
+        updateRequest.addParams("lobby", gson.toJson(updateRequest));
+        ServerManager.getInstance().getUserServerThread(updatedLobby.getHostUsername()).send(updateRequest.convertToJson());
+        return "update successful";
     }
 }
