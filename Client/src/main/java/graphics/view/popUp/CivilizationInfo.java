@@ -5,6 +5,8 @@ import controller.GameMenuController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.popUp.overview.EconomicOverview;
+import graphics.view.popUp.overview.MilitaryOverview;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -40,7 +42,7 @@ public class CivilizationInfo extends Pane {
         military.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                new PopUp((Pane)CivilizationInfo.this.getParent(), new MilitaryOverview());
+                new PopUp((Pane)CivilizationInfo.this.getParent(), new MilitaryOverview(civilization));
             }
         });
         economic.setOnMouseClicked(new EventHandler<MouseEvent>() {

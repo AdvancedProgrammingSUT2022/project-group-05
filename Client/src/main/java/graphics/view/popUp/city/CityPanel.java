@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.game.City;
+import model.tile.Tile;
 
 import java.util.ArrayList;
 
@@ -236,6 +237,11 @@ public class CityPanel extends Pane{
         this.buyTileButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) CityPanel.this.getParent(), new Error("no tile selected"));
+                    return;
+                }
+
                 String response = CityController.getInstance().buyTile(
                         MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(),
                         MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace()
