@@ -21,6 +21,7 @@ public class ClientThread extends Thread { // This class is used for receiving d
             try {
                 String input = dataInputStream.readUTF();
                 Request request = Request.convertFromJson(input);
+                this.handleRequest(request);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -32,11 +33,11 @@ public class ClientThread extends Thread { // This class is used for receiving d
             Gson gson = new Gson();
             Lobby lobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
             Lobby.getInvitedLobbies().add(lobby);
+            ClientManager.getInstance().updateLobbyInvites();
         }
         if (request.getAction().equals("updateLobby")) { //when server send update to client to refresh lobby
-            Gson gson = new Gson();
-            Lobby lobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
-            //TODO use this updated lobby and update graphically
+            Lobby updatedLobby = (Lobby) request.getParams().get("updatedLobby");
+            ClientManager.getInstance().updateLobby(updatedLobby);
         }
     }
 }

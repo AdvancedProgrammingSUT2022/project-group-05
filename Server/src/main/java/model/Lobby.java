@@ -3,9 +3,6 @@ package model;
 import java.util.ArrayList;
 
 public class Lobby{
-
-    private static ArrayList<Lobby> invitedLobbies = new ArrayList<>();
-
     private int size;
     private String id;
 
@@ -48,10 +45,6 @@ public class Lobby{
 
     public ArrayList<String> getPlayerUsernames() {
         return this.playerUsernames;
-    }
-
-    public static ArrayList<Lobby> getInvitedLobbies() {
-        return invitedLobbies;
     }
 
     //METHOD

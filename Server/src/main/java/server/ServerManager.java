@@ -1,6 +1,7 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class ServerManager {
 
@@ -39,11 +40,15 @@ public class ServerManager {
 
     public ServerThread getUserServerThread(String username) {
         for (ServerThread serverThread : serverThreads) {
-            if (serverThread.getUsername().equals(username)) {
+            if (serverThread.getUsername() != null && serverThread.getUsername().equals(username)) {
                 return serverThread;
             }
         }
         return null;
+    }
+
+    public void removeServerThread(ServerThread serverThread) {
+        serverThreads.remove(serverThread);
     }
 
 }

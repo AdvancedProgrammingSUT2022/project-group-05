@@ -19,9 +19,9 @@ public class LobbyController {
         return lobby;
     }
 
-    public static String joinLobby(String username, String id) {
+    public static String joinLobby(String username, Lobby destinationLobby) {
         for (Lobby lobby : lobbies) {
-            if (lobby.getId().equals(id)) {
+            if (lobby.getId().equals(destinationLobby.getId())) {
                 if (lobby.getPlayerUsernames().size() == 4)
                     return "error: lobby is full";
                 lobby.addUser(username);
@@ -31,21 +31,17 @@ public class LobbyController {
         return "error: lobby with this id not exists";
     }
 
-    public static String inviteToLobby(String id, String invitedUsername) {
-        for (Lobby lobby : lobbies) {
-            if (lobby.getId().equals(id)) {
-                if (!ServerManager.getInstance().isUserOnline(invitedUsername))
-                    return "error: invited user is not online";
-                ServerThread serverThread = ServerManager.getInstance().getUserServerThread(invitedUsername);
-                Request request = new Request("invite");
-                Gson gson = new Gson();
-                String lobbyJson = gson.toJson(lobby);
-                request.addParams("lobby", lobbyJson);
-                serverThread.send(request.convertToJson());
-                return "inviting successful";
-            }
-        }
-        return "error: no lobby with this id exists";
+    public static String inviteToLobby(Lobby lobby, String invitedUsername) {
+        if (!ServerManager.getInstance().isUserOnline(invitedUsername))
+            return "error: invited user is not online";
+        if (lobby.getPlayerUsernames().contains(invitedUsername))
+            return "error: invited user is already in lobby";
+
+        ServerThread serverThread = ServerManager.getInstance().getUserServerThread(invitedUsername);
+        Request request = new Request("invite");
+        request.addParams("lobby", new Gson().toJson(lobby));
+        serverThread.send(request.convertToJson());
+        return "inviting successful";
     }
 
     public static ArrayList<Lobby> getLobbies() {

@@ -1,11 +1,10 @@
 package model;
 
+import client.ClientManager;
+
 import java.util.ArrayList;
 
 public class Lobby{
-
-    private static ArrayList<Lobby> invitedLobbies = new ArrayList<>();
-
     private int size;
     private String id;
 
@@ -51,7 +50,7 @@ public class Lobby{
     }
 
     public static ArrayList<Lobby> getInvitedLobbies() {
-        return invitedLobbies;
+        return ClientManager.getInstance().getInvitedLobbies();
     }
 
     //METHOD

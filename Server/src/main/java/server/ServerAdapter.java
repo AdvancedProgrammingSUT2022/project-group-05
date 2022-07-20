@@ -118,6 +118,7 @@ public class ServerAdapter {
         String id = (String) request.getParams().get("id");
 
         Lobby lobby = LobbyController.hostLobby(hostUsername, id, 10);
+        LobbyController.getLobbies().add(lobby);
 
         Gson gson = new Gson();
 
@@ -147,12 +148,26 @@ public class ServerAdapter {
         //now send updated lobby to related clients and host
         for (String playerUsername : updatedLobby.getPlayerUsernames()) {
             Request updateRequest = new Request("updateLobby");
-            updateRequest.addParams("lobby", gson.toJson(updatedLobby));
+            updateRequest.addParams("lobby", new Gson().toJson(updatedLobby));
             ServerManager.getInstance().getUserServerThread(playerUsername).send(updateRequest.convertToJson());
         }
         Request updateRequest = new Request("updateLobby");
-        updateRequest.addParams("lobby", gson.toJson(updateRequest));
+        updateRequest.addParams("lobby", new Gson().toJson(updatedLobby));
         ServerManager.getInstance().getUserServerThread(updatedLobby.getHostUsername()).send(updateRequest.convertToJson());
         return "update successful";
+    }
+
+    public static String inviteToLobby(Request request) {
+        Lobby lobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
+        String friendUsername = (String) request.getParams().get("friendUsername");
+
+        return LobbyController.inviteToLobby(lobby, friendUsername);
+    }
+
+    public static String joinLobby(Request request) {
+        Lobby lobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
+        String username = (String) request.getParams().get("username");
+
+        return LobbyController.joinLobby(username, lobby);
     }
 }

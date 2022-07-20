@@ -26,7 +26,7 @@ public class MainMenu extends Pane{
         //OBJECTS
 
         Circle circle = new Circle();
-            String imageAddress = ClientManager.getInstance().getMainUser().getImageAddress();
+        String imageAddress = ClientManager.getInstance().getMainUser().getImageAddress();
         try {
             FileInputStream image = new FileInputStream(imageAddress);
             ImagePattern imagePattern = new ImagePattern(new Image(image));

@@ -36,7 +36,9 @@ public class ServerThread extends Thread {
             }
         } catch (IOException e) {
             System.out.println("client with username " + username + " disconnected");
+
             this.username = null;
+            ServerManager.getInstance().removeServerThread(this);
         }
     }
 
@@ -49,6 +51,7 @@ public class ServerThread extends Thread {
         }
         if (request.getAction().equals("getUser")) {
             message = ServerAdapter.getUser(request);
+            System.out.println(message + " sent message");
             response.setMessage(message);
         }
         if (request.getAction().equals("register")) {
@@ -75,8 +78,9 @@ public class ServerThread extends Thread {
             message = ServerAdapter.addFriend(request);
             response.setMessage(message);
         }
-        if (request.getAction().equals("host")) {
+        if (request.getAction().equals("createLobby")) {
             message = ServerAdapter.createLobby(request);
+            response.setMessage(message);
         }
         if (request.getAction().equals("inviteFriend")) {
             message = ServerAdapter.inviteFriend(request);
@@ -84,6 +88,14 @@ public class ServerThread extends Thread {
         }
         if (request.getAction().equals("update")) { // update changes in lobby from client
             message = ServerAdapter.update(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("inviteToLobby")) {
+            message = ServerAdapter.inviteToLobby(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("joinLobby")) {
+            message = ServerAdapter.joinLobby(request);
             response.setMessage(message);
         }
 
