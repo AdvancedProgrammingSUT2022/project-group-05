@@ -28,4 +28,22 @@ public class ServerManager {
         serverThreads.add(serverThread);
     }
 
+    public boolean isUserOnline(String username) {
+        for (ServerThread serverThread : serverThreads) {
+            if (serverThread.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ServerThread getUserServerThread(String username) {
+        for (ServerThread serverThread : serverThreads) {
+            if (serverThread.getUsername().equals(username)) {
+                return serverThread;
+            }
+        }
+        return null;
+    }
+
 }

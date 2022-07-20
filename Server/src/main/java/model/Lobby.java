@@ -52,4 +52,6 @@ public class Lobby{
     public void removeUser(String username) {
         this.playerUsernames.remove(username);
     }
+
+    public void addUser(String username) {this.playerUsernames.add(username);}
 }
