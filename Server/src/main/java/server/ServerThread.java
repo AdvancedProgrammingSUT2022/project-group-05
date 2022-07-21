@@ -30,6 +30,7 @@ public class ServerThread extends Thread {
                 Response response = handleRequest(request);
                 if (request.getAction().equals("login") && response.getMessage().equals("login successful")) {
                     this.username = UserDatabaseController.getUserByUsername((String) request.getParams().get("username")).getUsername();
+
                 }
                 String responseJson = response.convertToJson();
                 this.send(responseJson);
@@ -77,8 +78,16 @@ public class ServerThread extends Thread {
             message = ServerAdapter.addFriend(request);
             response.setMessage(message);
         }
+        if (request.getAction().equals("rejectFriend")) {
+            message = ServerAdapter.rejectFriend(request);
+            response.setMessage(message);
+        }
         if (request.getAction().equals("createLobby")) {
             message = ServerAdapter.createLobby(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("searchFriend")) {
+            message = ServerAdapter.searchFriend(request);
             response.setMessage(message);
         }
         if (request.getAction().equals("inviteFriend")) {
@@ -103,6 +112,14 @@ public class ServerThread extends Thread {
         }
         if (request.getAction().equals("startGame")) {
             message = ServerAdapter.startGame(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("getOnlineUsers")) {
+            message = ServerAdapter.getOnlineUsers(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("userLoggedOut")) {
+            message = ServerAdapter.userLoggedOut(request);
             response.setMessage(message);
         }
 

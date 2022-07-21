@@ -5,6 +5,7 @@ import controller.UnitController;
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.Game;
+import graphics.view.menus.Scoreboard.ScoreboardMenu;
 import graphics.view.menus.multiplayer.LobbyGuest;
 import graphics.view.menus.multiplayer.LobbyHost;
 import graphics.view.menus.multiplayer.MultiplayerGame;
@@ -27,6 +28,11 @@ public class ClientManager{
     private final Scene mainScene;
 
     private User mainUser;
+
+    public void updateScoreboard() {
+        if (this.getMainScene().getRoot() instanceof ScoreboardMenu)
+            ((ScoreboardMenu) this.getMainScene().getRoot()).updateScoreBoard();
+    }
 
     public void addPane(String name, Pane pane)
     {
