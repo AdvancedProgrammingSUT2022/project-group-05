@@ -166,8 +166,12 @@ public class LobbyHost extends Pane {
         this.startGameButton = new ButtonOne("START GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
                 960, 900, 600, 70, this);
 
-        Response response = Client.send(ClientAdapter.startGame(this.getLobby()));
-
+        this.startGameButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Response response = Client.send(ClientAdapter.startGame(LobbyHost.this.getLobby()));
+            }
+        });
     }
 
     private void setLeaveButton() {
