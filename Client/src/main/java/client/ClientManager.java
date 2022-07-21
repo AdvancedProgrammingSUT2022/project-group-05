@@ -33,7 +33,7 @@ public class ClientManager{
         panes.put(name, pane);
     }
 
-    public void setPane(String name)
+    public synchronized void setPane(String name)
     {
         mainScene.setRoot(panes.get(name));
         mainStage.setScene(mainScene);

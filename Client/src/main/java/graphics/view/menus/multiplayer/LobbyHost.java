@@ -98,28 +98,28 @@ public class LobbyHost extends Pane {
         this.small.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                LobbyHost.this.setMapSmall();
+                LobbyHost.this.setMapSize(10);
             }
         });
 
         this.medium.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                LobbyHost.this.setMapMedium();
+                LobbyHost.this.setMapSize(15);
             }
         });
 
         this.big.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                LobbyHost.this.setMapBig();
+                LobbyHost.this.setMapSize(20);
             }
         });
 
         this.huge.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                LobbyHost.this.setMapHuge();
+                LobbyHost.this.setMapSize(25);
             }
         });
     }

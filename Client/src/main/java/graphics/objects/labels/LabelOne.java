@@ -1,5 +1,6 @@
 package graphics.objects.labels;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -33,6 +34,11 @@ public class LabelOne extends Pane {
     }
 
     public void setText(String name) {
-        this.label.setText(name);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                LabelOne.this.label.setText(name);
+            }
+        });
     }
 }

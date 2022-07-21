@@ -11,6 +11,7 @@ import graphics.view.popUp.FriendsPane;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
 import graphics.view.popUp.research.InvitingFriendsPane;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -148,7 +149,13 @@ public class ProfileMenu extends Pane{
         this.friendsControl.setLayoutX(50);
         this.friendsControl.setLayoutY(100);
 
-        friendsControl.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                friendsControl.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
+            }
+        });
 
         this.getChildren().add(friendsControl);
 
@@ -189,7 +196,12 @@ public class ProfileMenu extends Pane{
             });
         }
 
-        invitingFriendsControl.setItems(FXCollections.observableArrayList(invitingFriendsPanes));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                invitingFriendsControl.setItems(FXCollections.observableArrayList(invitingFriendsPanes));
+            }
+        });
 
         this.getChildren().add(invitingFriendsControl);
     }

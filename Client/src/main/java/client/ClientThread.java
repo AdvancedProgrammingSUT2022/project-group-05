@@ -41,7 +41,6 @@ public class ClientThread extends Thread { // This class is used for receiving d
             ClientManager.getInstance().updateLobby(updatedLobby);
         }
         if (request.getAction().equals("closeLobby")) {
-            Gson gson = new Gson();
             ClientManager.getInstance().closeLobby();
         }
     }
