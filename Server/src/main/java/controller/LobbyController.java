@@ -57,13 +57,8 @@ public class LobbyController {
         return "lobby removed successfully";
     }
 
-    public static String closeLobbyAndEnterGame(Lobby gameLobby) {
+    public static String closeLobbyBeforeGame(Lobby gameLobby) {
         lobbies.removeIf(lobby -> lobby.getId().equals(gameLobby.getId()));
-
-        for (String playerUsername : gameLobby.getPlayerUsernames()) {
-            Request request = new Request("updateGame");
-            ServerManager.getInstance().getUserListenerServerThread(playerUsername).send(request.convertToJson());
-        }
 
         return "game created successfully";
     }

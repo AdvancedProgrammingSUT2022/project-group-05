@@ -44,5 +44,8 @@ public class ClientThread extends Thread { // This class is used for receiving d
             Gson gson = new Gson();
             ClientManager.getInstance().closeLobby();
         }
+        if (request.getAction().equals("updateGame")) {
+            //TODO update game request
+        }
     }
 }

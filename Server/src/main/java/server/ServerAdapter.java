@@ -186,9 +186,9 @@ public class ServerAdapter {
     }
 
     public static String startGame(Request request) {
-        Lobby gameLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
-
         if (GameMenuController.getInstance() != null) return "there is another game is progress";
+
+        Lobby gameLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
 
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for (int i = 0; i < gameLobby.getPlayerUsernames().size(); i++) {
@@ -197,9 +197,17 @@ public class ServerAdapter {
 
         Map.updateInstance(gameLobby.getSize());
         GameMenuController.updateInstance(civilizations);
+        LobbyController.closeLobbyBeforeGame(gameLobby);
 
-        LobbyController.closeLobbyAndEnterGame(gameLobby);
+        for (String playerUsername : gameLobby.getPlayerUsernames()) {
+            //TODO sending game info
+        }
 
         return "game created successfully";
+    }
+
+    public static String updateGame() {
+        //TODO sending game info
+        return null;
     }
 }
