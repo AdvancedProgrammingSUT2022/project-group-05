@@ -140,6 +140,7 @@ public class ServerAdapter {
     public static String update(Request request) { // find lobby from request and change it and send it to all clients and host related to this lobby
         Gson gson = new Gson();
         Lobby updatedLobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
+        String whoSentIt = (String) request.getParams().get("whoSendIt");
         for (int i = 0; i < LobbyController.getLobbies().size(); i++) {
             if (LobbyController.getLobbies().get(i).getId().equals(updatedLobby.getId())) {
                 LobbyController.getLobbies().set(i, updatedLobby);
@@ -147,13 +148,17 @@ public class ServerAdapter {
         }
         //now send updated lobby to related clients and host
         for (String playerUsername : updatedLobby.getPlayerUsernames()) {
+            if (!playerUsername.equals(whoSentIt)) {
+                Request updateRequest = new Request("updateLobby");
+                updateRequest.addParams("lobby", new Gson().toJson(updatedLobby));
+                ServerManager.getInstance().getUserListenerServerThread(playerUsername).send(updateRequest.convertToJson());
+            }
+        }
+        if (!updatedLobby.getHostUsername().equals(whoSentIt)) {
             Request updateRequest = new Request("updateLobby");
             updateRequest.addParams("lobby", new Gson().toJson(updatedLobby));
-            ServerManager.getInstance().getUserServerThread(playerUsername).send(updateRequest.convertToJson());
+            ServerManager.getInstance().getUserListenerServerThread(updatedLobby.getHostUsername()).send(updateRequest.convertToJson());
         }
-        Request updateRequest = new Request("updateLobby");
-        updateRequest.addParams("lobby", new Gson().toJson(updatedLobby));
-        ServerManager.getInstance().getUserServerThread(updatedLobby.getHostUsername()).send(updateRequest.convertToJson());
         return "update successful";
     }
 
@@ -169,5 +174,11 @@ public class ServerAdapter {
         String username = (String) request.getParams().get("username");
 
         return LobbyController.joinLobby(username, lobby);
+    }
+
+    public static String closeLobby(Request request) {
+        Lobby closingLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
+        return  LobbyController.closeLobby(closingLobby);
+
     }
 }

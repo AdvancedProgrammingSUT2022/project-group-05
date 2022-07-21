@@ -95,4 +95,10 @@ public class    ClientAdapter {
 
         return request.convertToJson();
     }
+
+    public static String closeLobby(Lobby lobby) {
+        Request request = new Request("closeLobby");
+        request.addParams("lobby", new Gson().toJson(lobby));
+        return request.convertToJson();
+    }
 }

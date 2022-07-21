@@ -31,7 +31,7 @@ public class ServerManager {
 
     public boolean isUserOnline(String username) {
         for (ServerThread serverThread : serverThreads) {
-            if (serverThread.getUsername().equals(username)) {
+            if (serverThread.getUsername() != null && serverThread.getUsername().equals(username)) {
                 return true;
             }
         }
@@ -41,6 +41,16 @@ public class ServerManager {
     public ServerThread getUserServerThread(String username) {
         for (ServerThread serverThread : serverThreads) {
             if (serverThread.getUsername() != null && serverThread.getUsername().equals(username)) {
+                return serverThread;
+            }
+        }
+        return null;
+    }
+    
+    public ServerThread getUserListenerServerThread(String username) {
+        int port = this.getUserServerThread(username).getSocket().getPort();
+        for (ServerThread serverThread : serverThreads) {
+            if (serverThread.getSocket().getPort() - 1 == port) {
                 return serverThread;
             }
         }

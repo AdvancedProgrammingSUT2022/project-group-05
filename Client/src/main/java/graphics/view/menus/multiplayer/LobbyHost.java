@@ -47,6 +47,10 @@ public class LobbyHost extends Pane {
     private ButtonOne leaveButton;
 
     public LobbyHost(Lobby lobby) {
+
+        this.setScaleX(0.5);
+        this.setScaleY(0.5);
+
         this.lobby = lobby;
 
         this.setGameId();
@@ -171,8 +175,7 @@ public class LobbyHost extends Pane {
         this.leaveButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                //TODO update server
-
+                Client.send(ClientAdapter.closeLobby(LobbyHost.this.getLobby()));
                 ClientManager.getInstance().setPane(new MultiplayerGame());
             }
         });
@@ -201,8 +204,7 @@ public class LobbyHost extends Pane {
                 this.setMapSmall();
                 break;
         }
-
-        ClientManager.getInstance().sendUpdatedLobbyToServer(this.getLobby());
+        ClientManager.getInstance().sendUpdatedLobbyToServer(this.getLobby(), this.getLobby().getHostUsername());
     }
 
     private void setPlayers(ArrayList<String> usernames) {
