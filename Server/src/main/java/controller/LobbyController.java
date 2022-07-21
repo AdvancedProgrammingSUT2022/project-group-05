@@ -34,6 +34,8 @@ public class LobbyController {
     public static String inviteToLobby(Lobby lobby, String invitedUsername) {
         if (UserDatabaseController.getUserByUsername(invitedUsername) == null)
             return "error: invited user not exists";
+        if (!UserDatabaseController.getUserByUsername(lobby.getHostUsername()).getFriends().contains(invitedUsername))
+            return "error: invited user is not your friend";
         if (!ServerManager.getInstance().isUserOnline(invitedUsername))
             return "error: invited user is not online";
         if (lobby.getPlayerUsernames().contains(invitedUsername))
@@ -46,7 +48,21 @@ public class LobbyController {
         return "inviting successful";
     }
 
+    public static String closeLobby(Lobby closingLobby) {
+        for (Lobby lobby : lobbies) {
+            if (lobby.getId().equals(closingLobby.getId())) {
+                lobbies.remove(lobby);
+            }
+        }
+        for (String playerUsername : closingLobby.getPlayerUsernames()) {
+            Request request = new Request("closeLobby");
+            ServerManager.getInstance().getUserListenerServerThread(playerUsername).send(request.convertToJson());
+        }
+        return "lobby removed successfully";
+    }
+
     public static ArrayList<Lobby> getLobbies() {
         return lobbies;
     }
+
 }

@@ -175,8 +175,7 @@ public class LobbyHost extends Pane {
         this.leaveButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                //TODO update server
-
+                Client.send(ClientAdapter.closeLobby(LobbyHost.this.getLobby()));
                 ClientManager.getInstance().setPane(new MultiplayerGame());
             }
         });

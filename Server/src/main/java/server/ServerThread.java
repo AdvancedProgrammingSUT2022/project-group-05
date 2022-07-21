@@ -97,6 +97,10 @@ public class ServerThread extends Thread {
             message = ServerAdapter.joinLobby(request);
             response.setMessage(message);
         }
+        if (request.getAction().equals("closeLobby")) {
+            message = ServerAdapter.closeLobby(request);
+            response.setMessage(message);
+        }
 
         return response;
     }

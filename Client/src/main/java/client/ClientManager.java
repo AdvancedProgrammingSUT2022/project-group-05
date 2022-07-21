@@ -140,4 +140,8 @@ public class ClientManager{
         request.addParams("whoSendIt", whoSendIt);
         Client.send(request.convertToJson());
     }
+
+    public void closeLobby() {
+        ClientManager.getInstance().setPane(new MultiplayerGame());
+    }
 }

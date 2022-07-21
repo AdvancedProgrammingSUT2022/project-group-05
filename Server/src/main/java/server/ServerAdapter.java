@@ -175,4 +175,10 @@ public class ServerAdapter {
 
         return LobbyController.joinLobby(username, lobby);
     }
+
+    public static String closeLobby(Request request) {
+        Lobby closingLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
+        return  LobbyController.closeLobby(closingLobby);
+
+    }
 }
