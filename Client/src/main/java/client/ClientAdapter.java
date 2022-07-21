@@ -101,4 +101,10 @@ public class    ClientAdapter {
         request.addParams("lobby", new Gson().toJson(lobby));
         return request.convertToJson();
     }
+
+    public static String startGame(Lobby lobby) {
+        Request request = new Request("startGame");
+        request.addParams("lobby", new Gson().toJson(lobby));
+        return request.convertToJson();
+    }
 }

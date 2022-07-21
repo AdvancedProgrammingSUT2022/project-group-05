@@ -18,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.Lobby;
+import model.map.Map;
 
 import java.util.ArrayList;
 
@@ -165,7 +166,8 @@ public class LobbyHost extends Pane {
         this.startGameButton = new ButtonOne("START GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
                 960, 900, 600, 70, this);
 
-        //TODO add function
+        Response response = Client.send(ClientAdapter.startGame(this.getLobby()));
+
     }
 
     private void setLeaveButton() {
