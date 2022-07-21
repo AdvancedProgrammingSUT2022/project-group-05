@@ -9,6 +9,7 @@ import graphics.view.menus.MainMenu;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -59,10 +60,14 @@ public class MultiplayerGame extends Pane{
         for (Lobby lobby : Lobby.getInvitedLobbies()) {
             LobbyInvitationPane lobbyInvitationPane = new LobbyInvitationPane(lobby);
             this.setInvitationButton(lobbyInvitationPane);
-            invitationPanes.add(new LobbyInvitationPane(lobby));
+            invitationPanes.add(lobbyInvitationPane);
         }
-
-        this.invitations.setItems(FXCollections.observableList(invitationPanes));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                MultiplayerGame.this.invitations.setItems(FXCollections.observableList(invitationPanes));
+            }
+        });
         this.getChildren().add(this.invitations);
     }
 
@@ -106,7 +111,7 @@ public class MultiplayerGame extends Pane{
                     new PopUp(MultiplayerGame.this, new Error(response.getMessage()));
                     return;
                 }
-
+                lobbyInvitationPane.getLobby().addUser(ClientManager.getInstance().getMainUser().getUsername());
                 ClientManager.getInstance().setPane(new LobbyGuest(lobbyInvitationPane.getLobby()));
 
                 new PopUp(MultiplayerGame.this, new Successful(response.getMessage()));

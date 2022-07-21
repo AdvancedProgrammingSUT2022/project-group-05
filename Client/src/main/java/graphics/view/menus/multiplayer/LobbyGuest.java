@@ -29,6 +29,10 @@ public class LobbyGuest extends Pane{
     private ButtonOne leaveButton;
 
     public LobbyGuest(Lobby lobby) {
+
+        this.setScaleX(0.5);
+        this.setScaleY(0.5);
+
         this.lobby = lobby;
 
         this.setGameId();
