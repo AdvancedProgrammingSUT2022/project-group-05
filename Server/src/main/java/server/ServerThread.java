@@ -51,7 +51,6 @@ public class ServerThread extends Thread {
         }
         if (request.getAction().equals("getUser")) {
             message = ServerAdapter.getUser(request);
-            System.out.println(message + " sent message");
             response.setMessage(message);
         }
         if (request.getAction().equals("register")) {
@@ -102,7 +101,7 @@ public class ServerThread extends Thread {
         return response;
     }
 
-    public void send(String message) { // for sending message to client
+    public void send(String message) { // for sending message to client directly
         try {
             this.dataOutputStream.writeUTF(message);
             this.dataOutputStream.flush();
@@ -114,5 +113,9 @@ public class ServerThread extends Thread {
 
     public String getUsername() {
         return username;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 }

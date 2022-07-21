@@ -134,10 +134,10 @@ public class ClientManager{
         instance = new ClientManager(mainStage, mainScene);
     }
 
-    public void sendUpdatedLobbyToServer(Lobby lobby) { //use this after making change in lobby
+    public void sendUpdatedLobbyToServer(Lobby lobby, String whoSendIt) { //use this after making change in lobby
         Request request = new Request("update");
         request.addParams("lobby", new Gson().toJson(lobby));
-
+        request.addParams("whoSendIt", whoSendIt);
         Client.send(request.convertToJson());
     }
 }

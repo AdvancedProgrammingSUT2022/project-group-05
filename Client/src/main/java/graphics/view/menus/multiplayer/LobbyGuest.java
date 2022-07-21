@@ -78,7 +78,7 @@ public class LobbyGuest extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 LobbyGuest.this.getLobby().removeUser(ClientManager.getInstance().getMainUser().getUsername());
-                ClientManager.getInstance().sendUpdatedLobbyToServer(LobbyGuest.this.getLobby());
+                ClientManager.getInstance().sendUpdatedLobbyToServer(LobbyGuest.this.getLobby(), ClientManager.getInstance().getMainUser().getUsername());
 
                 ClientManager.getInstance().setPane(new MultiplayerGame());
             }
@@ -108,8 +108,6 @@ public class LobbyGuest extends Pane{
                 this.setMapSmall();
                 break;
         }
-
-        ClientManager.getInstance().sendUpdatedLobbyToServer(this.lobby);
     }
 
     private void setPlayers(ArrayList<String> usernames) {

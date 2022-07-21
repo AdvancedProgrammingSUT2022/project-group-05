@@ -36,7 +36,8 @@ public class ClientThread extends Thread { // This class is used for receiving d
             ClientManager.getInstance().updateLobbyInvites();
         }
         if (request.getAction().equals("updateLobby")) { //when server send update to client to refresh lobby
-            Lobby updatedLobby = (Lobby) request.getParams().get("updatedLobby");
+            Gson gson = new Gson();
+            Lobby updatedLobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
             ClientManager.getInstance().updateLobby(updatedLobby);
         }
     }

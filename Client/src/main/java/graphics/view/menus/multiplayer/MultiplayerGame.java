@@ -27,6 +27,10 @@ public class MultiplayerGame extends Pane{
     private ButtonOne backButton;
 
     public MultiplayerGame() {
+
+        this.setScaleX(0.5);
+        this.setScaleY(0.5);
+
         this.setInvitationsTitle();
         this.setInvitations();
 
@@ -109,7 +113,7 @@ public class MultiplayerGame extends Pane{
                 Lobby.getInvitedLobbies().remove(lobbyInvitationPane.getLobby());
                 MultiplayerGame.this.setInvitations();
 
-                ClientManager.getInstance().sendUpdatedLobbyToServer(lobbyInvitationPane.getLobby());
+                ClientManager.getInstance().sendUpdatedLobbyToServer(lobbyInvitationPane.getLobby(), ClientManager.getInstance().getMainUser().getUsername());
             }
         });
 
