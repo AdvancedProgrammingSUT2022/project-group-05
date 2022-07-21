@@ -33,8 +33,8 @@ public class GameMenuController {
     //singleton
     private static GameMenuController instance;
 
-    private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
-        this.civilizationCount = civilizationCount;
+    private GameMenuController(ArrayList<Civilization> civilizations) {
+        this.civilizationCount = civilizations.size();
         this.cityNames = CityName.getCityNames();
 
         this.autoSave = true; //TODO add autoSave option in settings
@@ -51,8 +51,8 @@ public class GameMenuController {
         return instance;
     }
 
-    public static void updateInstance(int civilizationCount, ArrayList<Civilization> civilizations) {
-        instance = new GameMenuController(civilizationCount, civilizations);
+    public static void updateInstance(ArrayList<Civilization> civilizations) {
+        instance = new GameMenuController(civilizations);
     }
 
     public static void destroyInstance() {

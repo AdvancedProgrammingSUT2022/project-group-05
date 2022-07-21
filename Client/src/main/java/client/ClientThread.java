@@ -43,5 +43,8 @@ public class ClientThread extends Thread { // This class is used for receiving d
         if (request.getAction().equals("closeLobby")) {
             ClientManager.getInstance().closeLobby();
         }
+        if (request.getAction().equals("updateGame")) {
+            //TODO update game request
+        }
     }
 }

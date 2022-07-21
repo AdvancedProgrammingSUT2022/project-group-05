@@ -1,10 +1,13 @@
 package server;
 
 import com.google.gson.Gson;
+import controller.GameMenuController;
 import controller.LobbyController;
 import controller.UserDatabaseController;
 import model.Lobby;
 import model.User;
+import model.game.Civilization;
+import model.map.Map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -180,5 +183,31 @@ public class ServerAdapter {
         Lobby closingLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
         return  LobbyController.closeLobby(closingLobby);
 
+    }
+
+    public static String startGame(Request request) {
+        if (GameMenuController.getInstance() != null) return "there is another game is progress";
+
+        Lobby gameLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
+
+        ArrayList<Civilization> civilizations = new ArrayList<>();
+        for (int i = 0; i < gameLobby.getPlayerUsernames().size(); i++) {
+            civilizations.add(new Civilization(UserDatabaseController.getUserByUsername(gameLobby.getPlayerUsernames().get(i)), i));
+        }
+
+        Map.updateInstance(gameLobby.getSize());
+        GameMenuController.updateInstance(civilizations);
+        LobbyController.closeLobbyBeforeGame(gameLobby);
+
+        for (String playerUsername : gameLobby.getPlayerUsernames()) {
+            //TODO sending game info
+        }
+
+        return "game created successfully";
+    }
+
+    public static String updateGame() {
+        //TODO sending game info
+        return null;
     }
 }

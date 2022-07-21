@@ -49,16 +49,18 @@ public class LobbyController {
     }
 
     public static String closeLobby(Lobby closingLobby) {
-        for (Lobby lobby : lobbies) {
-            if (lobby.getId().equals(closingLobby.getId())) {
-                lobbies.remove(lobby);
-            }
-        }
+        lobbies.removeIf(lobby -> lobby.getId().equals(closingLobby.getId()));
         for (String playerUsername : closingLobby.getPlayerUsernames()) {
             Request request = new Request("closeLobby");
             ServerManager.getInstance().getUserListenerServerThread(playerUsername).send(request.convertToJson());
         }
         return "lobby removed successfully";
+    }
+
+    public static String closeLobbyBeforeGame(Lobby gameLobby) {
+        lobbies.removeIf(lobby -> lobby.getId().equals(gameLobby.getId()));
+
+        return "game created successfully";
     }
 
     public static ArrayList<Lobby> getLobbies() {
