@@ -1,7 +1,9 @@
 package graphics.view.popUp.research;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
+import javafx.scene.shape.Line;
 import model.game.Civilization;
 
 import static model.research.Research.*;
@@ -129,9 +131,93 @@ public class TechnologyTreeMap extends Pane {
         telegraph = new TechnologyFX(civilization.getResearchTree().getResearch(TELEGRAPH), 1, 12, this);
         radio = new TechnologyFX(civilization.getResearchTree().getResearch(RADIO), 2, 12, this);
         combustion = new TechnologyFX(civilization.getResearchTree().getResearch(COMBUSTION), 6, 12, this);
+
+        lineAdder(agriculture, pottery);
+        lineAdder(agriculture, animalHusbandry);
+        lineAdder(agriculture, archery);
+        lineAdder(agriculture, mining);
+
+        lineAdder(pottery, calendar);
+        lineAdder(pottery, writing);
+        lineAdder(animalHusbandry, trapping);
+        lineAdder(animalHusbandry, theWheel);
+        lineAdder(archery, mathematics);
+        lineAdder(mining, masonry);
+        lineAdder(mining, bronzeWorking);
+
+        lineAdder(calendar, theology);
+        lineAdder(writing, philosophy);
+        lineAdder(trapping, civilService);
+        lineAdder(theWheel, horsebackRiding);
+        lineAdder(theWheel, mathematics);
+        lineAdder(masonry, construction);
+        lineAdder(bronzeWorking, ironWorking);
+
+        lineAdder(philosophy, theology);
+        lineAdder(philosophy, civilService);
+        lineAdder(horsebackRiding, chivalry);
+        lineAdder(mathematics, currency);
+        lineAdder(mathematics, engineering);
+        lineAdder(construction, engineering);
+        lineAdder(ironWorking, metalCasting);
+
+        lineAdder(theology, education);
+        lineAdder(civilService, chivalry);
+        lineAdder(currency, chivalry);
+        lineAdder(engineering, machinery);
+        lineAdder(engineering, physics);
+        lineAdder(metalCasting, physics);
+        lineAdder(metalCasting, steel);
+
+        lineAdder(education, acoustics);
+        lineAdder(education, banking);
+        lineAdder(chivalry, banking);
+        lineAdder(machinery, printingPress);
+        lineAdder(physics, printingPress);
+        lineAdder(physics, gunpowder);
+        lineAdder(steel, gunpowder);
+
+        lineAdder(acoustics, archaeology);
+        lineAdder(acoustics, scientificTheory);
+        lineAdder(banking, economics);
+        lineAdder(printingPress, economics);
+        lineAdder(gunpowder, chemistry);
+        lineAdder(gunpowder, metallurgy);
+
+        lineAdder(economics, militaryScience);
+        lineAdder(chemistry, militaryScience);
+        lineAdder(chemistry, fertilizer);
+        lineAdder(metallurgy, rifling);
+
+        lineAdder(archaeology, biology);
+        lineAdder(scientificTheory, biology);
+        lineAdder(scientificTheory, steamPower);
+        lineAdder(militaryScience, steamPower);
+        lineAdder(fertilizer, dynamite);
+        lineAdder(rifling, dynamite);
+
+        lineAdder(biology, electricity);
+        lineAdder(steamPower, electricity);
+        lineAdder(steamPower, replaceableParts);
+        lineAdder(steamPower, railroad);
+
+        lineAdder(electricity, telegraph);
+        lineAdder(electricity, radio);
+        lineAdder(replaceableParts, combustion);
+        lineAdder(railroad, combustion);
+        lineAdder(dynamite, combustion);
+
     }
 
     public Civilization getCivilization() {
         return this.civilization;
+    }
+
+    private void lineAdder (TechnologyFX from, TechnologyFX to) {
+        Line temp = new Line(from.getLineFromX(), from.getLineFromY(),
+                to.getLineToX(), to.getLineToY());
+        temp.setStroke(Color.BLUE);
+        temp.setStrokeWidth(3);
+        getChildren().add(temp);
     }
 }

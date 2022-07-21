@@ -174,6 +174,7 @@ public class TileFX extends Group {
         if (fogOfWarStates.equals(FogOfWarStates.REVEALED)) {
             civilian.setFill(Color.TRANSPARENT);
             soldure.setFill(Color.TRANSPARENT);
+            fogOfWar.setFill(StaticImages.FogOfWar2);
         }
     }
 

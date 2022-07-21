@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import model.game.Civilization;
 import model.research.Research;
 import model.research.ResearchNode;
@@ -79,5 +80,21 @@ public class TechnologyFX extends Pane {
                 new PopUp((Pane) TechnologyFX.this.getParent().getParent().getParent().getParent().getParent().getParent(), new Successful("started doing " + research.toString()));
             }
         });
+    }
+
+    public double getLineFromX () {
+        return getLayoutX() + 100;
+    }
+
+    public double getLineFromY () {
+        return getLayoutY() + 80;
+    }
+
+    public double getLineToX () {
+        return getLayoutX() + 100;
+    }
+
+    public double getLineToY () {
+        return getLayoutY() + 20;
     }
 }
