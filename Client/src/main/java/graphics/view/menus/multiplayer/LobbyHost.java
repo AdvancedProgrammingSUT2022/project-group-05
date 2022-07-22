@@ -189,6 +189,7 @@ public class LobbyHost extends Pane {
 
     //SETTERS
     public void updateLobby(Lobby lobby) {
+        System.out.println("lobby is updating and playerUsernames are : " + lobby.getPlayerUsernames());
         this.lobby = lobby;
 
         this.setMapSize(lobby.getSize());
@@ -217,12 +218,28 @@ public class LobbyHost extends Pane {
         switch (usernames.size()) {
             case 4:
                 fourthPlayer.setText(usernames.get(3));
-            case 3:
                 thirdPlayer.setText(usernames.get(2));
-            case 2:
                 secondPlayer.setText(usernames.get(1));
-            case 1:
                 firstPlayer.setText(usernames.get(0));
+                break;
+            case 3:
+                fourthPlayer.setText("NO PLAYER");
+                thirdPlayer.setText(usernames.get(2));
+                secondPlayer.setText(usernames.get(1));
+                firstPlayer.setText(usernames.get(0));
+                break;
+            case 2:
+                fourthPlayer.setText("NO PLAYER");
+                thirdPlayer.setText("NO PLAYER");
+                secondPlayer.setText(usernames.get(1));
+                firstPlayer.setText(usernames.get(0));
+                break;
+            case 1:
+                fourthPlayer.setText("NO PLAYER");
+                thirdPlayer.setText("NO PLAYER");
+                secondPlayer.setText("NO PLAYER");
+                firstPlayer.setText(usernames.get(0));
+                break;
             default:
                 break;
         }
