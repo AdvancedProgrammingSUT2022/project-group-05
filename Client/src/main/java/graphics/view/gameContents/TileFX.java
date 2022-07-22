@@ -25,6 +25,7 @@ public class TileFX extends Group {
 
     private LabelOne place;
     private LabelOne cityName;
+    private LabelOne resource;
 
     private Polygon fogOfWar;
     private Polygon selected;
@@ -94,6 +95,8 @@ public class TileFX extends Group {
         String cityString = "";
         if (tile.hasCity()) cityString = tile.getCity().getName();
         cityName = new LabelOne(cityString, StaticFonts.segoeLoad(12), Pos.CENTER,
+                0, -82, 200, 12, this);
+        resource = new LabelOne(tile.getResource().toString(), StaticFonts.segoeLoad(12), Pos.CENTER,
                 0, 90, 200, 12, this);
 
         fogOfWar = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
