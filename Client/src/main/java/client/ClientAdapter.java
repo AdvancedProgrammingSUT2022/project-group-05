@@ -67,6 +67,20 @@ public class    ClientAdapter {
         return request.convertToJson();
     }
 
+    public static String removeFriend(String friendUsername, String username) {
+        Request request = new Request("removeFriend");
+        request.addParams("friendUsername", friendUsername);
+        request.addParams("username", username);
+        return request.convertToJson();
+    }
+
+    public static String rejectFriend(String invitingFriendUsername, String username) {
+        Request request = new Request("rejectFriend");
+        request.addParams("invitingFriendUsername", invitingFriendUsername);
+        request.addParams("username", username);
+        return request.convertToJson();
+    }
+
     public static String inviteFriend(String friendUsername, String username) {
         Request request = new Request("inviteFriend");
         request.addParams("friendUsername", friendUsername);
@@ -107,4 +121,22 @@ public class    ClientAdapter {
         request.addParams("lobby", new Gson().toJson(lobby));
         return request.convertToJson();
     }
+
+    public static String getOnlineUsers() {
+        Request request = new Request("getOnlineUsers");
+        return request.convertToJson();
+    }
+
+    public static String userLoggedOut(String username) {
+        Request request = new Request("userLoggedOut");
+        request.addParams("username", username);
+        return request.convertToJson();
+    }
+
+    public static String searchFriend(String friendUsername) {
+        Request request = new Request("searchFriend");
+        request.addParams("friendUsername", friendUsername);
+        return request.convertToJson();
+    }
+
 }

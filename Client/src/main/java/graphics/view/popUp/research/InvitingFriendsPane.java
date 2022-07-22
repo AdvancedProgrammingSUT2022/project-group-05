@@ -31,9 +31,9 @@ public class InvitingFriendsPane extends Pane {
         new LabelOne("name: " + invitingFriendUsername, StaticFonts.segoeLoad(15), Pos.CENTER,
                 50, 20, 120, 25, this);
         this.acceptButton = new ButtonOne("accept", StaticFonts.segoeLoad(15), Pos.CENTER,
-                130, 20, 50, 25, this);
+                150, 20, 50, 25, this);
         this.rejectButton = new ButtonOne("reject", StaticFonts.segoeLoad(15), Pos.CENTER,
-                190, 20, 50, 25, this);
+                210, 20, 50, 25, this);
     }
 
     public static ArrayList<InvitingFriendsPane> getInvitingFriendsPane() {

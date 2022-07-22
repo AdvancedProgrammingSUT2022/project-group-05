@@ -1,8 +1,11 @@
 package graphics.view.menus;
 
+import client.Client;
+import client.ClientAdapter;
 import graphics.objects.buttons.ButtonOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
+import graphics.view.menus.Scoreboard.ScoreboardMenu;
 import graphics.view.menus.multiplayer.MultiplayerGame;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
@@ -98,6 +101,7 @@ public class MainMenu extends Pane{
         logout.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Client.send(ClientAdapter.userLoggedOut(ClientManager.getInstance().getMainUser().getUsername()));
                 ClientManager.getInstance().setMainUser(null);
                 ClientManager.getInstance().setPane(new LoginMenu());
             }

@@ -49,7 +49,6 @@ public class Client extends Application {
             dataOutputStream.flush();
             while (true) {
                 String input = dataInputStream.readUTF();
-                System.out.println(input + " is input");
                 return Response.convertFromJson(input);
             }
         } catch (IOException e) {

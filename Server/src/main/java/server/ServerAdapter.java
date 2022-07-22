@@ -23,6 +23,8 @@ public class ServerAdapter {
             return "error: username doesn't exists";
         if (!user.getPassword().equals(password))
             return "error: username and password don't match";
+        if (ServerManager.getInstance().isUserOnline(username))
+            return "error: you can't log in twice";
         return "login successful";
     }
 
@@ -116,6 +118,24 @@ public class ServerAdapter {
         return "friend added successfully";
     }
 
+    public static String removeFriend(Request request) {
+        String friendUsername = (String) request.getParams().get("friendUsername");
+        String username = (String) request.getParams().get("username");
+        User friendUser = UserDatabaseController.getUserByUsername(friendUsername);
+        User user = UserDatabaseController.getUserByUsername(username);
+        UserDatabaseController.removeFriend(friendUser, username);
+        UserDatabaseController.removeFriend(user, friendUsername);
+        return "friend removed successfully";
+    }
+
+    public static String rejectFriend(Request request) {
+        String invitingFriendUsername = (String) request.getParams().get("invitingFriendUsername");
+        String username = (String) request.getParams().get("username");
+        User user = UserDatabaseController.getUserByUsername(username);
+        UserDatabaseController.removeInvitingFriend(user, invitingFriendUsername);
+        return "friend rejected successfully";
+    }
+
     public static String createLobby(Request request) {
         String hostUsername = (String) request.getParams().get("hostUsername");
         String id = (String) request.getParams().get("id");
@@ -128,14 +148,22 @@ public class ServerAdapter {
         return gson.toJson(lobby);
     }
 
+    public static String searchFriend(Request request) {
+        String friendUsername = (String) request.getParams().get("friendUsername");
+        User friendUser = UserDatabaseController.getUserByUsername(friendUsername);
+        if (friendUser == null)
+            return "error: friend with this username not found";
+        return new Gson().toJson(friendUser);
+    }
+
     public static String inviteFriend(Request request) {
         String friendUsername = (String) request.getParams().get("friendUsername");
         String username = (String) request.getParams().get("username");
         User friendUser = UserDatabaseController.getUserByUsername(friendUsername);
-        if (friendUser == null)
-            return "error: friend with this username not found";
         if (friendUser.getFriends().contains(username))
             return "error: you are already friend with this user";
+        if (username.equals(friendUsername))
+            return "error: you can't invite yourself!";
         UserDatabaseController.addInvitingFriend(friendUser, username);
         return "friend invited successfully";
     }
@@ -175,7 +203,6 @@ public class ServerAdapter {
     public static String joinLobby(Request request) {
         Lobby lobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
         String username = (String) request.getParams().get("username");
-
         return LobbyController.joinLobby(username, lobby);
     }
 
@@ -210,4 +237,33 @@ public class ServerAdapter {
         //TODO sending game info
         return null;
     }
+
+    public static String getOnlineUsers(Request request) {
+        ArrayList<String> onlineUsers = new ArrayList<>();
+        for (ServerThread serverThread : ServerManager.getInstance().getServerThreads()) {
+            onlineUsers.add(serverThread.getUsername());
+        }
+        return new Gson().toJson(onlineUsers);
+    }
+
+    public static String userLoggedOut(Request request) {
+        String username = (String) request.getParams().get("username");
+        sendUpdateForScoreBoard();
+        ServerManager.getInstance().getUserServerThread(username).setUsername(null);
+        return "user logged out successfully";
+    }
+
+
+
+
+    /////////////////////////////
+    public static void sendUpdateForScoreBoard() {
+        for (ServerThread serverThread : ServerManager.getInstance().getServerThreads()) {
+            if (serverThread.getUsername() == null) {
+                Request request = new Request("updateScoreboard");
+                serverThread.send(request.convertToJson());
+            }
+        }
+    }
+
 }

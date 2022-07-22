@@ -1,15 +1,14 @@
 package graphics.view.menus;
 
 //import controller.UserDatabaseController;
+import com.google.gson.Gson;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
+import graphics.view.popUp.*;
 import graphics.view.popUp.Error;
-import graphics.view.popUp.FriendsPane;
-import graphics.view.popUp.PopUp;
-import graphics.view.popUp.Successful;
 import graphics.view.popUp.research.InvitingFriendsPane;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -22,6 +21,7 @@ import javafx.stage.FileChooser;
 import client.Client;
 import client.ClientAdapter;
 import client.Response;
+import model.User;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class ProfileMenu extends Pane{
 
         TextFieldOne friendUsername = new TextFieldOne("friend username", StaticFonts.segoeLoad(20), Pos.CENTER,
                 150, fromTop + 400, 200, 30, this);
-        ButtonOne invite = new ButtonOne("invite", StaticFonts.segoeLoad(15), Pos.CENTER,
+        ButtonOne search = new ButtonOne("search", StaticFonts.segoeLoad(15), Pos.CENTER,
                 150, fromTop + 450, 100, 50, this);
 
         //FUNCTIONS
@@ -114,16 +114,17 @@ public class ProfileMenu extends Pane{
             }
         });
 
-        invite.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        search.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 String friendUsernameText = friendUsername.getText();
-                Response response = Client.send(ClientAdapter.inviteFriend(friendUsernameText, ClientManager.getInstance().getMainUser().getUsername()));
-                if (response.getMessage().startsWith("error")) {
-                    new PopUp(temp, new Error(response.getMessage()));
+                Response searchResponse = Client.send(ClientAdapter.searchFriend(friendUsernameText));
+                if (searchResponse.getMessage().startsWith("error")) {
+                    new PopUp(temp, new Error(searchResponse.getMessage()));
                     return;
                 }
-                new PopUp(temp, new Successful(response.getMessage()));
+                User friendUser = new Gson().fromJson(searchResponse.getMessage(), User.class);
+                new PopUp(temp, new FriendProfilePane(friendUser));
             }
         });
 
@@ -149,11 +150,22 @@ public class ProfileMenu extends Pane{
         this.friendsControl.setLayoutX(50);
         this.friendsControl.setLayoutY(100);
 
+        ArrayList<FriendsPane> friendsPanes = FriendsPane.getFriendsPane();
+
+        for (FriendsPane friendsPane : friendsPanes) {
+            friendsPane.getRemoveButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Client.send(ClientAdapter.removeFriend(friendsPane.getFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
+                    ProfileMenu.this.setFriendsControl();
+                }
+            });
+        }
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                friendsControl.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
+                friendsControl.setItems(FXCollections.observableArrayList(friendsPanes));
             }
         });
 
@@ -191,6 +203,7 @@ public class ProfileMenu extends Pane{
             invitingFriendsPane.getRejectButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+                    Client.send(ClientAdapter.rejectFriend(invitingFriendsPane.getInvitingFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
                     ProfileMenu.this.setInvitingFriendsControl();
                 }
             });
