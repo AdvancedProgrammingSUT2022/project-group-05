@@ -67,6 +67,13 @@ public class    ClientAdapter {
         return request.convertToJson();
     }
 
+    public static String removeFriend(String friendUsername, String username) {
+        Request request = new Request("removeFriend");
+        request.addParams("friendUsername", friendUsername);
+        request.addParams("username", username);
+        return request.convertToJson();
+    }
+
     public static String rejectFriend(String invitingFriendUsername, String username) {
         Request request = new Request("rejectFriend");
         request.addParams("invitingFriendUsername", invitingFriendUsername);
@@ -131,4 +138,5 @@ public class    ClientAdapter {
         request.addParams("friendUsername", friendUsername);
         return request.convertToJson();
     }
+
 }

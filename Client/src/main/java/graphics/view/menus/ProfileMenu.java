@@ -150,11 +150,22 @@ public class ProfileMenu extends Pane{
         this.friendsControl.setLayoutX(50);
         this.friendsControl.setLayoutY(100);
 
+        ArrayList<FriendsPane> friendsPanes = FriendsPane.getFriendsPane();
+
+        for (FriendsPane friendsPane : friendsPanes) {
+            friendsPane.getRemoveButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Client.send(ClientAdapter.removeFriend(friendsPane.getFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
+                    ProfileMenu.this.setFriendsControl();
+                }
+            });
+        }
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                friendsControl.setItems(FXCollections.observableArrayList(FriendsPane.getFriendsPane()));
+                friendsControl.setItems(FXCollections.observableArrayList(friendsPanes));
             }
         });
 

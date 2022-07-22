@@ -118,6 +118,16 @@ public class ServerAdapter {
         return "friend added successfully";
     }
 
+    public static String removeFriend(Request request) {
+        String friendUsername = (String) request.getParams().get("friendUsername");
+        String username = (String) request.getParams().get("username");
+        User friendUser = UserDatabaseController.getUserByUsername(friendUsername);
+        User user = UserDatabaseController.getUserByUsername(username);
+        UserDatabaseController.removeFriend(friendUser, username);
+        UserDatabaseController.removeFriend(user, friendUsername);
+        return "friend removed successfully";
+    }
+
     public static String rejectFriend(Request request) {
         String invitingFriendUsername = (String) request.getParams().get("invitingFriendUsername");
         String username = (String) request.getParams().get("username");

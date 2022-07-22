@@ -78,6 +78,11 @@ public class ServerThread extends Thread {
             message = ServerAdapter.addFriend(request);
             response.setMessage(message);
         }
+        if (request.getAction().equals("removeFriend")) {
+
+            message = ServerAdapter.removeFriend(request);
+            response.setMessage(message);
+        }
         if (request.getAction().equals("rejectFriend")) {
             message = ServerAdapter.rejectFriend(request);
             response.setMessage(message);
