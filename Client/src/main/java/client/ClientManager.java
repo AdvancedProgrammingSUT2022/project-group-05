@@ -9,6 +9,7 @@ import graphics.view.menus.Scoreboard.ScoreboardMenu;
 import graphics.view.menus.multiplayer.LobbyGuest;
 import graphics.view.menus.multiplayer.LobbyHost;
 import graphics.view.menus.multiplayer.MultiplayerGame;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -64,7 +65,6 @@ public class ClientManager{
 
     public User getUserByUsername(String username) {
         Response getUserResponse = Client.send(ClientAdapter.getUser(username));
-        System.out.println(getUserResponse.getMessage() + " received response");
         String userJson = getUserResponse.getMessage();
         Gson gson = new Gson();
         return gson.fromJson(userJson, User.class);
@@ -88,7 +88,12 @@ public class ClientManager{
 
     public void updateLobbyInvites() {
         if (this.getMainScene().getRoot() instanceof MultiplayerGame) {
-            this.setPane(new MultiplayerGame());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ClientManager.this.setPane(new MultiplayerGame());
+                }
+            });
         }
     }
 
@@ -148,6 +153,11 @@ public class ClientManager{
     }
 
     public void closeLobby() {
-        ClientManager.getInstance().setPane(new MultiplayerGame());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ClientManager.getInstance().setPane(new MultiplayerGame());
+            }
+        });
     }
 }

@@ -62,15 +62,15 @@ public class ServerManager {
         ServerAdapter.sendUpdateForScoreBoard();
     }
 
-    public void removeServerThread(String username) {
-        for (int i = 0; i < serverThreads.size(); i++) {
-            if (serverThreads.get(i).getUsername() != null && serverThreads.get(i).getUsername().equals(username)) {
-                serverThreads.remove(i);
-                ServerAdapter.sendUpdateForScoreBoard();
-                break;
-            }
-        }
-    }
+//    public void removeServerThread(String username) {
+//        for (int i = 0; i < serverThreads.size(); i++) {
+//            if (serverThreads.get(i).getUsername() != null && serverThreads.get(i).getUsername().equals(username)) {
+//                serverThreads.remove(i);
+//                ServerAdapter.sendUpdateForScoreBoard();
+//                break;
+//            }
+//        }
+//    }
 
     public ArrayList<ServerThread> getServerThreads() {
         return serverThreads;

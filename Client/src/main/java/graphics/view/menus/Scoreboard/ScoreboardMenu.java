@@ -39,19 +39,18 @@ public class ScoreboardMenu extends Pane{
     private int fromLeft;
     private int fromTop;
     private ListView<ScoreboardPane> scoreboardControl;
+    private ButtonOne back;
 
     public ScoreboardMenu () throws FileNotFoundException {
         fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2 - 560;
         fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2;
 
         this.updateScoreBoard();
-        this.updateElements();
 
-        //OBJECTS
-        ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
+
+        back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft + 560, fromTop + 300, 100, 50, this);
 
-        //FUNCTIONS
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -61,13 +60,18 @@ public class ScoreboardMenu extends Pane{
     }
 
     public void updateScoreBoard(){
-        this.updateUsers();
-        this.updateElements();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ScoreboardMenu.this.updateElements();
+            }
+        });
     }
 
-    private void updateUsers() {
+    private void updateElements() {
         Response getUsersResponse = Client.send(ClientAdapter.getUsers());
         String usersJson = getUsersResponse.getMessage();
+        System.out.println(usersJson);
         Gson gson = new Gson();
         users = gson.fromJson(usersJson,  new TypeToken<List<HashMap<String, String>>>() {
         }.getType());
@@ -77,9 +81,6 @@ public class ScoreboardMenu extends Pane{
                 return Integer.parseInt(o1.get("score")) - Integer.parseInt(o2.get("score"));
             }
         });
-    }
-
-    private void updateElements() {
 
         this.getChildren().remove(this.scoreboardControl);
 
@@ -96,30 +97,41 @@ public class ScoreboardMenu extends Pane{
         ArrayList<String> onlineUsers = new Gson().fromJson(getOnlineUsersResponse.getMessage(), new TypeToken<List<String>>() {
         }.getType());
 
+        System.out.println(onlineUsers + " are online users now");
+
         ArrayList<ScoreboardPane> scoreboardPanes = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
-            User user = new User(users.get(i).get("username"), users.get(i).get("nickname"), users.get(i).get("password"), users.get(i).get("image"), Integer.parseInt(users.get(i).get("score")));
-            ScoreboardPane scoreboardPane = new ScoreboardPane(user, i, onlineUsers);
+            ScoreboardPane scoreboardPane = new ScoreboardPane(users.get(i).get("username"),
+                    users.get(i).get("image"),users.get(i).get("nickname"), users.get(i).get("score"), i, onlineUsers);
+            int finalI = i;
             scoreboardPane.getInviteButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    String friendUsernameText = user.getUsername();
+                    String friendUsernameText = users.get(finalI).get("username");
                     Response response = Client.send(ClientAdapter.inviteFriend(friendUsernameText, ClientManager.getInstance().getMainUser().getUsername()));
                     if (response.getMessage().startsWith("error")) {
-                        new PopUp((Pane) ScoreboardMenu.this, new Error(response.getMessage()));
+                        new PopUp(ScoreboardMenu.this, new Error(response.getMessage()));
                         return;
                     }
-                    new PopUp((Pane) ScoreboardMenu.this, new Successful(response.getMessage()));
+                    new PopUp(ScoreboardMenu.this, new Successful(response.getMessage()));
                 }
             });
             scoreboardPanes.add(scoreboardPane);
         }
-        Platform.runLater(new Runnable() {
+        ScoreboardMenu.this.scoreboardControl.setItems(FXCollections.observableArrayList(scoreboardPanes));
+        this.getChildren().add(this.scoreboardControl);
+
+        this.getChildren().remove(back);
+
+        back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
+                fromLeft + 560, fromTop + 300, 100, 50, this);
+
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void run() {
-                ScoreboardMenu.this.scoreboardControl.setItems(FXCollections.observableArrayList(scoreboardPanes));
+            public void handle(MouseEvent event) {
+                ClientManager.getInstance().setPane(new MainMenu());
             }
         });
-        this.getChildren().add(this.scoreboardControl);
+
     }
 }

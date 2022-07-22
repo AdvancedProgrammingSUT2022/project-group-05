@@ -238,8 +238,8 @@ public class ServerAdapter {
 
     public static String userLoggedOut(Request request) {
         String username = (String) request.getParams().get("username");
-        ServerManager.getInstance().removeServerThread(username);
         sendUpdateForScoreBoard();
+        ServerManager.getInstance().getUserServerThread(username).setUsername(null);
         return "user logged out successfully";
     }
 

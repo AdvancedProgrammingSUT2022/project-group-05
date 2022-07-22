@@ -13,6 +13,11 @@ public class LobbyInvitationPane extends Pane{
     private LabelOne gameId;
     private LabelOne hostUsername;
 
+    private LabelOne playerOne;
+    private LabelOne playerTwo;
+    private LabelOne playerThree;
+    private LabelOne playerFour;
+
     private ButtonOne join;
     private ButtonOne reject;
 
@@ -24,6 +29,8 @@ public class LobbyInvitationPane extends Pane{
 
         this.setHostUsername();
         this.setGameId();
+
+        //this.setPlayersNicknames();
 
         this.setJoin();
         this.setReject();
@@ -48,6 +55,17 @@ public class LobbyInvitationPane extends Pane{
         this.reject = new ButtonOne("REJECT", StaticFonts.segoeLoad(40), Pos.CENTER,
                 1050, 100, 200, 150, this);
     }
+
+//    private void setPlayersNicknames() {
+//        this.playerOne = new LabelOne("playerOne : " + this.lobby.getPlayerUsernames().get(0), StaticFonts.segoeLoad(60), Pos.BOTTOM_LEFT,
+//                350, 200, 400, 100, this);
+//        this.playerTwo = new LabelOne("playerTwo : " + this.lobby.getPlayerUsernames().get(1), StaticFonts.segoeLoad(60), Pos.BOTTOM_LEFT,
+//                750, 200, 400, 100, this);
+//        this.playerThree= new LabelOne("playerThree : " + this.lobby.getPlayerUsernames().get(2), StaticFonts.segoeLoad(60), Pos.BOTTOM_LEFT,
+//                350, 300, 400, 100, this);
+//        this.playerFour = new LabelOne("playerFour : " + this.lobby.getPlayerUsernames().get(3), StaticFonts.segoeLoad(60), Pos.BOTTOM_LEFT,
+//                750, 300, 400, 100, this);
+//    }
 
     //GETTER
     public ButtonOne getJoinButton() {

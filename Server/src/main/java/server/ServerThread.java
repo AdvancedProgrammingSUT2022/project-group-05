@@ -30,7 +30,7 @@ public class ServerThread extends Thread {
                 Response response = handleRequest(request);
                 if (request.getAction().equals("login") && response.getMessage().equals("login successful")) {
                     this.username = UserDatabaseController.getUserByUsername((String) request.getParams().get("username")).getUsername();
-
+                    ServerAdapter.sendUpdateForScoreBoard();
                 }
                 String responseJson = response.convertToJson();
                 this.send(responseJson);
@@ -142,5 +142,9 @@ public class ServerThread extends Thread {
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

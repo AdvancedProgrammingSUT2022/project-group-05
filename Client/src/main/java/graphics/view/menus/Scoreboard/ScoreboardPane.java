@@ -28,7 +28,7 @@ public class ScoreboardPane extends Pane {
 
     private ButtonOne invite;
 
-    public ScoreboardPane(User user, int i, ArrayList<String> onlineUsers) {
+    public ScoreboardPane(String username, String imageAddress, String nickname, String score, int i, ArrayList<String> onlineUsers) {
 
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
 
@@ -40,7 +40,7 @@ public class ScoreboardPane extends Pane {
         onlineDot.setRadius(5);
         onlineDot.setCenterX(50);
         onlineDot.setCenterY(5);
-        if (onlineUsers.contains(user.getUsername()))
+        if (onlineUsers.contains(username))
             onlineDot.setFill(Color.GREEN);
         else
             onlineDot.setFill(Color.RED);
@@ -49,7 +49,7 @@ public class ScoreboardPane extends Pane {
         Circle circle = new Circle();
         FileInputStream fileInputStream = null;
         try {
-            fileInputStream = new FileInputStream(user.getImageAddress());
+            fileInputStream = new FileInputStream(imageAddress);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -61,9 +61,9 @@ public class ScoreboardPane extends Pane {
         this.getChildren().add(circle);
         new LabelOne(i+1 + " :", StaticFonts.segoeLoad(15), Pos.CENTER_LEFT,
                 100, 25, 200, 30, this);
-        new LabelOne(user.getNickname(), StaticFonts.segoeLoad(15), Pos.CENTER_LEFT,
+        new LabelOne(nickname, StaticFonts.segoeLoad(15), Pos.CENTER_LEFT,
                 210, 25, 200, 30, this);
-        new LabelOne(user.getScore() + "", StaticFonts.segoeLoad(15), Pos.CENTER_RIGHT,
+        new LabelOne(score, StaticFonts.segoeLoad(15), Pos.CENTER_RIGHT,
                 1220, 25, 200, 30, this);
         //invite Button
         invite = new ButtonOne("invite", StaticFonts.segoeLoad(15), Pos.CENTER,
