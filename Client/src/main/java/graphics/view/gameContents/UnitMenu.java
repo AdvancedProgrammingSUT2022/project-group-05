@@ -1,9 +1,7 @@
 package graphics.view.gameContents;
 
-import client.Client;
 import client.ClientManager;
 import controller.UnitController;
-import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
@@ -19,7 +17,6 @@ import model.game.Civilization;
 import model.improvement.Improvement;
 import model.tile.Route;
 import model.tile.Tile;
-import model.unit.Unit;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
@@ -135,6 +132,10 @@ public class UnitMenu extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 UnitMenu.this.update();
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no target selected"));
+                    return;
+                }
                 String response = unitController.unitMove(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -265,6 +266,10 @@ public class UnitMenu extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 UnitMenu.this.update();
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no target selected"));
+                    return;
+                }
                 String response = unitController.unitAttack(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -278,6 +283,10 @@ public class UnitMenu extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 UnitMenu.this.update();
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no target selected"));
+                    return;
+                }
                 String response = unitController.conquerCity(MapFX.getInstance().getSecondSelectedTile().getTile().getCity(), (Soldier) unitController.getUnit());
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -326,7 +335,7 @@ public class UnitMenu extends Pane{
                         }
                     }
                 });
-                improvementPanel.lumber_mill.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                improvementPanel.lumberMill.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         String response = unitController.unitBuildImprovement(Improvement.LUMBER_MILL);
@@ -381,7 +390,7 @@ public class UnitMenu extends Pane{
                         }
                     }
                 });
-                improvementPanel.trading_post.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                improvementPanel.tradingPost.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         String response = unitController.unitBuildImprovement(Improvement.TRADING_POST);
@@ -495,8 +504,6 @@ public class UnitMenu extends Pane{
                 }
             }
         });
-
-
 
 
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
