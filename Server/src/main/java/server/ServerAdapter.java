@@ -217,12 +217,13 @@ public class ServerAdapter {
 
         Lobby gameLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
 
+        Map.updateInstance(gameLobby.getSize());
+
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for (int i = 0; i < gameLobby.getPlayerUsernames().size(); i++) {
             civilizations.add(new Civilization(UserDatabaseController.getUserByUsername(gameLobby.getPlayerUsernames().get(i)), i));
         }
 
-        Map.updateInstance(gameLobby.getSize());
         GameMenuController.updateInstance(civilizations);
         LobbyController.closeLobbyBeforeGame(gameLobby);
 

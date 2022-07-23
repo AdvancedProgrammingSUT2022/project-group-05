@@ -184,14 +184,14 @@ public class City implements Serializable {
 
     public Unit getUnitInProgress() {
         if (productionInProgress == null) return null;
-        if (productionInProgress.getClass() == Unit.class)
+        if (productionInProgress instanceof Unit)
             return (Unit) productionInProgress;
         return null;
     }
 
     public Building getBuildingInProgress() {
         if (productionInProgress == null) return null;
-        if (productionInProgress.getClass() == Building.class)
+        if (productionInProgress instanceof Building)
             return (Building) productionInProgress;
         return null;
     }
@@ -202,10 +202,10 @@ public class City implements Serializable {
 
     public int getRemainingProductionTime() {
         if (productionInProgress == null) return 0;
-        if (productionInProgress.getClass() == Unit.class) {
+        if (productionInProgress instanceof Unit) {
             Unit unit = (Unit) productionInProgress;
             return unit.getCost() / this.getCivilization().getProduction();
-        } else if (productionInProgress.getClass() == Building.class) {
+        } else if (productionInProgress instanceof Building) {
             Building building = (Building) productionInProgress;
             return building.getCost() / this.getCivilization().getProduction();
         } else {
@@ -348,7 +348,7 @@ public class City implements Serializable {
 
     public void spendProductionForProductionInProgress() {
         if (this.productionInProgress == null) return ;
-        if (this.productionInProgress.getClass() == Unit.class) {
+        if (this.productionInProgress instanceof Unit) {
             Unit unit = (Unit) productionInProgress;
             unit.setCost(unit.getCost() - this.getCivilization().getProduction());
             if (unit.getCost() <= 0) {
@@ -356,7 +356,7 @@ public class City implements Serializable {
                 this.getCivilization().addUnit(unit);
                 this.productionInProgress = null;
             }
-        } else if (this.productionInProgress.getClass() == Building.class){
+        } else if (this.productionInProgress instanceof Building){
             Building building = (Building) productionInProgress;
             building.setCostForSpending(building.getCostForSpending() - this.getCivilization().getProduction());
             if (building.getCostForSpending() <= 0) {
