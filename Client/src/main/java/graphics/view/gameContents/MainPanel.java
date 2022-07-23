@@ -66,7 +66,12 @@ public class MainPanel extends Pane {
             public void handle(MouseEvent event) {
                 String response = GameMenuController.getInstance().nextCivilization();
 
-                if (response.startsWith("error")) new PopUp((Pane) MainPanel.this.getParent(), new Error(response));
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) MainPanel.this.getParent(), new Error(response));
+                    return;
+                }
+
+                ClientManager.getInstance().updateAll();
             }
         });
         cheatCode.setOnMouseClicked(new EventHandler<MouseEvent>() {

@@ -36,6 +36,7 @@ public class ClientThread extends Thread { // This class is used for receiving d
                     GameObjectData gameObjectData = (GameObjectData) objectInputStream.readObject();
                     GameMenuController.updateInstance(gameObjectData.getGameMenuController());
                     Map.updateInstance(gameObjectData.getMap());
+                    ClientManager.getInstance().update();
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {

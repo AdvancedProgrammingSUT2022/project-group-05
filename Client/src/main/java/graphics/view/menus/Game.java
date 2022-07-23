@@ -23,9 +23,6 @@ public class Game extends Pane {
         this.getChildren().add(TileMenu.getInstance());
 
         //ANIMATION
-        ParallelTransition start = AnimatedPane.getStartAnimation(this);
-        ParallelTransition end = AnimatedPane.getEndAnimation(this);
-        start.play();
         this.getChildren().add(UnitMenu.getInstance());
 
     }

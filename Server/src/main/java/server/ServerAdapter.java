@@ -226,6 +226,8 @@ public class ServerAdapter {
         }
 
         GameMenuController.updateInstance(civilizations);
+        GameMenuController.getInstance().nextCivilization();
+
         LobbyController.closeLobbyBeforeGame(gameLobby);
 
         for (String playerUsername : gameLobby.getPlayerUsernames()) {

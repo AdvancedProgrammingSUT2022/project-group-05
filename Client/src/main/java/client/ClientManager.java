@@ -84,6 +84,9 @@ public class ClientManager{
                 ((MainPanel) node).updatePanel();
             }
         }
+    }
+
+    public void updateAll() {
         if (getMainScene().getRoot() instanceof Game && GameMenuController.getInstance().getCurrentCivilizationController()
                 .getCivilization().getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())) {
             Client.send("sending");
