@@ -32,6 +32,7 @@ public enum Terrain{
     private final ImagePattern texture;
 
     Terrain(int food, int gold, int production, int combatBoost, int movementCost, ImagePattern texture) {
+        System.out.println("food");
         this.food = food;
         this.gold = gold;
         this.production = production;

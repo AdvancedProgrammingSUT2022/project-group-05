@@ -1,7 +1,8 @@
 package client;
 
 import com.google.gson.Gson;
-import controller.GameData;
+import controller.GameMenuController;
+import controller.GameObjectData;
 import controller.UnitController;
 import graphics.view.gameContents.MainPanel;
 import graphics.view.gameContents.MapFX;
@@ -82,6 +83,11 @@ public class ClientManager{
             if (node instanceof MainPanel) {
                 ((MainPanel) node).updatePanel();
             }
+        }
+        if (getMainScene().getRoot() instanceof Game && GameMenuController.getInstance().getCurrentCivilizationController()
+                .getCivilization().getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())) {
+            Client.send("sending");
+            Client.sendObject(GameObjectData.getInstance());
         }
     }
 

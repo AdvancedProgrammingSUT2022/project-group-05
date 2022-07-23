@@ -56,7 +56,7 @@ public class Tile implements Serializable {
         this.fromLeft = fromLeftFinder(xPlace, yPlace, sizeOfMap);
 
         this.setRoute(Route.NO_ROUTE);
-        this.setTerrain(Terrain.NO_TERRAIN);
+//        this.setTerrain(Terrain.NO_TERRAIN);
         this.setFeature(Feature.NO_FEATURE);
         this.setResource(Resource.NO_RESOURCE);
         this.setImprovement(Improvement.NO_IMPROVEMENT);

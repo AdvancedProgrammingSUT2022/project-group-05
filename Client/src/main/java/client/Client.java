@@ -7,9 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 
@@ -18,6 +16,8 @@ public class Client extends Application {
     private static Socket socket;
     private static DataInputStream dataInputStream;
     private static DataOutputStream dataOutputStream;
+    private static ObjectOutputStream objectOutputStream;
+    private static ObjectInputStream objectInputStream;
     private static Socket listener;
 
     public static boolean connect(String HOST, int SERVER_PORT) {
@@ -37,9 +37,7 @@ public class Client extends Application {
 
     public static void listerForUpdates(String HOST, int SERVER_PORT) throws IOException { // always listen for incoming messages from server
         listener = new Socket(HOST, SERVER_PORT);
-        DataInputStream dataInputStream = new DataInputStream(listener.getInputStream());
-        DataOutputStream dataOutputStream = new DataOutputStream(listener.getOutputStream());
-        ClientThread clientThread = new ClientThread(dataInputStream, dataOutputStream);
+        ClientThread clientThread = new ClientThread(listener);
         clientThread.start();
     }
 
@@ -54,6 +52,16 @@ public class Client extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void sendObject(Object object) {
+        try {
+            if (objectOutputStream == null) objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(object);
+            objectOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -79,6 +87,7 @@ public class Client extends Application {
         int SERVER_PORT = 8000;
 
         if (connect(HOST, SERVER_PORT)) {
+            System.out.println("connected");
             launch();
         } else {
             System.out.println("can't connect to server");

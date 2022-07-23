@@ -13,13 +13,14 @@ import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
 import static view.enums.Entity.*;
 
-public class GameMenuController {
+public class GameMenuController implements Serializable {
     //FIELDS
     private int civilizationCount;
     private ArrayList<CivilizationController> civilizationControllers = new ArrayList<>();
@@ -105,11 +106,11 @@ public class GameMenuController {
         UnitController.updateInstance(null); // deselect unit in new turn
 
         //TODO resolve autosave and required actions comments in this method
-        //autoSaving
-        /*if (autoSave) {
-            Map.getInstance().save();
-            this.currentCivilizationController.getCivilization().save();
-        }*/
+//        //autoSaving
+//        if (autoSave) {
+//            Map.getInstance().save();
+//            this.currentCivilizationController.getCivilization().save();
+//        }
 
         return this.whoseTurnIsIt();
     }
@@ -827,5 +828,21 @@ public class GameMenuController {
         }
 
         return result;
+    }
+
+    public ArrayList<String> getPlayerUsernames() {
+        ArrayList<String> playerUsernames = new ArrayList<>();
+        for (Civilization civilization : getCivilizations()) {
+            playerUsernames.add(civilization.getPlayer().getUsername());
+        }
+        return playerUsernames;
+    }
+
+    public Civilization getCivilizationByUsername(String username) {
+        for (Civilization civilization : this.getCivilizations()) {
+            if (civilization.getPlayer().getUsername().equals(username)) return civilization;
+        }
+
+        return null;
     }
 }

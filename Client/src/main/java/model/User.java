@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -30,6 +32,16 @@ public class User implements Serializable {
         invitingFriends.add(invitingFriendUsername);
     }
 
+    public String getFriendsJson() {
+        Gson gson = new Gson();
+        return gson.toJson(friends);
+    }
+
+    public String getInvitingFriendsJson() {
+        Gson gson = new Gson();
+        return gson.toJson(invitingFriends);
+    }
+
     //SETTERS
     public void setUsername(String username) {
         this.username = username;
@@ -53,6 +65,10 @@ public class User implements Serializable {
 
     public void setFriends(ArrayList<String> friends) {
         this.friends = friends;
+    }
+
+    public void setInvitingFriends(ArrayList<String> invitingFriends) {
+        this.invitingFriends = invitingFriends;
     }
 
     //GETTERS

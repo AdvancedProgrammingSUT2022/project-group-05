@@ -1,18 +1,27 @@
 package client;
 
 import com.google.gson.Gson;
+import controller.GameMenuController;
+import controller.GameObjectData;
+import graphics.view.menus.Game;
+import javafx.application.Platform;
 import model.Lobby;
+import model.map.Map;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.*;
+import java.net.Socket;
 
 public class ClientThread extends Thread { // This class is used for receiving data from server
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
+    private Socket listener;
 
-    public ClientThread(DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
-        this.dataInputStream = dataInputStream;
-        this.dataOutputStream = dataOutputStream;
+    public ClientThread(Socket listener) throws IOException {
+        this.listener = listener;
+        this.dataInputStream = new DataInputStream(listener.getInputStream());
+        this.dataOutputStream = new DataOutputStream(listener.getOutputStream());
     }
 
     @Override
@@ -20,8 +29,25 @@ public class ClientThread extends Thread { // This class is used for receiving d
         while (true) {
             try {
                 String input = dataInputStream.readUTF();
-                Request request = Request.convertFromJson(input);
-                this.handleRequest(request);
+                System.out.println(input + " is received");
+                if (input.equals("sending")) {
+                    if (objectInputStream == null)
+                        objectInputStream = new ObjectInputStream(listener.getInputStream());
+                    GameObjectData gameObjectData = (GameObjectData) objectInputStream.readObject();
+                    GameMenuController.updateInstance(gameObjectData.getGameMenuController());
+                    Map.updateInstance(gameObjectData.getMap());
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("in runnable");
+                            ClientManager.getInstance().setPane(new Game(GameMenuController.getInstance()
+                                .getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername())));
+                        }
+                    });
+                } else if (input != null){
+                    Request request = Request.convertFromJson(input);
+                    this.handleRequest(request);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
