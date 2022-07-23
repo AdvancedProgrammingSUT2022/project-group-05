@@ -40,8 +40,8 @@ public class Civilization implements Serializable {
     private int happiness;
     private int baseHappiness;
 
-    private final ResourceList resourceList;
-    private final ResearchTree researchTree;
+    private ResourceList resourceList;
+    private ResearchTree researchTree;
 
     private FogOfWarStates[][] fogOfWar;
 
@@ -127,6 +127,17 @@ public class Civilization implements Serializable {
         this.cities.remove(city);
     }
 
+    public void setResourceList(ResourceList resourceList) {
+        this.resourceList = resourceList;
+    }
+
+    public void setResearchTree(ResearchTree researchTree) {
+        this.researchTree = researchTree;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
 
     //GETTERS
     public User getPlayer() {

@@ -7,7 +7,9 @@ import model.game.City;
 import model.game.Civilization;
 import model.improvement.Improvement;
 import model.map.Map;
+import model.research.ResearchTree;
 import model.resource.Resource;
+import model.resource.ResourceList;
 import model.tile.Feature;
 import model.tile.Route;
 import model.tile.Terrain;
@@ -63,8 +65,17 @@ public class GameData{
 
     public static String writeCivilization(Civilization civilization) {
 
-        return new Gson().toJson(civilization.getPlayer()) + "----" +
-                civilization.getColor() + "\n";
+        return  new Gson().toJson(civilization.getPlayer()) + "----" +
+                civilization.getColor() + "----" +
+                civilization.getGold() + "----" +
+                civilization.getProduction() + "----" +
+                civilization.getBaseProduction() + "----" +
+                civilization.getResearchPoint() + "----" +
+                civilization.getBaseResearchPoint() + "----" +
+                civilization.getHappiness() + "----" +
+                civilization.getBaseHappiness() + "----" +
+                new Gson().toJson(civilization.getResourceList()) + "----" +
+                new Gson().toJson(civilization.getResearchTree()) + "\n";
     }
 
     public static String writeCity(City city) {
@@ -217,7 +228,33 @@ public class GameData{
     public static Civilization initializeCivilization(String civilizationData) {
         String[] split = civilizationData.split("----");
 
-        return new Civilization(new Gson().fromJson(split[0], User.class), Integer.parseInt(split[1]));
+        /*
+        return  new Gson().toJson(civilization.getPlayer()) + "----" +
+                civilization.getColor() + "----" +
+                civilization.getGold() + "----" +
+                civilization.getProduction() + "----" +
+                civilization.getBaseProduction() + "----" +
+                civilization.getResearchPoint() + "----" +
+                civilization.getBaseResearchPoint() + "----" +
+                civilization.getHappiness() + "----" +
+                civilization.getBaseHappiness() + "----" +
+                new Gson().toJson(civilization.getResourceList()) + "----" +
+                new Gson().toJson(civilization.getResearchTree()) + "\n";
+         */
+
+        Civilization civilization = new Civilization(new Gson().fromJson(split[0], User.class), Integer.parseInt(split[1]));
+        civilization.setGold(Integer.parseInt(split[2]));
+        civilization.setProduction(Integer.parseInt(split[3]));
+        civilization.setBaseProduction(Integer.parseInt(split[4]));
+        civilization.setResearchPoint(Integer.parseInt(split[5]));
+        civilization.setBaseResearchPoint(Integer.parseInt(split[6]));
+        civilization.setHappiness(Integer.parseInt(split[7]));
+        civilization.setBaseHappiness(Integer.parseInt(split[8]));
+
+        civilization.setResourceList(new Gson().fromJson(split[9], ResourceList.class));
+        civilization.setResearchTree(new Gson().fromJson(split[10], ResearchTree.class));
+
+        return civilization;
     }
 
     //INITIALIZE CITIES
