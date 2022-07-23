@@ -1,11 +1,11 @@
 package server;
 
+import controller.GameMenuController;
+import controller.GameObjectData;
 import controller.UserDatabaseController;
-import model.User;
+import model.map.Map;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class ServerThread extends Thread {
@@ -13,6 +13,8 @@ public class ServerThread extends Thread {
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
     private String username;
 
     public ServerThread(Socket socket) throws IOException {
@@ -26,20 +28,38 @@ public class ServerThread extends Thread {
         try {
             while (true) {
                 String input = dataInputStream.readUTF();
-                Request request = Request.convertFromJson(input);
-                Response response = handleRequest(request);
-                if (request.getAction().equals("login") && response.getMessage().equals("login successful")) {
-                    this.username = UserDatabaseController.getUserByUsername((String) request.getParams().get("username")).getUsername();
-                    ServerAdapter.sendUpdateForScoreBoard();
+                if (input.equals("sending")) {
+                    Response response = new Response();
+                    response.setMessage("OK");
+                    this.send(response.convertToJson());
+                    if (objectInputStream == null)
+                        objectInputStream = new ObjectInputStream(socket.getInputStream());
+                    GameObjectData gameObjectData = (GameObjectData) objectInputStream.readObject();
+                    GameMenuController.updateInstance(gameObjectData.getGameMenuController());
+                    Map.updateInstance(gameObjectData.getMap());
+                    for (String playerUsername : GameMenuController.getInstance().getPlayerUsernames()) {
+                        ServerThread serverThread = ServerManager.getInstance().getUserListenerServerThread(playerUsername);
+                        serverThread.send("sending");
+                        serverThread.sendObject(GameObjectData.getInstance());
+                    }
+                } else {
+                    Request request = Request.convertFromJson(input);
+                    Response response = handleRequest(request);
+                    if (request.getAction().equals("login") && response.getMessage().equals("login successful")) {
+                        this.username = UserDatabaseController.getUserByUsername((String) request.getParams().get("username")).getUsername();
+                        ServerAdapter.sendUpdateForScoreBoard();
+                    }
+                    String responseJson = response.convertToJson();
+                    this.send(responseJson);
                 }
-                String responseJson = response.convertToJson();
-                this.send(responseJson);
             }
         } catch (IOException e) {
             System.out.println("client with username " + username + " disconnected");
 
             this.username = null;
             ServerManager.getInstance().removeServerThread(this);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -137,6 +157,17 @@ public class ServerThread extends Thread {
             this.dataOutputStream.flush();
         } catch (IOException e) {
             this.username = null;
+            e.printStackTrace();
+        }
+    }
+
+    public void sendObject(Object object) {
+        try {
+
+            if (this.objectOutputStream == null) this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            this.objectOutputStream.writeObject(object);
+            this.objectOutputStream.flush();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
