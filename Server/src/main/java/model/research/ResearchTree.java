@@ -104,7 +104,7 @@ public class ResearchTree implements Serializable {
     }
 
     //GETTER
-    private ResearchNode getResearch(Research research) {
+    public ResearchNode getResearch(Research research) {
         return getResearchFromHead(research, root);
     }
 

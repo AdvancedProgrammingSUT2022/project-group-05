@@ -9,7 +9,6 @@ import graphics.view.popUp.CheatCode;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Setting;
 import graphics.view.popUp.research.ResearchPanel;
-import graphics.view.popUp.research.TechnologyTreeMap;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -18,9 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.game.Civilization;
 
-//TODO add functions and datas
+//TODO add functions and data's
 
 public class MainPanel extends Pane {
+    Civilization civilization;
+
     private Rectangle background;
     private ButtonOne setting;
     private ButtonOne researchPanel;
@@ -32,15 +33,15 @@ public class MainPanel extends Pane {
     private ButtonOne endTurn;
 
     public MainPanel (Civilization civilization) {
-
+        this.civilization = civilization;
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
 
         background = new Rectangle(450, 110);
         background.setFill(Color.WHITE);
         this.getChildren().add(background);
 
-        //TODO add year
-        year = new LabelTwo("YEAR", StaticFonts.segoeLoad(10), Pos.CENTER,
+
+        year = new LabelTwo("YEAR : " + GameMenuController.getInstance().getCurrentYear(), StaticFonts.segoeLoad(10), Pos.CENTER,
                 35, 15, 70, 30, this);
         gold = new LabelTwo("GOLD : " + civilization.getGold(), StaticFonts.segoeLoad(10), Pos.CENTER,
                 115, 15, 90, 30, this);
@@ -89,7 +90,7 @@ public class MainPanel extends Pane {
         this.setLayoutY(20);
     }
 
-    public void updatePanel (Civilization civilization) {
+    public void updatePanel () {
         gold.changeText("GOLD : " + civilization.getGold());
         happiness.changeText("HAPPINESS : " + civilization.getHappiness());
         research.changeText("RESEARCH : " + civilization.getResearchTree().getCurrentResearch() + " "
