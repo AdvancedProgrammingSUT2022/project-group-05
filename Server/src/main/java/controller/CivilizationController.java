@@ -4,9 +4,10 @@ import model.game.City;
 import model.game.Civilization;
 import model.unit.Unit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CivilizationController {
+public class CivilizationController implements Serializable {
     private Civilization civilization;
     private boolean hasRequiredAction;
 

@@ -139,7 +139,7 @@ public class UnitController{
             this.setDefenceBonusInFortifyState(0);
             this.unit.garrison();
 
-            this.unit.getTile().getCity().garrisonUnit((Soldier) this.unit);
+            this.unit.getTile().getCity().garrisonUnit();
             return Responses.UNIT_GARRISONED.getResponse();
         }
         return Responses.ALREADY_GARRISONED.getResponse();

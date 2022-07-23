@@ -13,13 +13,14 @@ import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
 import static view.enums.Entity.*;
 
-public class GameMenuController {
+public class GameMenuController implements Serializable {
     //FIELDS
     private int civilizationCount;
     private ArrayList<CivilizationController> civilizationControllers = new ArrayList<>();
@@ -64,6 +65,10 @@ public class GameMenuController {
     }
     // end of singleton design pattern
 
+    public int getCurrentYear() {
+        return this.currentYear;
+    }
+
     public String getRandomCityName() {
         Collections.shuffle(this.cityNames);
         String cityName = this.cityNames.get(0);
@@ -87,11 +92,11 @@ public class GameMenuController {
         CityController.updateInstance(null); // deselect city in new turn
         UnitController.updateInstance(null); // deselect unit in new turn
 
-        //autoSaving
-        if (autoSave) {
-            Map.getInstance().save();
-            this.currentCivilizationController.getCivilization().save();
-        }
+//        //autoSaving
+//        if (autoSave) {
+//            Map.getInstance().save();
+//            this.currentCivilizationController.getCivilization().save();
+//        }
 
         return this.whoseTurnIsIt();
     }
@@ -809,5 +814,21 @@ public class GameMenuController {
         }
 
         return result;
+    }
+
+    public ArrayList<String> getPlayerUsernames() {
+        ArrayList<String> playerUsernames = new ArrayList<>();
+        for (Civilization civilization : getCivilizations()) {
+            playerUsernames.add(civilization.getPlayer().getUsername());
+        }
+        return playerUsernames;
+    }
+
+    public Civilization getCivilizationByUsername(String username) {
+        for (Civilization civilization : this.getCivilizations()) {
+            if (civilization.getPlayer().getUsername().equals(username)) return civilization;
+        }
+
+        return null;
     }
 }

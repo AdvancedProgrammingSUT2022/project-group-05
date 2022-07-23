@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.Gson;
 import controller.GameMenuController;
+import controller.GameObjectData;
 import controller.LobbyController;
 import controller.UserDatabaseController;
 import model.Lobby;
@@ -228,7 +229,9 @@ public class ServerAdapter {
         LobbyController.closeLobbyBeforeGame(gameLobby);
 
         for (String playerUsername : gameLobby.getPlayerUsernames()) {
-            //TODO sending game info
+            ServerThread serverThread = ServerManager.getInstance().getUserListenerServerThread(playerUsername);
+            serverThread.send("sending");
+            serverThread.sendObject(GameObjectData.getInstance());
         }
 
         return "game created successfully";
