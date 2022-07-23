@@ -31,6 +31,7 @@ public class ClientManager{
     private final HashMap<String, Pane> panes;
     private final Stage mainStage;
     private final Scene mainScene;
+    private EventHandler<MouseEvent> handler = MouseEvent::consume;
 
     private User mainUser;
 
@@ -146,7 +147,15 @@ public class ClientManager{
         mainScene.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                if (mainScene.getRoot() instanceof Game) update();
+                if (mainScene.getRoot() instanceof Game) {
+                    update();
+                    if (GameMenuController.getInstance().getCurrentCivilizationController().getCivilization()
+                            .getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())){
+                        mainScene.getRoot().removeEventFilter(MouseEvent.ANY, handler);
+                    } else {
+                        mainScene.getRoot().addEventFilter(MouseEvent.ANY, handler);
+                    }
+                }
             }
         });
     }
