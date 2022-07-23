@@ -1,4 +1,5 @@
 package graphics.view.gameContents;
+import client.ClientManager;
 import controller.GameMenuController;
 import graphics.objects.buttons.DisableButtonOne;
 import graphics.objects.labels.LabelOne;
@@ -216,8 +217,8 @@ public class TileFX extends Group {
     }
 
     public void updateTexture () {
-        FogOfWarStates fogOfWarStates = GameMenuController.getInstance().getCurrentCivilizationController().
-                getCivilization().getFogOfWar()[tile.getXPlace()][tile.getYPlace()];
+        FogOfWarStates fogOfWarStates = GameMenuController.getInstance().getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername())
+                .getFogOfWar()[tile.getXPlace()][tile.getYPlace()];
 
         String cityString = "";
         if (tile.hasCity()) {
