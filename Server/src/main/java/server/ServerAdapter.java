@@ -214,7 +214,7 @@ public class ServerAdapter {
     }
 
     public static String startGame(Request request) {
-        if (GameMenuController.getInstance() != null) return "there is another game is progress";
+        if (GameMenuController.getInstance() != null) return "error: there is another game is progress";
 
         Lobby gameLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
 
@@ -247,7 +247,8 @@ public class ServerAdapter {
     public static String getOnlineUsers(Request request) {
         ArrayList<String> onlineUsers = new ArrayList<>();
         for (ServerThread serverThread : ServerManager.getInstance().getServerThreads()) {
-            onlineUsers.add(serverThread.getUsername());
+            if (serverThread.isAlive())
+                onlineUsers.add(serverThread.getUsername());
         }
         return new Gson().toJson(onlineUsers);
     }
@@ -264,7 +265,8 @@ public class ServerAdapter {
 
     /////////////////////////////
     public static void sendUpdateForScoreBoard() {
-        for (ServerThread serverThread : ServerManager.getInstance().getServerThreads()) {
+        for (int i = 0; i < ServerManager.getInstance().getServerThreads().size(); i++) {
+            ServerThread serverThread = ServerManager.getInstance().getServerThreads().get(i);
             if (serverThread.getUsername() == null) {
                 Request request = new Request("updateScoreboard");
                 serverThread.send(request.convertToJson());

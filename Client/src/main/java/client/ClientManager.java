@@ -77,7 +77,7 @@ public class ClientManager{
         MapFX.getInstance().updateMapTextures();
         if (UnitController.getInstance() != null) {
             UnitMenu.getInstance().update();
-            UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
+            //UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
         }
         for (Node node : ((Pane) mainScene.getRoot()).getChildren()) {
             if (node instanceof MainPanel) {

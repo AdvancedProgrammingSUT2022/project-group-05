@@ -279,6 +279,23 @@ public class UnitMenu extends Pane{
             }
         });
 
+        attackCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                UnitMenu.this.update();
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no target selected"));
+                    return;
+                }
+                String response = unitController.unitAttack(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
+                if (response.startsWith("error")) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
+            }
+        });
+
         conquerCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -409,13 +426,7 @@ public class UnitMenu extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 UnitMenu.this.update();
-                boolean canRoad = false ;
-                boolean canRail = false;
-                if (unitController.getUnit().getCivilization().getResearchTree().isResearchDone(Route.ROAD.getNeededResearch()))
-                    canRoad = true;
-                if (unitController.getUnit().getCivilization().getResearchTree().isResearchDone(Route.RAIL.getNeededResearch()))
-                    canRail = true;
-                RoutePanel routePanel = new RoutePanel(canRoad, canRail);
+                RoutePanel routePanel = new RoutePanel();
                 routePanel.road.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -444,7 +455,7 @@ public class UnitMenu extends Pane{
 
 
 
-        remove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        removeFeature.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 UnitMenu.this.update();
@@ -474,8 +485,17 @@ public class UnitMenu extends Pane{
                             new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
                         }
                         break;
-
+                    default:
+                        new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no removable feature found"));
+                        break;
                 }
+            }
+        });
+
+        remove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                new PopUp((Pane) UnitMenu.this.getParent(), new Successful("removed"));
             }
         });
 
@@ -510,6 +530,7 @@ public class UnitMenu extends Pane{
             @Override
             public void handle(MouseEvent event) {
                 UnitMenu.getInstance().setVisible(false);
+                System.out.println(UnitMenu.getInstance().isVisible());
             }
         });
 
