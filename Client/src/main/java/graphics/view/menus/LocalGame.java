@@ -8,6 +8,8 @@ import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.gameContents.MapFX;
+import javafx.animation.ParallelTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -59,27 +61,44 @@ public class LocalGame extends Pane {
         back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 960, 1000, 100, 50, this);
 
+        //ANIMATION
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
+
         createGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //Debugging purposes
-                Map.updateInstance(10);
-                Civilization civilization1 = new Civilization(ClientManager.getInstance().getMainUser(), 0);
-                Civilization civilization2 = new Civilization(ClientManager.getUserByUsername("sam"), 1);
-                ArrayList<Civilization> civilizations = new ArrayList<>();
-                civilizations.add(civilization1);
-                civilizations.add(civilization2);
-                GameMenuController.updateInstance(2, civilizations);
-                ClientManager.getInstance().setPane(new Game(civilization1));
-                GameMenuController.getInstance().nextCivilization();
-                MapFX.getInstance().updateMapTextures();
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //Debugging purposes
+                        Map.updateInstance(10);
+                        Civilization civilization1 = new Civilization(ClientManager.getInstance().getMainUser(), 0);
+                        Civilization civilization2 = new Civilization(ClientManager.getUserByUsername("sam"), 1);
+                        ArrayList<Civilization> civilizations = new ArrayList<>();
+                        civilizations.add(civilization1);
+                        civilizations.add(civilization2);
+                        GameMenuController.updateInstance(2, civilizations);
+                        ClientManager.getInstance().setPane(new Game(civilization1));
+                        GameMenuController.getInstance().nextCivilization();
+                        MapFX.getInstance().updateMapTextures();
+                    }
+                });
+                end.play();
             }
         });
 
         back.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new MainMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new MainMenu());
+                    }
+                });
+                end.play();
             }
         });
 

@@ -7,6 +7,8 @@ import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
+import javafx.animation.ParallelTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +41,10 @@ public class RegisterMenu extends Pane{
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft, fromTop + 400, 100, 50, this);
 
+        //ANIMATION
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
         //FUNCTIONS
         signUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -61,14 +67,26 @@ public class RegisterMenu extends Pane{
                 Gson gson = new Gson();
                 User user = gson.fromJson(userJson, User.class);
 
-                ClientManager.getInstance().setMainUser(user);
-                ClientManager.getInstance().setPane(new MainMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setMainUser(user);
+                        ClientManager.getInstance().setPane(new MainMenu());
+                    }
+                });
+                end.play();
             }
         });
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new LoginMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new LoginMenu());
+                    }
+                });
+                end.play();
             }
         });
     }

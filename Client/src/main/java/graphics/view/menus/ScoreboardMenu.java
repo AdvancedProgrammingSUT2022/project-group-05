@@ -6,6 +6,8 @@ import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
+import javafx.animation.ParallelTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -75,11 +77,22 @@ public class ScoreboardMenu extends Pane{
                     fromLeft + 1120, 50 * i + 100, 200, 30, this);
         }
 
+        //ANIMATION
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
+
         //FUNCTIONS
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new MainMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new MainMenu());
+                    }
+                });
+                end.play();
             }
         });
     }
