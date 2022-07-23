@@ -56,8 +56,9 @@ public class LabelOne extends Pane {
     public void changeText(String text) {
         Label label = (Label) this.getChildren().get(1);
         label.setText(text);
+    }
 
-    public void setText(String name) {
+    public void setText (String name) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

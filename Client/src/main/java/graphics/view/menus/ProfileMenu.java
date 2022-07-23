@@ -62,9 +62,6 @@ public class ProfileMenu extends Pane{
                 fromLeft, fromTop + 450, 100, 50, this);
 
         //ANIMATION
-        ParallelTransition start = AnimatedPane.getStartAnimation(this);
-        ParallelTransition end = AnimatedPane.getEndAnimation(this);
-        start.play();
 
         //Friends
         this.setFriendsControl();
@@ -77,6 +74,10 @@ public class ProfileMenu extends Pane{
                 150, fromTop + 400, 200, 30, this);
         ButtonOne search = new ButtonOne("search", StaticFonts.segoeLoad(15), Pos.CENTER,
                 150, fromTop + 450, 100, 50, this);
+
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {

@@ -5,12 +5,15 @@ import com.google.gson.Gson;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.menus.AnimatedPane;
 import graphics.view.menus.MainMenu;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
+import javafx.animation.ParallelTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
@@ -27,6 +30,8 @@ public class MultiplayerGame extends Pane{
     private ButtonOne hostLobbyButton;
     private ButtonOne backButton;
 
+    ParallelTransition end;
+
     public MultiplayerGame() {
 
         this.setScaleX(0.5);
@@ -37,6 +42,10 @@ public class MultiplayerGame extends Pane{
 
         this.setHostLobbyButton();
         this.setBackButton();
+
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        end = AnimatedPane.getEndAnimation(this);
+        start.play();
     }
 
     private void setInvitationsTitle() {
@@ -95,7 +104,13 @@ public class MultiplayerGame extends Pane{
         this.backButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new MainMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new MainMenu());
+                    }
+                });
+                end.play();
             }
         });
     }
