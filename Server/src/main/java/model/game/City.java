@@ -6,8 +6,6 @@ import model.building.BuildingList;
 import model.map.Map;
 import model.tile.Tile;
 import model.unit.Unit;
-import model.unit.civilian.Civilian;
-import model.unit.soldier.Soldier;
 import utility.RandomGenerator;
 
 import java.io.Serializable;
@@ -39,9 +37,6 @@ public class City implements Serializable {
     private int totalCitizenCount;
     private int joblessCitizenCount;
 
-    private boolean hasGarrisonedUnit;
-    private boolean hasCivilianUnit;
-
     public City(String name, Tile center, Civilization civilization) {
         this.name = name;
         this.center = center;
@@ -50,7 +45,6 @@ public class City implements Serializable {
         this.setHealth(20);
         this.setDefenceStrength(10); // TODO set later
         this.setDefenceBonusPercentage(center.getCombatBoost());
-        this.hasGarrisonedUnit = false;
 
         this.food = 0;
         this.annexTime = 0;
@@ -128,20 +122,13 @@ public class City implements Serializable {
         return false;
     }
 
-    public void garrisonUnit(Soldier soldier) {
-        this.hasGarrisonedUnit = true;
+    public void garrisonUnit() {
         this.setDefenceBonusPercentage(this.getDefenceBonusPercentage() + 33);
     }
 
     public void removeGarrisonedUnit() {
-        this.hasGarrisonedUnit = false;
         this.setDefenceBonusPercentage(this.getDefenceBonusPercentage() - 33);
     }
-
-    public void stayCivilianUnitInCity(Civilian civilian) {
-        hasCivilianUnit = true;
-        center.setCivilian(civilian);
-   }
 
     public void applyNewTurnChanges() {
 
@@ -238,7 +225,7 @@ public class City implements Serializable {
     }
 
     public boolean hasGarrisonedUnit() {
-        return hasGarrisonedUnit;
+        return this.center.hasSoldier();
     }
 
     public int getDefenceStrength() {
@@ -250,7 +237,7 @@ public class City implements Serializable {
     }
 
     public boolean hasCivilianUnit() {
-        return hasCivilianUnit;
+        return this.getCenter().hasCivilian();
     }
 
     public int getFood() {
@@ -262,7 +249,13 @@ public class City implements Serializable {
     }
 
     //SETTER
+    public void setBuildingList(BuildingList buildingList) {
+        this.buildingList = buildingList;
+    }
 
+    public void setTotalCitizenCount(int totalCitizenCount) {
+        this.totalCitizenCount = totalCitizenCount;
+    }
 
     public void setFood(int food) {
         this.food = food;

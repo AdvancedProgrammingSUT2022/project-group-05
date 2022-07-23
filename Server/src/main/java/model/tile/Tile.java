@@ -37,7 +37,7 @@ public class Tile implements Serializable {
     private final boolean[] rivers;
 
     private boolean isRepaired;
-    private final ProjectManager projectManager;
+    private ProjectManager projectManager;
 
     private int food;
     private int gold;
@@ -82,6 +82,10 @@ public class Tile implements Serializable {
     }
 
     //Project stuff
+    public void setProjectManager(ProjectManager projectManager) {
+        this.projectManager = projectManager;
+    }
+
     public boolean hasProject() {
         return this.projectManager.hasProject();
     }

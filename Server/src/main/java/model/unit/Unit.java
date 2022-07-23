@@ -176,6 +176,9 @@ public abstract class Unit implements Serializable {
         this.startingCity = startingCity;
     }
 
+    public void setUnitState(UnitState unitState) {
+        this.unitState = unitState;
+    }
     //GETTERS
     public int getTemporaryDefenceBonusPercentage() {
         return temporaryDefenceBonusPercentage;
