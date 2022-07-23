@@ -1,7 +1,9 @@
 package client;
 
 import com.google.gson.Gson;
+import controller.GameData;
 import controller.UnitController;
+import graphics.view.gameContents.MainPanel;
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.Game;
@@ -11,6 +13,7 @@ import graphics.view.menus.multiplayer.LobbyHost;
 import graphics.view.menus.multiplayer.MultiplayerGame;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -35,24 +38,22 @@ public class ClientManager{
             ((ScoreboardMenu) this.getMainScene().getRoot()).updateScoreBoard();
     }
 
-    public void addPane(String name, Pane pane)
-    {
+    public void addPane(String name, Pane pane) {
         panes.put(name, pane);
     }
 
-    public synchronized void setPane(String name)
-    {
+    public synchronized void setPane(String name) {
         mainScene.setRoot(panes.get(name));
         mainStage.setScene(mainScene);
     }
-    public void setPane(Pane pane)
-    {
+
+    public void setPane(Pane pane) {
         mainScene.setRoot(pane);
         mainStage.setScene(mainScene);
     }
 
     public void setMainUser(User mainUser) {
-        this.mainUser =  mainUser;
+        this.mainUser = mainUser;
     }
 
     public void updateMainUser() {
@@ -74,7 +75,13 @@ public class ClientManager{
     public void update() {
         MapFX.getInstance().updateMapTextures();
         if (UnitController.getInstance() != null) {
+            UnitMenu.getInstance().update();
             UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
+        }
+        for (Node node : ((Pane) mainScene.getRoot()).getChildren()) {
+            if (node instanceof MainPanel) {
+                ((MainPanel) node).updatePanel();
+            }
         }
     }
 
@@ -88,7 +95,7 @@ public class ClientManager{
 
     public void updateLobbyInvites() {
         if (this.getMainScene().getRoot() instanceof MultiplayerGame) {
-            Platform.runLater(new Runnable() {
+            Platform.runLater(new Runnable(){
                 @Override
                 public void run() {
                     ClientManager.this.setPane(new MultiplayerGame());
@@ -103,13 +110,11 @@ public class ClientManager{
         return this.mainUser;
     }
 
-    public Scene getMainScene()
-    {
+    public Scene getMainScene() {
         return this.mainScene;
     }
 
-    public Stage getMainStage()
-    {
+    public Stage getMainStage() {
         return this.mainStage;
     }
 
@@ -119,8 +124,8 @@ public class ClientManager{
 
     //SINGLETON
     private static ClientManager instance;
-    private ClientManager(Stage mainStage, Scene mainScene)
-    {
+
+    private ClientManager(Stage mainStage, Scene mainScene) {
         this.mainUser = null;
 
         this.invitedLobbies = new ArrayList<>();
@@ -136,12 +141,12 @@ public class ClientManager{
             }
         });
     }
-    public static ClientManager getInstance()
-    {
+
+    public static ClientManager getInstance() {
         return instance;
     }
-    public static void updateInstance(Stage mainStage, Scene mainScene)
-    {
+
+    public static void updateInstance(Stage mainStage, Scene mainScene) {
         instance = new ClientManager(mainStage, mainScene);
     }
 
@@ -153,7 +158,7 @@ public class ClientManager{
     }
 
     public void closeLobby() {
-        Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable(){
             @Override
             public void run() {
                 ClientManager.getInstance().setPane(new MultiplayerGame());

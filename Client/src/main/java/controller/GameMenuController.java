@@ -64,6 +64,10 @@ public class GameMenuController {
     }
     // end of singleton design pattern
 
+    public int getCurrentYear() {
+        return this.currentYear;
+    }
+
     public String getRandomCityName() {
         Collections.shuffle(this.cityNames);
         String cityName = this.cityNames.get(0);
