@@ -1,6 +1,7 @@
 package controller;
 
 import model.building.Building;
+import model.building.BuildingList;
 import model.game.City;
 import model.map.Map;
 import model.tile.Tile;
@@ -45,7 +46,7 @@ public class CityController {
             if (newUnit.equals(this.city.getUnitInProgress())) { // building same unit that is being built
                 return Responses.UNIT_IS_ALREADY_BEING_BUILT.getResponse();
             }
-            if (!this.city.getCivilization().getResearchTree().isResearchDone(newUnit.getRequiredResearch())) { // check reserch
+            if (!this.city.getCivilization().getResearchTree().isResearchDone(newUnit.getRequiredResearch())) { // check research
                 return Responses.REQUIRED_RESEARCH_NOT_FOUND.getResponse();
             } else if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1)) {
                 return Responses.NOT_ENOUGH_RESOURCE.getResponse();
@@ -107,25 +108,41 @@ public class CityController {
         Unit newUnit = GenerateUnit.StringToUnit(this.city.getCivilization(), this.city.getCenter(), unitName);
         if (newUnit == null)
             return "error: there is no unit with this name";
+        if (newUnit.getCost() > this.city.getCivilization().getGold())
+            return "error: not enough gold";
+        if (!this.city.getCivilization().getResearchTree().isResearchDone(newUnit.getRequiredResearch()))
+            return "error: required research not found";
+        if (!this.city.getCivilization().getResourceList().hasEnough(newUnit.getRequiredResource(), 1))
+            return "error: not enough resources";
+
         newUnit.setStartingCity(this.city);
-        if (newUnit.getCost() > this.city.getCivilization().getGold()) {
-            return Responses.NOT_ENOUGH_GOLD.getResponse();
-        }
+
+        this.city.getCivilization().setGold(this.city.getCivilization().getGold() - newUnit.getCost());
         this.city.getCivilization().addUnit(newUnit);
         return Responses.UNIT_PURCHASED_SUCCESSFULLY.getResponse();
     }
 
     public String purchaseBuilding(String buildingName) {
         Building newBuilding = Building.find(buildingName);
-        if (newBuilding == null) {
+        if (newBuilding == null)
             return "error: there is no building with this name";
-        }
-        if (this.city.getBuildingList().hasBuilding(newBuilding)) {
+        if (this.city.getBuildingList().hasBuilding(newBuilding))
             return "error: already have this building in city";
-        }
-        if (newBuilding.getCost() > this.city.getCivilization().getGold()) {
-            return Responses.NOT_ENOUGH_GOLD.getResponse();
-        }
+        if (newBuilding.getCost() > this.city.getCivilization().getGold())
+            return "error: not enough gold";
+        if (!this.city.getCivilization().getResearchTree().isResearchDone(newBuilding.getResearchRequired()))
+            return "error: required research not found";
+        if (!this.city.getCivilization().getResourceList().hasEnough(newBuilding.getResourceNeeded(), 1))
+            return "error: not enough resources";
+        if (!this.city.getBuildingList().hasBuildings(newBuilding.getBuildingsNeeded()))
+            return "error: required buildings not found";
+
+        Building buildingInQueue = this.city.getBuildingFromQueue(newBuilding);
+        if (buildingInQueue != null) this.city.removeProductionFromQueue(buildingInQueue);
+        Building buildingInProgress = this.city.getBuildingInProgress();
+        if (newBuilding.equals(buildingInProgress)) this.city.setProductionInProgress(null);
+
+        this.city.getCivilization().setGold(this.city.getCivilization().getGold() - newBuilding.getCost());
         this.city.getBuildingList().addBuilding(newBuilding, this.city);
         return Responses.BUILDING_PURCHASED_SUCCESSFULLY.getResponse();
     }
