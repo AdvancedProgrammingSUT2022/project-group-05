@@ -9,6 +9,10 @@ import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.popUp.*;
 import graphics.view.popUp.Error;
+import graphics.view.popUp.PopUp;
+import graphics.view.popUp.Successful;
+import javafx.animation.ParallelTransition;
+import javafx.event.ActionEvent;
 import graphics.view.popUp.research.InvitingFriendsPane;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -57,6 +61,8 @@ public class ProfileMenu extends Pane{
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft, fromTop + 450, 100, 50, this);
 
+        //ANIMATION
+
         //Friends
         this.setFriendsControl();
         //invitingFriends
@@ -68,6 +74,10 @@ public class ProfileMenu extends Pane{
                 150, fromTop + 400, 200, 30, this);
         ButtonOne search = new ButtonOne("search", StaticFonts.segoeLoad(15), Pos.CENTER,
                 150, fromTop + 450, 100, 50, this);
+
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
 
         //FUNCTIONS
         changePassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -131,7 +141,13 @@ public class ProfileMenu extends Pane{
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new MainMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new MainMenu());
+                    }
+                });
+                end.play();
             }
         });
     }

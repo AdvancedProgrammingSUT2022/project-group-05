@@ -65,7 +65,7 @@ public class ClientManager{
         this.mainUser = getUserByUsername(mainUser.getUsername());
     }
 
-    public User getUserByUsername(String username) {
+    public static User getUserByUsername(String username) {
         Response getUserResponse = Client.send(ClientAdapter.getUser(username));
         String userJson = getUserResponse.getMessage();
         Gson gson = new Gson();

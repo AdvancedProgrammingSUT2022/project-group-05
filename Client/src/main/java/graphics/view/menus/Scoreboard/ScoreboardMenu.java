@@ -6,12 +6,15 @@ import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
+import graphics.view.menus.AnimatedPane;
 import graphics.view.menus.MainMenu;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Successful;
+import javafx.animation.ParallelTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
@@ -51,12 +54,23 @@ public class ScoreboardMenu extends Pane{
         back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft + 560, fromTop + 300, 100, 50, this);
 
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
+
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new MainMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new MainMenu());
+                    }
+                });
+                end.play();
             }
         });
+
     }
 
     public void updateScoreBoard(){

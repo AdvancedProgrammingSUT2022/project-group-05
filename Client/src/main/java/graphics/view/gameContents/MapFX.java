@@ -23,7 +23,7 @@ public class MapFX extends Pane {
         if (instance == null) {
             instance = new MapFX();
             int mapSize = Map.getInstance().getSizeOfMap();
-            for (int i = 0; i < mapSize; i++) {
+            for (int i = mapSize - 1; i >= 0; i--) {
                 for (int j = 0; j < mapSize; j++) {
                    tileFXES[i][j] =  new TileFX(instance, Map.getInstance().getTileFromMap(i, j));
                 }

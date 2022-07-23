@@ -8,6 +8,8 @@ import client.ClientManager;
 import graphics.view.menus.Scoreboard.ScoreboardMenu;
 import graphics.view.menus.multiplayer.MultiplayerGame;
 import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -55,55 +57,88 @@ public class MainMenu extends Pane{
         ButtonOne logout = new ButtonOne("LOGOUT", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft, fromTop + 600, 100, 50, this);
 
-
-        FadeTransition transition = new FadeTransition();
-        transition.setDuration(new Duration(2000));
-        transition.setNode(startGame);
-        transition.play();
-        transition.setFromValue(0.8);
-        transition.setToValue(0.1);
+        //ANIMATION
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
 
         //FUNCTIONS
         startGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new LocalGame());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new LocalGame());
+                    }
+                });
+                end.play();
             }
         });
         startMultiplayerGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new MultiplayerGame());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new MultiplayerGame());
+                    }
+                });
+                end.play();
             }
         });
         scoreBoard.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                try {
-                    ClientManager.getInstance().setPane(new ScoreboardMenu());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+                            ClientManager.getInstance().setPane(new ScoreboardMenu());
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                end.play();
             }
         });
         profile.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new ProfileMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new ProfileMenu());
+                    }
+                });
+                end.play();
             }
         });
         chat.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new ChatMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new ChatMenu());
+                    }
+                });
+                end.play();
             }
         });
         logout.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Client.send(ClientAdapter.userLoggedOut(ClientManager.getInstance().getMainUser().getUsername()));
-                ClientManager.getInstance().setMainUser(null);
-                ClientManager.getInstance().setPane(new LoginMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        Client.send(ClientAdapter.userLoggedOut(ClientManager.getInstance().getMainUser().getUsername()));
+                        ClientManager.getInstance().setMainUser(null);
+                        ClientManager.getInstance().setPane(new LoginMenu());
+                    }
+                });
+                end.play();
             }
         });
     }

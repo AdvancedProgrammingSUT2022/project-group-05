@@ -1,6 +1,7 @@
 package graphics.view.popUp;
 
 import graphics.statics.StaticColors;
+import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,20 +35,24 @@ public class PopUp extends Pane{
         this.getChildren().add(child);
         child.setLayoutX(960 - width/2);
         child.setLayoutY(540 - height/2);
+
+        FadeTransition start = new FadeTransition(new Duration(500), this);
+        start.setFromValue(0);
+        start.setToValue(1);
+        start.play();
     }
 
     private void exit() {
-        ScaleTransition toZero = new ScaleTransition(new Duration(500), this);
-        toZero.setToX(0);
-        toZero.setToY(0);
+        FadeTransition end = new FadeTransition(new Duration(500), this);
+        end.setToValue(0);
         Pane temp = this;
-        toZero.setOnFinished(new EventHandler<ActionEvent>() {
+        end.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 father.getChildren().remove(temp);
             }
         });
-        toZero.play();
+        end.play();
     }
 
 }

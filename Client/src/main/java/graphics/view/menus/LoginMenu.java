@@ -3,10 +3,15 @@ package graphics.view.menus;
 import com.google.gson.Gson;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.textFields.TextFieldOne;
+import graphics.statics.StaticColors;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -14,11 +19,17 @@ import javafx.scene.layout.Pane;
 import client.Client;
 import client.ClientAdapter;
 import client.Response;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.User;
+
 
 public class LoginMenu extends Pane{
     public LoginMenu () {
         Pane temp = this;
+
+
+
 
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
         int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2 - 100;
@@ -36,6 +47,12 @@ public class LoginMenu extends Pane{
         ButtonOne exit = new ButtonOne("EXIT", StaticFonts.segoeLoad(15), Pos.CENTER,
                 fromLeft, fromTop + 450, 100, 50, this);
 
+
+        //ANIMATION
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
+
         //FUNCTIONS
         login.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -50,24 +67,43 @@ public class LoginMenu extends Pane{
                     return;
                 }
 
-                Response getUserResponse = Client.send(ClientAdapter.getUser(usernameText));
-                String userJson = getUserResponse.getMessage();
-                Gson gson = new Gson();
-                User user = gson.fromJson(userJson, User.class);
-                ClientManager.getInstance().setMainUser(user);
-                ClientManager.getInstance().setPane(new MainMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        Response getUserResponse = Client.send(ClientAdapter.getUser(usernameText));
+                        String userJson = getUserResponse.getMessage();
+                        Gson gson = new Gson();
+                        User user = gson.fromJson(userJson, User.class);
+                        ClientManager.getInstance().setMainUser(user);
+                        ClientManager.getInstance().setPane(new MainMenu());
+                    }
+                });
+                end.play();
             }
         });
         signUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ClientManager.getInstance().setPane(new RegisterMenu());
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ClientManager.getInstance().setPane(new RegisterMenu());
+
+                    }
+                });
+                end.play();
             }
         });
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.exit(0);
+                end.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        System.exit(0);
+                    }
+                });
+                end.play();
             }
         });
     }

@@ -5,6 +5,7 @@ import controller.GameMenuController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
+import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.gameContents.MapFX;
@@ -19,50 +20,57 @@ import model.map.Map;
 
 import java.util.ArrayList;
 
-//TODO add functions
-
-public class LocalGame extends Pane {
-    int size = 2;
-    int players = 2;
-
+public class MultiplayerGame extends Pane {
     LabelOne title;
 
     ButtonTwo small;
     ButtonTwo medium;
     ButtonTwo big;
+    ButtonTwo huge;
 
-    ButtonTwo two;
-    ButtonTwo three;
-    ButtonTwo four;
+    TextFieldOne inviteText;
+    ButtonOne invite;
+
+    LabelOne firstPlayer;
+    LabelOne secondPlayer;
+    LabelOne thirdPlayer;
+    LabelOne fourthPlayer;
 
     ButtonOne createGame;
     ButtonOne back;
 
-    public LocalGame() {
-
-        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
-
-        title = new LabelOne("NEW LOCAL GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
-                fromLeft, 100, 600, 70, this);
+    public MultiplayerGame() {
+        title = new LabelOne("NEW MULTIPLAYER GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
+                960, 200, 1000, 70, this);
 
         small = new ButtonTwo("SMALL", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft - 270, 200, 400, 60, this);
+                500, 400, 400, 60, this);
         medium = new ButtonTwo("MEDIUM", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft - 270, 300, 400, 60, this);
+                500, 500, 400, 60, this);
         big = new ButtonTwo("BIG", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft - 270, 400, 400, 60, this);
+                500, 600, 400, 60, this);
+        huge = new ButtonTwo("HUGE", StaticFonts.segoeLoad(40), Pos.CENTER,
+                500, 700, 400, 60, this);
 
-        two = new ButtonTwo("2 PLAYERS", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft + 280, 200, 400, 60, this);
-        three = new ButtonTwo("3 PLAYERS", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft + 280, 300, 400, 60, this);
-        four = new ButtonTwo("4 PLAYERS", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft + 280, 400, 400, 60, this);
+        inviteText = new TextFieldOne("TYPE USERNAME", StaticFonts.segoeLoad(20), Pos.CENTER,
+                960, 500, 400, 40, this);
+        invite = new ButtonOne("INVITE", StaticFonts.segoeLoad(30), Pos.CENTER,
+                960, 600, 200, 60, this);
 
-        createGame = new ButtonOne("CREATE GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
-                fromLeft, 500, 600, 70, this);
+
+        firstPlayer = new LabelOne("YOU", StaticFonts.segoeLoad(40), Pos.CENTER,
+                1420, 400, 400, 60, this);
+        secondPlayer = new LabelOne("NO PLAYER", StaticFonts.segoeLoad(40), Pos.CENTER,
+                1420, 500, 400, 60, this);
+        thirdPlayer = new LabelOne("NO PLAYER", StaticFonts.segoeLoad(40), Pos.CENTER,
+                1420, 600, 400, 60, this);
+        fourthPlayer = new LabelOne("NO PLAYER", StaticFonts.segoeLoad(40), Pos.CENTER,
+                1420, 700, 400, 60, this);
+
+        createGame = new ButtonOne("START GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
+                960, 900, 600, 70, this);
         back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
-                fromLeft, 600, 100, 50, this);
+                960, 1000, 100, 50, this);
 
         //ANIMATION
         ParallelTransition start = AnimatedPane.getStartAnimation(this);
@@ -104,6 +112,5 @@ public class LocalGame extends Pane {
                 end.play();
             }
         });
-
     }
 }

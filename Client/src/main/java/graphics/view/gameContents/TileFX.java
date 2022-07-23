@@ -4,6 +4,8 @@ import graphics.objects.buttons.DisableButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import graphics.statics.StaticImages;
+import javafx.animation.FillTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -13,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.map.FogOfWarStates;
 import model.tile.Tile;
 
@@ -22,6 +25,7 @@ public class TileFX extends Group {
     private Polygon terrain;
     private Polygon feature;
     private Polygon[] rivers;
+    private Polygon upper;
 
     private LabelOne place;
     private LabelOne cityName;
@@ -35,6 +39,17 @@ public class TileFX extends Group {
     private Rectangle civilian;
     private Polygon city;
 
+    private FillTransition upperToNormal;
+    private FillTransition upperToFirst;
+    private FillTransition upperToSecond;
+
+    private FillTransition selectedToNormal;
+    private FillTransition selectedToFirst;
+    private FillTransition selectedToSecond;
+
+    TranslateTransition start;
+    TranslateTransition end;
+
     public TileFX(Pane pane, Tile tile) {
         this.tile = tile;
         int xPlace = tile.getXPlace();
@@ -44,6 +59,18 @@ public class TileFX extends Group {
 
         this.setLayoutX((xPlace + yPlace) * 300);
         this.setLayoutY((yPlace - xPlace) * 100);
+
+        upper = new Polygon(100, 0, 300, 0, 400, 100, 400, 110, 300, 210, 100, 210, 0, 110, 0, 100);
+        upper.setLayoutX(-200);
+        upper.setLayoutY(-100);
+        upper.setFill(Color.BLUE);
+        this.getChildren().add(upper);
+        upperToNormal = new FillTransition(new Duration(500), upper);
+        upperToNormal.setToValue(Color.BLUE);
+        upperToFirst = new FillTransition(new Duration(500), upper);
+        upperToFirst.setToValue(Color.GREEN);
+        upperToSecond = new FillTransition(new Duration(500), upper);
+        upperToSecond.setToValue(Color.RED);
 
         terrain = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         terrain.setLayoutX(-200);
@@ -110,6 +137,12 @@ public class TileFX extends Group {
         selected.setLayoutY(-100);
         this.getChildren().add(selected);
         selected.setFill(new Color(0, 0, 0, 0));
+        selectedToNormal = new FillTransition(new Duration(500), selected);
+        selectedToNormal.setToValue(Color.TRANSPARENT);
+        selectedToFirst = new FillTransition(new Duration(500), selected);
+        selectedToFirst.setToValue(new Color(0, 1, 0, 0.5));
+        selectedToSecond = new FillTransition(new Duration(500), selected);
+        selectedToSecond.setToValue(new Color(1, 0, 0, 0.5));
 
         front = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         front.setLayoutX(-200);
@@ -117,18 +150,27 @@ public class TileFX extends Group {
         this.getChildren().add(front);
         front.setFill(new Color(0, 0, 0, 0));
 
+        start = new TranslateTransition(new Duration(200), this);
+        start.setToY(-10);
 
+        end  = new TranslateTransition(new Duration(200), this);
+        end.setToY(0);
         //TILES EFFECTS
         front.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                front.setFill(new Color(0.2, 0, 0, 0.2));
+                //front.setFill(new Color(0.2, 0, 0, 0.2));
+                end.stop();
+                start.play();
             }
         });
         front.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                front.setFill(new Color(0, 0, 0, 0));
+                //front.setFill(new Color(0, 0, 0, 0));
+                if (TileFX.this.equals(MapFX.getInstance().getFirstSelectedTile()) || TileFX.this.equals(MapFX.getInstance().getSecondSelectedTile())) return;
+                start.stop();
+                end.play();
             }
         });
         front.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -210,14 +252,18 @@ public class TileFX extends Group {
     }
 
     public void setSelectedDisable () {
-        selected.setFill(new Color(0, 0, 0, 0));
+        selectedToNormal.play();
+        upperToNormal.play();
+        start.stop();
+        end.play();
     }
     public void setSelectedFirst() {
-        selected.setFill(new Color(0 ,0.5, 0, 0.3));
-
+        selectedToFirst.play();
+        upperToFirst.play();
     }
     public void setSelectedSecond() {
-        selected.setFill(new Color(0.5 ,0, 0, 0.3));
+        selectedToSecond.play();
+        upperToSecond.play();
     }
     public Tile getTile () {
         return this.tile;

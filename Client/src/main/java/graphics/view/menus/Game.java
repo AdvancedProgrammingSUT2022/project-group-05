@@ -4,6 +4,7 @@ import client.ClientManager;
 import graphics.view.gameContents.MainPanel;
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.TileMenu;
+import javafx.animation.ParallelTransition;
 import graphics.view.gameContents.UnitMenu;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -20,6 +21,11 @@ public class Game extends Pane {
         this.getChildren().add(MapFX.getInstance());
         this.getChildren().add(new MainPanel(civilization));
         this.getChildren().add(TileMenu.getInstance());
+
+        //ANIMATION
+        ParallelTransition start = AnimatedPane.getStartAnimation(this);
+        ParallelTransition end = AnimatedPane.getEndAnimation(this);
+        start.play();
         this.getChildren().add(UnitMenu.getInstance());
 
     }

@@ -58,7 +58,7 @@ public class LabelOne extends Pane {
         label.setText(text);
     }
 
-    public void setText(String name) {
+    public void setText (String name) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
