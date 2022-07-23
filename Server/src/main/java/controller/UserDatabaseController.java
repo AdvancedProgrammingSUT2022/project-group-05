@@ -2,6 +2,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.User;
+import net.bytebuddy.description.method.MethodDescription;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -90,10 +91,17 @@ public class UserDatabaseController {
 
     public static User getUserByUsername(String username) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
+        Gson gson = new Gson();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("username").equals(username)) {
                 HashMap<String, String> userData = users.get(i);
                 User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"), Integer.parseInt(userData.get("score")));
+                ArrayList<String> friends = gson.fromJson(userData.get("friends"), new TypeToken<List<String>>(){
+                }.getType());
+                ArrayList<String> invitingFriends = gson.fromJson(userData.get("invitingFriends"), new TypeToken<List<String>>(){
+                }.getType());
+                user.setFriends(friends);
+                user.setInvitingFriends(invitingFriends);
                 return user;
             }
         }
@@ -102,10 +110,17 @@ public class UserDatabaseController {
 
     public static User getUserByNickname(String nickname) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
+        Gson gson = new Gson();
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).get("nickname").equals(nickname)) {
                 HashMap<String, String> userData = users.get(i);
                 User user = new User(userData.get("username"), userData.get("nickname"), userData.get("password"), userData.get("image"), Integer.parseInt(userData.get("score")));
+                ArrayList<String> friends = gson.fromJson(userData.get("friends"),  new TypeToken<List<String>>() {
+                }.getType());
+                ArrayList<String> invitingFriends = gson.fromJson(userData.get("invitingFriends"), new TypeToken<List<String>>() {
+                }.getType());
+                user.setFriends(friends);
+                user.setInvitingFriends(invitingFriends);
                 return user;
             }
         }
@@ -131,16 +146,45 @@ public class UserDatabaseController {
 
     public static void addFriend(User user, String friendUsername) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
-        int userIndex = getUserIndexByUsername(friendUsername);
-        user.addFriend(users.get(userIndex).get("username"));
+        int userIndex = getUserIndexByUsername(user.getUsername());
+        ArrayList<String> friends = user.getFriends();
+        friends.add(friendUsername);
+        Gson gson = new Gson();
+        String friendsJson = gson.toJson(friends);
+        users.get(userIndex).put("friends", friendsJson);
+        updateDatabase(users);
+    }
+
+    public static void removeFriend(User user, String friendUsername) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = getUserIndexByUsername(user.getUsername());
+        ArrayList<String> friends = user.getFriends();
+        friends.remove(friendUsername);
+        Gson gson = new Gson();
+        String friendsJson = gson.toJson(friends);
+        users.get(userIndex).put("friends", friendsJson);
         updateDatabase(users);
     }
 
     public static void addInvitingFriend(User user, String friendUsername) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
-        int userIndex = getUserIndexByUsername(friendUsername);
-        user.addInvitingFriend(users.get(userIndex).get("username"));
+        int userIndex = getUserIndexByUsername(user.getUsername());
+        ArrayList<String> invitingFriend = user.getInvitingFriends();
+        invitingFriend.add(friendUsername);
+        Gson gson = new Gson();
+        String invitingJson = gson.toJson(invitingFriend);
+        users.get(userIndex).put("invitingFriends", invitingJson);
         updateDatabase(users);
     }
 
+    public static void removeInvitingFriend(User user, String friendUsername) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = getUserIndexByUsername(user.getUsername());
+        ArrayList<String> invitingFriend = user.getInvitingFriends();
+        invitingFriend.remove(friendUsername);
+        Gson gson = new Gson();
+        String invitingJson = gson.toJson(invitingFriend);
+        users.get(userIndex).put("invitingFriends",invitingJson);
+        updateDatabase(users);
+    }
 }

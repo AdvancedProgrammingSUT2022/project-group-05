@@ -51,6 +51,10 @@ public class User implements Serializable {
         this.imageAddress = imageAddress;
     }
 
+    public void setFriends(ArrayList<String> friends) {
+        this.friends = friends;
+    }
+
     //GETTERS
     public String getUsername() {
         return this.username;

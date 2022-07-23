@@ -1,8 +1,12 @@
 package graphics.view.menus;
 
+import client.Client;
+import client.ClientAdapter;
 import graphics.objects.buttons.ButtonOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
+import graphics.view.menus.Scoreboard.ScoreboardMenu;
+import graphics.view.menus.multiplayer.MultiplayerGame;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -25,7 +29,7 @@ public class MainMenu extends Pane{
         //OBJECTS
 
         Circle circle = new Circle();
-            String imageAddress = ClientManager.getInstance().getMainUser().getImageAddress();
+        String imageAddress = ClientManager.getInstance().getMainUser().getImageAddress();
         try {
             FileInputStream image = new FileInputStream(imageAddress);
             ImagePattern imagePattern = new ImagePattern(new Image(image));
@@ -38,9 +42,9 @@ public class MainMenu extends Pane{
             e.printStackTrace();
         }
 
-        ButtonOne startGame = new ButtonOne("NEW LOCAL GAME", StaticFonts.segoeLoad(40), Pos.CENTER,
+        ButtonOne startGame = new ButtonOne("LOCAL", StaticFonts.segoeLoad(40), Pos.CENTER,
                 fromLeft, fromTop - 50, 600, 80, this);
-        ButtonOne startMultiplayerGame = new ButtonOne("NEW MULTIPLAYER GAME", StaticFonts.segoeLoad(40), Pos.CENTER,
+        ButtonOne startMultiplayerGame = new ButtonOne("MULTIPLAYER", StaticFonts.segoeLoad(40), Pos.CENTER,
                 fromLeft, fromTop + 50, 600, 80, this);
         ButtonOne scoreBoard = new ButtonOne("SCOREBOARD", StaticFonts.segoeLoad(20), Pos.CENTER,
                 fromLeft, fromTop + 350, 200, 50, this);
@@ -97,6 +101,7 @@ public class MainMenu extends Pane{
         logout.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Client.send(ClientAdapter.userLoggedOut(ClientManager.getInstance().getMainUser().getUsername()));
                 ClientManager.getInstance().setMainUser(null);
                 ClientManager.getInstance().setPane(new LoginMenu());
             }

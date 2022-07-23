@@ -1,5 +1,6 @@
 package graphics.view.gameContents;
 
+import client.ClientManager;
 import controller.GameMenuController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelTwo;
@@ -31,6 +32,9 @@ public class MainPanel extends Pane {
     private ButtonOne endTurn;
 
     public MainPanel (Civilization civilization) {
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+
         background = new Rectangle(450, 110);
         background.setFill(Color.WHITE);
         this.getChildren().add(background);
@@ -81,7 +85,7 @@ public class MainPanel extends Pane {
             }
         });
 
-        this.setLayoutX(960 - background.getWidth()/2);
+        this.setLayoutX(fromLeft - background.getWidth()/2);
         this.setLayoutY(20);
     }
 

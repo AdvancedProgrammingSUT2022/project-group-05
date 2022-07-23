@@ -9,6 +9,8 @@ project-group-05.iml
 /target
 /Client/target
 /Server/target
+/Client/.idea
+/Server/.idea
 
 /.idea
 /khosro.txt

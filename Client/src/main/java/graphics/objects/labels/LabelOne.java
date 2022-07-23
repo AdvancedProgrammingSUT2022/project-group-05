@@ -1,5 +1,6 @@
 package graphics.objects.labels;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -32,6 +33,7 @@ public class LabelOne extends Pane {
         label.setFont(font);
         this.getChildren().add(label);
     }
+
     public LabelOne(String text, Font font, Pos pos, double fromLeft, double fromTop, double width, double height, Group group) {
         group.getChildren().add(this);
         this.setLayoutX(fromLeft - width/2);
@@ -54,5 +56,13 @@ public class LabelOne extends Pane {
     public void changeText(String text) {
         Label label = (Label) this.getChildren().get(1);
         label.setText(text);
+
+    public void setText(String name) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                LabelOne.this.label.setText(name);
+            }
+        });
     }
 }
