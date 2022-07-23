@@ -1,11 +1,14 @@
 package graphics.view.gameContents;
 
+import client.Client;
+import client.ClientManager;
 import controller.UnitController;
+import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
+import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
-import graphics.view.popUp.ImprovementPanel;
-import graphics.view.popUp.PopUp;
-import graphics.view.popUp.RoutePanel;
+import graphics.view.popUp.*;
+import graphics.view.popUp.Error;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +19,7 @@ import model.game.Civilization;
 import model.improvement.Improvement;
 import model.tile.Route;
 import model.tile.Tile;
+import model.unit.Unit;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
@@ -37,6 +41,8 @@ public class UnitMenu extends Pane{
     private UnitController unitController;
 
     private Rectangle background;
+
+    private LabelOne name;
 
     private ButtonTwo move;
     private ButtonTwo sleep;
@@ -63,141 +69,221 @@ public class UnitMenu extends Pane{
 
     private ButtonTwo exit;
 
-    private UnitMenu () {
-        this.unitController = UnitController.getInstance();
+    public void setName(String name) {
+        this.name.setText(name);
+    }
 
-        background = new Rectangle(bSize*10, bSize*2);
+    private UnitMenu () {
+
+        unitController = UnitController.getInstance();
+        int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2;
+
+        this.setVisible(false);
+
+        background = new Rectangle(bSize*2, bSize*10);
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
         this.getChildren().add(background);
 
+        name = new LabelOne("nothing", StaticFonts.segoeLoad(15), Pos.CENTER,
+                bSize/2, -bSize/2, bSize, bSize, this);
         move = new ButtonTwo("Move", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2, bSize/2, bSize, bSize, this);
         sleep = new ButtonTwo("Sleep", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize, bSize, bSize, this);
         alert = new ButtonTwo("Alert", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*2, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*2, bSize, bSize, this);
         fortify = new ButtonTwo("Fortify", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*3, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*3, bSize, bSize, this);
         recover = new ButtonTwo("Recover", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*4, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*4, bSize, bSize, this);
         garrison = new ButtonTwo("Garrison", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*5, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*5, bSize, bSize, this);
         wake = new ButtonTwo("Wake", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*6, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*6, bSize, bSize, this);
         cancel = new ButtonTwo("Cancel", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*7, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*7, bSize, bSize, this);
         delete = new ButtonTwo("Delete", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*8, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*8, bSize, bSize, this);
         foundCity = new ButtonTwo("FoundCity", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*9, bSize/2, bSize, bSize, this);
+                bSize/2, bSize/2 + bSize*9, bSize, bSize, this);
 
         setupRanged = new ButtonTwo("SetRanged", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2, bSize, bSize, this);
         attack = new ButtonTwo("Attack", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2 + bSize, bSize/2 + bSize, bSize, bSize, this);
         attackCity = new ButtonTwo("AttCity", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*2, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*2, bSize, bSize, this);
         conquerCity = new ButtonTwo("Conquer", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*3, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*3, bSize, bSize, this);
         buildImprovement = new ButtonTwo("BuildImp", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*4, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*4, bSize, bSize, this);
         buildRoute = new ButtonTwo("BuildRoute", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*5, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*5, bSize, bSize, this);
         removeFeature = new ButtonTwo("RemFeature", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*6, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*6, bSize, bSize, this);
         remove = new ButtonTwo("Remove", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*7, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*7, bSize, bSize, this);
         repair = new ButtonTwo("Repair", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*8, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*8, bSize, bSize, this);
 
         exit = new ButtonTwo("EXIT", StaticFonts.segoeLoad(10), Pos.CENTER,
-                bSize/2 + bSize*9, bSize/2 + bSize, bSize, bSize, this);
+                bSize/2 + bSize, bSize/2 + bSize*9, bSize, bSize, this);
 
         //Functions
 
         move.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitMove(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
+                unitController = UnitController.getInstance();
+                String response = unitController.unitMove(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         sleep.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitSleep();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitSleep();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         alert.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitAlert();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitAlert();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         fortify.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitFortify();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitFortify();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         recover.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitRecover();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitRecover();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         garrison.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitGarrison();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitGarrison();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         wake.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitWake();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitWake();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
-
-
 
         cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitCancel();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitCancel();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         foundCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitFoundCity();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitFoundCity();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         setupRanged.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitSetupRanged();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitSetupRanged();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         attack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitAttack(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
+                unitController = UnitController.getInstance();
+                String response = unitController.unitAttack(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         conquerCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.conquerCity(MapFX.getInstance().getSecondSelectedTile().getTile().getCity(), (Soldier) unitController.getUnit());
+                unitController = UnitController.getInstance();
+                String response = unitController.conquerCity(MapFX.getInstance().getSecondSelectedTile().getTile().getCity(), (Soldier) unitController.getUnit());
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
@@ -206,6 +292,7 @@ public class UnitMenu extends Pane{
         buildImprovement.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                unitController = UnitController.getInstance();
                 ArrayList<Improvement> improvements = new ArrayList<>();
                 Tile tile = unitController.getUnit().getTile();
                 Civilization civilization = unitController.getUnit().getCivilization();
@@ -219,49 +306,90 @@ public class UnitMenu extends Pane{
                 improvementPanel.camp.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.CAMP);
+                        String response = unitController.unitBuildImprovement(Improvement.CAMP);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
+
                     }
                 });
                 improvementPanel.farm.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.FARM);
+                        String response = unitController.unitBuildImprovement(Improvement.FARM);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 improvementPanel.lumber_mill.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.LUMBER_MILL);
+                        String response = unitController.unitBuildImprovement(Improvement.LUMBER_MILL);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 improvementPanel.mine.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.MINE);
+                        String response = unitController.unitBuildImprovement(Improvement.MINE);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 improvementPanel.pasture.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.PASTURE);
+                        String response = unitController.unitBuildImprovement(Improvement.PASTURE);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 improvementPanel.plantation.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.PLANTATION);
+                        String response = unitController.unitBuildImprovement(Improvement.PLANTATION);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 improvementPanel.quarry.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.QUARRY);
+                        String response = unitController.unitBuildImprovement(Improvement.QUARRY);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 improvementPanel.trading_post.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildImprovement(Improvement.TRADING_POST);
+                        String response = unitController.unitBuildImprovement(Improvement.TRADING_POST);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 new PopUp(temp, improvementPanel);
@@ -271,6 +399,7 @@ public class UnitMenu extends Pane{
         buildRoute.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                unitController = UnitController.getInstance();
                 boolean canRoad = false ;
                 boolean canRail = false;
                 if (unitController.getUnit().getCivilization().getResearchTree().isResearchDone(Route.ROAD.getNeededResearch()))
@@ -281,13 +410,23 @@ public class UnitMenu extends Pane{
                 routePanel.road.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildRoute(Route.ROAD);
+                        String response = unitController.unitBuildRoute(Route.ROAD);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 routePanel.rail.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        unitController.unitBuildRoute(Route.RAIL);
+                        String response = unitController.unitBuildRoute(Route.RAIL);
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
                     }
                 });
                 new PopUp(temp, routePanel);
@@ -299,13 +438,34 @@ public class UnitMenu extends Pane{
         remove.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                unitController = UnitController.getInstance();
+                String response;
                 switch (unitController.getUnit().getTile().getFeature()) {
                     case FOREST:
-                        unitController.unitRemoveForest();
+                        response = unitController.unitRemoveForest();
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
+                        break;
                     case MARSH:
-                        unitController.unitRemoveMarsh();
+                        response = unitController.unitRemoveMarsh();
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
+                        break;
                     case JUNGLE:
-                        unitController.unitRemoveJungle();
+                        response = unitController.unitRemoveJungle();
+                        if (response.startsWith("error")) {
+                            new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                        } else {
+                            new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                        }
+                        break;
+
                 }
             }
         });
@@ -313,14 +473,26 @@ public class UnitMenu extends Pane{
         repair.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitRepair();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitRepair();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
         delete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController.unitDelete();
+                unitController = UnitController.getInstance();
+                String response = unitController.unitDelete();
+                if (response.startsWith("error")) {
+                    new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
+                } else {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Successful(response));
+                }
             }
         });
 
@@ -330,14 +502,13 @@ public class UnitMenu extends Pane{
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setVisible(false);
-                //can add animation here
+                UnitMenu.getInstance().setVisible(false);
             }
         });
 
         //TODO other functions
 
-        this.setLayoutX(960 - 5*bSize);
-        this.setLayoutY(1060 - 2*bSize);
+        this.setLayoutX(2*bSize);
+        this.setLayoutY(fromTop - 5*bSize);
     }
 }

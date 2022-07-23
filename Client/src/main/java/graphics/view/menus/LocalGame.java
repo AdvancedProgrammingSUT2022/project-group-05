@@ -39,27 +39,30 @@ public class LocalGame extends Pane {
     ButtonOne back;
 
     public LocalGame() {
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
+
         title = new LabelOne("NEW LOCAL GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
-                960, 200, 600, 70, this);
+                fromLeft, 100, 600, 70, this);
 
         small = new ButtonTwo("SMALL", StaticFonts.segoeLoad(40), Pos.CENTER,
-                680, 400, 400, 60, this);
+                fromLeft - 270, 200, 400, 60, this);
         medium = new ButtonTwo("MEDIUM", StaticFonts.segoeLoad(40), Pos.CENTER,
-                680, 500, 400, 60, this);
+                fromLeft - 270, 300, 400, 60, this);
         big = new ButtonTwo("BIG", StaticFonts.segoeLoad(40), Pos.CENTER,
-                680, 600, 400, 60, this);
+                fromLeft - 270, 400, 400, 60, this);
 
         two = new ButtonTwo("2 PLAYERS", StaticFonts.segoeLoad(40), Pos.CENTER,
-                1240, 400, 400, 60, this);
+                fromLeft + 280, 200, 400, 60, this);
         three = new ButtonTwo("3 PLAYERS", StaticFonts.segoeLoad(40), Pos.CENTER,
-                1240, 500, 400, 60, this);
+                fromLeft + 280, 300, 400, 60, this);
         four = new ButtonTwo("4 PLAYERS", StaticFonts.segoeLoad(40), Pos.CENTER,
-                1240, 600, 400, 60, this);
+                fromLeft + 280, 400, 400, 60, this);
 
         createGame = new ButtonOne("CREATE GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
-                960, 800, 600, 70, this);
+                fromLeft, 500, 600, 70, this);
         back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
-                960, 1000, 100, 50, this);
+                fromLeft, 600, 100, 50, this);
 
         //ANIMATION
         ParallelTransition start = AnimatedPane.getStartAnimation(this);

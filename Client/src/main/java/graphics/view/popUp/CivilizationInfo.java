@@ -1,9 +1,12 @@
 package graphics.view.popUp;
 
+import client.ClientManager;
 import controller.GameMenuController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import graphics.view.popUp.overview.EconomicOverview;
+import graphics.view.popUp.overview.MilitaryOverview;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +22,8 @@ public class CivilizationInfo extends Pane {
     ButtonOne economic;
     public CivilizationInfo (Civilization civilization) {
         this.civilization = civilization;
+
+        int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
 
         this.getChildren().add(new Rectangle(600, 800, Color.WHITE));
         this.setPrefWidth(600);
@@ -37,7 +42,7 @@ public class CivilizationInfo extends Pane {
         military.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                new PopUp((Pane)CivilizationInfo.this.getParent(), new MilitaryOverview());
+                new PopUp((Pane)CivilizationInfo.this.getParent(), new MilitaryOverview(civilization));
             }
         });
         economic.setOnMouseClicked(new EventHandler<MouseEvent>() {

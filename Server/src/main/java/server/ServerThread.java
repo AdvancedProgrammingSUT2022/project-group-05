@@ -1,5 +1,8 @@
 package server;
 
+import controller.UserDatabaseController;
+import model.User;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,6 +13,7 @@ public class ServerThread extends Thread {
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private String username;
 
     public ServerThread(Socket socket) throws IOException {
         this.socket = socket;
@@ -24,12 +28,18 @@ public class ServerThread extends Thread {
                 String input = dataInputStream.readUTF();
                 Request request = Request.convertFromJson(input);
                 Response response = handleRequest(request);
+                if (request.getAction().equals("login") && response.getMessage().equals("login successful")) {
+                    this.username = UserDatabaseController.getUserByUsername((String) request.getParams().get("username")).getUsername();
+                    ServerAdapter.sendUpdateForScoreBoard();
+                }
                 String responseJson = response.convertToJson();
-
                 this.send(responseJson);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("client with username " + username + " disconnected");
+
+            this.username = null;
+            ServerManager.getInstance().removeServerThread(this);
         }
     }
 
@@ -64,17 +74,82 @@ public class ServerThread extends Thread {
             message = ServerAdapter.getUsers(request);
             response.setMessage(message);
         }
+        if (request.getAction().equals("addFriend")) {
+            message = ServerAdapter.addFriend(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("removeFriend")) {
+
+            message = ServerAdapter.removeFriend(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("rejectFriend")) {
+            message = ServerAdapter.rejectFriend(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("createLobby")) {
+            message = ServerAdapter.createLobby(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("searchFriend")) {
+            message = ServerAdapter.searchFriend(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("inviteFriend")) {
+            message = ServerAdapter.inviteFriend(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("update")) { // update changes in lobby from client
+            message = ServerAdapter.update(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("inviteToLobby")) {
+            message = ServerAdapter.inviteToLobby(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("joinLobby")) {
+            message = ServerAdapter.joinLobby(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("closeLobby")) {
+            message = ServerAdapter.closeLobby(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("startGame")) {
+            message = ServerAdapter.startGame(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("getOnlineUsers")) {
+            message = ServerAdapter.getOnlineUsers(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("userLoggedOut")) {
+            message = ServerAdapter.userLoggedOut(request);
+            response.setMessage(message);
+        }
 
         return response;
     }
 
-    public void send(String message) { // for sending message to client
+    public void send(String message) { // for sending message to client directly
         try {
             this.dataOutputStream.writeUTF(message);
             this.dataOutputStream.flush();
         } catch (IOException e) {
+            this.username = null;
             e.printStackTrace();
         }
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

@@ -63,6 +63,14 @@ public class User implements Serializable {
         this.imageAddress = imageAddress;
     }
 
+    public void setFriends(ArrayList<String> friends) {
+        this.friends = friends;
+    }
+
+    public void setInvitingFriends(ArrayList<String> invitingFriends) {
+        this.invitingFriends = invitingFriends;
+    }
+
     //GETTERS
     public String getUsername() {
         return this.username;

@@ -25,7 +25,6 @@ public abstract class Ranged extends Soldier{
 
     @Override
     public boolean canAttackTile(Tile tile) {
-        //TODO... if(distance(this, tile) > attackRange) return false
         if (Map.getInstance().findDistance(this.tile, tile) > this.maxAttackRange || !this.tile.canSeeThrough(tile)) {
             return false;
         } else {
