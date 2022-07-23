@@ -112,6 +112,8 @@ public class GameMenuController implements Serializable {
 //            this.currentCivilizationController.getCivilization().save();
 //        }
 
+        //debugging
+        System.out.println(this.whoseTurnIsIt());
         return this.whoseTurnIsIt();
     }
 
