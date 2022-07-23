@@ -82,7 +82,7 @@ public class LocalGame extends Pane {
                         ArrayList<Civilization> civilizations = new ArrayList<>();
                         civilizations.add(civilization1);
                         civilizations.add(civilization2);
-                        GameMenuController.updateInstance(2, civilizations);
+                        GameMenuController.updateInstance(civilizations);
                         ClientManager.getInstance().setPane(new Game(civilization1));
                         GameMenuController.getInstance().nextCivilization();
                         MapFX.getInstance().updateMapTextures();
