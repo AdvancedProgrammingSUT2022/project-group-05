@@ -1,7 +1,11 @@
 package graphics.view.gameContents;
 import controller.GameMenuController;
+import graphics.objects.buttons.DisableButtonOne;
+import graphics.objects.labels.LabelOne;
+import graphics.statics.StaticFonts;
 import graphics.statics.StaticImages;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -19,12 +23,17 @@ public class TileFX extends Group {
     private Polygon feature;
     private Polygon[] rivers;
 
+    private LabelOne place;
+    private LabelOne cityName;
+    private LabelOne resource;
+
     private Polygon fogOfWar;
     private Polygon selected;
     private Polygon front;
     private Rectangle ruin;
     private Rectangle soldure;
     private Rectangle civilian;
+    private Polygon city;
 
     public TileFX(Pane pane, Tile tile) {
         this.tile = tile;
@@ -47,6 +56,13 @@ public class TileFX extends Group {
         feature.setLayoutY(-100);
         feature.setFill(tile.getFeature().getTexture());
         this.getChildren().add(feature);
+
+        city = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
+        city.setLayoutX(-200);
+        city.setLayoutY(-100);
+        city.setFill(StaticImages.City);
+        city.setVisible(false);
+        this.getChildren().add(city);
 
         rivers = new Polygon[6];
         rivers[0] = new Polygon(100, 0, 300, 0, 297, 3, 103, 3);
@@ -74,6 +90,14 @@ public class TileFX extends Group {
         this.getChildren().add(civilian);
         civilian.setFill(new Color(0, 0, 0 , 0));
 
+        place = new LabelOne(tile.getXPlace() + "," + tile.getYPlace(), StaticFonts.segoeLoad(10), Pos.CENTER,
+                0, -94, 20, 10, this);
+        String cityString = "";
+        if (tile.hasCity()) cityString = tile.getCity().getName();
+        cityName = new LabelOne(cityString, StaticFonts.segoeLoad(12), Pos.CENTER,
+                0, -82, 200, 12, this);
+        resource = new LabelOne(tile.getResource().toString(), StaticFonts.segoeLoad(12), Pos.CENTER,
+                0, 90, 200, 12, this);
 
         fogOfWar = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         fogOfWar.setLayoutX(-200);
@@ -153,6 +177,13 @@ public class TileFX extends Group {
         FogOfWarStates fogOfWarStates = GameMenuController.getInstance().getCurrentCivilizationController().
                 getCivilization().getFogOfWar()[tile.getXPlace()][tile.getYPlace()];
 
+        String cityString = "";
+        if (tile.hasCity()) {
+            cityString = tile.getCity().getName();
+            city.setVisible(tile.isCityCenter());
+        }
+        cityName.changeText(cityString);
+
         if (fogOfWarStates.equals(FogOfWarStates.VISIBLE)) {
             if (tile.hasCivilian())
                 civilian.setFill(tile.getCivilian().getTexture());
@@ -174,6 +205,7 @@ public class TileFX extends Group {
         if (fogOfWarStates.equals(FogOfWarStates.REVEALED)) {
             civilian.setFill(Color.TRANSPARENT);
             soldure.setFill(Color.TRANSPARENT);
+            fogOfWar.setFill(StaticImages.FogOfWar2);
         }
     }
 

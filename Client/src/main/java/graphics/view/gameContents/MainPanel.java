@@ -28,6 +28,7 @@ public class MainPanel extends Pane {
     private LabelTwo gold;
     private LabelTwo happiness;
     private LabelTwo research;
+    private LabelTwo year;
     private ButtonOne endTurn;
 
     public MainPanel (Civilization civilization) {
@@ -38,13 +39,16 @@ public class MainPanel extends Pane {
         background.setFill(Color.WHITE);
         this.getChildren().add(background);
 
+        //TODO add year
+        year = new LabelTwo("YEAR", StaticFonts.segoeLoad(10), Pos.CENTER,
+                35, 15, 70, 30, this);
         gold = new LabelTwo("GOLD : " + civilization.getGold(), StaticFonts.segoeLoad(10), Pos.CENTER,
-                50, 15, 100, 30, this);
+                115, 15, 90, 30, this);
         happiness = new LabelTwo("HAPPINESS : " + civilization.getHappiness(), StaticFonts.segoeLoad(10), Pos.CENTER,
-                150, 15, 100, 30, this);
+                205, 15, 90, 30, this);
         research = new LabelTwo("RESEARCH : " + civilization.getResearchTree().getCurrentResearch() + " "
                 + civilization.getResearchTree().getResearchProgressPercentage() + "%", StaticFonts.segoeLoad(10), Pos.CENTER,
-                325, 15, 250, 30, this);
+                350, 15, 200, 30, this);
 
         researchPanel = new ButtonOne("RESEARCH", StaticFonts.segoeLoad(20), Pos.CENTER,
                 75, 50, 150, 40, this);
@@ -83,5 +87,13 @@ public class MainPanel extends Pane {
 
         this.setLayoutX(fromLeft - background.getWidth()/2);
         this.setLayoutY(20);
+    }
+
+    public void updatePanel (Civilization civilization) {
+        gold.changeText("GOLD : " + civilization.getGold());
+        happiness.changeText("HAPPINESS : " + civilization.getHappiness());
+        research.changeText("RESEARCH : " + civilization.getResearchTree().getCurrentResearch() + " "
+                + civilization.getResearchTree().getResearchProgressPercentage() + "%");
+
     }
 }
