@@ -23,7 +23,7 @@ import org.w3c.dom.ranges.Range;
 import utility.RandomGenerator;
 
 public class UnitController{
-    private final Unit unit;
+    private Unit unit;
 
     //Singleton definition
     private static UnitController instance;
@@ -310,6 +310,7 @@ public class UnitController{
         Settler settler = (Settler) this.unit;
         settler.foundCity(GameMenuController.getInstance().getRandomCityName());
         unit.getCivilization().removeUnit(this.unit);
+        this.unit = null;
 
         return Responses.CITY_FOUNDED.getResponse();
     }

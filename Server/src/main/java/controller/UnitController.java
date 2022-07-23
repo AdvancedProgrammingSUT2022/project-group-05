@@ -23,7 +23,7 @@ import org.w3c.dom.ranges.Range;
 import utility.RandomGenerator;
 
 public class UnitController{
-    private final Unit unit;
+    private Unit unit;
 
     //Singleton definition
     private static UnitController instance;
@@ -139,7 +139,7 @@ public class UnitController{
             this.setDefenceBonusInFortifyState(0);
             this.unit.garrison();
 
-            this.unit.getTile().getCity().garrisonUnit((Soldier) this.unit);
+            this.unit.getTile().getCity().garrisonUnit();
             return Responses.UNIT_GARRISONED.getResponse();
         }
         return Responses.ALREADY_GARRISONED.getResponse();
@@ -179,11 +179,8 @@ public class UnitController{
         this.setDefenceBonusInFortifyState(0);
 
 
-        if (soldier instanceof Melee)
-            this.attack(soldier, end.getSoldier());
-        else {
-            //TODO rangedAttack
-        }
+        this.attack(soldier, end.getSoldier());
+
         return Responses.UNIT_ATTACKED.getResponse();
     }
 
@@ -227,16 +224,16 @@ public class UnitController{
         if (enemySoldier instanceof AntiTankGun && soldier instanceof Tank)
             soldier.setHealth(soldier.getHealth() - 10);
 
-        if (enemySoldier.getHealth() == 0) {
+        if (enemySoldier.getHealth() <= 0) {
             enemySoldier.kill();
-            if (soldier.getHealth() != 0) {
+            if (soldier.getHealth() > 0) {
                 Tile targetTile = enemySoldier.getTile();
                 Map.getInstance().moveSoldierWithoutMP(soldier, targetTile);
                 if (targetTile.getCivilian() != null) targetTile.getCivilian().setCivilization(soldier.getCivilization());
             }
         }
 
-        if (soldier.getHealth() == 0) {
+        if (soldier.getHealth() <= 0) {
             soldier.kill();
         }
     }
@@ -313,6 +310,7 @@ public class UnitController{
         Settler settler = (Settler) this.unit;
         settler.foundCity(GameMenuController.getInstance().getRandomCityName());
         unit.getCivilization().removeUnit(this.unit);
+        this.unit = null;
 
         return Responses.CITY_FOUNDED.getResponse();
     }

@@ -64,6 +64,21 @@ public class GameMenuController {
     }
     // end of singleton design pattern
 
+    public boolean isGameOver() {
+        int notLostCount = 0;
+        for (Civilization civilization : this.getCivilizations()) {
+            if (!civilization.isLost()) notLostCount++;
+        }
+
+        if (notLostCount <= 1) return true;
+
+        return currentYear >= 2500;
+    }
+
+    public int getCurrentYear() {
+        return this.currentYear;
+    }
+
     public String getRandomCityName() {
         Collections.shuffle(this.cityNames);
         String cityName = this.cityNames.get(0);
@@ -79,7 +94,7 @@ public class GameMenuController {
         }
         this.currentTurn++;
         this.currentTurn %= this.civilizationCount;
-        if (this.currentTurn == 0) this.currentYear++;
+        if (this.currentTurn == 0) this.currentYear += 25;
 
         this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
         this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
