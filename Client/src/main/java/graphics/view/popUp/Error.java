@@ -2,10 +2,12 @@ package graphics.view.popUp;
 
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class Error extends Pane {
     public Error (String message) {
