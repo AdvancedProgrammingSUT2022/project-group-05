@@ -6,6 +6,7 @@ import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelTwo;
 import graphics.statics.StaticFonts;
 import graphics.view.popUp.CheatCode;
+import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Setting;
 import graphics.view.popUp.research.ResearchPanel;
@@ -63,7 +64,9 @@ public class MainPanel extends Pane {
         endTurn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                GameMenuController.getInstance().nextCivilization();
+                String response = GameMenuController.getInstance().nextCivilization();
+
+                if (response.startsWith("error")) new PopUp((Pane) MainPanel.this.getParent(), new Error(response));
             }
         });
         cheatCode.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -91,6 +94,7 @@ public class MainPanel extends Pane {
     }
 
     public void updatePanel () {
+        year.changeText("YEAR : " + GameMenuController.getInstance().getCurrentYear());
         gold.changeText("GOLD : " + civilization.getGold());
         happiness.changeText("HAPPINESS : " + civilization.getHappiness());
         research.changeText("RESEARCH : " + civilization.getResearchTree().getCurrentResearch() + " "

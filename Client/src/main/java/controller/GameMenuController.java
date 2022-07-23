@@ -41,7 +41,7 @@ public class GameMenuController implements Serializable {
         this.autoSave = true; //TODO add autoSave option in settings
 
         this.currentTurn = -1;
-        this.currentYear = -1;
+        this.currentYear = -20;
 
         for (int i = 0; i < civilizationCount; i++) {
             this.civilizationControllers.add(new CivilizationController(civilizations.get(i)));
@@ -65,6 +65,17 @@ public class GameMenuController implements Serializable {
     }
     // end of singleton design pattern
 
+    public boolean isGameOver() {
+        int notLostCount = 0;
+        for (Civilization civilization : this.getCivilizations()) {
+            if (!civilization.isLost()) notLostCount++;
+        }
+
+        if (notLostCount <= 1) return true;
+
+        return currentYear >= 2500;
+    }
+
     public int getCurrentYear() {
         return this.currentYear;
     }
@@ -77,14 +88,16 @@ public class GameMenuController implements Serializable {
     }
 
     public String nextCivilization() {
-        if (currentTurn > -1)
+        if (currentTurn >= 0)
             this.currentCivilizationController.searchForRequiredActions(); // search if there is any required actions left
-        if (currentTurn > -1 && currentCivilizationController.hasRequiredAction()) { // check conditions for changing turn
+
+        if (currentTurn >= 0 && currentCivilizationController.hasRequiredAction()) { // check conditions for changing turn
             return "error: " + currentCivilizationController.getRequiredActions();
         }
+
         this.currentTurn++;
         this.currentTurn %= this.civilizationCount;
-        if (this.currentTurn == 0) this.currentYear++;
+        if (this.currentTurn == 0) this.currentYear += 20;
 
         this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
         this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
@@ -92,6 +105,7 @@ public class GameMenuController implements Serializable {
         CityController.updateInstance(null); // deselect city in new turn
         UnitController.updateInstance(null); // deselect unit in new turn
 
+        //TODO resolve autosave and required actions comments in this method
 //        //autoSaving
 //        if (autoSave) {
 //            Map.getInstance().save();

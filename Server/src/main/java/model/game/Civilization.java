@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.GameMenuController;
+import controller.InfoController;
 import controller.UnitController;
 import model.User;
 import model.map.FogOfWar;
@@ -95,6 +97,26 @@ public class Civilization implements Serializable {
 
     public void startResearch(Research research) {
         this.researchTree.startResearch(research);
+    }
+
+    public int calculateScore() {
+        int result = 0;
+        result += (GameMenuController.getInstance().getCurrentYear() + 7) * 131;
+        result += this.cities.size() * 620;
+        result += this.units.size() * 69;
+        result += InfoController.getLuxuryResourceCount(this) * 500;
+        result += this.gold;
+        result += 10 * this.happiness;
+
+        return result;
+    }
+
+    public boolean isLost() {
+        for (Unit unit : units) {
+            if (unit instanceof Settler) return false;
+        }
+
+        return cities.size() <= 0;
     }
 
 
