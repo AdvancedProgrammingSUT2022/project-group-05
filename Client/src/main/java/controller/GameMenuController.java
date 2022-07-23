@@ -33,8 +33,8 @@ public class GameMenuController {
     //singleton
     private static GameMenuController instance;
 
-    private GameMenuController(int civilizationCount, ArrayList<Civilization> civilizations) {
-        this.civilizationCount = civilizationCount;
+    private GameMenuController(ArrayList<Civilization> civilizations) {
+        this.civilizationCount = civilizations.size();
         this.cityNames = CityName.getCityNames();
 
         this.autoSave = true; //TODO add autoSave option in settings
@@ -51,8 +51,12 @@ public class GameMenuController {
         return instance;
     }
 
-    public static void updateInstance(int civilizationCount, ArrayList<Civilization> civilizations) {
-        instance = new GameMenuController(civilizationCount, civilizations);
+    public static void updateInstance(ArrayList<Civilization> civilizations) {
+        instance = new GameMenuController(civilizations);
+    }
+
+    public static void updateInstance(GameMenuController gameMenuController) {
+        instance = gameMenuController;
     }
 
     public static void destroyInstance() {
@@ -774,5 +778,36 @@ public class GameMenuController {
 
     public CivilizationController getCurrentCivilizationController () {
         return currentCivilizationController;
+    }
+
+    //DATA
+    public ArrayList<Civilization> getCivilizations() {
+        ArrayList<Civilization> result = new ArrayList<>();
+
+        for (CivilizationController civilizationController : this.civilizationControllers) {
+            result.add(civilizationController.getCivilization());
+        }
+
+        return result;
+    }
+
+    public ArrayList<City> getCities() {
+        ArrayList<City> result = new ArrayList<>();
+
+        for (Civilization civilization : this.getCivilizations()) {
+            result.addAll(civilization.getCities());
+        }
+
+        return result;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        ArrayList<Unit> result = new ArrayList<>();
+
+        for (Civilization civilization : this.getCivilizations()) {
+            result.addAll(civilization.getUnits());
+        }
+
+        return result;
     }
 }

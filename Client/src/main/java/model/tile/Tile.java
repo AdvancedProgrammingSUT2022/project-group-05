@@ -289,6 +289,10 @@ public class Tile implements Serializable {
 
     public boolean[] getRivers() {return this.rivers;}
 
+    public ProjectManager getProjectManager() {
+        return this.projectManager;
+    }
+
     public Improvement getImprovement() {
         if (!this.hasCity()) return Improvement.NO_IMPROVEMENT;
 
