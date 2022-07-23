@@ -37,7 +37,7 @@ public class Tile implements Serializable {
     private final boolean[] rivers;
 
     private boolean isRepaired;
-    private final ProjectManager projectManager;
+    private ProjectManager projectManager;
 
     private int food;
     private int gold;
@@ -56,7 +56,7 @@ public class Tile implements Serializable {
         this.fromLeft = fromLeftFinder(xPlace, yPlace, sizeOfMap);
 
         this.setRoute(Route.NO_ROUTE);
-        this.setTerrain(Terrain.NO_TERRAIN);
+//        this.setTerrain(Terrain.NO_TERRAIN);
         this.setFeature(Feature.NO_FEATURE);
         this.setResource(Resource.NO_RESOURCE);
         this.setImprovement(Improvement.NO_IMPROVEMENT);
@@ -82,6 +82,10 @@ public class Tile implements Serializable {
     }
 
     //Project stuff
+    public void setProjectManager(ProjectManager projectManager) {
+        this.projectManager = projectManager;
+    }
+
     public boolean hasProject() {
         return this.projectManager.hasProject();
     }
@@ -288,6 +292,10 @@ public class Tile implements Serializable {
     }
 
     public boolean[] getRivers() {return this.rivers;}
+
+    public ProjectManager getProjectManager() {
+        return this.projectManager;
+    }
 
     public Improvement getImprovement() {
         if (!this.hasCity()) return Improvement.NO_IMPROVEMENT;

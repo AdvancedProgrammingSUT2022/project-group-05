@@ -1,5 +1,6 @@
 package graphics.view.gameContents;
 
+import client.ClientManager;
 import controller.GameMenuController;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -80,7 +81,8 @@ public class MapFX extends Pane {
     }
 
     public void updateMapTextures () {
-        FogOfWar.updateFogOfWar(GameMenuController.getInstance().getCurrentCivilizationController().getCivilization());
+        FogOfWar.updateFogOfWar(GameMenuController.getInstance().getCivilizationByUsername(ClientManager
+                .getInstance().getMainUser().getUsername()));
         int mapSize = Map.getInstance().getSizeOfMap();
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {

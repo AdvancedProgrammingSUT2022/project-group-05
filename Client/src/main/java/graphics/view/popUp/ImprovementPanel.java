@@ -13,12 +13,12 @@ public class ImprovementPanel extends Pane {
 
     public ButtonOne camp;
     public ButtonOne farm;
-    public ButtonOne lumber_mill;
+    public ButtonOne lumberMill;
     public ButtonOne mine;
     public ButtonOne pasture;
     public ButtonOne plantation;
     public ButtonOne quarry;
-    public ButtonOne trading_post;
+    public ButtonOne tradingPost;
 
     public ImprovementPanel(ArrayList<Improvement> improvements) {
         //TODO.. configure fromLeft and fromTop of nodes!!!
@@ -28,7 +28,7 @@ public class ImprovementPanel extends Pane {
                 225, 50, 150, 40, this);
         this.farm = new ButtonOne("FARM", StaticFonts.segoeLoad(20), Pos.CENTER,
                 225, 50, 150, 40, this);
-        this.lumber_mill = new ButtonOne("LUMBER_MILL", StaticFonts.segoeLoad(20), Pos.CENTER,
+        this.lumberMill = new ButtonOne("LUMBER_MILL", StaticFonts.segoeLoad(20), Pos.CENTER,
                 225, 50, 150, 40, this);
         this.mine = new ButtonOne("MINE", StaticFonts.segoeLoad(20), Pos.CENTER,
                 225, 50, 150, 40, this);
@@ -38,14 +38,14 @@ public class ImprovementPanel extends Pane {
                 225, 50, 150, 40, this);
         this.quarry = new ButtonOne("QUARRY", StaticFonts.segoeLoad(20), Pos.CENTER,
                 225, 50, 150, 40, this);
-        this.trading_post = new ButtonOne("TRADING_POST", StaticFonts.segoeLoad(20), Pos.CENTER,
+        this.tradingPost = new ButtonOne("TRADING_POST", StaticFonts.segoeLoad(20), Pos.CENTER,
                 225, 50, 150, 40, this);
         if (!improvements.contains(Improvement.CAMP))
             camp.setDisable(true);
         if (!improvements.contains(Improvement.FARM))
             farm.setDisable(true);
         if (!improvements.contains(Improvement.LUMBER_MILL))
-            lumber_mill.setDisable(true);
+            lumberMill.setDisable(true);
         if (!improvements.contains(Improvement.MINE))
             mine.setDisable(true);
         if (!improvements.contains(Improvement.PASTURE))
@@ -55,7 +55,7 @@ public class ImprovementPanel extends Pane {
         if (!improvements.contains(Improvement.QUARRY))
             quarry.setDisable(true);
         if (!improvements.contains(Improvement.TRADING_POST))
-            trading_post.setDisable(true);
+            tradingPost.setDisable(true);
     }
 
 }

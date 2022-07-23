@@ -13,13 +13,14 @@ import model.unit.Unit;
 import model.unit.civilian.Civilian;
 import model.unit.soldier.Soldier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
 import static view.enums.Entity.*;
 
-public class GameMenuController {
+public class GameMenuController implements Serializable {
     //FIELDS
     private int civilizationCount;
     private ArrayList<CivilizationController> civilizationControllers = new ArrayList<>();
@@ -55,10 +56,29 @@ public class GameMenuController {
         instance = new GameMenuController(civilizations);
     }
 
+    public static void updateInstance(GameMenuController gameMenuController) {
+        instance = gameMenuController;
+    }
+
     public static void destroyInstance() {
         instance = null;
     }
     // end of singleton design pattern
+
+    public boolean isGameOver() {
+        int notLostCount = 0;
+        for (Civilization civilization : this.getCivilizations()) {
+            if (!civilization.isLost()) notLostCount++;
+        }
+
+        if (notLostCount <= 1) return true;
+
+        return currentYear >= 2500;
+    }
+    
+    public int getCurrentYear() {
+        return this.currentYear;
+    }
 
     public String getRandomCityName() {
         Collections.shuffle(this.cityNames);
@@ -75,7 +95,7 @@ public class GameMenuController {
         }
         this.currentTurn++;
         this.currentTurn %= this.civilizationCount;
-        if (this.currentTurn == 0) this.currentYear++;
+        if (this.currentTurn == 0) this.currentYear += 25;
 
         this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
         this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
@@ -83,11 +103,11 @@ public class GameMenuController {
         CityController.updateInstance(null); // deselect city in new turn
         UnitController.updateInstance(null); // deselect unit in new turn
 
-        //autoSaving
-        if (autoSave) {
-            Map.getInstance().save();
-            this.currentCivilizationController.getCivilization().save();
-        }
+//        //autoSaving
+//        if (autoSave) {
+//            Map.getInstance().save();
+//            this.currentCivilizationController.getCivilization().save();
+//        }
 
         return this.whoseTurnIsIt();
     }
@@ -312,7 +332,7 @@ public class GameMenuController {
     public String unitMove(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } 
+        }
         int xPlace = Integer.parseInt(command.get(X_POSITION.getKey()));
         int yPlace = Integer.parseInt(command.get(Y_POSITION.getKey()));
 
@@ -333,7 +353,7 @@ public class GameMenuController {
     public String unitAlert(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } 
+        }
         return UnitController.getInstance().unitAlert();
 
     }
@@ -348,7 +368,7 @@ public class GameMenuController {
     public String unitRecover(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } 
+        }
         return UnitController.getInstance().unitRecover();
     }
 
@@ -389,7 +409,7 @@ public class GameMenuController {
     public String unitWake(HashMap<String, String> command) {
         if (UnitController.getInstance().getUnit() == null) {
             return Responses.NO_UNIT_SELECTED.getResponse();
-        } 
+        }
         return UnitController.getInstance().unitWake();
     }
 
@@ -489,7 +509,7 @@ public class GameMenuController {
             return UnitController.getInstance().unitRepair();
         }
     }
-    
+
     //CITY COMMANDS
     public String cityCreateUnit(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
@@ -499,7 +519,7 @@ public class GameMenuController {
             return CityController.getInstance().cityCreateUnit(unitName);
         }
     }
-    
+
     public String cityCreateBuilding(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
             return Responses.NO_CITY_SELECTED.getResponse();
@@ -508,7 +528,7 @@ public class GameMenuController {
             return CityController.getInstance().cityCreateBuilding(buildingName);
         }
     }
-    
+
     public String buyTile(HashMap<String, String> command) {
         if (CityController.getInstance().getCity() == null) {
             return Responses.NO_CITY_SELECTED.getResponse();
@@ -579,6 +599,7 @@ public class GameMenuController {
 
     public String mapShowCity(HashMap<String, String> command) {
         String cityName = command.get(CITY_NAME.getKey());
+        //TODO find city by cityName in Map (city must have been discovered before) and print Map
         return "";
     }
 
@@ -589,11 +610,13 @@ public class GameMenuController {
         if (x < 0 || x > Map.getInstance().getSizeOfMap() - 1 || y < 0 || y > Map.getInstance().getSizeOfMap() - 1)
             return "error: out of bound";
 
+        //TODO check validity of x and y and print Map
         return "";
     }
 
     public String mapMove(HashMap<String, String> command) {
         String direction = command.get(DIRECTION.getKey());
+        //TODO move Map to desired direction and print Map
         return "";
     }
 
@@ -651,17 +674,16 @@ public class GameMenuController {
         return Responses.GOLD_INCREASED.getResponse();
     }
 
- 
 
-    public ArrayList<String> revealAll(HashMap<String, String> command) {
+
+    public String revealAll(HashMap<String, String> command) {
         Civilization currentCivilization = this.currentCivilizationController.getCivilization();
 
         FogOfWar.fogOfWarRevealAll(currentCivilization);
 
         ArrayList<String> result = Map.getInstance().printMap(currentCivilization);
-        result.add(Responses.REVEAL_MAP.getResponse());
 
-        return result;
+        return Responses.REVEAL_MAP.getResponse();
     }
 
     public String industrialRevolution(HashMap<String, String> command) {
@@ -732,6 +754,7 @@ public class GameMenuController {
         Tile tile = Map.getInstance().getTileFromMap(x, y);
         if (!tile.hasSoldier())
             return "error: no soldier in tile";
+        UnitController.updateInstance(null);
         tile.getSoldier().getCivilization().removeUnit(tile.getSoldier());
         return "unit killed successfully";
     }
@@ -746,6 +769,7 @@ public class GameMenuController {
         Tile tile = Map.getInstance().getTileFromMap(x, y);
         if (!tile.hasCivilian())
             return "error: no civilian in tile";
+        UnitController.updateInstance(null);
         tile.getCivilian().getCivilization().removeUnit(tile.getCivilian());
         return "unit killed successfully";
     }
@@ -770,5 +794,52 @@ public class GameMenuController {
 
     public CivilizationController getCurrentCivilizationController () {
         return currentCivilizationController;
+    }
+
+    //DATA
+    public ArrayList<Civilization> getCivilizations() {
+        ArrayList<Civilization> result = new ArrayList<>();
+
+        for (CivilizationController civilizationController : this.civilizationControllers) {
+            result.add(civilizationController.getCivilization());
+        }
+
+        return result;
+    }
+
+    public ArrayList<City> getCities() {
+        ArrayList<City> result = new ArrayList<>();
+
+        for (Civilization civilization : this.getCivilizations()) {
+            result.addAll(civilization.getCities());
+        }
+
+        return result;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        ArrayList<Unit> result = new ArrayList<>();
+
+        for (Civilization civilization : this.getCivilizations()) {
+            result.addAll(civilization.getUnits());
+        }
+
+        return result;
+    }
+
+    public ArrayList<String> getPlayerUsernames() {
+        ArrayList<String> playerUsernames = new ArrayList<>();
+        for (Civilization civilization : getCivilizations()) {
+            playerUsernames.add(civilization.getPlayer().getUsername());
+        }
+        return playerUsernames;
+    }
+
+    public Civilization getCivilizationByUsername(String username) {
+        for (Civilization civilization : this.getCivilizations()) {
+            if (civilization.getPlayer().getUsername().equals(username)) return civilization;
+        }
+
+        return null;
     }
 }

@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.Gson;
 import controller.GameMenuController;
+import controller.GameObjectData;
 import controller.LobbyController;
 import controller.UserDatabaseController;
 import model.Lobby;
@@ -217,17 +218,20 @@ public class ServerAdapter {
 
         Lobby gameLobby = new Gson().fromJson((String) request.getParams().get("lobby"), Lobby.class);
 
+        Map.updateInstance(gameLobby.getSize());
+
         ArrayList<Civilization> civilizations = new ArrayList<>();
         for (int i = 0; i < gameLobby.getPlayerUsernames().size(); i++) {
             civilizations.add(new Civilization(UserDatabaseController.getUserByUsername(gameLobby.getPlayerUsernames().get(i)), i));
         }
 
-        Map.updateInstance(gameLobby.getSize());
         GameMenuController.updateInstance(civilizations);
         LobbyController.closeLobbyBeforeGame(gameLobby);
 
         for (String playerUsername : gameLobby.getPlayerUsernames()) {
-            //TODO sending game info
+            ServerThread serverThread = ServerManager.getInstance().getUserListenerServerThread(playerUsername);
+            serverThread.send("sending");
+            serverThread.sendObject(GameObjectData.getInstance());
         }
 
         return "game created successfully";

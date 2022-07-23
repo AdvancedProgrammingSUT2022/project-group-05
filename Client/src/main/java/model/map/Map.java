@@ -29,6 +29,15 @@ public class Map implements Serializable {
             }
         }
     }
+    private Map(int sizeOfMap, ArrayList<Tile> tiles) {
+        this.sizeOfMap = sizeOfMap;
+        gameMap = new Tile[sizeOfMap][sizeOfMap];
+        for (int i = 0; i < sizeOfMap; i++) {
+            for (int j = 0; j < sizeOfMap; j++) {
+                gameMap[i][j] = tiles.get((i * sizeOfMap) + j);
+            }
+        }
+    }
 
     public static void updateInstance(int sizeOfMap) {
         instance = new Map(sizeOfMap);
@@ -36,6 +45,9 @@ public class Map implements Serializable {
     }
     public static void updateInstance(Map map) {
         instance = map;
+    }
+    public static void updateInstance(int sizeOfMap, ArrayList<Tile> tiles) {
+        instance = new Map(sizeOfMap, tiles);
     }
 
     public static Map getInstance() {

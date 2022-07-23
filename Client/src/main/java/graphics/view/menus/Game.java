@@ -6,6 +6,8 @@ import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.TileMenu;
 import javafx.animation.ParallelTransition;
 import graphics.view.gameContents.UnitMenu;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.game.Civilization;
 
@@ -25,5 +27,6 @@ public class Game extends Pane {
         ParallelTransition end = AnimatedPane.getEndAnimation(this);
         start.play();
         this.getChildren().add(UnitMenu.getInstance());
+
     }
 }

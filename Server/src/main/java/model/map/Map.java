@@ -29,6 +29,15 @@ public class Map implements Serializable {
             }
         }
     }
+    private Map(int sizeOfMap, ArrayList<Tile> tiles) {
+        this.sizeOfMap = sizeOfMap;
+        gameMap = new Tile[sizeOfMap][sizeOfMap];
+        for (int i = 0; i < sizeOfMap; i++) {
+            for (int j = 0; j < sizeOfMap; j++) {
+                gameMap[i][j] = tiles.get((i * sizeOfMap) + j);
+            }
+        }
+    }
 
     public static void updateInstance(int sizeOfMap) {
         instance = new Map(sizeOfMap);
@@ -36,6 +45,9 @@ public class Map implements Serializable {
     }
     public static void updateInstance(Map map) {
         instance = map;
+    }
+    public static void updateInstance(int sizeOfMap, ArrayList<Tile> tiles) {
+        instance = new Map(sizeOfMap, tiles);
     }
 
     public static Map getInstance() {
@@ -56,17 +68,6 @@ public class Map implements Serializable {
         if (xPlace < 0 || xPlace >= this.sizeOfMap) return null;
         if (yPlace < 0 || yPlace >= this.sizeOfMap) return null;
         return gameMap[xPlace][yPlace];
-    }
-
-    //to find tile from two places , put the third negative
-    public Tile getTileFromMap(int xPlace, int yPlace, int zPlace) {
-        if (xPlace < 0) {
-            xPlace = 2 * (this.getSizeOfMap() - 1) - (yPlace + zPlace);
-        } else if (yPlace < 0) {
-            yPlace = 2 * (this.getSizeOfMap() - 1) - (xPlace + zPlace);
-        }
-
-        return getTileFromMap(xPlace, yPlace);
     }
 
 
@@ -144,7 +145,7 @@ public class Map implements Serializable {
 
         pathsMap.put(end, new Path(end));
 
-        return bestPathFindersBacktrack(start, end, remainingMP, pathsMap);
+        return bestPathFindersBacktrack(start, end, remainingMP);
     }
 
     // can't handle wrong input
@@ -195,11 +196,8 @@ public class Map implements Serializable {
     }*/
 
 
-    private Path bestPathFindersBacktrack(Tile start, Tile end, int remainingMP, HashMap<Tile, Path> pathsMap) {
-        if (pathsMap.containsKey(start)) {
-            return pathsMap.get(start);
-        }
-
+    private Path bestPathFindersBacktrack(Tile start, Tile end, int remainingMP) {
+        if (start.equals(end)) return new Path(end);
         if (remainingMP <= 0) return null;
 
         Tile[] neighbors = findNeighbors(start);
@@ -211,7 +209,7 @@ public class Map implements Serializable {
                 continue;
             }
             int MPLeft = remainingMP - Map.getInstance().getMPNeededBetweenTiles(start, neighbors[i]);
-            pathsFound[i] = bestPathFindersBacktrack(neighbors[i], end, MPLeft, pathsMap);
+            pathsFound[i] = bestPathFindersBacktrack(neighbors[i], end, MPLeft);
         }
 
         //creating paths from start to neighbor and then to end
@@ -220,7 +218,7 @@ public class Map implements Serializable {
             pathsFound[i] = new Path(start, pathsFound[i]);
         }
         //finding the path with minimum mp
-        int minMP = 100;
+        int minMP = 100000;
         int minMPIndex = 0;
         for (int i = 0; i < 6; i++) {
             if (pathsFound[i] == null) continue;
@@ -230,7 +228,6 @@ public class Map implements Serializable {
             }
         }
         //returning minimum value
-        pathsMap.put(start, pathsFound[minMPIndex]);
         return pathsFound[minMPIndex];
     }
 

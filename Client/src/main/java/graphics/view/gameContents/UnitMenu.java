@@ -1,9 +1,7 @@
 package graphics.view.gameContents;
 
-import client.Client;
 import client.ClientManager;
 import controller.UnitController;
-import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
@@ -19,7 +17,6 @@ import model.game.Civilization;
 import model.improvement.Improvement;
 import model.tile.Route;
 import model.tile.Tile;
-import model.unit.Unit;
 import model.unit.soldier.Soldier;
 
 import java.util.ArrayList;
@@ -75,7 +72,7 @@ public class UnitMenu extends Pane{
 
     private UnitMenu () {
 
-        unitController = UnitController.getInstance();
+        UnitMenu.this.update();
         int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2;
 
         this.setVisible(false);
@@ -134,7 +131,11 @@ public class UnitMenu extends Pane{
         move.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no target selected"));
+                    return;
+                }
                 String response = unitController.unitMove(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -147,7 +148,7 @@ public class UnitMenu extends Pane{
         sleep.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitSleep();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -160,7 +161,7 @@ public class UnitMenu extends Pane{
         alert.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitAlert();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -173,7 +174,7 @@ public class UnitMenu extends Pane{
         fortify.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitFortify();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -186,7 +187,7 @@ public class UnitMenu extends Pane{
         recover.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitRecover();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -199,7 +200,7 @@ public class UnitMenu extends Pane{
         garrison.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitGarrison();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -212,7 +213,7 @@ public class UnitMenu extends Pane{
         wake.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitWake();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -225,7 +226,7 @@ public class UnitMenu extends Pane{
         cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitCancel();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -238,7 +239,7 @@ public class UnitMenu extends Pane{
         foundCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitFoundCity();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -251,7 +252,7 @@ public class UnitMenu extends Pane{
         setupRanged.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitSetupRanged();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -264,7 +265,11 @@ public class UnitMenu extends Pane{
         attack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no target selected"));
+                    return;
+                }
                 String response = unitController.unitAttack(MapFX.getInstance().getSecondSelectedTile().getTile().getXPlace(), MapFX.getInstance().getSecondSelectedTile().getTile().getYPlace());
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -277,7 +282,11 @@ public class UnitMenu extends Pane{
         conquerCity.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
+                if (MapFX.getInstance().getSecondSelectedTile() == null) {
+                    new PopUp((Pane) UnitMenu.this.getParent(), new Error("error: no target selected"));
+                    return;
+                }
                 String response = unitController.conquerCity(MapFX.getInstance().getSecondSelectedTile().getTile().getCity(), (Soldier) unitController.getUnit());
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -292,7 +301,7 @@ public class UnitMenu extends Pane{
         buildImprovement.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 ArrayList<Improvement> improvements = new ArrayList<>();
                 Tile tile = unitController.getUnit().getTile();
                 Civilization civilization = unitController.getUnit().getCivilization();
@@ -326,7 +335,7 @@ public class UnitMenu extends Pane{
                         }
                     }
                 });
-                improvementPanel.lumber_mill.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                improvementPanel.lumberMill.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         String response = unitController.unitBuildImprovement(Improvement.LUMBER_MILL);
@@ -381,7 +390,7 @@ public class UnitMenu extends Pane{
                         }
                     }
                 });
-                improvementPanel.trading_post.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                improvementPanel.tradingPost.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         String response = unitController.unitBuildImprovement(Improvement.TRADING_POST);
@@ -399,7 +408,7 @@ public class UnitMenu extends Pane{
         buildRoute.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 boolean canRoad = false ;
                 boolean canRail = false;
                 if (unitController.getUnit().getCivilization().getResearchTree().isResearchDone(Route.ROAD.getNeededResearch()))
@@ -438,7 +447,7 @@ public class UnitMenu extends Pane{
         remove.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response;
                 switch (unitController.getUnit().getTile().getFeature()) {
                     case FOREST:
@@ -473,7 +482,7 @@ public class UnitMenu extends Pane{
         repair.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitRepair();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -486,7 +495,7 @@ public class UnitMenu extends Pane{
         delete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                unitController = UnitController.getInstance();
+                UnitMenu.this.update();
                 String response = unitController.unitDelete();
                 if (response.startsWith("error")) {
                     new PopUp((Pane)UnitMenu.this.getParent(), new Error(response));
@@ -495,8 +504,6 @@ public class UnitMenu extends Pane{
                 }
             }
         });
-
-
 
 
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -510,5 +517,9 @@ public class UnitMenu extends Pane{
 
         this.setLayoutX(2*bSize);
         this.setLayoutY(fromTop - 5*bSize);
+    }
+    
+    public void update() {
+        unitController = UnitController.getInstance();
     }
 }
