@@ -31,7 +31,7 @@ public class ServerManager {
 
     public boolean isUserOnline(String username) {
         for (ServerThread serverThread : serverThreads) {
-            if (serverThread.getUsername() != null && serverThread.getUsername().equals(username)) {
+            if (serverThread.getUsername() != null && serverThread.getUsername().equals(username) && serverThread.isAlive()) {
                 return true;
             }
         }

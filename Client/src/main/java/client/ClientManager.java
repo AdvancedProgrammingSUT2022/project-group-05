@@ -31,6 +31,7 @@ public class ClientManager{
     private final HashMap<String, Pane> panes;
     private final Stage mainStage;
     private final Scene mainScene;
+    private EventHandler<MouseEvent> handler = MouseEvent::consume;
 
     private User mainUser;
 
@@ -77,7 +78,7 @@ public class ClientManager{
         MapFX.getInstance().updateMapTextures();
         if (UnitController.getInstance() != null) {
             UnitMenu.getInstance().update();
-            UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
+            //UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
         }
         for (Node node : ((Pane) mainScene.getRoot()).getChildren()) {
             if (node instanceof MainPanel) {
@@ -87,8 +88,7 @@ public class ClientManager{
     }
 
     public void updateAll() {
-        if (getMainScene().getRoot() instanceof Game && GameMenuController.getInstance().getCurrentCivilizationController()
-                .getCivilization().getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())) {
+        if (getMainScene().getRoot() instanceof Game ) {
             Client.send("sending");
             Client.sendObject(GameObjectData.getInstance());
         }
@@ -115,7 +115,8 @@ public class ClientManager{
 
     //GETTER
     public User getMainUser() {
-        this.updateMainUser();
+        //debugging purpose
+        //this.updateMainUser();
         return this.mainUser;
     }
 
@@ -146,7 +147,15 @@ public class ClientManager{
         mainScene.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                if (mainScene.getRoot() instanceof Game) update();
+                if (mainScene.getRoot() instanceof Game) {
+                    update();
+                    if (GameMenuController.getInstance().getCurrentCivilizationController().getCivilization()
+                            .getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())){
+                        mainScene.getRoot().removeEventFilter(MouseEvent.ANY, handler);
+                    } else {
+                        mainScene.getRoot().addEventFilter(MouseEvent.ANY, handler);
+                    }
+                }
             }
         });
     }

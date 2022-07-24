@@ -5,22 +5,25 @@ import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class RoutePanel extends Pane {
 
     public ButtonOne road;
     public ButtonOne rail;
 
-    public RoutePanel(boolean canRoad, boolean canRail) {
+    public RoutePanel() {
+
+        this.setPrefWidth(600);
+        this.setPrefHeight(300);
+        this.getChildren().add(new Rectangle(600, 300, Color.WHITE));
+
         new LabelOne("ROUTE PANEL", StaticFonts.segoeLoad(20), Pos.CENTER,
-                300, 75, 200, 60, this);
+                300, 100, 200, 60, this);
         this.road = new ButtonOne("ROAD", StaticFonts.segoeLoad(20), Pos.CENTER,
-                225, 50, 150, 40, this);
+                225, 200, 150, 40, this);
         this.rail = new ButtonOne("RAIL", StaticFonts.segoeLoad(20), Pos.CENTER,
-                225, 50, 150, 40, this);
-        if (!canRoad)
-            road.setDisable(true);
-        if (!canRail)
-            rail.setDisable(true);
+                375, 200, 150, 40, this);
     }
 }

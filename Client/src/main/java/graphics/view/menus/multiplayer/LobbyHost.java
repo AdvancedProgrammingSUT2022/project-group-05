@@ -172,6 +172,11 @@ public class LobbyHost extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 Response response = Client.send(ClientAdapter.startGame(LobbyHost.this.getLobby()));
+                if (response.getMessage().startsWith("error")) {
+                    new PopUp(LobbyHost.this, new Error(response.getMessage()));
+                    return;
+                }
+                new PopUp(LobbyHost.this, new Successful(response.getMessage()));
             }
         });
     }
