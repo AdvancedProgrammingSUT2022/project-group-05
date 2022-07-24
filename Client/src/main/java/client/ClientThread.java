@@ -3,6 +3,7 @@ package client;
 import com.google.gson.Gson;
 import controller.GameMenuController;
 import controller.GameObjectData;
+import graphics.view.gameContents.MapFX;
 import graphics.view.menus.Game;
 import javafx.application.Platform;
 import model.Lobby;
@@ -29,18 +30,17 @@ public class ClientThread extends Thread { // This class is used for receiving d
         while (true) {
             try {
                 String input = dataInputStream.readUTF();
-                System.out.println(input + " is received");
                 if (input.equals("sending")) {
                     if (objectInputStream == null)
                         objectInputStream = new ObjectInputStream(listener.getInputStream());
                     GameObjectData gameObjectData = (GameObjectData) objectInputStream.readObject();
                     GameMenuController.updateInstance(gameObjectData.getGameMenuController());
                     Map.updateInstance(gameObjectData.getMap());
+                    MapFX.updateInstance();
                     ClientManager.getInstance().update();
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            System.out.println("in runnable");
                             ClientManager.getInstance().setPane(new Game(GameMenuController.getInstance()
                                 .getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername())));
                         }

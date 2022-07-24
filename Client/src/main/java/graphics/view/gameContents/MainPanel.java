@@ -10,6 +10,7 @@ import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
 import graphics.view.popUp.Setting;
 import graphics.view.popUp.research.ResearchPanel;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -99,11 +100,16 @@ public class MainPanel extends Pane {
     }
 
     public void updatePanel () {
-        year.changeText("YEAR : " + GameMenuController.getInstance().getCurrentYear());
-        gold.changeText("GOLD : " + civilization.getGold());
-        happiness.changeText("HAPPINESS : " + civilization.getHappiness());
-        research.changeText("RESEARCH : " + civilization.getResearchTree().getCurrentResearch() + " "
-                + civilization.getResearchTree().getResearchProgressPercentage() + "%");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                year.changeText("YEAR : " + GameMenuController.getInstance().getCurrentYear());
+                gold.changeText("GOLD : " + civilization.getGold());
+                happiness.changeText("HAPPINESS : " + civilization.getHappiness());
+                research.changeText("RESEARCH : " + civilization.getResearchTree().getCurrentResearch() + " "
+                        + civilization.getResearchTree().getResearchProgressPercentage() + "%");
+            }
+        });
 
     }
 }

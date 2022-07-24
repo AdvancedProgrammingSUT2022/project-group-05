@@ -28,6 +28,7 @@ public class ServerThread extends Thread {
         try {
             while (true) {
                 String input = dataInputStream.readUTF();
+                System.out.println(input + " is received in serverThread");
                 if (input.equals("sending")) {
                     Response response = new Response();
                     response.setMessage("OK");

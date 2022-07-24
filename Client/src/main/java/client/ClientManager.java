@@ -88,8 +88,7 @@ public class ClientManager{
     }
 
     public void updateAll() {
-        if (getMainScene().getRoot() instanceof Game && GameMenuController.getInstance().getCurrentCivilizationController()
-                .getCivilization().getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())) {
+        if (getMainScene().getRoot() instanceof Game ) {
             Client.send("sending");
             Client.sendObject(GameObjectData.getInstance());
         }
@@ -116,7 +115,8 @@ public class ClientManager{
 
     //GETTER
     public User getMainUser() {
-        this.updateMainUser();
+        //debugging purpose
+        //this.updateMainUser();
         return this.mainUser;
     }
 
