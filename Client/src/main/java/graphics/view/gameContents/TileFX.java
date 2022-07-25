@@ -211,8 +211,8 @@ public class TileFX extends Group {
                     }
                 }
 
-                if (MapFX.getInstance().getFirstSelectedTile() == null) TileMenu.getInstance().setVisible(false);
-                else TileMenu.getInstance().setVisible(true);
+                if (MapFX.getInstance().getFirstSelectedTile() == null) TileMenu.getInstance().close();
+                else TileMenu.getInstance().open();
             }
         });
     }

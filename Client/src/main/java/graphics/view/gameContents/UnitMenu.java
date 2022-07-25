@@ -7,12 +7,15 @@ import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import graphics.view.popUp.*;
 import graphics.view.popUp.Error;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.game.Civilization;
 import model.improvement.Improvement;
 import model.tile.Route;
@@ -529,7 +532,7 @@ public class UnitMenu extends Pane{
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                UnitMenu.getInstance().setVisible(false);
+                UnitMenu.this.close();
                 System.out.println(UnitMenu.getInstance().isVisible());
             }
         });
@@ -542,5 +545,26 @@ public class UnitMenu extends Pane{
     
     public void update() {
         unitController = UnitController.getInstance();
+    }
+
+    public void close () {
+        FadeTransition end = new FadeTransition(new Duration(500), this);
+        end.setFromValue(1);
+        end.setToValue(0);
+        end.play();
+        end.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                instance.setVisible(false);
+            }
+        });
+        end.play();
+    }
+    public void open () {
+        this.setVisible(true);
+        FadeTransition start = new FadeTransition(new Duration(500), this);
+        start.setFromValue(0);
+        start.setToValue(1);
+        start.play();
     }
 }

@@ -8,12 +8,15 @@ import graphics.statics.StaticFonts;
 import graphics.view.popUp.*;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.city.CityPanel;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.game.City;
 import model.map.FogOfWarStates;
 import model.tile.Tile;
@@ -40,8 +43,8 @@ public class TileMenu extends Pane {
     private ButtonTwo selSol;
     private ButtonTwo exit;
 
-    private TileMenu () {
 
+    private TileMenu () {
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
         int fromTop= (int) ClientManager.getInstance().getMainStage().getHeight();
         this.setVisible(false);
@@ -79,7 +82,7 @@ public class TileMenu extends Pane {
         exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setVisible(false);
+                TileMenu.this.close();
                 MapFX.getInstance().getFirstSelectedTile().setSelectedDisable();
                 MapFX.getInstance().setFirstSelectedTile(null);
                 //can add animation here
@@ -143,7 +146,7 @@ public class TileMenu extends Pane {
 
 //                ((Pane) TileMenu.this.getParent()).getChildren().add(UnitMenu.getInstance());
                 UnitMenu.getInstance().setName(UnitController.getInstance().getUnit().toString());
-                UnitMenu.getInstance().setVisible(true);
+                UnitMenu.getInstance().open();
             }
         });
         selCiv.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -161,7 +164,7 @@ public class TileMenu extends Pane {
                 //TODO city panel tor
 //                new PopUp((Pane) TileMenu.this.getParent(), UnitMenu.getInstance());
                 UnitMenu.getInstance().setName(UnitController.getInstance().getUnit().toString());
-                UnitMenu.getInstance().setVisible(true);
+                UnitMenu.getInstance().open();
             }
         });
 
@@ -188,5 +191,26 @@ public class TileMenu extends Pane {
 
         this.setLayoutX(fromLeft - 4*bSize);
         this.setLayoutY(fromTop - 40 - bSize);
+    }
+
+    public void close () {
+        FadeTransition end = new FadeTransition(new Duration(500), this);
+        end.setFromValue(1);
+        end.setToValue(0);
+        end.play();
+        end.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                instance.setVisible(false);
+            }
+        });
+        end.play();
+    }
+    public void open () {
+        this.setVisible(true);
+        FadeTransition start = new FadeTransition(new Duration(500), this);
+        start.setFromValue(0);
+        start.setToValue(1);
+        start.play();
     }
 }
