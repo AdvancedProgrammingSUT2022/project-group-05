@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.User;
 import model.game.Civilization;
 import model.map.Map;
 
@@ -75,20 +76,74 @@ public class LocalGame extends Pane {
                 end.setOnFinished(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //Debugging purposes
-                        Map.updateInstance(10);
+                        if (size == 1) {
+                            Map.updateInstance(10);
+                        } else if (size == 2) {
+                            Map.updateInstance(15);
+                        } else if (size == 3) {
+                            Map.updateInstance(20);
+                        }
                         Civilization civilization1 = new Civilization(ClientManager.getInstance().getMainUser(), 0);
-                        Civilization civilization2 = new Civilization(ClientManager.getUserByUsername("sam"), 1);
+                        Civilization civilization2 = new Civilization(new User("player2", "player2", "player2", null, 0), 1);
+                        Civilization civilization3 = new Civilization(new User("player3", "player3", "player3", null, 0), 2);
+                        Civilization civilization4 = new Civilization(new User("player4", "player4", "player4", null, 0), 3);
                         ArrayList<Civilization> civilizations = new ArrayList<>();
                         civilizations.add(civilization1);
-                        civilizations.add(civilization2);
+                        if (players >= 2)
+                            civilizations.add(civilization2);
+                        if (players >= 3)
+                            civilizations.add(civilization3);
+                        if (players >= 4)
+                            civilizations.add(civilization4);
                         GameMenuController.updateInstance(civilizations);
-                        ClientManager.getInstance().setPane(new Game(civilization1));
                         GameMenuController.getInstance().nextCivilization();
-                        MapFX.getInstance().updateMapTextures();
+                        ClientManager.getInstance().setPane(new Game(civilization1, true));
+                        MapFX.getInstance().updateMapTextures(true);
                     }
                 });
                 end.play();
+            }
+        });
+
+        two.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LocalGame.this.players = 2;
+            }
+        });
+
+        three.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LocalGame.this.players = 3;
+            }
+        });
+
+        four.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LocalGame.this.players = 4;
+            }
+        });
+
+        small.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LocalGame.this.size = 1;
+            }
+        });
+
+        medium.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LocalGame.this.size = 2;
+            }
+        });
+
+        big.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                LocalGame.this.size = 3;
             }
         });
 

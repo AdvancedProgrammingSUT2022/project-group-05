@@ -38,12 +38,12 @@ public class ClientThread extends Thread { // This class is used for receiving d
                     GameMenuController.updateInstance(gameObjectData.getGameMenuController());
                     Map.updateInstance(gameObjectData.getMap());
                     MapFX.updateInstance();
-                    ClientManager.getInstance().update();
+                    ClientManager.getInstance().update(false);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             ClientManager.getInstance().setPane(new Game(GameMenuController.getInstance()
-                                .getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername())));
+                                .getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername()), false));
                         }
                     });
                 } else if (input != null){
