@@ -82,8 +82,8 @@ public class ClientManager{
     }
 
 
-    public void update() {
-        MapFX.getInstance().updateMapTextures();
+    public void update(boolean isLocal) {
+        MapFX.getInstance().updateMapTextures(isLocal);
         if (UnitController.getInstance() != null) {
             UnitMenu.getInstance().update();
             //UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
@@ -156,12 +156,16 @@ public class ClientManager{
             @Override
             public void handle(MouseEvent event) {
                 if (mainScene.getRoot() instanceof Game) {
-                    update();
+                    update(((Game) mainScene.getRoot()).isLocal);
                     if (GameMenuController.getInstance().getCurrentCivilizationController().getCivilization()
                             .getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())){
-                        mainScene.getRoot().removeEventFilter(MouseEvent.ANY, handler);
+                        if (!((Game) mainScene.getRoot()).isLocal) {
+                            mainScene.getRoot().removeEventFilter(MouseEvent.ANY, handler);
+                        }
                     } else {
-                        mainScene.getRoot().addEventFilter(MouseEvent.ANY, handler);
+                        if (!((Game) mainScene.getRoot()).isLocal) {
+                            mainScene.getRoot().addEventFilter(MouseEvent.ANY, handler);
+                        }
                     }
                 }
             }

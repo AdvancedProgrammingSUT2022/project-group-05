@@ -216,10 +216,15 @@ public class TileFX extends Group {
         });
     }
 
-    public void updateTexture () {
-        FogOfWarStates fogOfWarStates = GameMenuController.getInstance().getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername())
-                .getFogOfWar()[tile.getXPlace()][tile.getYPlace()];
-
+    public void updateTexture (boolean isLocal) {
+        FogOfWarStates fogOfWarStates;
+        if (!isLocal) {
+            fogOfWarStates = GameMenuController.getInstance().getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername())
+                    .getFogOfWar()[tile.getXPlace()][tile.getYPlace()];
+        } else {
+            fogOfWarStates = GameMenuController.getInstance().getCurrentCivilizationController().getCivilization()
+                    .getFogOfWar()[tile.getXPlace()][tile.getYPlace()];
+        }
         String cityString = "";
         if (tile.hasCity()) {
             cityString = tile.getCity().getName();

@@ -11,15 +11,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.game.Civilization;
 
+import java.util.ArrayList;
+
 public class Game extends Pane {
-    public Game (Civilization civilization) {
+
+    public boolean isLocal;
+
+    public Game (Civilization civilization, boolean isLocal) {
+
+        this.isLocal = isLocal;
 
         this.setScaleX(ClientManager.getInstance().getMainStage().getWidth() / 1920);
         this.setScaleY(ClientManager.getInstance().getMainStage().getHeight() / 1080);
 
-
+        MapFX.getInstance().updateMapTextures(isLocal);
         this.getChildren().add(MapFX.getInstance());
-        this.getChildren().add(new MainPanel(civilization));
+        this.getChildren().add(new MainPanel(civilization, isLocal));
         this.getChildren().add(TileMenu.getInstance());
 
         //ANIMATION

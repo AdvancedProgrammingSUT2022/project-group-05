@@ -84,13 +84,17 @@ public class MapFX extends Pane {
         return secondSelectedTile;
     }
 
-    public void updateMapTextures () {
-        FogOfWar.updateFogOfWar(GameMenuController.getInstance().getCivilizationByUsername(ClientManager
-                .getInstance().getMainUser().getUsername()));
+    public void updateMapTextures (boolean isLocal) {
+        if (!isLocal) {
+            FogOfWar.updateFogOfWar(GameMenuController.getInstance().getCivilizationByUsername(ClientManager
+                    .getInstance().getMainUser().getUsername()));
+        } else {
+            FogOfWar.updateFogOfWar(GameMenuController.getInstance().getCurrentCivilizationController().getCivilization());
+        }
         int mapSize = Map.getInstance().getSizeOfMap();
         for (int i = 0; i < mapSize; i++) {
             for (int j = 0; j < mapSize; j++) {
-                tileFXES[i][j].updateTexture();
+                tileFXES[i][j].updateTexture(isLocal);
             }
         }
     }
