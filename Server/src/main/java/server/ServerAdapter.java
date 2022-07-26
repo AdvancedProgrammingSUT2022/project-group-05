@@ -116,6 +116,7 @@ public class ServerAdapter {
         UserDatabaseController.addFriend(friendUser, username);
         UserDatabaseController.addFriend(user, friendUsername);
         UserDatabaseController.removeInvitingFriend(user, friendUsername);
+        ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(new Request("updateProfileMenu").convertToJson());
         return "friend added successfully";
     }
 
@@ -126,6 +127,7 @@ public class ServerAdapter {
         User user = UserDatabaseController.getUserByUsername(username);
         UserDatabaseController.removeFriend(friendUser, username);
         UserDatabaseController.removeFriend(user, friendUsername);
+        ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(new Request("updateProfileMenu").convertToJson());
         return "friend removed successfully";
     }
 
@@ -166,6 +168,8 @@ public class ServerAdapter {
         if (username.equals(friendUsername))
             return "error: you can't invite yourself!";
         UserDatabaseController.addInvitingFriend(friendUser, username);
+        Request inviteRequest = new Request("updateProfileMenu");
+        ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(inviteRequest.convertToJson());
         return "friend invited successfully";
     }
 

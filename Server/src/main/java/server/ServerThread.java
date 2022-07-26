@@ -100,7 +100,6 @@ public class ServerThread extends Thread {
             response.setMessage(message);
         }
         if (request.getAction().equals("removeFriend")) {
-
             message = ServerAdapter.removeFriend(request);
             response.setMessage(message);
         }

@@ -109,6 +109,7 @@ public class MainMenu extends Pane{
                 end.setOnFinished(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        ClientManager.getInstance().updateMainUser();
                         ClientManager.getInstance().setPane(new ProfileMenu());
                     }
                 });
