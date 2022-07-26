@@ -8,6 +8,7 @@ import graphics.view.gameContents.MainPanel;
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.Game;
+import graphics.view.menus.ProfileMenu;
 import graphics.view.menus.Scoreboard.ScoreboardMenu;
 import graphics.view.menus.multiplayer.LobbyGuest;
 import graphics.view.menus.multiplayer.LobbyHost;
@@ -38,6 +39,13 @@ public class ClientManager{
     public void updateScoreboard() {
         if (this.getMainScene().getRoot() instanceof ScoreboardMenu)
             ((ScoreboardMenu) this.getMainScene().getRoot()).updateScoreBoard();
+    }
+
+    public void updateProfileMenu() {
+        if (this.getMainScene().getRoot() instanceof ProfileMenu) {
+            ((ProfileMenu) this.getMainScene().getRoot()).update();
+        }
+
     }
 
     public void addPane(String name, Pane pane) {
