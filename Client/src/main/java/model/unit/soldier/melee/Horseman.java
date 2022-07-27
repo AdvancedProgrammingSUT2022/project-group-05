@@ -15,7 +15,7 @@ public class Horseman extends Melee implements Mounted, CanMoveAfterAttacking, N
         this.initialCost = cost;
         this.meleeStrength = 12;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 4;
         this.requiredResource = Resource.HORSE;
         this.requiredResearch = Research.HORSEBACK_RIDING;

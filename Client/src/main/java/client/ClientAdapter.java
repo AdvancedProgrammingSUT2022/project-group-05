@@ -48,6 +48,13 @@ public class ClientAdapter {
         return request.convertToJson();
     }
 
+    public static String changeScore(int score, String username) {
+        Request request = new Request("changeScore");
+        request.addParams("score", score);
+        request.addParams("username", username);
+        return request.convertToJson();
+    }
+
     public static String changeImage(String newImageAddress, String username) {
         Request request = new Request("changeImage");
         request.addParams("newImageAddress", newImageAddress);

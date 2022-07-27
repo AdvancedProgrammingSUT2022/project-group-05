@@ -10,7 +10,7 @@ public class Warrior extends Melee {
         this.initialCost = cost;
         this.meleeStrength = 6;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 2;
 
         this.textureAddress = "file:src/main/resources/images/units/melee/Warrior/";

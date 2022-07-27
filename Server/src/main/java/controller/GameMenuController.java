@@ -102,6 +102,11 @@ public class GameMenuController implements Serializable {
         this.currentCivilizationController = civilizationControllers.get(currentTurn); // change civilization for new turn
         this.currentCivilizationController.getCivilization().applyNewTurnChanges(currentYear); // add production and gold and ... and progress productions
 
+        if (currentCivilizationController.getCivilization().isLost()) {
+            nextCivilization();
+            return "you are lost";
+        }
+
         CityController.updateInstance(null); // deselect city in new turn
         UnitController.updateInstance(null); // deselect unit in new turn
 
@@ -112,6 +117,8 @@ public class GameMenuController implements Serializable {
 //            this.currentCivilizationController.getCivilization().save();
 //        }
 
+        //debugging
+        System.out.println(this.whoseTurnIsIt());
         return this.whoseTurnIsIt();
     }
 

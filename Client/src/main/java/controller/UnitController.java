@@ -179,7 +179,12 @@ public class UnitController{
         this.setDefenceBonusInFortifyState(0);
 
 
-        this.attack(soldier, end.getSoldier());
+        if (end.hasSoldier()) this.attack(soldier, end.getSoldier());
+        else {
+            end.getCivilian().getCivilization().removeUnit(end.getCivilian());
+            end.getCivilian().setCivilization(soldier.getCivilization());
+            soldier.getCivilization().addUnit(end.getCivilian());
+        }
 
         return Responses.UNIT_ATTACKED.getResponse();
     }

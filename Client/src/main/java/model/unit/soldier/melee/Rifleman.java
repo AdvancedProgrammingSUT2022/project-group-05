@@ -11,7 +11,7 @@ public class Rifleman extends Melee {
         this.initialCost = cost;
         this.meleeStrength = 25;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 2;
         this.requiredResearch = Research.RIFLING;
 

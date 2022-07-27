@@ -13,7 +13,7 @@ public class Tank extends Melee implements CanMoveAfterAttacking, model.unit.add
         this.initialCost = cost;
         this.meleeStrength = 50;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 4;
         this.requiredResearch = Research.COMBUSTION;
 

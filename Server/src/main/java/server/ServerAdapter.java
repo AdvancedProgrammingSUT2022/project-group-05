@@ -102,6 +102,16 @@ public class ServerAdapter {
         return "image changed successfully";
     }
 
+    public static String changeScore(Request request) {
+        HashMap<String, Object> params = request.getParams();
+        double score = (double) params.get("score");
+        String username = (String) params.get("username");
+
+        User user = UserDatabaseController.getUserByUsername(username);
+        UserDatabaseController.increaseScore(user, (int) score);
+        return "score increases successfully";
+    }
+
     public static String getUsers(Request request) {
         ArrayList<HashMap<String, String>> users = UserDatabaseController.loadDatabase();
         Gson gson = new Gson();
@@ -116,7 +126,8 @@ public class ServerAdapter {
         UserDatabaseController.addFriend(friendUser, username);
         UserDatabaseController.addFriend(user, friendUsername);
         UserDatabaseController.removeInvitingFriend(user, friendUsername);
-        ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(new Request("updateProfileMenu").convertToJson());
+        if (ServerManager.getInstance().isUserOnline(friendUsername))
+            ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(new Request("updateProfileMenu").convertToJson());
         return "friend added successfully";
     }
 
@@ -127,7 +138,8 @@ public class ServerAdapter {
         User user = UserDatabaseController.getUserByUsername(username);
         UserDatabaseController.removeFriend(friendUser, username);
         UserDatabaseController.removeFriend(user, friendUsername);
-        ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(new Request("updateProfileMenu").convertToJson());
+        if (ServerManager.getInstance().isUserOnline(friendUsername))
+            ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(new Request("updateProfileMenu").convertToJson());
         return "friend removed successfully";
     }
 
@@ -169,7 +181,8 @@ public class ServerAdapter {
             return "error: you can't invite yourself!";
         UserDatabaseController.addInvitingFriend(friendUser, username);
         Request inviteRequest = new Request("updateProfileMenu");
-        ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(inviteRequest.convertToJson());
+        if (ServerManager.getInstance().isUserOnline(friendUsername))
+            ServerManager.getInstance().getUserListenerServerThread(friendUsername).send(inviteRequest.convertToJson());
         return "friend invited successfully";
     }
 
@@ -277,5 +290,4 @@ public class ServerAdapter {
             }
         }
     }
-
 }
