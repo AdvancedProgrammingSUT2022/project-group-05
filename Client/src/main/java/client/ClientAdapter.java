@@ -6,7 +6,7 @@ import model.Lobby;
 
 import java.net.SocketException;
 
-public class    ClientAdapter {
+public class ClientAdapter {
 
     public static String login(String username, String password) {
         Request request = new Request("login");

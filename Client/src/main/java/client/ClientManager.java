@@ -8,6 +8,7 @@ import graphics.view.gameContents.MainPanel;
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.Game;
+import graphics.view.menus.ProfileMenu;
 import graphics.view.menus.Scoreboard.ScoreboardMenu;
 import graphics.view.menus.multiplayer.LobbyGuest;
 import graphics.view.menus.multiplayer.LobbyHost;
@@ -38,6 +39,13 @@ public class ClientManager{
     public void updateScoreboard() {
         if (this.getMainScene().getRoot() instanceof ScoreboardMenu)
             ((ScoreboardMenu) this.getMainScene().getRoot()).updateScoreBoard();
+    }
+
+    public void updateProfileMenu() {
+        if (this.getMainScene().getRoot() instanceof ProfileMenu) {
+            ((ProfileMenu) this.getMainScene().getRoot()).update();
+        }
+
     }
 
     public void addPane(String name, Pane pane) {
@@ -74,8 +82,8 @@ public class ClientManager{
     }
 
 
-    public void update() {
-        MapFX.getInstance().updateMapTextures();
+    public void update(boolean isLocal) {
+        MapFX.getInstance().updateMapTextures(isLocal);
         if (UnitController.getInstance() != null) {
             UnitMenu.getInstance().update();
             //UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
@@ -148,12 +156,16 @@ public class ClientManager{
             @Override
             public void handle(MouseEvent event) {
                 if (mainScene.getRoot() instanceof Game) {
-                    update();
+                    update(((Game) mainScene.getRoot()).isLocal);
                     if (GameMenuController.getInstance().getCurrentCivilizationController().getCivilization()
                             .getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())){
-                        mainScene.getRoot().removeEventFilter(MouseEvent.ANY, handler);
+                        if (!((Game) mainScene.getRoot()).isLocal) {
+                            mainScene.getRoot().removeEventFilter(MouseEvent.ANY, handler);
+                        }
                     } else {
-                        mainScene.getRoot().addEventFilter(MouseEvent.ANY, handler);
+                        if (!((Game) mainScene.getRoot()).isLocal) {
+                            mainScene.getRoot().addEventFilter(MouseEvent.ANY, handler);
+                        }
                     }
                 }
             }

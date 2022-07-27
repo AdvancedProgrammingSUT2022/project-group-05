@@ -5,6 +5,7 @@ import controller.GameMenuController;
 import controller.GameObjectData;
 import graphics.view.gameContents.MapFX;
 import graphics.view.menus.Game;
+import graphics.view.menus.ProfileMenu;
 import javafx.application.Platform;
 import model.Lobby;
 import model.map.Map;
@@ -37,12 +38,12 @@ public class ClientThread extends Thread { // This class is used for receiving d
                     GameMenuController.updateInstance(gameObjectData.getGameMenuController());
                     Map.updateInstance(gameObjectData.getMap());
                     MapFX.updateInstance();
-                    ClientManager.getInstance().update();
+                    ClientManager.getInstance().update(false);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             ClientManager.getInstance().setPane(new Game(GameMenuController.getInstance()
-                                .getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername())));
+                                .getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername()), false));
                         }
                     });
                 } else if (input != null){
@@ -55,7 +56,7 @@ public class ClientThread extends Thread { // This class is used for receiving d
         }
     }
 
-    public void handleRequest(Request request) {
+    public void handleRequest(Request request) throws NoSuchMethodException {
         if (request.getAction().equals("invite")) { //when server wants to add invitation to client
             Gson gson = new Gson();
             Lobby lobby = gson.fromJson((String) request.getParams().get("lobby"), Lobby.class);
@@ -75,6 +76,9 @@ public class ClientThread extends Thread { // This class is used for receiving d
         }
         if (request.getAction().equals("updateScoreboard")) {
             ClientManager.getInstance().updateScoreboard();
+        }
+        if (request.getAction().equals("updateProfileMenu")) {
+            ClientManager.getInstance().updateProfileMenu();
         }
     }
 }

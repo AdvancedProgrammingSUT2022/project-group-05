@@ -1,12 +1,12 @@
 package graphics.view.menus;
 
 //import controller.UserDatabaseController;
+import client.*;
 import com.google.gson.Gson;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelOne;
 import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
-import client.ClientManager;
 import graphics.view.popUp.*;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
@@ -22,9 +22,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import client.Client;
-import client.ClientAdapter;
-import client.Response;
 import model.User;
 
 import java.io.File;
@@ -175,18 +172,13 @@ public class ProfileMenu extends Pane{
                 @Override
                 public void handle(MouseEvent event) {
                     Client.send(ClientAdapter.removeFriend(friendsPane.getFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
+                    ClientManager.getInstance().updateMainUser();
                     ProfileMenu.this.setFriendsControl();
                 }
             });
         }
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                friendsControl.setItems(FXCollections.observableArrayList(friendsPanes));
-            }
-        });
-
+        friendsControl.setItems(FXCollections.observableArrayList(friendsPanes));
         this.getChildren().add(friendsControl);
 
     }
@@ -214,6 +206,7 @@ public class ProfileMenu extends Pane{
                 @Override
                 public void handle(MouseEvent event) {
                     Client.send(ClientAdapter.addFriend(invitingFriendsPane.getInvitingFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
+                    ClientManager.getInstance().updateMainUser();
                     ProfileMenu.this.setInvitingFriendsControl();
                     ProfileMenu.this.setFriendsControl();
                 }
@@ -222,18 +215,26 @@ public class ProfileMenu extends Pane{
                 @Override
                 public void handle(MouseEvent event) {
                     Client.send(ClientAdapter.rejectFriend(invitingFriendsPane.getInvitingFriendUsername(), ClientManager.getInstance().getMainUser().getUsername()));
+                    ClientManager.getInstance().updateMainUser();
                     ProfileMenu.this.setInvitingFriendsControl();
                 }
             });
         }
 
+
+        invitingFriendsControl.setItems(FXCollections.observableArrayList(invitingFriendsPanes));
+
+        this.getChildren().add(invitingFriendsControl);
+    }
+
+    public void update() {
+        ClientManager.getInstance().updateMainUser();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                invitingFriendsControl.setItems(FXCollections.observableArrayList(invitingFriendsPanes));
+                ProfileMenu.this.setFriendsControl();
+                ProfileMenu.this.setInvitingFriendsControl();
             }
         });
-
-        this.getChildren().add(invitingFriendsControl);
     }
 }

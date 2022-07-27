@@ -5,6 +5,7 @@ import controller.GameMenuController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.labels.LabelTwo;
 import graphics.statics.StaticFonts;
+import graphics.view.menus.Game;
 import graphics.view.popUp.CheatCode;
 import graphics.view.popUp.Error;
 import graphics.view.popUp.PopUp;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.game.Civilization;
+import model.map.Map;
 
 //TODO add functions and data's
 
@@ -34,7 +36,10 @@ public class MainPanel extends Pane {
     private LabelTwo year;
     private ButtonOne endTurn;
 
-    public MainPanel (Civilization civilization) {
+    private boolean isLocal;
+
+    public MainPanel (Civilization civilization, boolean isLocal) {
+        this.isLocal = isLocal;
         this.civilization = civilization;
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
 
@@ -72,7 +77,13 @@ public class MainPanel extends Pane {
                     return;
                 }
 
-                ClientManager.getInstance().updateAll();
+                if (!isLocal) {
+                    ClientManager.getInstance().updateAll();
+                } else {
+                    ClientManager.getInstance().update(true);
+                    MapFX.updateInstance();
+                    ClientManager.getInstance().setPane(new Game(GameMenuController.getInstance().getCurrentCivilizationController().getCivilization(), true));
+                }
             }
         });
         cheatCode.setOnMouseClicked(new EventHandler<MouseEvent>() {
