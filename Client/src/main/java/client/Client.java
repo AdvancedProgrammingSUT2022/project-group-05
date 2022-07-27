@@ -1,5 +1,6 @@
 package client;
 
+import graphics.statics.StaticSounds;
 import graphics.view.menus.LoginMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -78,6 +79,7 @@ public class Client extends Application {
 
         ClientManager.updateInstance(primaryStage, primaryScene);
         ClientManager.getInstance().setPane(new LoginMenu());
+        StaticSounds.mainTheme();
 
         primaryStage.show();
     }
