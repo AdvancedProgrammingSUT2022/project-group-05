@@ -3,6 +3,7 @@ package graphics.view.menus;
 import client.Client;
 import client.ClientAdapter;
 import graphics.objects.buttons.ButtonOne;
+import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.menus.Scoreboard.ScoreboardMenu;
@@ -31,11 +32,15 @@ public class MainMenu extends Pane{
         //OBJECTS
 
         Circle circle = new Circle();
+        LabelOne loginUserName = new LabelOne(ClientManager.getInstance().getMainUser().getNickname(), StaticFonts.segoeLoad(20), Pos.CENTER,
+                960, 250, 400, 40, this);
         String imageAddress = ClientManager.getInstance().getMainUser().getImageAddress();
         try {
             FileInputStream image = new FileInputStream(imageAddress);
             ImagePattern imagePattern = new ImagePattern(new Image(image));
             circle.setFill(imagePattern);
+            circle.setLayoutX(860);
+            circle.setLayoutY(20);
             circle.setRadius(100);
             circle.setCenterX(100);
             circle.setCenterY(100);
@@ -45,17 +50,17 @@ public class MainMenu extends Pane{
         }
 
         ButtonOne startGame = new ButtonOne("LOCAL", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft, fromTop - 50, 600, 80, this);
+                fromLeft, fromTop + 100, 400, 80, this);
         ButtonOne startMultiplayerGame = new ButtonOne("MULTIPLAYER", StaticFonts.segoeLoad(40), Pos.CENTER,
-                fromLeft, fromTop + 50, 600, 80, this);
+                fromLeft, fromTop + 200, 400, 80, this);
         ButtonOne scoreBoard = new ButtonOne("SCOREBOARD", StaticFonts.segoeLoad(20), Pos.CENTER,
-                fromLeft, fromTop + 350, 200, 50, this);
+                fromLeft, fromTop + 450, 200, 50, this);
         ButtonOne profile = new ButtonOne("PROFILE", StaticFonts.segoeLoad(20), Pos.CENTER,
-                fromLeft, fromTop + 410, 200, 50, this);
+                fromLeft, fromTop + 510, 200, 50, this);
         ButtonOne chat = new ButtonOne("CHAT", StaticFonts.segoeLoad(20), Pos.CENTER,
-                fromLeft, fromTop + 470, 200, 50, this);
+                fromLeft, fromTop + 570, 200, 50, this);
         ButtonOne logout = new ButtonOne("LOGOUT", StaticFonts.segoeLoad(15), Pos.CENTER,
-                fromLeft, fromTop + 600, 100, 50, this);
+                fromLeft, fromTop + 750, 100, 50, this);
 
         //ANIMATION
         ParallelTransition start = AnimatedPane.getStartAnimation(this);
