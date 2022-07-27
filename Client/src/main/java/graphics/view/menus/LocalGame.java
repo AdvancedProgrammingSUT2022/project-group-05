@@ -5,6 +5,7 @@ import controller.GameMenuController;
 import graphics.objects.buttons.ButtonOne;
 import graphics.objects.buttons.ButtonTwo;
 import graphics.objects.labels.LabelOne;
+import graphics.objects.textFields.TextFieldOne;
 import graphics.statics.StaticFonts;
 import client.ClientManager;
 import graphics.view.gameContents.MapFX;
@@ -39,6 +40,9 @@ public class LocalGame extends Pane {
     ButtonOne createGame;
     ButtonOne back;
 
+    LabelOne numberOfPlayer;
+    LabelOne mapSize;
+
     public LocalGame() {
 
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
@@ -59,6 +63,11 @@ public class LocalGame extends Pane {
                 fromLeft + 280, 500, 400, 60, this);
         four = new ButtonTwo("4 PLAYERS", StaticFonts.segoeLoad(40), Pos.CENTER,
                 fromLeft + 280, 600, 400, 60, this);
+
+        mapSize = new LabelOne("Medium map 15x15", StaticFonts.segoeLoad(20), Pos.CENTER,
+                680, 250, 1000, 60, this);
+        numberOfPlayer = new LabelOne("Three player", StaticFonts.segoeLoad(20), Pos.CENTER,
+                680, 320, 1000, 60, this);
 
         createGame = new ButtonOne("CREATE GAME", StaticFonts.segoeLoad(50), Pos.CENTER,
                 fromLeft, 800, 600, 70, this);
@@ -109,6 +118,7 @@ public class LocalGame extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 LocalGame.this.players = 2;
+                numberOfPlayer.setText("Two player");
             }
         });
 
@@ -116,6 +126,7 @@ public class LocalGame extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 LocalGame.this.players = 3;
+                numberOfPlayer.setText("Three player");
             }
         });
 
@@ -123,6 +134,7 @@ public class LocalGame extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 LocalGame.this.players = 4;
+                numberOfPlayer.setText("Four player");
             }
         });
 
@@ -130,6 +142,7 @@ public class LocalGame extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 LocalGame.this.size = 1;
+                mapSize.setText("Small map 10x10");
             }
         });
 
@@ -137,6 +150,7 @@ public class LocalGame extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 LocalGame.this.size = 2;
+                mapSize.setText("Medium map 15x15");
             }
         });
 
@@ -144,6 +158,7 @@ public class LocalGame extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 LocalGame.this.size = 3;
+                mapSize.setText("Big map 20x20");
             }
         });
 
