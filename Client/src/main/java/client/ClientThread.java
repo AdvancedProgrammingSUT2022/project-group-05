@@ -36,6 +36,9 @@ public class ClientThread extends Thread { // This class is used for receiving d
                         objectInputStream = new ObjectInputStream(listener.getInputStream());
                     GameObjectData gameObjectData = (GameObjectData) objectInputStream.readObject();
                     GameMenuController.updateInstance(gameObjectData.getGameMenuController());
+
+                    if (GameMenuController.getInstance().isGameOver()) return;
+
                     Map.updateInstance(gameObjectData.getMap());
                     MapFX.updateInstance();
                     ClientManager.getInstance().update(false);

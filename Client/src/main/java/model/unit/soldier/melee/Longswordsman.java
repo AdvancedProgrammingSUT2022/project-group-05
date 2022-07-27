@@ -12,7 +12,7 @@ public class Longswordsman extends Melee {
         this.initialCost = cost;
         this.meleeStrength = 18;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 3;
         this.requiredResource = Resource.IRON;
         this.requiredResearch = Research.STEEL;

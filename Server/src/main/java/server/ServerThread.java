@@ -43,6 +43,7 @@ public class ServerThread extends Thread {
                         serverThread.send("sending");
                         serverThread.sendObject(GameObjectData.getInstance());
                     }
+                    if (GameMenuController.getInstance().isGameOver()) GameMenuController.destroyInstance();
                 } else {
                     Request request = Request.convertFromJson(input);
                     Response response = handleRequest(request);
@@ -67,6 +68,7 @@ public class ServerThread extends Thread {
     public Response handleRequest(Request request) {
         Response response = new Response();
         String message;
+
         if (request.getAction().equals("login")) {
             message = ServerAdapter.login(request);
             response.setMessage(message);
@@ -85,6 +87,10 @@ public class ServerThread extends Thread {
         }
         if (request.getAction().equals("changeNickname")) {
             message = ServerAdapter.changeNickname(request);
+            response.setMessage(message);
+        }
+        if (request.getAction().equals("changeScore")) {
+            message = ServerAdapter.changeScore(request);
             response.setMessage(message);
         }
         if (request.getAction().equals("changeImage")) {

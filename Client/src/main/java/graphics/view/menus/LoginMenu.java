@@ -28,9 +28,6 @@ public class LoginMenu extends Pane{
     public LoginMenu () {
         Pane temp = this;
 
-
-
-
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
         int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2 - 100;
         //OBJECTS
