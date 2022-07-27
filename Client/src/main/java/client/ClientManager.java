@@ -8,6 +8,7 @@ import graphics.view.gameContents.MainPanel;
 import graphics.view.gameContents.MapFX;
 import graphics.view.gameContents.UnitMenu;
 import graphics.view.menus.Game;
+import graphics.view.menus.GameOver;
 import graphics.view.menus.ProfileMenu;
 import graphics.view.menus.Scoreboard.ScoreboardMenu;
 import graphics.view.menus.multiplayer.LobbyGuest;
@@ -88,6 +89,16 @@ public class ClientManager{
             UnitMenu.getInstance().update();
             //UnitMenu.getInstance().setVisible(UnitController.getInstance().getUnit() != null);
         }
+
+        if (getMainScene().getRoot() instanceof Game && GameMenuController.getInstance().isGameOver()) {
+            setPane(new GameOver());
+
+            if (!GameMenuController.getInstance().getCivilizationByUsername(mainUser.getUsername()).isLost()) {
+                Client.send("sending");
+                Client.sendObject(GameObjectData.getInstance());
+            }
+        }
+
         for (Node node : ((Pane) mainScene.getRoot()).getChildren()) {
             if (node instanceof MainPanel) {
                 ((MainPanel) node).updatePanel();
@@ -96,7 +107,7 @@ public class ClientManager{
     }
 
     public void updateAll() {
-        if (getMainScene().getRoot() instanceof Game ) {
+        if (getMainScene().getRoot() instanceof Game) {
             Client.send("sending");
             Client.sendObject(GameObjectData.getInstance());
         }
@@ -158,7 +169,7 @@ public class ClientManager{
                 if (mainScene.getRoot() instanceof Game) {
                     update(((Game) mainScene.getRoot()).isLocal);
                     if (GameMenuController.getInstance().getCurrentCivilizationController().getCivilization()
-                            .getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())){
+                            .getPlayer().getUsername().equals(ClientManager.getInstance().getMainUser().getUsername())) {
                         if (!((Game) mainScene.getRoot()).isLocal) {
                             mainScene.getRoot().removeEventFilter(MouseEvent.ANY, handler);
                         }
