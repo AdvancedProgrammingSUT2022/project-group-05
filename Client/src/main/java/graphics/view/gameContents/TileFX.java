@@ -104,7 +104,7 @@ public class TileFX extends Group {
         for (int i = 0; i < 6; i++) {
             rivers[i].setLayoutX(-200);
             rivers[i].setLayoutY(-100);
-            rivers[i].setFill(Color.BLUE);
+            rivers[i].setFill(Color.LIGHTBLUE);
             this.getChildren().add(rivers[i]);
         }
 
@@ -143,9 +143,9 @@ public class TileFX extends Group {
         selectedToNormal = new FillTransition(new Duration(500), selected);
         selectedToNormal.setToValue(Color.TRANSPARENT);
         selectedToFirst = new FillTransition(new Duration(500), selected);
-        selectedToFirst.setToValue(new Color(0, 1, 0, 0.5));
+        selectedToFirst.setToValue(new Color(0, 1, 0, 0.3));
         selectedToSecond = new FillTransition(new Duration(500), selected);
-        selectedToSecond.setToValue(new Color(1, 0, 0, 0.5));
+        selectedToSecond.setToValue(new Color(1, 0, 0, 0.3));
 
         front = new Polygon(100, 0, 300, 0, 400, 100, 300, 200, 100, 200, 0, 100);
         front.setLayoutX(-200);
