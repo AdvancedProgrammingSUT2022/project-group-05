@@ -33,10 +33,6 @@ public class MultiplayerGame extends Pane{
     ParallelTransition end;
 
     public MultiplayerGame() {
-
-        this.setScaleX(0.5);
-        this.setScaleY(0.5);
-
         this.setInvitationsTitle();
         this.setInvitations();
 

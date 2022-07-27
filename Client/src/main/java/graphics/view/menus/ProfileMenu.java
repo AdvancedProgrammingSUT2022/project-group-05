@@ -38,28 +38,30 @@ public class ProfileMenu extends Pane{
     public ProfileMenu () {
         Pane temp = this;
         int fromLeft = (int) ClientManager.getInstance().getMainStage().getWidth() / 2;
-        int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2 - 200;
+        int fromTop = (int) ClientManager.getInstance().getMainStage().getHeight() / 2 - 540;
 
         //OBJECTS
+        LabelOne menuName = new LabelOne("PROFILE MENU", StaticFonts.segoeLoad(40), Pos.CENTER,
+                fromLeft, 100, 400, 50, this);
         TextFieldOne oldPassword = new TextFieldOne("old password", StaticFonts.segoeLoad(20), Pos.CENTER,
-                fromLeft, fromTop, 400, 30, this);
+                fromLeft, 300, 400, 30, this);
         TextFieldOne newPassword = new TextFieldOne("new password", StaticFonts.segoeLoad(20), Pos.CENTER,
-                fromLeft, fromTop + 50, 400, 30, this);
+                fromLeft, 350, 400, 30, this);
         TextFieldOne repeatPassword = new TextFieldOne("repeat password", StaticFonts.segoeLoad(20), Pos.CENTER,
-                fromLeft, fromTop + 100, 400, 30, this);
+                fromLeft, 400, 400, 30, this);
         ButtonOne changePassword = new ButtonOne("CHANGE PASSWORD", StaticFonts.segoeLoad(30), Pos.CENTER,
-                fromLeft, fromTop + 150, 400, 50, this);
+                fromLeft, 500 , 400, 50, this);
 
         TextFieldOne newNickname = new TextFieldOne("new nickname", StaticFonts.segoeLoad(20), Pos.CENTER,
-                fromLeft, fromTop + 250, 400, 30, this);
+                fromLeft, 600, 400, 30, this);
         ButtonOne changeNickname = new ButtonOne("CHANGE NICKNAME", StaticFonts.segoeLoad(30), Pos.CENTER,
-                fromLeft, fromTop + 300, 400, 50, this);
+                fromLeft, 700, 400, 50, this);
 
         ButtonOne changePicture = new ButtonOne("CHANGE PICTURE", StaticFonts.segoeLoad(30), Pos.CENTER,
-                fromLeft, fromTop + 400, 400, 50, this);
+                fromLeft, 800, 400, 50, this);
 
         ButtonOne back = new ButtonOne("back", StaticFonts.segoeLoad(15), Pos.CENTER,
-                fromLeft, fromTop + 450, 100, 50, this);
+                fromLeft,950, 100, 50, this);
 
         //ANIMATION
 

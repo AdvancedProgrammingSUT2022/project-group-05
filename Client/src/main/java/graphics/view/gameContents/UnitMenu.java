@@ -80,12 +80,12 @@ public class UnitMenu extends Pane{
 
         this.setVisible(false);
 
-        background = new Rectangle(bSize*2, bSize*10);
+        background = new Rectangle(0, -bSize, bSize*2, bSize*11);
         background.setFill(new Color(0, 0.5, 0.5, 0.4));
         this.getChildren().add(background);
 
         name = new LabelOne("nothing", StaticFonts.segoeLoad(15), Pos.CENTER,
-                bSize/2, -bSize/2, bSize, bSize, this);
+                bSize, -bSize/2, 2*bSize, bSize, this);
         move = new ButtonTwo("Move", StaticFonts.segoeLoad(10), Pos.CENTER,
                 bSize/2, bSize/2, bSize, bSize, this);
         sleep = new ButtonTwo("Sleep", StaticFonts.segoeLoad(10), Pos.CENTER,
@@ -539,7 +539,7 @@ public class UnitMenu extends Pane{
 
         //TODO other functions
 
-        this.setLayoutX(2*bSize);
+        this.setLayoutX(bSize);
         this.setLayoutY(fromTop - 5*bSize);
     }
     

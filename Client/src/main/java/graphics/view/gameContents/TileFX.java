@@ -6,6 +6,7 @@ import graphics.objects.labels.LabelOne;
 import graphics.statics.StaticColors;
 import graphics.statics.StaticFonts;
 import graphics.statics.StaticImages;
+import graphics.statics.StaticSounds;
 import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
@@ -162,6 +163,7 @@ public class TileFX extends Group {
             @Override
             public void handle(MouseEvent event) {
                 //front.setFill(new Color(0.2, 0, 0, 0.2));
+                StaticSounds.playTileHover();
                 end.stop();
                 start.play();
             }
