@@ -104,7 +104,7 @@ public class TileFX extends Group {
         for (int i = 0; i < 6; i++) {
             rivers[i].setLayoutX(-200);
             rivers[i].setLayoutY(-100);
-            rivers[i].setFill(Color.LIGHTBLUE);
+            rivers[i].setFill(new Color(0, 0.7, 1, 1));
             this.getChildren().add(rivers[i]);
         }
 
