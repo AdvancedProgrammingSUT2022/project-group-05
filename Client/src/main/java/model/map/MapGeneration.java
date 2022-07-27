@@ -57,12 +57,14 @@ public class MapGeneration {
     private static final int RESOURCE_HORSE_PROB = 15;
     private static final int RESOURCE_IRON_PROB = 15;
 
+    private static final int RUNES_PROB = 5;
 
     public static void mapCreator() {
         addTerrains();
         addRiver();
         addFeatures();
         addResource();
+        addRunes();
     }
 
     //ADDING TERRAINS
@@ -223,5 +225,22 @@ public class MapGeneration {
         Collections.shuffle(tiles);
         int count = (tiles.size() * PROB) / 100;
         for (int i = 0; i < count; i++) tiles.get(i).setResource(resource);
+    }
+
+    private static void addRunes () {
+        Map map = Map.getInstance();
+        int sizeOfMap = map.getSizeOfMap();
+
+        Random rand = new Random();
+        rand.setSeed(System.currentTimeMillis());
+
+        for (int i = 0; i < sizeOfMap; i++) {
+            for (int j = 0; j < sizeOfMap; j++) {
+                Tile temp = map.getTileFromMap(i, j);
+                if(Math.abs(rand.nextInt())%100 < RUNES_PROB) {
+                    temp.setIsRuin(true);
+                }
+            }
+        }
     }
 }
