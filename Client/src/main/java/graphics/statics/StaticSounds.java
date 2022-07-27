@@ -21,7 +21,7 @@ public class StaticSounds {
 
     public static void playTileHover () {
         MediaPlayer temp = new MediaPlayer(buttonHover);
-        temp.play();
+        temp.play();//
     }
 
     public static void mainTheme () {
