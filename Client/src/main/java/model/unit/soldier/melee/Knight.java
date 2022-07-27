@@ -15,7 +15,7 @@ public class Knight extends Melee implements Mounted, CanMoveAfterAttacking, NoD
         this.initialCost = cost;
         this.meleeStrength = 18;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 3;
         this.requiredResource = Resource.HORSE;
         this.requiredResearch = Research.CHIVALRY;

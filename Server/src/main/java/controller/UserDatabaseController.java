@@ -89,6 +89,13 @@ public class UserDatabaseController {
         updateDatabase(users);
     }
 
+    public static void increaseScore(User user, int score) {
+        ArrayList<HashMap<String, String>> users = loadDatabase();
+        int userIndex = getUserIndexByUsername(user.getUsername());
+        users.get(userIndex).put("score", users.get(userIndex).get("score") + score);
+        updateDatabase(users);
+    }
+
     public static User getUserByUsername(String username) {
         ArrayList<HashMap<String, String>> users = loadDatabase();
         Gson gson = new Gson();

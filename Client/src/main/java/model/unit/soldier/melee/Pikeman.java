@@ -12,7 +12,7 @@ public class Pikeman extends Melee implements BonusVsMounted {
         this.initialCost = cost;
         this.meleeStrength = 10;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 2;
         this.requiredResearch = Research.CIVIL_SERVICE;
 

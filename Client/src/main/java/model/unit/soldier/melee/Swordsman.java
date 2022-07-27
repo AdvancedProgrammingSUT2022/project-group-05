@@ -12,7 +12,7 @@ public class Swordsman extends Melee {
         this.initialCost = cost;
         this.meleeStrength = 11;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 2;
         this.requiredResource = Resource.IRON;
         this.requiredResearch = Research.IRON_WORKING;

@@ -39,7 +39,7 @@ public class ScoreboardMenu extends Pane{
         users.sort(new Comparator<HashMap<String, String>>() {
             @Override
             public int compare(HashMap<String, String> o1, HashMap<String, String> o2) {
-                return Integer.parseInt(o1.get("score")) - Integer.parseInt(o2.get("score"));
+                return Integer.parseInt(o2.get("score")) - Integer.parseInt(o1.get("score"));
             }
         });
         String[] nicknames = new String[users.size()];

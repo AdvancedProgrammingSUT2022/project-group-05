@@ -102,6 +102,16 @@ public class ServerAdapter {
         return "image changed successfully";
     }
 
+    public static String changeScore(Request request) {
+        HashMap<String, Object> params = request.getParams();
+        double score = (double) params.get("score");
+        String username = (String) params.get("username");
+
+        User user = UserDatabaseController.getUserByUsername(username);
+        UserDatabaseController.increaseScore(user, (int) score);
+        return "score increases successfully";
+    }
+
     public static String getUsers(Request request) {
         ArrayList<HashMap<String, String>> users = UserDatabaseController.loadDatabase();
         Gson gson = new Gson();
@@ -280,5 +290,4 @@ public class ServerAdapter {
             }
         }
     }
-
 }

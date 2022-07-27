@@ -92,6 +92,8 @@ public class ClientManager{
 
         if (getMainScene().getRoot() instanceof Game && GameMenuController.getInstance().isGameOver()) {
             setPane(new GameOver());
+            int score = GameMenuController.getInstance().getCivilizationByUsername(ClientManager.getInstance().getMainUser().getUsername()).calculateScore();
+            Client.send(ClientAdapter.changeScore(score, ClientManager.getInstance().getMainUser().getUsername()));
 
             if (!GameMenuController.getInstance().getCivilizationByUsername(mainUser.getUsername()).isLost()) {
                 Client.send("sending");

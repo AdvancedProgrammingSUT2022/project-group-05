@@ -14,15 +14,10 @@ public abstract class Soldier extends Unit{
             return false;
         if (tile.getSoldier() == null && tile.getCivilian() == null)
             return false;
-        if (tile.getSoldier() == null) {
-            if (tile.getCivilian().getCivilization() == this.getCivilization())
-                return false;
-            else
-                return true;
-        }
-        if (tile.getSoldier().getCivilization() == this.getCivilization())
-            return false;
-        return true;
+        if (tile.getSoldier() == null)
+            return tile.getCivilian().getCivilization() != this.getCivilization();
+        
+        return tile.getSoldier().getCivilization() != this.getCivilization();
     }
 
     @Override

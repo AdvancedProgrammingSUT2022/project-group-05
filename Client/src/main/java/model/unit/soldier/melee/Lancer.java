@@ -15,7 +15,7 @@ public class Lancer extends Melee implements Mounted, CanMoveAfterAttacking, NoD
         this.initialCost = cost;
         this.meleeStrength = 22;
         this.rangedStrength = 0;
-        this.maxAttackRange = 0;
+        this.maxAttackRange = 1;
         this.maxMovement = 4;
         this.requiredResource = Resource.HORSE;
         this.requiredResearch = Research.METALLURGY;
