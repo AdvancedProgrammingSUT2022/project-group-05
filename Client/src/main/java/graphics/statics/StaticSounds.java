@@ -7,18 +7,21 @@ public class StaticSounds {
     private static final Media mainTheme = new Media(StaticSounds.class.getResource("maintheme.mp3").toString());
     private static final MediaPlayer mainThemePlayer = new MediaPlayer(mainTheme);
     private static boolean isPlaying = false;
-    //private static final Media tileHover = new Media("file:src/main/resources/sounds/aaa.ogg");
-    private static final Media buttonHover = new Media(StaticSounds.class.getResource("aaa.mp3").toString());
-    //public static void playButtonHover() {
-    //    new MediaPlayer(buttonHover).play();
-    //}
-//
-    //public static void playMainTheme() {
-    //    new MediaPlayer(mainTheme).play();
-    //}
+    private static final Media buttonHover = new Media(StaticSounds.class.getResource("b.mp3").toString());
+    private static final MediaPlayer buttonHoverPlayer = new MediaPlayer(buttonHover);
+    static {
+        mainThemePlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mainThemePlayer.stop();
+                mainThemePlayer.play();
+            }
+        });
+    }
 
     public static void playTileHover () {
-        //new MediaPlayer(tileHover).play();
+        MediaPlayer temp = new MediaPlayer(buttonHover);
+        temp.play();
     }
 
     public static void mainTheme () {
